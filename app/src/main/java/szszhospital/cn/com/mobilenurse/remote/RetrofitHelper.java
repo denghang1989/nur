@@ -1,0 +1,49 @@
+package szszhospital.cn.com.mobilenurse.remote;
+
+import android.content.Context;
+
+import java.io.File;
+import java.util.concurrent.TimeUnit;
+
+import okhttp3.Cache;
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
+
+/**
+ * 2016/9/21 10:03
+ */
+public class RetrofitHelper {
+
+    private static OkHttpClient okHttpClient = null;
+
+    public static Retrofit getRetrofit(String baseUrl, Context context) {
+        initOkHttp(context);
+        return new Retrofit.Builder()
+                .client(okHttpClient)
+                .baseUrl(baseUrl)
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .build();
+    }
+
+    private static OkHttpClient initOkHttp(final Context context) {
+        if (okHttpClient == null) {
+            OkHttpClient.Builder builder = new OkHttpClient.Builder();
+            HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+            loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+            builder.addInterceptor(loggingInterceptor);
+            File cacheFile = new File(context.getCacheDir(), "http");
+            Cache cache = new Cache(cacheFile, 1024 * 1024 * 50);
+            builder.cache(cache);
+            builder.connectTimeout(10, TimeUnit.SECONDS);
+            builder.readTimeout(20, TimeUnit.SECONDS);
+            builder.writeTimeout(20, TimeUnit.SECONDS);
+            builder.retryOnConnectionFailure(true);
+            okHttpClient = builder.build();
+        }
+        return okHttpClient;
+    }
+}

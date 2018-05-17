@@ -15,6 +15,8 @@ import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 
+import szszhospital.cn.com.mobilenurse.remote.ApiService;
+
 public class App extends Application {
 
     static {
@@ -41,5 +43,6 @@ public class App extends Application {
         super.onCreate();
         Utils.init(this);
         FlowManager.init(this);
+        ApiService.init(this);
     }
 }

@@ -2,10 +2,10 @@ package szszhospital.cn.com.mobilenurse.activity;
 
 import szszhospital.cn.com.mobilenurse.R;
 import szszhospital.cn.com.mobilenurse.adapter.MainActivityAdapter;
-import szszhospital.cn.com.mobilenurse.base.BaseActivity;
+import szszhospital.cn.com.mobilenurse.base.BasePresentActivity;
 import szszhospital.cn.com.mobilenurse.databinding.ActiviyMainBinding;
 
-public class MainActivity extends BaseActivity<ActiviyMainBinding> {
+public class MainActivity extends BasePresentActivity<ActiviyMainBinding> {
 
     private MainActivityAdapter mAdapter;
 
@@ -21,6 +21,7 @@ public class MainActivity extends BaseActivity<ActiviyMainBinding> {
 
     @Override
     protected void init() {
+        super.init();
         mAdapter = new MainActivityAdapter(getSupportFragmentManager());
     }
 }
