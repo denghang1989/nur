@@ -5,4 +5,6 @@
     <string name="loc">请选择登入科室</string>
     <string name="login">登入</string>
     <string name="hospital_name">深圳市中医院\n广州中医药大学第四临床医学院</string>
+    <string name="patient_detail">患者信息</string>
+    <string name="drug_detail">药品信息</string>
 </resources>
