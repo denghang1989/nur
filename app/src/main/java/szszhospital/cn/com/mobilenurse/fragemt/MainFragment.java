@@ -5,8 +5,9 @@ import android.os.Bundle;
 import szszhospital.cn.com.mobilenurse.R;
 import szszhospital.cn.com.mobilenurse.adapter.MainFragmentAdapter;
 import szszhospital.cn.com.mobilenurse.base.BaseFragment;
+import szszhospital.cn.com.mobilenurse.databinding.FragmentMainBinding;
 
-public class MainFragment extends BaseFragment {
+public class MainFragment extends BaseFragment<FragmentMainBinding> {
 
     private MainFragmentAdapter mAdapter;
 

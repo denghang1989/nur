@@ -11,7 +11,7 @@ import android.text.TextUtils;
  * @param <T>
  * @desc 扫描二维码
  */
-public abstract class BaseScanFragment extends BaseFragment {
+public abstract class BaseScanFragment<T extends ViewDataBinding> extends BaseFragment<T> {
 
     private static final String KEY_ACTION = "android.intent.action.BARCODEDATA";
     private static final String KEY_RESULT = "barcode_result";

@@ -1,17 +1,21 @@
 package szszhospital.cn.com.mobilenurse.base;
 
+import android.databinding.DataBindingUtil;
+import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 import me.yokeyword.fragmentation.SwipeBackLayout;
 import me.yokeyword.fragmentation_swipeback.SwipeBackActivity;
 
-public abstract class BaseActivity extends SwipeBackActivity {
+public abstract class BaseActivity<T extends ViewDataBinding> extends SwipeBackActivity {
+
+    protected T mDataBinding;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(getLayoutId());
+        mDataBinding = DataBindingUtil.setContentView(this, getLayoutId());
         getSwipeBackLayout().setEdgeOrientation(SwipeBackLayout.EDGE_LEFT);
         init();
         initView();
