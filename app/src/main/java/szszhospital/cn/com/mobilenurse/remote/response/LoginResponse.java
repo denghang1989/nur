@@ -5,8 +5,8 @@ import java.util.List;
 import szszhospital.cn.com.mobilenurse.mode.LocTable;
 
 public class LoginResponse {
-    public String         ErrorInfo;
-    public String         UserID;
-    public String         UserName;
+    public String    ErrorInfo;
+    public String    UserID;
+    public String    UserName;
     public List<LocTable> Locs;
 }

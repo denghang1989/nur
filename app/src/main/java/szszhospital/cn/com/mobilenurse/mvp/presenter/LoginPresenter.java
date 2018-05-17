@@ -2,7 +2,6 @@ package szszhospital.cn.com.mobilenurse.mvp.presenter;
 
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
-import retrofit2.Response;
 import szszhospital.cn.com.mobilenurse.base.RxPresenter;
 import szszhospital.cn.com.mobilenurse.mvp.contract.LoginContract;
 import szszhospital.cn.com.mobilenurse.remote.ApiService;
@@ -12,32 +11,35 @@ import szszhospital.cn.com.mobilenurse.remote.response.LoginResponse;
 
 public class LoginPresenter extends RxPresenter<LoginContract.View, LoginContract.Model> implements LoginContract.Presenter {
 
+    private static final String TAG = "LoginPresenter";
 
     @Override
-    public void login(LoginRequest request) {
-        ApiService.Instance().getService().login(request).
-                compose(RxUtil.<Response<LoginResponse>>rxSchedulerHelper()).
-                compose(RxUtil.<LoginResponse>httpHandleResponse()).subscribe(new Observer<LoginResponse>() {
-            @Override
-            public void onSubscribe(Disposable d) {
-                addSubscribe(d);
-            }
+    public void login(final LoginRequest request) {
+        mView.showProgress();
+        ApiService.Instance().getService().
+                login(obj2Map(request)).
+                compose(RxUtil.<LoginResponse>rxSchedulerHelper()).
+                subscribe(new Observer<LoginResponse>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        addSubscribe(d);
+                    }
 
-            @Override
-            public void onNext(LoginResponse loginResponse) {
-                
-            }
+                    @Override
+                    public void onNext(LoginResponse loginResponse) {
+                        mView.setSpinnerData(loginResponse.Locs);
+                    }
 
-            @Override
-            public void onError(Throwable e) {
+                    @Override
+                    public void onError(Throwable e) {
 
-            }
+                    }
 
-            @Override
-            public void onComplete() {
-
-            }
-        });
+                    @Override
+                    public void onComplete() {
+                        mView.hideProgress();
+                    }
+                });
 
     }
 

@@ -1,11 +1,11 @@
 package szszhospital.cn.com.mobilenurse.remote;
 
 
+import java.util.Map;
+
 import io.reactivex.Observable;
-import retrofit2.Response;
-import retrofit2.http.Body;
-import retrofit2.http.POST;
-import szszhospital.cn.com.mobilenurse.remote.request.LoginRequest;
+import retrofit2.http.GET;
+import retrofit2.http.QueryMap;
 import szszhospital.cn.com.mobilenurse.remote.response.LoginResponse;
 
 /**
@@ -16,6 +16,6 @@ public interface Api {
 
 
     //3.账号密码登录
-    @POST("csp/dhc.nurse.androidpda.common.getdata.csp")
-    Observable<Response<LoginResponse>> login(@Body LoginRequest request);
+    @GET("Quality.Ajax.AndroidHttpResponse.cls")
+    Observable<LoginResponse> login(@QueryMap Map<String, String> option);
 }

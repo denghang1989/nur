@@ -5,7 +5,6 @@ import android.support.annotation.CallSuper;
 
 public abstract class BasePresentActivity<T extends ViewDataBinding, P extends BasePresenter> extends BaseActivity<T> implements BaseView {
 
-    protected T mDataBinding;
     protected P mPresenter;
 
     @Override
@@ -21,6 +20,7 @@ public abstract class BasePresentActivity<T extends ViewDataBinding, P extends B
     }
 
     @CallSuper
+    @Override
     protected void init() {
         mPresenter = initPresenter();
         if (mPresenter != null) {

@@ -52,7 +52,7 @@ public class LoginSpinnerAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        viewHolder.item.setText(mLocList.get(position).LocDesc);
+        viewHolder.item.setText(mLocList.get(position).LocDesc.trim());
         return convertView;
     }
 

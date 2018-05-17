@@ -23,15 +23,9 @@ public abstract class BaseActivity<T extends ViewDataBinding> extends SwipeBackA
         initEvent();
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
-
     protected void init() {
 
     }
-
 
     protected void initView() {
 
