@@ -8,4 +8,14 @@
     <string name="patient_detail">患者信息</string>
     <string name="drug_detail">药品信息</string>
     <string name="select_loc">选择科室</string>
+
+
+
+    <string-array name="drug_list">
+        <item>药品核对</item>
+    </string-array>
+
+    <string-array name="nurse_list">
+        <item>药品交接</item>
+    </string-array>
 </resources>

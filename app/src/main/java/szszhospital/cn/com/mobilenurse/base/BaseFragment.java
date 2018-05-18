@@ -13,7 +13,7 @@ import me.yokeyword.fragmentation_swipeback.SwipeBackFragment;
 
 public abstract class BaseFragment<T extends ViewDataBinding> extends SwipeBackFragment {
 
-    private T mDataBinding;
+    protected T mDataBinding;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

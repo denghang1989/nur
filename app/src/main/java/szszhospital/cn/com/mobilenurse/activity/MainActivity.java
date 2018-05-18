@@ -17,6 +17,7 @@ public class MainActivity extends BaseActivity<ActiviyMainBinding> {
     @Override
     protected void initView() {
         setSwipeBackEnable(false);
+        mDataBinding.viewPager.setAdapter(mAdapter);
     }
 
     @Override

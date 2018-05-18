@@ -12,24 +12,21 @@ import android.text.TextUtils;
  * @desc 扫描二维码
  */
 public abstract class BaseScanFragment<T extends ViewDataBinding> extends BaseFragment<T> {
-
+    private static final String TAG        = "BaseScanFragment";
     private static final String KEY_ACTION = "android.intent.action.BARCODEDATA";
     private static final String KEY_RESULT = "barcode_result";
-    private QRCodeBroadcastReceiver mBroadcastReceiver;
-    private IntentFilter            mIntentFilter;
+    protected QRCodeBroadcastReceiver mBroadcastReceiver;
 
     @Override
     protected void init() {
         super.init();
         mBroadcastReceiver = new QRCodeBroadcastReceiver();
-        mIntentFilter = new IntentFilter();
-        mIntentFilter.addAction(KEY_ACTION);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        _mActivity.registerReceiver(mBroadcastReceiver, mIntentFilter);
+        _mActivity.registerReceiver(mBroadcastReceiver, new IntentFilter(KEY_ACTION));
     }
 
     @Override
