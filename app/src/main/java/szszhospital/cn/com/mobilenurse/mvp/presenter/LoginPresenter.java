@@ -1,5 +1,7 @@
 package szszhospital.cn.com.mobilenurse.mvp.presenter;
 
+import com.blankj.utilcode.util.ToastUtils;
+
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 import retrofit2.Response;
@@ -13,6 +15,7 @@ import szszhospital.cn.com.mobilenurse.remote.RxUtil;
 import szszhospital.cn.com.mobilenurse.remote.request.LoginRequest;
 import szszhospital.cn.com.mobilenurse.remote.request.SchDateTimeRequest;
 import szszhospital.cn.com.mobilenurse.remote.response.LoginResponse;
+import szszhospital.cn.com.mobilenurse.remote.response.SchDateTimeResponse;
 
 public class LoginPresenter extends RxPresenter<LoginContract.View, LoginContract.Model> implements LoginContract.Presenter {
 
@@ -59,22 +62,23 @@ public class LoginPresenter extends RxPresenter<LoginContract.View, LoginContrac
     public void clearCacheDateTime(SchDateTimeRequest request) {
         mView.showProgress();
         ApiService.Instance().getService().clearCacheLogin(obj2Map(request))
-                .compose(RxUtil.<Response<String>>rxSchedulerHelper())
-                .compose(RxUtil.<String>httpHandleResponse()).subscribe(new Observer<String>() {
+                .compose(RxUtil.<Response<SchDateTimeResponse>>rxSchedulerHelper())
+                .compose(RxUtil.<SchDateTimeResponse>httpHandleResponse()).subscribe(new Observer<SchDateTimeResponse>() {
             @Override
             public void onSubscribe(Disposable d) {
                 addSubscribe(d);
             }
 
             @Override
-            public void onNext(String s) {
-                String[] arr = s.split("\\^");
-                String[] itmst = arr[0].split(",");
-                String[] itmet = arr[1].split(",");
+            public void onNext(SchDateTimeResponse response) {
+                ToastUtils.showShort("登入成功");
+                String[] itmst = response.stdatetime.split(",");
+                String[] itmet = response.enddatetime.split(",");
                 App.loginUser.SchStDate = itmst[0];
                 App.loginUser.StTime = itmst[1];
                 App.loginUser.SchEnDate = itmet[0];
                 App.loginUser.EnTime = itmet[1];
+                mView.goToMainActivity();
             }
 
             @Override

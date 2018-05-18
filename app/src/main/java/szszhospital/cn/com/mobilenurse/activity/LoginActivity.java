@@ -40,7 +40,7 @@ public class LoginActivity extends BasePresentActivity<ActivityLoginBinding, Log
     private void initSchDateTimeRequest() {
         mSchDateTimeRequest = new SchDateTimeRequest();
         mSchDateTimeRequest.className = "Nur.Android.Common";
-        mSchDateTimeRequest.methodName = "DelSchDateTime";
+        mSchDateTimeRequest.methodName = "DelSchDateTimeJson";
         mSchDateTimeRequest.type = "Method";
     }
 
@@ -71,7 +71,6 @@ public class LoginActivity extends BasePresentActivity<ActivityLoginBinding, Log
             mSchDateTimeRequest.user = App.loginUser.UserDR;
             mPresenter.clearCacheDateTime(mSchDateTimeRequest);
         }
-
     }
 
     @Override
