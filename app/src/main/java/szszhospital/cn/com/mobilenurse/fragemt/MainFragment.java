@@ -5,11 +5,11 @@ import android.support.design.widget.TabLayout;
 import szszhospital.cn.com.mobilenurse.App;
 import szszhospital.cn.com.mobilenurse.R;
 import szszhospital.cn.com.mobilenurse.adapter.MainFragmentAdapter;
-import szszhospital.cn.com.mobilenurse.base.BaseScanFragment;
+import szszhospital.cn.com.mobilenurse.base.BaseFragment;
 import szszhospital.cn.com.mobilenurse.databinding.FragmentMainBinding;
 import szszhospital.cn.com.mobilenurse.utils.Contants;
 
-public class MainFragment extends BaseScanFragment<FragmentMainBinding> {
+public class MainFragment extends BaseFragment<FragmentMainBinding> {
 
     private String mLocId;
 

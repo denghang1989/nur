@@ -1,6 +1,12 @@
 package szszhospital.cn.com.mobilenurse.remote.request;
 
-public class LoginRequest extends BaseRequest {
+/**
+ * 登入
+ */
+public class LoginRequest {
+    public String className  = "Nur.Android.Common";
+    public String methodName = "logon";
+    public String type       = "Method";
     public String userName;
     public String password;
 

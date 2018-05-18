@@ -39,16 +39,10 @@ public class LoginActivity extends BasePresentActivity<ActivityLoginBinding, Log
 
     private void initSchDateTimeRequest() {
         mSchDateTimeRequest = new SchDateTimeRequest();
-        mSchDateTimeRequest.className = "Nur.Android.Common";
-        mSchDateTimeRequest.methodName = "DelSchDateTimeJson";
-        mSchDateTimeRequest.type = "Method";
     }
 
     private void initLoginRequest() {
         mRequest = new LoginRequest();
-        mRequest.className = "Nur.Android.Common";
-        mRequest.methodName = "logon";
-        mRequest.type = "Method";
     }
 
     @Override
@@ -66,7 +60,7 @@ public class LoginActivity extends BasePresentActivity<ActivityLoginBinding, Log
         if (!mUser.isLogin()) {
             mRequest.userName = mUser.getName();
             mRequest.password = mUser.getPassword();
-            mPresenter.login(mRequest,mUser);
+            mPresenter.login(mRequest, mUser);
         } else {
             mSchDateTimeRequest.user = App.loginUser.UserDR;
             mPresenter.clearCacheDateTime(mSchDateTimeRequest);
@@ -102,6 +96,7 @@ public class LoginActivity extends BasePresentActivity<ActivityLoginBinding, Log
     @Override
     public void goToMainActivity() {
         startActivity(new Intent(this, MainActivity.class));
+        finish();
     }
 
     @Override
