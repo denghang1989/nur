@@ -10,7 +10,7 @@ public class FragmentFactory {
         BaseFragment fragment = null;
         switch (moduleTable.className) {
             case "DispensingFragment":
-                fragment = DispensingFragment.newInstance();
+                fragment = new DispensingFragment();
                 break;
         }
         return fragment;

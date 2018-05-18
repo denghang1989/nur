@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.databinding.ViewDataBinding;
 import android.text.TextUtils;
+import android.util.Log;
 
 /**
  * @param <T>
@@ -15,23 +16,24 @@ public abstract class BaseScanFragment<T extends ViewDataBinding> extends BaseFr
     private static final String TAG        = "BaseScanFragment";
     private static final String KEY_ACTION = "android.intent.action.BARCODEDATA";
     private static final String KEY_RESULT = "barcode_result";
-    protected QRCodeBroadcastReceiver mBroadcastReceiver;
+    public QRCodeBroadcastReceiver mBroadcastReceiver;
 
     @Override
     protected void init() {
-        super.init();
         mBroadcastReceiver = new QRCodeBroadcastReceiver();
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        Log.d(TAG, "onResume: "+mBroadcastReceiver);
         _mActivity.registerReceiver(mBroadcastReceiver, new IntentFilter(KEY_ACTION));
     }
 
     @Override
     public void onPause() {
         super.onPause();
+        Log.d(TAG, "onPause: "+mBroadcastReceiver);
         _mActivity.unregisterReceiver(mBroadcastReceiver);
     }
 

@@ -1,6 +1,5 @@
 package szszhospital.cn.com.mobilenurse.fragemt;
 
-import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 
 import szszhospital.cn.com.mobilenurse.App;
@@ -15,10 +14,7 @@ public class MainFragment extends BaseScanFragment<FragmentMainBinding> {
     private String mLocId;
 
     public static MainFragment newInstance() {
-        Bundle args = new Bundle();
-        MainFragment fragment = new MainFragment();
-        fragment.setArguments(args);
-        return fragment;
+        return new MainFragment();
     }
 
     @Override

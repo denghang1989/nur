@@ -1,5 +1,7 @@
 package szszhospital.cn.com.mobilenurse.base;
 
+import android.app.Activity;
+import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
@@ -13,7 +15,14 @@ import me.yokeyword.fragmentation_swipeback.SwipeBackFragment;
 
 public abstract class BaseFragment<T extends ViewDataBinding> extends SwipeBackFragment {
 
-    protected T mDataBinding;
+    protected T        mDataBinding;
+    protected Activity _mActivity;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        _mActivity = (Activity) context;
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
