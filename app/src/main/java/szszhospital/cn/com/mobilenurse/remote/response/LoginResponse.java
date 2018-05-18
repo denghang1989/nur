@@ -2,7 +2,7 @@ package szszhospital.cn.com.mobilenurse.remote.response;
 
 import java.util.List;
 
-import szszhospital.cn.com.mobilenurse.mode.LocTable;
+import szszhospital.cn.com.mobilenurse.db.LocTable;
 
 public class LoginResponse {
     public String    ErrorInfo;

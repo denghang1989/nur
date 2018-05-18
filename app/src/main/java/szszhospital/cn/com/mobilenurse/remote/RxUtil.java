@@ -1,6 +1,8 @@
 package szszhospital.cn.com.mobilenurse.remote;
 
 
+import android.util.Log;
+
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -48,7 +50,7 @@ public class RxUtil {
         };
     }
 
-    public static <T> ObservableTransformer<Response<T>,T> httpHandleResponse(){
+    public static <T> ObservableTransformer<Response<T>, T> httpHandleResponse() {
         return new ObservableTransformer<Response<T>, T>() {
             @Override
             public ObservableSource<T> apply(Observable<Response<T>> upstream) {
@@ -56,8 +58,11 @@ public class RxUtil {
                     @Override
                     public ObservableSource<T> apply(Response<T> tResponse) throws Exception {
                         if (tResponse.code() == 200) {
+                            String cookie = tResponse.headers().get("Set-Cookie");
+                            Log.d(TAG, "apply: " + cookie);
+                            RetrofitHelper.cookie = cookie;
                             return createObservable(tResponse.body());
-                        }else {
+                        } else {
                             return ObservableError.error(new ApiException(tResponse.message()));
                         }
                     }

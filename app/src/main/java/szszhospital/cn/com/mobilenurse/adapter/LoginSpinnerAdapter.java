@@ -10,7 +10,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import szszhospital.cn.com.mobilenurse.R;
-import szszhospital.cn.com.mobilenurse.mode.LocTable;
+import szszhospital.cn.com.mobilenurse.db.LocTable;
 
 public class LoginSpinnerAdapter extends BaseAdapter {
 
@@ -32,7 +32,7 @@ public class LoginSpinnerAdapter extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int position) {
+    public LocTable getItem(int position) {
         return mLocList.get(position);
     }
 

@@ -1,25 +1,31 @@
 package szszhospital.cn.com.mobilenurse.activity;
 
-import android.util.Log;
+import android.content.Intent;
 import android.view.View;
+import android.widget.AdapterView;
+
+import com.blankj.utilcode.util.KeyboardUtils;
 
 import java.util.List;
 
+import szszhospital.cn.com.mobilenurse.App;
 import szszhospital.cn.com.mobilenurse.R;
 import szszhospital.cn.com.mobilenurse.adapter.LoginSpinnerAdapter;
 import szszhospital.cn.com.mobilenurse.base.BasePresentActivity;
 import szszhospital.cn.com.mobilenurse.databinding.ActivityLoginBinding;
 import szszhospital.cn.com.mobilenurse.databinding.User;
-import szszhospital.cn.com.mobilenurse.mode.LocTable;
+import szszhospital.cn.com.mobilenurse.db.LocTable;
 import szszhospital.cn.com.mobilenurse.mvp.contract.LoginContract;
 import szszhospital.cn.com.mobilenurse.mvp.presenter.LoginPresenter;
 import szszhospital.cn.com.mobilenurse.remote.request.LoginRequest;
+import szszhospital.cn.com.mobilenurse.remote.request.SchDateTimeRequest;
 
 public class LoginActivity extends BasePresentActivity<ActivityLoginBinding, LoginPresenter> implements LoginContract.View {
     private static final String TAG = "LoginActivity";
     private LoginSpinnerAdapter mAdapter;
     private User                mUser;
     private LoginRequest        mRequest;
+    private SchDateTimeRequest  mSchDateTimeRequest;
 
     @Override
     protected void init() {
@@ -28,6 +34,14 @@ public class LoginActivity extends BasePresentActivity<ActivityLoginBinding, Log
         mUser = new User();
         mDataBinding.setUser(mUser);
         initLoginRequest();
+        initSchDateTimeRequest();
+    }
+
+    private void initSchDateTimeRequest() {
+        mSchDateTimeRequest = new SchDateTimeRequest();
+        mSchDateTimeRequest.className = "Nur.Android.Common";
+        mSchDateTimeRequest.methodName = "DelSchDateTime";
+        mSchDateTimeRequest.type = "Method";
     }
 
     private void initLoginRequest() {
@@ -46,14 +60,18 @@ public class LoginActivity extends BasePresentActivity<ActivityLoginBinding, Log
     protected void initView() {
         setSwipeBackEnable(false);
         mDataBinding.loc.setAdapter(mAdapter);
-        mDataBinding.loc.setSelection(0,true);
     }
 
     public void onClick(View view) {
-        mRequest.userName = mUser.getName();
-        mRequest.password = mUser.getPassword();
-        Log.d(TAG, "onClick: "+mRequest.toString());
-        mPresenter.login(mRequest);
+        if (!mUser.isLogin()) {
+            mRequest.userName = mUser.getName();
+            mRequest.password = mUser.getPassword();
+            mPresenter.login(mRequest,mUser);
+        } else {
+            mSchDateTimeRequest.user = App.loginUser.UserDR;
+            mPresenter.clearCacheDateTime(mSchDateTimeRequest);
+        }
+
     }
 
     @Override
@@ -63,6 +81,9 @@ public class LoginActivity extends BasePresentActivity<ActivityLoginBinding, Log
 
     @Override
     public void showProgress() {
+        if (KeyboardUtils.isSoftInputVisible(this)) {
+            KeyboardUtils.hideSoftInput(this);
+        }
         mDataBinding.login.setEnabled(false);
         mDataBinding.progress.setVisibility(View.VISIBLE);
     }
@@ -76,5 +97,33 @@ public class LoginActivity extends BasePresentActivity<ActivityLoginBinding, Log
     @Override
     public void setSpinnerData(List<LocTable> list) {
         mAdapter.setData(list);
+        mDataBinding.loc.setSelection(0);
+    }
+
+    @Override
+    public void goToMainActivity() {
+        startActivity(new Intent(this, MainActivity.class));
+    }
+
+    @Override
+    protected void initEvent() {
+        mDataBinding.loc.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                App.loginUser.UserLoc = mAdapter.getItem(position).LocID;
+                App.loginUser.WardID = mAdapter.getItem(position).WardID;
+                App.loginUser.UserGroupID = mAdapter.getItem(position).GroupID;
+                App.loginUser.UserLocDesc = mAdapter.getItem(position).LocDesc;
+                App.loginUser.UserID = mUser.getName();
+                if (KeyboardUtils.isSoftInputVisible(LoginActivity.this)) {
+                    KeyboardUtils.hideSoftInput(LoginActivity.this);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 }

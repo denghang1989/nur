@@ -15,6 +15,7 @@ import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 
 import szszhospital.cn.com.mobilenurse.remote.ApiService;
+import szszhospital.cn.com.mobilenurse.remote.model.LoginUser;
 
 public class App extends Application {
 
@@ -36,6 +37,8 @@ public class App extends Application {
             }
         });
     }
+
+    public static LoginUser loginUser = new LoginUser();
 
     @Override
     public void onCreate() {

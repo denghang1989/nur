@@ -1,4 +1,4 @@
-package szszhospital.cn.com.mobilenurse.mode;
+package szszhospital.cn.com.mobilenurse.db;
 
 public class ModuleTable {
 

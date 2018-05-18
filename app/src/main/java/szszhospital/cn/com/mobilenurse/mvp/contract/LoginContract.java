@@ -5,8 +5,11 @@ import java.util.List;
 import szszhospital.cn.com.mobilenurse.base.BaseModel;
 import szszhospital.cn.com.mobilenurse.base.BasePresenter;
 import szszhospital.cn.com.mobilenurse.base.BaseView;
-import szszhospital.cn.com.mobilenurse.mode.LocTable;
+import szszhospital.cn.com.mobilenurse.databinding.User;
+import szszhospital.cn.com.mobilenurse.db.LocTable;
 import szszhospital.cn.com.mobilenurse.remote.request.LoginRequest;
+import szszhospital.cn.com.mobilenurse.remote.request.SchDateTimeRequest;
+import szszhospital.cn.com.mobilenurse.remote.response.LoginResponse;
 
 public interface LoginContract {
     interface View extends BaseView {
@@ -15,17 +18,17 @@ public interface LoginContract {
         void hideProgress();
 
         void setSpinnerData(List<LocTable> list);
+
+        void goToMainActivity();
     }
 
     interface Model extends BaseModel {
-        void saveLoginUser();
-
-        void saveLoc();
+        void save(LoginResponse loginResponse);
     }
 
     interface Presenter extends BasePresenter<View> {
-        void login(LoginRequest request);
+        void login(LoginRequest request, User user);
 
-        void clearCacheDateTime();
+        void clearCacheDateTime(SchDateTimeRequest request);
     }
 }

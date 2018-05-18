@@ -9,6 +9,7 @@ public class User extends BaseObservable {
 
     private String name;
     private String password;
+    private boolean isLogin;
 
     @Bindable
     public String getName() {
@@ -28,5 +29,13 @@ public class User extends BaseObservable {
     public void setPassword(String password) {
         this.password = password;
         notifyPropertyChanged(BR.password);
+    }
+
+    public boolean isLogin() {
+        return isLogin;
+    }
+
+    public void setLogin(boolean login) {
+        isLogin = login;
     }
 }

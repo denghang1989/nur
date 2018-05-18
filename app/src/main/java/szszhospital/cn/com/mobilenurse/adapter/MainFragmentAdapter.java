@@ -8,7 +8,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import java.util.List;
 
 import szszhospital.cn.com.mobilenurse.factory.FragmentFactory;
-import szszhospital.cn.com.mobilenurse.mode.ModuleTable;
+import szszhospital.cn.com.mobilenurse.db.ModuleTable;
 
 public class MainFragmentAdapter extends FragmentPagerAdapter {
 

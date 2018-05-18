@@ -6,7 +6,6 @@
         <variable
             name="user"
             type="szszhospital.cn.com.mobilenurse.databinding.User"/>
-
     </data>
 
     <android.support.constraint.ConstraintLayout
@@ -20,7 +19,7 @@
             android:id="@+id/logo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="30dp"
             android:src="@mipmap/logo"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -32,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/logo">
@@ -43,6 +42,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/account"
                 android:inputType="text"
+                android:maxLines="1"
                 android:text="@={user.name}"
                 android:textColorHint="#333"/>
         </android.support.design.widget.TextInputLayout>
@@ -63,39 +63,33 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/password"
                 android:inputType="textPassword"
+                android:maxLines="1"
                 android:text="@={user.password}"
                 android:textColorHint="#333"/>
         </android.support.design.widget.TextInputLayout>
 
-        <fr.ganfra.materialspinner.MaterialSpinner
+        <android.support.v7.widget.AppCompatSpinner
             android:id="@+id/loc"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_marginLeft="23dp"
             android:layout_marginRight="23dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/loc_bg"
+            android:spinnerMode="dialog"
+            android:text="@string/loc"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/password"
-            app:ms_alignLabels="false"
-            android:spinnerMode="dropdown"
-            android:overlapAnchor="false"
-            app:ms_arrowSize="16dp"
-            app:ms_enableErrorLabel="false"
-            app:ms_enableFloatingLabel="false"
-            app:ms_hint="@string/select_loc"
-            app:ms_hintColor="@color/gray"
-            app:ms_multiline="false"
-            app:ms_thickness="1px"/>
+            app:layout_constraintTop_toBottomOf="@+id/password"/>
 
         <Button
             android:id="@+id/login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginLeft="23dp"
+            android:layout_marginRight="23dp"
             android:layout_marginTop="20dp"
-            android:background="@drawable/login"
+            android:background="@drawable/login_normal"
             android:onClick="onClick"
             android:text="@string/login"
             android:textColor="@android:color/white"
@@ -120,9 +114,11 @@
             android:id="@+id/progress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="@+id/login"
+            android:layout_marginTop="10dp"
+            android:visibility="gone"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/login"/>
+            app:layout_constraintTop_toBottomOf="@+id/login"
+            />
     </android.support.constraint.ConstraintLayout>
 </layout>

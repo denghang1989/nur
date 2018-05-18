@@ -1,7 +1,7 @@
 package szszhospital.cn.com.mobilenurse.factory;
 
 import szszhospital.cn.com.mobilenurse.base.BaseFragment;
-import szszhospital.cn.com.mobilenurse.mode.ModuleTable;
+import szszhospital.cn.com.mobilenurse.db.ModuleTable;
 
 public class FragmentFactory {
 
