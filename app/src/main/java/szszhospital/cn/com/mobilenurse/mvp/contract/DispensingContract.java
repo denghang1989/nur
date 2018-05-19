@@ -5,10 +5,12 @@ import java.util.List;
 import szszhospital.cn.com.mobilenurse.base.BaseModel;
 import szszhospital.cn.com.mobilenurse.base.BasePresenter;
 import szszhospital.cn.com.mobilenurse.base.BaseView;
-import szszhospital.cn.com.mobilenurse.db.LocTable;
 import szszhospital.cn.com.mobilenurse.remote.request.DrugBillRequest;
 import szszhospital.cn.com.mobilenurse.remote.request.PatientInfoRequest;
 import szszhospital.cn.com.mobilenurse.remote.request.SingleDrugInfoRequest;
+import szszhospital.cn.com.mobilenurse.remote.response.Drug;
+import szszhospital.cn.com.mobilenurse.remote.response.PatientInfoResponse;
+import szszhospital.cn.com.mobilenurse.remote.response.SingleDrugInfoResponse;
 
 public interface DispensingContract {
 
@@ -17,7 +19,11 @@ public interface DispensingContract {
 
         void hideProgress();
 
-        void setSpinnerData(List<LocTable> list);
+        void setDrugBillList(List<Drug> list);
+
+        void setPatientInfo(PatientInfoResponse response);
+
+        void setSingleDrugInfo(SingleDrugInfoResponse response);
 
     }
 
