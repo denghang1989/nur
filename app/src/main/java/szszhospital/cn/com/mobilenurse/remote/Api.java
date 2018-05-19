@@ -10,7 +10,9 @@ import retrofit2.http.GET;
 import retrofit2.http.QueryMap;
 import szszhospital.cn.com.mobilenurse.remote.response.Drug;
 import szszhospital.cn.com.mobilenurse.remote.response.LoginResponse;
+import szszhospital.cn.com.mobilenurse.remote.response.PatientInfoResponse;
 import szszhospital.cn.com.mobilenurse.remote.response.SchDateTimeResponse;
+import szszhospital.cn.com.mobilenurse.remote.response.SingleDrugInfoResponse;
 
 /**
  * 2016/11/2 11
@@ -32,10 +34,10 @@ public interface Api {
 
     //获病人信息
     @GET("web/Quality.Ajax.AndroidHttpResponse.cls")
-    Observable<Response<List<Drug>>> getPatientInfo(@QueryMap Map<String, String> option);
+    Observable<Response<PatientInfoResponse>> getPatientInfo(@QueryMap Map<String, String> option);
 
     //获病人信息
     @GET("web/Quality.Ajax.AndroidHttpResponse.cls")
-    Observable<Response<List<Drug>>> getSingleDrugInfo(@QueryMap Map<String, String> option);
+    Observable<Response<SingleDrugInfoResponse>> getSingleDrugInfo(@QueryMap Map<String, String> option);
 
 }

@@ -1,7 +1,5 @@
 package szszhospital.cn.com.mobilenurse.mvp.presenter;
 
-import android.util.Log;
-
 import java.util.List;
 
 import io.reactivex.Observer;
@@ -15,6 +13,8 @@ import szszhospital.cn.com.mobilenurse.remote.request.DrugBillRequest;
 import szszhospital.cn.com.mobilenurse.remote.request.PatientInfoRequest;
 import szszhospital.cn.com.mobilenurse.remote.request.SingleDrugInfoRequest;
 import szszhospital.cn.com.mobilenurse.remote.response.Drug;
+import szszhospital.cn.com.mobilenurse.remote.response.PatientInfoResponse;
+import szszhospital.cn.com.mobilenurse.remote.response.SingleDrugInfoResponse;
 
 public class DispensingPresenter extends RxPresenter<DispensingContract.View, DispensingContract.Model> implements DispensingContract.Presenter {
     private static final String TAG = "DispensingPresenter";
@@ -33,7 +33,7 @@ public class DispensingPresenter extends RxPresenter<DispensingContract.View, Di
 
                     @Override
                     public void onNext(List<Drug> drugs) {
-                        Log.d(TAG, "onNext: ");
+                        mView.setDrugBillList(drugs);
                     }
 
                     @Override
@@ -51,11 +51,58 @@ public class DispensingPresenter extends RxPresenter<DispensingContract.View, Di
 
     @Override
     public void getPatientInfo(PatientInfoRequest request) {
+        mView.showProgress();
+        ApiService.Instance().getService().getPatientInfo(obj2Map(request))
+                .compose(RxUtil.<Response<PatientInfoResponse>>rxSchedulerHelper())
+                .compose(RxUtil.<PatientInfoResponse>httpHandleResponse()).subscribe(new Observer<PatientInfoResponse>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+                addSubscribe(d);
+            }
 
+            @Override
+            public void onNext(PatientInfoResponse patientInfoResponse) {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                mView.hideProgress();
+            }
+
+            @Override
+            public void onComplete() {
+                mView.hideProgress();
+            }
+        });
     }
 
     @Override
     public void getSingleDrugInfo(SingleDrugInfoRequest request) {
+        mView.showProgress();
+        ApiService.Instance().getService().getSingleDrugInfo(obj2Map(request))
+                .compose(RxUtil.<Response<SingleDrugInfoResponse>>rxSchedulerHelper())
+                .compose(RxUtil.<SingleDrugInfoResponse>httpHandleResponse())
+                .subscribe(new Observer<SingleDrugInfoResponse>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        addSubscribe(d);
+                    }
 
+                    @Override
+                    public void onNext(SingleDrugInfoResponse singleDrugInfoResponse) {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mView.hideProgress();
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        mView.hideProgress();
+                    }
+                });
     }
 }
