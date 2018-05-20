@@ -5,6 +5,8 @@ import android.view.View;
 import android.widget.AdapterView;
 
 import com.blankj.utilcode.util.KeyboardUtils;
+import com.blankj.utilcode.util.StringUtils;
+import com.blankj.utilcode.util.ToastUtils;
 
 import java.util.List;
 
@@ -57,14 +59,27 @@ public class LoginActivity extends BasePresentActivity<ActivityLoginBinding, Log
     }
 
     public void onClick(View view) {
-        if (!mUser.isLogin()) {
-            mRequest.userName = mUser.getName();
-            mRequest.password = mUser.getPassword();
-            mPresenter.login(mRequest, mUser);
+        if (checkForm(mUser)) {
+            if (!mUser.isLogin()) {
+                mRequest.userName = mUser.getName();
+                mRequest.password = mUser.getPassword();
+                mPresenter.login(mRequest, mUser);
+            } else {
+                mSchDateTimeRequest.user = App.loginUser.UserDR;
+                mPresenter.clearCacheDateTime(mSchDateTimeRequest);
+            }
         } else {
-            mSchDateTimeRequest.user = App.loginUser.UserDR;
-            mPresenter.clearCacheDateTime(mSchDateTimeRequest);
+            ToastUtils.showShort("请输入账号和密码!");
         }
+
+    }
+
+    private boolean checkForm(User user) {
+        boolean result = true;
+        if (StringUtils.isTrimEmpty(user.getName()) || StringUtils.isTrimEmpty(user.getPassword())) {
+            result = false;
+        }
+        return result;
     }
 
     @Override
