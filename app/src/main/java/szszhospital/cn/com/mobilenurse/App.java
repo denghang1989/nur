@@ -1,7 +1,7 @@
 package szszhospital.cn.com.mobilenurse;
 
-import android.app.Application;
 import android.content.Context;
+import android.support.multidex.MultiDexApplication;
 
 import com.blankj.utilcode.util.Utils;
 import com.raizlabs.android.dbflow.config.FlowManager;
@@ -18,7 +18,7 @@ import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import szszhospital.cn.com.mobilenurse.remote.ApiService;
 import szszhospital.cn.com.mobilenurse.remote.model.LoginUser;
 
-public class App extends Application {
+public class App extends MultiDexApplication {
 
     static {
         //设置全局的Header构建器
