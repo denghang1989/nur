@@ -5,23 +5,19 @@ import szszhospital.cn.com.mobilenurse.base.BasePresenter;
 import szszhospital.cn.com.mobilenurse.base.BaseView;
 
 /**
- * 2018/5/20 09
+ * 2018/5/20 10
  */
-public interface DrugBillUnCompletedContract {
+public interface DrugBillCompletedContract {
+
+
     interface View extends BaseView {
-        void showProgress();
+    }
 
-        void hideProgress();
-
-        void showDrugBillList();
-
+    interface Presenter<T extends BaseView> extends BasePresenter<T> {
     }
 
     interface Model extends BaseModel {
-
     }
 
-    interface Presenter extends BasePresenter<View> {
-        void getDrugBillList();
-    }
+
 }

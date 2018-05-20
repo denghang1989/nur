@@ -25,7 +25,7 @@ public abstract class BasePresenterFragment<T extends ViewDataBinding, P extends
         }
     }
 
-    private P initPresenter() {
+    protected P initPresenter() {
         return null;
     }
 }
