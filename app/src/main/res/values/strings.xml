@@ -12,10 +12,12 @@
 
 
     <string-array name="drug_list">
-        <item>药品核对</item>
+        <item>未配药|DrugBillUnCompletedFragment</item>
+        <item>已配药|DrugBillCompletedFragment</item>
     </string-array>
 
     <string-array name="nurse_list">
-        <item>药品交接</item>
+        <item>未接收|DrugBillCompletedFragment</item>
+        <item>已接收|DrugBillReceiveFragment</item>
     </string-array>
 </resources>

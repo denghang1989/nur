@@ -1,5 +1,6 @@
 package szszhospital.cn.com.mobilenurse.fragemt;
 
+import szszhospital.cn.com.mobilenurse.R;
 import szszhospital.cn.com.mobilenurse.base.BaseScanFragment;
 
 /**
@@ -9,6 +10,10 @@ import szszhospital.cn.com.mobilenurse.base.BaseScanFragment;
 public class DrugBillCompletedFragment extends BaseScanFragment{
     @Override
     public int getLayoutId() {
-        return 0;
+        return R.layout.fragment_drug_completed;
+    }
+
+    public static DrugBillCompletedFragment newInstance() {
+        return new DrugBillCompletedFragment();
     }
 }
