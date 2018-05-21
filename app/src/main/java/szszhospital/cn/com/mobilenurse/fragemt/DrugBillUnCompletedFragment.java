@@ -7,7 +7,7 @@ import android.view.View;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import szszhospital.cn.com.mobilenurse.R;
-import szszhospital.cn.com.mobilenurse.activity.QRCodeActivity;
+import szszhospital.cn.com.mobilenurse.activity.DispensingActivity;
 import szszhospital.cn.com.mobilenurse.adapter.DrugBillListAdapter;
 import szszhospital.cn.com.mobilenurse.base.BasePresenterFragment;
 import szszhospital.cn.com.mobilenurse.databinding.FragmentUnDrugBinding;
@@ -75,7 +75,7 @@ public class DrugBillUnCompletedFragment extends BasePresenterFragment<FragmentU
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                QRCodeActivity.startQRCodeActivity(_mActivity, position + "");
+                DispensingActivity.startDispensingActivity(_mActivity, position + "");
             }
         });
     }

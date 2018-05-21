@@ -10,7 +10,7 @@ import java.util.List;
 
 import szszhospital.cn.com.mobilenurse.R;
 import szszhospital.cn.com.mobilenurse.adapter.DrugListAdapter;
-import szszhospital.cn.com.mobilenurse.base.BaseScanFragment;
+import szszhospital.cn.com.mobilenurse.base.BasePresenterFragment;
 import szszhospital.cn.com.mobilenurse.databinding.FragmentDispensingBinding;
 import szszhospital.cn.com.mobilenurse.mvp.contract.DispensingContract;
 import szszhospital.cn.com.mobilenurse.mvp.presenter.DispensingPresenter;
@@ -18,7 +18,7 @@ import szszhospital.cn.com.mobilenurse.remote.response.Drug;
 import szszhospital.cn.com.mobilenurse.remote.response.PatientInfoResponse;
 import szszhospital.cn.com.mobilenurse.remote.response.SingleDrugInfoResponse;
 
-public class DispensingFragment extends BaseScanFragment<FragmentDispensingBinding, DispensingPresenter> implements DispensingContract.View {
+public class DispensingFragment extends BasePresenterFragment<FragmentDispensingBinding, DispensingPresenter> implements DispensingContract.View {
     private static final String TAG      = "DispensingFragment";
     private static final String KEY_CODE = "code";
     private DrugListAdapter mAdapter;
@@ -51,11 +51,6 @@ public class DispensingFragment extends BaseScanFragment<FragmentDispensingBindi
         DispensingFragment fragment = new DispensingFragment();
         fragment.setArguments(args);
         return fragment;
-    }
-
-    @Override
-    protected void handlerCode(String code) {
-        super.handlerCode(code);
     }
 
     @Override

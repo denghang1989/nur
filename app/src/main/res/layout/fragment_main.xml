@@ -17,7 +17,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:tabIndicatorColor="@color/green"
             app:tabIndicatorHeight="1dp"
-            app:tabSelectedTextColor="@color/black"
+            app:tabSelectedTextColor="@color/green"
             app:tabTextColor="@color/gray">
 
         </android.support.design.widget.TabLayout>

@@ -33,6 +33,15 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".activity.DispensingActivity"/>
         <activity android:name=".activity.ScanQRCodeActivity"/>
+
+        <receiver
+            android:name=".broadcast.QRCodeBroadcastReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BARCODEDATA"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
