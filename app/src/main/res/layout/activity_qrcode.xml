@@ -19,14 +19,10 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:navigationIcon="@drawable/ic_black_32dp">
+            app:navigationIcon="@drawable/ic_black_32dp"
+            app:title="@string/drug_bill_qr_code"
+            app:titleTextColor="@color/white">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/drug_bill_qr_code"
-                android:textColor="@color/white"
-                android:textSize="18sp"/>
         </android.support.v7.widget.Toolbar>
 
         <android.support.v7.widget.CardView

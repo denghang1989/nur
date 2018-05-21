@@ -10,6 +10,7 @@ import com.tbruyelle.rxpermissions2.RxPermissions;
 import org.greenrobot.eventbus.EventBus;
 
 import io.reactivex.disposables.Disposable;
+import szszhospital.cn.com.mobilenurse.App;
 import szszhospital.cn.com.mobilenurse.R;
 import szszhospital.cn.com.mobilenurse.adapter.MainActivityAdapter;
 import szszhospital.cn.com.mobilenurse.base.BaseActivity;
@@ -32,6 +33,7 @@ public class MainActivity extends BaseActivity<ActiviyMainBinding> {
     protected void initView() {
         setSwipeBackEnable(false);
         mDataBinding.viewPager.setAdapter(mAdapter);
+        mDataBinding.toolbar.setTitle(App.loginUser.UserName + "，您好！");
     }
 
     @Override

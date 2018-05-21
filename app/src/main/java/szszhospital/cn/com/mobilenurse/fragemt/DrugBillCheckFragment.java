@@ -6,17 +6,17 @@ import szszhospital.cn.com.mobilenurse.databinding.FragmentSendDrugBinding;
 import szszhospital.cn.com.mobilenurse.mvp.contract.DrugBillSendContract;
 
 /**
- * 已发药
+ * 已核对发药单
  */
-public class DrugBillSendFragment extends BaseFragment<FragmentSendDrugBinding> implements DrugBillSendContract.View {
+public class DrugBillCheckFragment extends BaseFragment<FragmentSendDrugBinding> implements DrugBillSendContract.View {
 
     @Override
     public int getLayoutId() {
         return R.layout.fragment_send_drug;
     }
 
-    public static DrugBillSendFragment newInstance() {
-        return new DrugBillSendFragment();
+    public static DrugBillCheckFragment newInstance() {
+        return new DrugBillCheckFragment();
     }
 
     @Override

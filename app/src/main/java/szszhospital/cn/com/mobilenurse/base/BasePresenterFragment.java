@@ -5,7 +5,6 @@ import android.support.annotation.CallSuper;
 
 public abstract class BasePresenterFragment<T extends ViewDataBinding, P extends BasePresenter> extends BaseFragment<T> implements BaseView {
 
-    protected T mDataBinding;
     protected P mPresenter;
 
     @CallSuper

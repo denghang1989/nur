@@ -4,19 +4,20 @@ import szszhospital.cn.com.mobilenurse.base.BaseModel;
 import szszhospital.cn.com.mobilenurse.base.BasePresenter;
 import szszhospital.cn.com.mobilenurse.base.BaseView;
 
-/**
- * 2018/5/20 22
- */
-public interface DrugBillReceiveContract {
-
+public interface DrugBillSendContract {
     interface View extends BaseView {
-    }
+        void showProgress();
 
-    interface Presenter extends BasePresenter<View> {
+        void hideProgress();
+
+        void setDrugBillList();
+
     }
 
     interface Model extends BaseModel {
     }
 
-
+    interface Presenter extends BasePresenter<DrugBillSendContract.View> {
+        void getDrugBillList();
+    }
 }
