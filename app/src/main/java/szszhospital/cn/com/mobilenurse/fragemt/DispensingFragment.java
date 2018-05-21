@@ -1,5 +1,6 @@
 package szszhospital.cn.com.mobilenurse.fragemt;
 
+import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
@@ -18,7 +19,8 @@ import szszhospital.cn.com.mobilenurse.remote.response.PatientInfoResponse;
 import szszhospital.cn.com.mobilenurse.remote.response.SingleDrugInfoResponse;
 
 public class DispensingFragment extends BaseScanFragment<FragmentDispensingBinding, DispensingPresenter> implements DispensingContract.View {
-    private static final String TAG = "DispensingFragment";
+    private static final String TAG      = "DispensingFragment";
+    private static final String KEY_CODE = "code";
     private DrugListAdapter mAdapter;
 
     @Override
@@ -43,8 +45,12 @@ public class DispensingFragment extends BaseScanFragment<FragmentDispensingBindi
         mAdapter.addHeaderView(headView);
     }
 
-    public static DispensingFragment newInstance() {
-        return new DispensingFragment();
+    public static DispensingFragment newInstance(String code) {
+        Bundle args = new Bundle();
+        args.putString(KEY_CODE, code);
+        DispensingFragment fragment = new DispensingFragment();
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
@@ -69,7 +75,7 @@ public class DispensingFragment extends BaseScanFragment<FragmentDispensingBindi
 
     @Override
     public void setPatientInfo(PatientInfoResponse response) {
-        
+
     }
 
     @Override

@@ -1,11 +1,5 @@
 package szszhospital.cn.com.mobilenurse.fragemt;
 
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
-
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
-
 import szszhospital.cn.com.mobilenurse.R;
 import szszhospital.cn.com.mobilenurse.base.BasePresenterFragment;
 import szszhospital.cn.com.mobilenurse.databinding.FragmentUnDrugBinding;
@@ -17,6 +11,7 @@ import szszhospital.cn.com.mobilenurse.mvp.presenter.DrugBillUnCompletedPresente
  * 获取当前未配药完成的发药单列表(当前界面不需要扫描二维码)
  */
 public class DrugBillUnCompletedFragment extends BasePresenterFragment<FragmentUnDrugBinding, DrugBillUnCompletedPresenter> implements DrugBillUnCompletedContract.View {
+
     @Override
     public int getLayoutId() {
         return R.layout.fragment_un_drug;
@@ -32,7 +27,7 @@ public class DrugBillUnCompletedFragment extends BasePresenterFragment<FragmentU
 
     @Override
     public void hideProgress() {
-        mDataBinding.refreshLayout.finishRefresh();
+//        mDataBinding.refreshLayout.finishRefresh();
     }
 
     @Override
@@ -47,9 +42,9 @@ public class DrugBillUnCompletedFragment extends BasePresenterFragment<FragmentU
 
     @Override
     protected void initView() {
-        mDataBinding.unDrugListview.setLayoutManager(new LinearLayoutManager(_mActivity));
-        mDataBinding.unDrugListview.addItemDecoration(new DividerItemDecoration(_mActivity, DividerItemDecoration.HORIZONTAL));
-        mDataBinding.refreshLayout.setEnableLoadmore(false);
+//        mDataBinding.unDrugListview.setLayoutManager(new LinearLayoutManager(_mActivity));
+//        mDataBinding.unDrugListview.addItemDecoration(new DividerItemDecoration(_mActivity, DividerItemDecoration.HORIZONTAL));
+//        mDataBinding.refreshLayout.setEnableLoadmore(false);
     }
 
     @Override
@@ -59,12 +54,7 @@ public class DrugBillUnCompletedFragment extends BasePresenterFragment<FragmentU
 
     @Override
     protected void initEvent() {
-        mDataBinding.refreshLayout.setOnRefreshListener(new OnRefreshListener() {
-            @Override
-            public void onRefresh(RefreshLayout refreshlayout) {
-                initData();
-            }
-        });
+//        mDataBinding.refreshLayout.setOnRefreshListener(refreshlayout -> initData());
     }
 
 }

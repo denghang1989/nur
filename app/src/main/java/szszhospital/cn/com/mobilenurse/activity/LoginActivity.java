@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.AdapterView;
 
 import com.blankj.utilcode.util.KeyboardUtils;
+import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
 
@@ -34,6 +35,7 @@ public class LoginActivity extends BasePresentActivity<ActivityLoginBinding, Log
         super.init();
         mAdapter = new LoginSpinnerAdapter(this);
         mUser = new User();
+        mUser.setName(SPUtils.getInstance().getString("user_name"));
         mDataBinding.setUser(mUser);
         initLoginRequest();
         initSchDateTimeRequest();

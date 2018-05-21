@@ -10,13 +10,13 @@ import szszhospital.cn.com.mobilenurse.mvp.presenter.DrugBillReceivePresenterImp
  * 2018/5/20 01
  * 药品接受界面(需要扫描二维码)
  */
-public class DrugBillReceiveFragment extends BaseScanFragment<FragmentDrugReceiverBinding, DrugBillReceivePresenterImpl> implements DrugBillReceiveContract.View {
+public class DrugBillUnReceiveFragment extends BaseScanFragment<FragmentDrugReceiverBinding, DrugBillReceivePresenterImpl> implements DrugBillReceiveContract.View {
     @Override
     public int getLayoutId() {
         return R.layout.fragment_drug_receiver;
     }
 
-    public static DrugBillReceiveFragment newInstance() {
-        return new DrugBillReceiveFragment();
+    public static DrugBillUnReceiveFragment newInstance() {
+        return new DrugBillUnReceiveFragment();
     }
 }

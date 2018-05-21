@@ -9,15 +9,17 @@
     <string name="drug_detail">药品信息</string>
     <string name="select_loc">选择科室</string>
     <string name="drug_bill_qr_code">发药单二维码</string>
+    <string name="dispensing">配药</string>
 
 
     <string-array name="drug_list">
         <item>未配药|DrugBillUnCompletedFragment</item>
         <item>已配药|DrugBillCompletedFragment</item>
+        <item>已发药|DrugBillSendFragment</item>
     </string-array>
 
     <string-array name="nurse_list">
-        <item>未接收|DrugBillCompletedFragment</item>
-        <item>已接收|DrugBillReceiveFragment</item>
+        <item>未接收|DrugBillUnReceiveFragment</item>
+        <item>已接收|DrugBillSendFragment</item>
     </string-array>
 </resources>

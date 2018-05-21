@@ -1,5 +1,6 @@
 package szszhospital.cn.com.mobilenurse.mvp.presenter;
 
+import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
 
 import io.reactivex.Observer;
@@ -43,6 +44,7 @@ public class LoginPresenter extends RxPresenter<LoginContract.View, LoginContrac
                         mView.setSpinnerData(loginResponse.Locs);
                         mModel.save(loginResponse);
                         user.setLogin(true);
+                        SPUtils.getInstance().put("user_name", user.getName());
                     }
 
                     @Override
