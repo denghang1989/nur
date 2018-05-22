@@ -4,9 +4,9 @@ import szszhospital.cn.com.mobilenurse.base.BaseFragment;
 import szszhospital.cn.com.mobilenurse.db.ModuleTable;
 import szszhospital.cn.com.mobilenurse.fragemt.DrugBillCheckFragment;
 import szszhospital.cn.com.mobilenurse.fragemt.DrugBillCompletedFragment;
-import szszhospital.cn.com.mobilenurse.fragemt.DrugBillSendFragment;
+import szszhospital.cn.com.mobilenurse.fragemt.DrugBillHandoverFragment;
 import szszhospital.cn.com.mobilenurse.fragemt.DrugBillUnCompletedFragment;
-import szszhospital.cn.com.mobilenurse.fragemt.DrugBillUnReceiveFragment;
+import szszhospital.cn.com.mobilenurse.fragemt.DrugBillReceiveFragment;
 
 public class FragmentFactory {
 
@@ -19,11 +19,11 @@ public class FragmentFactory {
             case "DrugBillCompletedFragment": // 已配药
                 fragment = DrugBillCompletedFragment.newInstance();
                 break;
-            case "DrugBillUnReceiveFragment": // 未接受
-                fragment = DrugBillUnReceiveFragment.newInstance();
+            case "DrugBillReceiveFragment": // 未接受
+                fragment = DrugBillReceiveFragment.newInstance();
                 break;
-            case "DrugBillSendFragment": // 已发药
-                fragment = DrugBillSendFragment.newInstance();
+            case "DrugBillHandoverFragment": // 已发药
+                fragment = DrugBillHandoverFragment.newInstance();
                 break;
             case "DrugBillCheckFragment": // 核对
                 fragment = DrugBillCheckFragment.newInstance();

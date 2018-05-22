@@ -16,11 +16,11 @@
         <item>未配药|DrugBillUnCompletedFragment</item>
         <item>已配药|DrugBillCompletedFragment</item>
         <item>已核对|DrugBillCheckFragment</item>
-        <item>已发药|DrugBillSendFragment</item>
+        <item>已交接|DrugBillHandoverFragment</item>
     </string-array>
 
     <string-array name="nurse_list">
-        <item>未接收|DrugBillUnReceiveFragment</item>
-        <item>已接收|DrugBillSendFragment</item>
+        <item>未接收|DrugBillHandoverFragment</item>
+        <item>已接收|DrugBillReceiveFragment</item>
     </string-array>
 </resources>

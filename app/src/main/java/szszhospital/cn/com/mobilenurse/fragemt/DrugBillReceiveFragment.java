@@ -11,16 +11,16 @@ import szszhospital.cn.com.mobilenurse.remote.response.DrugBill;
 
 /**
  * 2018/5/20 01
- * 药品接受界面(需要扫描二维码)
+ * 药品已接受界面
  */
-public class DrugBillUnReceiveFragment extends BasePresenterFragment<FragmentDrugReceiverBinding, DrugBillPresenter> implements DrugBillContract.View {
+public class DrugBillReceiveFragment extends BasePresenterFragment<FragmentDrugReceiverBinding, DrugBillPresenter> implements DrugBillContract.View {
     @Override
     public int getLayoutId() {
         return R.layout.fragment_drug_receiver;
     }
 
-    public static DrugBillUnReceiveFragment newInstance() {
-        return new DrugBillUnReceiveFragment();
+    public static DrugBillReceiveFragment newInstance() {
+        return new DrugBillReceiveFragment();
     }
 
     @Override
