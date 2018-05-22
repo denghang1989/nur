@@ -19,7 +19,7 @@ public class DrugListAdapter extends BaseQuickAdapter<DispDetailResponse, BaseVi
     protected void convert(BaseViewHolder helper, DispDetailResponse item) {
         helper.setText(R.id.drugName, item.InciDesc)
                 .setText(R.id.dispQty, item.Spec + "   " + item.DispQty)
-                .setText(R.id.dispAuditStatusDesc, item.ConFirmFlag);
+                .setText(R.id.InciCode, item.InciCode);
         switch (item.ConFirmFlag) {
             case "A":
                 break;
