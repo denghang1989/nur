@@ -21,7 +21,7 @@ import szszhospital.cn.com.mobilenurse.mvp.presenter.DispDetailPresenter;
 import szszhospital.cn.com.mobilenurse.remote.response.DispDetailResponse;
 
 /**
- * 配药界面Fragment
+ * 配药界面明细的Fragment
  */
 public class PrescriptionFragment extends BasePresenterFragment<FragmentDispensingBinding, DispDetailPresenter> implements DispDetailContract.View {
     private static final String TAG            = "PrescriptionFragment";

@@ -1,14 +1,17 @@
 package szszhospital.cn.com.mobilenurse.fragemt;
 
+import java.util.List;
+
 import szszhospital.cn.com.mobilenurse.R;
 import szszhospital.cn.com.mobilenurse.base.BaseFragment;
 import szszhospital.cn.com.mobilenurse.databinding.FragmentSendDrugBinding;
-import szszhospital.cn.com.mobilenurse.mvp.contract.DrugBillSendContract;
+import szszhospital.cn.com.mobilenurse.mvp.contract.DrugBillContract;
+import szszhospital.cn.com.mobilenurse.remote.response.DrugBill;
 
 /**
  * 已发药
  */
-public class DrugBillSendFragment extends BaseFragment<FragmentSendDrugBinding> implements DrugBillSendContract.View {
+public class DrugBillSendFragment extends BaseFragment<FragmentSendDrugBinding> implements DrugBillContract.View {
 
     @Override
     public int getLayoutId() {
@@ -30,7 +33,7 @@ public class DrugBillSendFragment extends BaseFragment<FragmentSendDrugBinding> 
     }
 
     @Override
-    public void setDrugBillList() {
+    public void showDrugBillList(List<DrugBill> list) {
 
     }
 }
