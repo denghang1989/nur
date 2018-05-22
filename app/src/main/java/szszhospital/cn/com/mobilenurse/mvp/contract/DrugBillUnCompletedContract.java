@@ -1,8 +1,12 @@
 package szszhospital.cn.com.mobilenurse.mvp.contract;
 
+import java.util.List;
+
 import szszhospital.cn.com.mobilenurse.base.BaseModel;
 import szszhospital.cn.com.mobilenurse.base.BasePresenter;
 import szszhospital.cn.com.mobilenurse.base.BaseView;
+import szszhospital.cn.com.mobilenurse.remote.request.DrugBillListRequest;
+import szszhospital.cn.com.mobilenurse.remote.response.DrugBill;
 
 /**
  * 2018/5/20 09
@@ -13,7 +17,7 @@ public interface DrugBillUnCompletedContract {
 
         void hideProgress();
 
-        void showDrugBillList();
+        void showDrugBillList(List<DrugBill> list);
 
     }
 
@@ -22,6 +26,6 @@ public interface DrugBillUnCompletedContract {
     }
 
     interface Presenter extends BasePresenter<View> {
-        void getDrugBillList();
+        void getDrugBillList(DrugBillListRequest request);
     }
 }

@@ -8,6 +8,8 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
+import java.util.List;
+
 import szszhospital.cn.com.mobilenurse.R;
 import szszhospital.cn.com.mobilenurse.activity.QRCodeActivity;
 import szszhospital.cn.com.mobilenurse.adapter.DrugBillListAdapter;
@@ -15,6 +17,7 @@ import szszhospital.cn.com.mobilenurse.base.BasePresenterFragment;
 import szszhospital.cn.com.mobilenurse.databinding.FragmentDrugCompletedBinding;
 import szszhospital.cn.com.mobilenurse.mvp.contract.DrugBillUnCompletedContract;
 import szszhospital.cn.com.mobilenurse.mvp.presenter.DrugBillCompletedPresenterImpl;
+import szszhospital.cn.com.mobilenurse.remote.response.DrugBill;
 
 /**
  * 2018/5/20 00
@@ -59,7 +62,7 @@ public class DrugBillCompletedFragment extends BasePresenterFragment<FragmentDru
     }
 
     @Override
-    public void showDrugBillList() {
+    public void showDrugBillList(List<DrugBill> list) {
 
     }
 

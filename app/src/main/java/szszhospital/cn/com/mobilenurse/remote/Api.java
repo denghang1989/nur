@@ -1,12 +1,15 @@
 package szszhospital.cn.com.mobilenurse.remote;
 
 
+import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Observable;
 import retrofit2.Response;
 import retrofit2.http.GET;
 import retrofit2.http.QueryMap;
+import szszhospital.cn.com.mobilenurse.remote.response.DispDetailResponse;
+import szszhospital.cn.com.mobilenurse.remote.response.DrugBill;
 import szszhospital.cn.com.mobilenurse.remote.response.DrugResponse;
 import szszhospital.cn.com.mobilenurse.remote.response.LoginResponse;
 import szszhospital.cn.com.mobilenurse.remote.response.PatientInfoResponse;
@@ -38,5 +41,13 @@ public interface Api {
     //获病人信息
     @GET("web/Quality.Ajax.AndroidHttpResponse.cls")
     Observable<Response<SingleDrugInfoResponse>> getSingleDrugInfo(@QueryMap Map<String, String> option);
+
+    //获取整个发药单信息
+    @GET("web/Quality.Ajax.AndroidHttpResponse.cls")
+    Observable<Response<List<DrugBill>>> getDrugBillList(@QueryMap Map<String, String> option);
+
+    //获取发药单明细
+    @GET("web/Quality.Ajax.AndroidHttpResponse.cls")
+    Observable<Response<List<DispDetailResponse>>> getDispDetailList(@QueryMap Map<String, String> option);
 
 }

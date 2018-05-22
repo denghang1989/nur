@@ -29,7 +29,8 @@ import szszhospital.cn.com.mobilenurse.fragemt.PrescriptionFragment;
 import szszhospital.cn.com.mobilenurse.mvp.contract.DispensingContract;
 import szszhospital.cn.com.mobilenurse.mvp.presenter.DispensingPresenter;
 import szszhospital.cn.com.mobilenurse.remote.model.Patient;
-import szszhospital.cn.com.mobilenurse.remote.request.DrugBillRequest;
+import szszhospital.cn.com.mobilenurse.remote.request.DispDetailListRequest;
+import szszhospital.cn.com.mobilenurse.remote.request.DrugBillListRequest;
 import szszhospital.cn.com.mobilenurse.remote.response.Drug;
 import szszhospital.cn.com.mobilenurse.remote.response.PatientInfoResponse;
 import szszhospital.cn.com.mobilenurse.remote.response.SingleDrugInfoResponse;
@@ -38,14 +39,20 @@ import szszhospital.cn.com.mobilenurse.remote.response.SingleDrugInfoResponse;
  * 配药界面Activity
  */
 public class PrescriptionActivity extends BasePresentActivity<ActivityPrescriptionBinding, DispensingPresenter> implements DispensingContract.View {
-    private static final String TAG              = "PrescriptionActivity";
-    private static final String KEY_PRESCRIPTION = "prescription";
-    private String             mPrescription;
-    private DrugBillRequest    mRequest;
-    private PatientListAdapter mAdapter;
+    private static final String TAG         = "PrescriptionActivity";
+    private static final String KEY_AUDITDR = "AuditDr";
+    private String                mAuditDr;
+    private DispDetailListRequest mRequest;
+    private PatientListAdapter    mAdapter;
     private Set<String>                      mSet         = new HashSet<>();
     private HashMap<String, ArrayList<Drug>> mHashMap     = new HashMap<>();
     private List<Patient>                    mPatientList = new ArrayList<>();
+
+    public static void startPrescriptionActivity(Activity context, String code) {
+        Intent intent = new Intent(context, PrescriptionActivity.class);
+        intent.putExtra(KEY_AUDITDR, code);
+        context.startActivity(intent);
+    }
 
     @Override
     protected int getLayoutId() {
@@ -56,28 +63,9 @@ public class PrescriptionActivity extends BasePresentActivity<ActivityPrescripti
     protected void init() {
         super.init();
         Intent intent = getIntent();
-        mPrescription = intent.getStringExtra(KEY_PRESCRIPTION);
-        mRequest = new DrugBillRequest();
-        mRequest.userId = App.loginUser.UserID;
+        mAuditDr = intent.getStringExtra(KEY_AUDITDR);
+        mRequest = new DispDetailListRequest();
         mAdapter = new PatientListAdapter(R.layout.item_patient);
-    }
-
-    @Override
-    protected void initData() {
-        super.initData();
-        if (!StringUtils.isTrimEmpty(mPrescription)) {
-            getDispInfo(mPrescription);
-        }
-    }
-
-    private void getDispInfo(String code) {
-        mRequest.dispNo = code;
-        mPresenter.getDispInfo(mRequest);
-    }
-
-    @Override
-    protected DispensingPresenter initPresenter() {
-        return new DispensingPresenter();
     }
 
     @Override
@@ -89,10 +77,22 @@ public class PrescriptionActivity extends BasePresentActivity<ActivityPrescripti
         mDataBinding.recyclerView.setAdapter(mAdapter);
     }
 
-    public static void startPrescriptionActivity(Activity context, String code) {
-        Intent intent = new Intent(context, PrescriptionActivity.class);
-        intent.putExtra(KEY_PRESCRIPTION, code);
-        context.startActivity(intent);
+    @Override
+    protected void initData() {
+        super.initData();
+        if (!StringUtils.isTrimEmpty(mAuditDr)) {
+            getDispInfo(mAuditDr);
+        }
+    }
+
+    private void getDispInfo(String code) {
+        mRequest.AuditDr = code;
+        mPresenter.getDispInfo(mRequest);
+    }
+
+    @Override
+    protected DispensingPresenter initPresenter() {
+        return new DispensingPresenter();
     }
 
     @Override
