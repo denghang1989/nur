@@ -1,6 +1,6 @@
 package szszhospital.cn.com.mobilenurse.mvp.presenter;
 
-import java.util.List;
+import android.util.Log;
 
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
@@ -12,7 +12,7 @@ import szszhospital.cn.com.mobilenurse.remote.RxUtil;
 import szszhospital.cn.com.mobilenurse.remote.request.DrugBillRequest;
 import szszhospital.cn.com.mobilenurse.remote.request.PatientInfoRequest;
 import szszhospital.cn.com.mobilenurse.remote.request.SingleDrugInfoRequest;
-import szszhospital.cn.com.mobilenurse.remote.response.Drug;
+import szszhospital.cn.com.mobilenurse.remote.response.DrugResponse;
 import szszhospital.cn.com.mobilenurse.remote.response.PatientInfoResponse;
 import szszhospital.cn.com.mobilenurse.remote.response.SingleDrugInfoResponse;
 
@@ -23,21 +23,23 @@ public class DispensingPresenter extends RxPresenter<DispensingContract.View, Di
     public void getDispInfo(DrugBillRequest request) {
         mView.showProgress();
         ApiService.Instance().getService().getDispInfo(obj2Map(request))
-                .compose(RxUtil.<Response<List<Drug>>>rxSchedulerHelper())
-                .compose(RxUtil.<List<Drug>>httpHandleResponse())
-                .subscribe(new Observer<List<Drug>>() {
+                .compose(RxUtil.<Response<DrugResponse>>rxSchedulerHelper())
+                .compose(RxUtil.<DrugResponse>httpHandleResponse())
+                .subscribe(new Observer<DrugResponse>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                         addSubscribe(d);
                     }
 
                     @Override
-                    public void onNext(List<Drug> drugs) {
-                        mView.setDrugBillList(drugs);
+                    public void onNext(DrugResponse response) {
+                        Log.d(TAG, "onNext: " + response);
+                        mView.setDrugBillList(response.rows);
                     }
 
                     @Override
                     public void onError(Throwable e) {
+                        e.printStackTrace();
                         mView.hideProgress();
                     }
 

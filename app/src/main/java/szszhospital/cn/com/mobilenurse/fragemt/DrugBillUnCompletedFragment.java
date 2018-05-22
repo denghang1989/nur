@@ -75,6 +75,7 @@ public class DrugBillUnCompletedFragment extends BasePresenterFragment<FragmentU
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                //判断一下当前配药单的状态>未发药的状态
                 DispensingActivity.startDispensingActivity(_mActivity, position + "");
             }
         });

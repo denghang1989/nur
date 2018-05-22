@@ -1,7 +1,11 @@
 package szszhospital.cn.com.mobilenurse.remote.response;
 
-public class Drug {
+import android.os.Parcel;
+import android.os.Parcelable;
 
+import java.io.Serializable;
+
+public class Drug implements Parcelable, Serializable {
 
     /**
      * wardDesc : 呼吸病科护士站
@@ -34,4 +38,81 @@ public class Drug {
     public String dispAuditStatusDesc;
     public String oeoreId;
     public String prefDispStatus;
+
+
+    @Override
+    public String toString() {
+        return "Drug{" +
+                "wardDesc='" + wardDesc + '\'' +
+                ", bedCode='" + bedCode + '\'' +
+                ", patName='" + patName + '\'' +
+                ", drugName='" + drugName + '\'' +
+                ", dispQty='" + dispQty + '\'' +
+                ", doseQty='" + doseQty + '\'' +
+                ", regNo='" + regNo + '\'' +
+                ", inciId='" + inciId + '\'' +
+                ", drugCode='" + drugCode + '\'' +
+                ", dispAuditId='" + dispAuditId + '\'' +
+                ", dispAuditStatus='" + dispAuditStatus + '\'' +
+                ", dispAuditStatusDesc='" + dispAuditStatusDesc + '\'' +
+                ", oeoreId='" + oeoreId + '\'' +
+                ", prefDispStatus='" + prefDispStatus + '\'' +
+                '}';
+    }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.wardDesc);
+        dest.writeString(this.bedCode);
+        dest.writeString(this.patName);
+        dest.writeString(this.drugName);
+        dest.writeString(this.dispQty);
+        dest.writeString(this.doseQty);
+        dest.writeString(this.regNo);
+        dest.writeString(this.inciId);
+        dest.writeString(this.drugCode);
+        dest.writeString(this.dispAuditId);
+        dest.writeString(this.dispAuditStatus);
+        dest.writeString(this.dispAuditStatusDesc);
+        dest.writeString(this.oeoreId);
+        dest.writeString(this.prefDispStatus);
+    }
+
+    public Drug() {
+    }
+
+    protected Drug(Parcel in) {
+        this.wardDesc = in.readString();
+        this.bedCode = in.readString();
+        this.patName = in.readString();
+        this.drugName = in.readString();
+        this.dispQty = in.readString();
+        this.doseQty = in.readString();
+        this.regNo = in.readString();
+        this.inciId = in.readString();
+        this.drugCode = in.readString();
+        this.dispAuditId = in.readString();
+        this.dispAuditStatus = in.readString();
+        this.dispAuditStatusDesc = in.readString();
+        this.oeoreId = in.readString();
+        this.prefDispStatus = in.readString();
+    }
+
+    public static final Creator<Drug> CREATOR = new Creator<Drug>() {
+        @Override
+        public Drug createFromParcel(Parcel source) {
+            return new Drug(source);
+        }
+
+        @Override
+        public Drug[] newArray(int size) {
+            return new Drug[size];
+        }
+    };
 }

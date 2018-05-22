@@ -1,6 +1,5 @@
 package szszhospital.cn.com.mobilenurse.activity;
 
-import android.content.Intent;
 import android.view.View;
 import android.widget.AdapterView;
 
@@ -112,7 +111,8 @@ public class LoginActivity extends BasePresentActivity<ActivityLoginBinding, Log
 
     @Override
     public void goToMainActivity() {
-        startActivity(new Intent(this, MainActivity.class));
+        //startActivity(new Intent(this, MainActivity.class));
+        PrescriptionActivity.startPrescriptionActivity(this, "");
         finish();
     }
 

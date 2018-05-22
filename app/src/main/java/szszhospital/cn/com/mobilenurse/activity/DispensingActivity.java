@@ -7,6 +7,9 @@ import szszhospital.cn.com.mobilenurse.R;
 import szszhospital.cn.com.mobilenurse.base.BaseActivity;
 import szszhospital.cn.com.mobilenurse.fragemt.DispensingFragment;
 
+/**
+ * 配药界面Activity
+ */
 public class DispensingActivity extends BaseActivity {
     private static final String KEY_PRESCRIPTION = "prescription";
     private String mPrescription;
