@@ -9,6 +9,9 @@ public class Patient {
     public String patName;
     public String regNo;
 
+    public String sex;
+    public String age;
+
 
     @Override
     public boolean equals(Object o) {

@@ -68,7 +68,7 @@ public class DispensingFragment extends BasePresenterFragment<FragmentDispensing
 
     @Override
     public void setDrugBillList(List<Drug> list) {
-        mAdapter.setNewData(list);
+        //mAdapter.setNewData(list);
     }
 
     @Override

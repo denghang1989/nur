@@ -67,4 +67,5 @@ dependencies {
     implementation 'com.annimon:stream:1.2.0'
     implementation 'com.android.support:multidex:1.0.3'
     implementation 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.5@aar'
+    implementation 'com.annimon:stream:1.2.0'
 }
