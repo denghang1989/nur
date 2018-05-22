@@ -15,15 +15,15 @@ import szszhospital.cn.com.mobilenurse.activity.QRCodeActivity;
 import szszhospital.cn.com.mobilenurse.adapter.DrugBillListAdapter;
 import szszhospital.cn.com.mobilenurse.base.BasePresenterFragment;
 import szszhospital.cn.com.mobilenurse.databinding.FragmentDrugCompletedBinding;
-import szszhospital.cn.com.mobilenurse.mvp.contract.DrugBillUnCompletedContract;
-import szszhospital.cn.com.mobilenurse.mvp.presenter.DrugBillCompletedPresenterImpl;
+import szszhospital.cn.com.mobilenurse.mvp.contract.DrugBillContract;
+import szszhospital.cn.com.mobilenurse.mvp.presenter.DrugBillPresenter;
 import szszhospital.cn.com.mobilenurse.remote.response.DrugBill;
 
 /**
  * 2018/5/20 00
  * 获取当前配药完成的发药单
  */
-public class DrugBillCompletedFragment extends BasePresenterFragment<FragmentDrugCompletedBinding, DrugBillCompletedPresenterImpl> implements DrugBillUnCompletedContract.View {
+public class DrugBillCompletedFragment extends BasePresenterFragment<FragmentDrugCompletedBinding, DrugBillPresenter> implements DrugBillContract.View {
 
     private DrugBillListAdapter mAdapter;
 

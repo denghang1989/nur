@@ -30,10 +30,14 @@
             />
         <activity
             android:name=".activity.QRCodeActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.DispensingActivity"/>
-        <activity android:name=".activity.ScanQRCodeActivity"/>
-        <activity android:name=".activity.PrescriptionActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Transparent"/>
+        <activity
+            android:name=".activity.ScanQRCodeActivity"
+            android:theme="@style/AppTheme.Transparent"
+            />
+        <activity
+            android:name=".activity.PrescriptionActivity"
             android:theme="@style/AppTheme.Transparent"
             />
 

@@ -11,8 +11,8 @@ import szszhospital.cn.com.mobilenurse.activity.PrescriptionActivity;
 import szszhospital.cn.com.mobilenurse.adapter.DrugBillListAdapter;
 import szszhospital.cn.com.mobilenurse.base.BasePresenterFragment;
 import szszhospital.cn.com.mobilenurse.databinding.FragmentUnDrugBinding;
-import szszhospital.cn.com.mobilenurse.mvp.contract.DrugBillUnCompletedContract;
-import szszhospital.cn.com.mobilenurse.mvp.presenter.DrugBillUnCompletedPresenter;
+import szszhospital.cn.com.mobilenurse.mvp.contract.DrugBillContract;
+import szszhospital.cn.com.mobilenurse.mvp.presenter.DrugBillPresenter;
 import szszhospital.cn.com.mobilenurse.remote.request.DrugBillListRequest;
 import szszhospital.cn.com.mobilenurse.remote.response.DrugBill;
 
@@ -20,7 +20,7 @@ import szszhospital.cn.com.mobilenurse.remote.response.DrugBill;
  * 2018/5/20 00
  * 获取当前未配药完成的发药单列表(当前界面不需要扫描二维码)
  */
-public class DrugBillUnCompletedFragment extends BasePresenterFragment<FragmentUnDrugBinding, DrugBillUnCompletedPresenter> implements DrugBillUnCompletedContract.View {
+public class DrugBillUnCompletedFragment extends BasePresenterFragment<FragmentUnDrugBinding, DrugBillPresenter> implements DrugBillContract.View {
     private static final String TAG = "DrugBillUnCompletedFrag";
     private DrugBillListAdapter mAdapter;
     private DrugBillListRequest mRequest;
@@ -59,8 +59,8 @@ public class DrugBillUnCompletedFragment extends BasePresenterFragment<FragmentU
     }
 
     @Override
-    protected DrugBillUnCompletedPresenter initPresenter() {
-        return new DrugBillUnCompletedPresenter();
+    protected DrugBillPresenter initPresenter() {
+        return new DrugBillPresenter();
     }
 
     @Override

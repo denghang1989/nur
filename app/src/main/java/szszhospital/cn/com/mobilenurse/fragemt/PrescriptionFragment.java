@@ -24,7 +24,7 @@ import szszhospital.cn.com.mobilenurse.remote.response.DispDetailResponse;
  * 配药界面Fragment
  */
 public class PrescriptionFragment extends BasePresenterFragment<FragmentDispensingBinding, DispDetailPresenter> implements DispDetailContract.View {
-    private static final String TAG            = "DispensingFragment";
+    private static final String TAG            = "PrescriptionFragment";
     private static final String KEY_DATA       = "data";
     private static final String KEY_PATIENT_NO = "key_patient_no";
     private DrugListAdapter mAdapter;

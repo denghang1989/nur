@@ -5,7 +5,7 @@ import java.util.List;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 import szszhospital.cn.com.mobilenurse.base.RxPresenter;
-import szszhospital.cn.com.mobilenurse.mvp.contract.DrugBillUnCompletedContract;
+import szszhospital.cn.com.mobilenurse.mvp.contract.DrugBillContract;
 import szszhospital.cn.com.mobilenurse.remote.ApiService;
 import szszhospital.cn.com.mobilenurse.remote.RxUtil;
 import szszhospital.cn.com.mobilenurse.remote.request.DrugBillListRequest;
@@ -14,7 +14,7 @@ import szszhospital.cn.com.mobilenurse.remote.response.DrugBill;
 /**
  * 2018/5/20 09
  */
-public class DrugBillUnCompletedPresenter extends RxPresenter<DrugBillUnCompletedContract.View, DrugBillUnCompletedContract.Model> implements DrugBillUnCompletedContract.Presenter {
+public class DrugBillPresenter extends RxPresenter<DrugBillContract.View, DrugBillContract.Model> implements DrugBillContract.Presenter {
 
     @Override
     public void getDrugBillList(DrugBillListRequest request) {

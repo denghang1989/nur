@@ -11,7 +11,7 @@ import szszhospital.cn.com.mobilenurse.remote.response.DrugBill;
 /**
  * 2018/5/20 09
  */
-public interface DrugBillUnCompletedContract {
+public interface DrugBillContract {
     interface View extends BaseView {
         void showProgress();
 
