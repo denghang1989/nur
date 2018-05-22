@@ -33,7 +33,9 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".activity.DispensingActivity"/>
         <activity android:name=".activity.ScanQRCodeActivity"/>
-        <activity android:name=".activity.PrescriptionActivity"/>
+        <activity android:name=".activity.PrescriptionActivity"
+            android:theme="@style/AppTheme.Transparent"
+            />
 
         <receiver
             android:name=".broadcast.QRCodeBroadcastReceiver"

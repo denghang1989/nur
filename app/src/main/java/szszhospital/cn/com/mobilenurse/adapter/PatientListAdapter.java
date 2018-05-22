@@ -25,10 +25,10 @@ public class PatientListAdapter extends BaseQuickAdapter<Patient, BaseViewHolder
         int position = helper.getAdapterPosition();
         if (position == selectPosition) {
             helper.setVisible(R.id.select, true);
-            helper.setBackgroundRes(R.id.patient, R.color.gray);
+            helper.setBackgroundRes(R.id.patient, R.color.white);
         } else {
             helper.setVisible(R.id.select, false);
-            helper.setBackgroundRes(R.id.patient, R.color.white);
+            helper.setBackgroundRes(R.id.patient, R.color.transparent);
         }
     }
 }

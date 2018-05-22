@@ -9,4 +9,5 @@
     <color name="white">@android:color/white</color>
     <color name="gray">@android:color/darker_gray</color>
     <color name="red">@android:color/holo_red_light</color>
+    <color name="lightGray">#F2F6FC</color>
 </resources>

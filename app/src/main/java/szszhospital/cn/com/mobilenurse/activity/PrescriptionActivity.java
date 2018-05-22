@@ -6,10 +6,8 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.View;
 
 import com.blankj.utilcode.util.StringUtils;
-import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -85,7 +83,7 @@ public class PrescriptionActivity extends BasePresentActivity<ActivityPrescripti
     @Override
     protected void initView() {
         super.initView();
-        loadRootFragment(R.id.container, PrescriptionFragment.newInstance(null));
+        loadRootFragment(R.id.container, PrescriptionFragment.newInstance(null, null));
         mDataBinding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
         mDataBinding.recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         mDataBinding.recyclerView.setAdapter(mAdapter);
@@ -100,13 +98,12 @@ public class PrescriptionActivity extends BasePresentActivity<ActivityPrescripti
     @Override
     protected void initEvent() {
         super.initEvent();
-        mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                mAdapter.setSelectPosition(position);
-                switchPatient(mAdapter.getItem(position).regNo);
-            }
+        mAdapter.setOnItemClickListener((adapter, view, position) -> {
+            mAdapter.setSelectPosition(position);
+            switchPatient(mAdapter.getItem(position).regNo);
         });
+
+        mDataBinding.sendDrug.setNavigationOnClickListener(v -> finish());
     }
 
     @Override
@@ -140,7 +137,6 @@ public class PrescriptionActivity extends BasePresentActivity<ActivityPrescripti
 
     @Override
     public void setDrugBillList(List<Drug> list) {
-        clearData();
         for (Drug drug : list) {
             mSet.add(drug.regNo);
         }
@@ -170,12 +166,6 @@ public class PrescriptionActivity extends BasePresentActivity<ActivityPrescripti
         switchPatient(mPatientList.get(0).regNo);
     }
 
-    private void clearData() {
-        mSet.clear();
-        mHashMap.clear();
-        mPatientList.clear();
-    }
-
     @Override
     public void setPatientInfo(PatientInfoResponse response) {
 
@@ -188,6 +178,6 @@ public class PrescriptionActivity extends BasePresentActivity<ActivityPrescripti
 
     public void switchPatient(String patientNo) {
         ArrayList<Drug> drugList = mHashMap.get(patientNo);
-        replaceFragment(PrescriptionFragment.newInstance(drugList), false);
+        replaceFragment(PrescriptionFragment.newInstance(drugList, patientNo), false);
     }
 }

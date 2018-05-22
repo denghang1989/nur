@@ -13,19 +13,19 @@ public class FragmentFactory {
     public static BaseFragment newInstance(ModuleTable moduleTable) {
         BaseFragment fragment = null;
         switch (moduleTable.className) {
-            case "DrugBillUnCompletedFragment":
+            case "DrugBillUnCompletedFragment": //未配药
                 fragment = DrugBillUnCompletedFragment.newInstance();
                 break;
-            case "DrugBillCompletedFragment":
+            case "DrugBillCompletedFragment": // 已配药
                 fragment = DrugBillCompletedFragment.newInstance();
                 break;
-            case "DrugBillUnReceiveFragment":
+            case "DrugBillUnReceiveFragment": // 未接受
                 fragment = DrugBillUnReceiveFragment.newInstance();
                 break;
-            case "DrugBillSendFragment":
+            case "DrugBillSendFragment": // 已发药
                 fragment = DrugBillSendFragment.newInstance();
                 break;
-            case "DrugBillCheckFragment":
+            case "DrugBillCheckFragment": // 核对
                 fragment = DrugBillCheckFragment.newInstance();
                 break;
         }
