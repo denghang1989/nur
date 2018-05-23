@@ -17,4 +17,11 @@ public class DrugBill {
     public String DispType;
     public String DispDateTime;
     public String DispUser;
+
+
+    /**
+     * DispTypeCode : KFY
+     */
+
+    public String DispTypeCode;
 }
