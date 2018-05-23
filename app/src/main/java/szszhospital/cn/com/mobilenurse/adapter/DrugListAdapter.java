@@ -7,7 +7,7 @@ import szszhospital.cn.com.mobilenurse.R;
 import szszhospital.cn.com.mobilenurse.remote.response.DispDetailResponse;
 
 /**
- * 2018/5/19 16
+ * 2018/5/19 16  ""-未配药;A-已配;C-核对;T-交接;R-接收
  */
 public class DrugListAdapter extends BaseQuickAdapter<DispDetailResponse, BaseViewHolder> {
 
@@ -18,12 +18,14 @@ public class DrugListAdapter extends BaseQuickAdapter<DispDetailResponse, BaseVi
     @Override
     protected void convert(BaseViewHolder helper, DispDetailResponse item) {
         helper.setText(R.id.drugName, item.InciDesc)
-                .setText(R.id.dispQty, item.Spec + "   " + item.DispQty)
-                .setText(R.id.InciCode, item.InciCode);
+                .setText(R.id.dispQty, "数量：" + item.DispQty + "   规格：" + item.Spec)
+                .setText(R.id.InciCode, "药品编码：" + item.InciCode);
         switch (item.ConFirmFlag) {
-            case "A":
+            case "":
+                helper.setVisible(R.id.icon_flag, false);
                 break;
-            case "N":
+            case "A":
+                helper.setVisible(R.id.icon_flag, true);
                 break;
         }
     }

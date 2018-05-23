@@ -28,8 +28,9 @@ import szszhospital.cn.com.mobilenurse.remote.response.DispDetailResponse;
  * 配药明细界面Activity
  */
 public class PrescriptionActivity extends BasePresentActivity<ActivityPrescriptionBinding, DispDetailListPresenter> implements DispDetailListContract.View {
-    private static final String TAG         = "PrescriptionActivity";
-    private static final String KEY_AUDITDR = "AuditDr";
+    private static final String TAG          = "PrescriptionActivity";
+    private static final String KEY_AUDITDR  = "AuditDr";
+    public static final  int    REQUEST_CODE = 200;
     private String                mAuditDr;
     private DispDetailListRequest mRequest;
     private PatientListAdapter    mAdapter;
@@ -38,7 +39,7 @@ public class PrescriptionActivity extends BasePresentActivity<ActivityPrescripti
     public static void startPrescriptionActivity(Activity context, String code) {
         Intent intent = new Intent(context, PrescriptionActivity.class);
         intent.putExtra(KEY_AUDITDR, code);
-        context.startActivity(intent);
+        context.startActivityForResult(intent, REQUEST_CODE);
     }
 
     @Override

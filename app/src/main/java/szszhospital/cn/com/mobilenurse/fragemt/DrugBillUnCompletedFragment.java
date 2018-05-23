@@ -1,5 +1,7 @@
 package szszhospital.cn.com.mobilenurse.fragemt;
 
+import android.content.Intent;
+
 import szszhospital.cn.com.mobilenurse.activity.PrescriptionActivity;
 
 /**
@@ -7,6 +9,8 @@ import szszhospital.cn.com.mobilenurse.activity.PrescriptionActivity;
  * 获取当前未配药完成的发药单列表(当前界面不需要扫描二维码)
  */
 public class DrugBillUnCompletedFragment extends BaseDrugBillFragment {
+
+    public static final int REQUEST_CODE = 200;
 
     public static DrugBillUnCompletedFragment newInstance() {
         return new DrugBillUnCompletedFragment();
@@ -27,4 +31,11 @@ public class DrugBillUnCompletedFragment extends BaseDrugBillFragment {
         });
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE) {
+            initData();
+        }
+    }
 }

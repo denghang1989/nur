@@ -8,6 +8,7 @@ import io.reactivex.Observable;
 import retrofit2.Response;
 import retrofit2.http.GET;
 import retrofit2.http.QueryMap;
+import szszhospital.cn.com.mobilenurse.remote.response.AuditDetailResponse;
 import szszhospital.cn.com.mobilenurse.remote.response.DispDetailResponse;
 import szszhospital.cn.com.mobilenurse.remote.response.DrugBill;
 import szszhospital.cn.com.mobilenurse.remote.response.DrugResponse;
@@ -46,8 +47,11 @@ public interface Api {
     @GET("web/Quality.Ajax.AndroidHttpResponse.cls")
     Observable<Response<List<DrugBill>>> getDrugBillList(@QueryMap Map<String, String> option);
 
-    //获取发药单明细
+    //获取发药单明细列表
     @GET("web/Quality.Ajax.AndroidHttpResponse.cls")
     Observable<Response<List<DispDetailResponse>>> getDispDetailList(@QueryMap Map<String, String> option);
 
+    //单个药品配药
+    @GET("web/Quality.Ajax.AndroidHttpResponse.cls")
+    Observable<Response<List<AuditDetailResponse>>> updateDrugState(@QueryMap Map<String, String> option);
 }
