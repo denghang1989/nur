@@ -41,6 +41,7 @@ public class DispDetailPresenter extends RxPresenter<DispDetailContract.View, Di
                                 //单个药品配药成功
                                 dispDetailResponse.ConFirmFlag = "A";
                                 mView.refresh();
+                                ToastUtils.showShort("配药成功");
                             } else {
                                 //单个药品配药失败
                                 ToastUtils.showShort(response.RetDesc);
