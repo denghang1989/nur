@@ -129,7 +129,7 @@ public class PrescriptionFragment extends BasePresenterFragment<FragmentDispensi
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 DispDetailResponse item = mAdapter.getItem(position);
                 if (StringUtils.isTrimEmpty(item.ConFirmFlag)) {
-                    mRequest.Input = item.AuditItmDr + "^" + item.DispQty + "^" + App.loginUser.UserID;
+                    mRequest.Input = item.AuditItmDr + "^" + item.DispQty + "^" + App.loginUser.UserDR;
                     mPresenter.updateDrugState(mRequest, item);
                 } else {
                     ToastUtils.showShort("已配药！");

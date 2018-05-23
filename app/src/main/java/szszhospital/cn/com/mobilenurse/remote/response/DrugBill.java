@@ -1,5 +1,8 @@
 package szszhospital.cn.com.mobilenurse.remote.response;
 
+/**
+ * 发药单
+ */
 public class DrugBill {
 
     /**

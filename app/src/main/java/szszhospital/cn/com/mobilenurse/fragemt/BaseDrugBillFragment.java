@@ -33,7 +33,7 @@ public class BaseDrugBillFragment extends BasePresenterFragment<FragmentUnDrugBi
         super.init();
         mAdapter = new DrugBillListAdapter(R.layout.item_drug_bill_list);
         mRequest = new DrugBillListRequest();
-        mRequest.User = App.loginUser.UserID;
+        mRequest.User = App.loginUser.UserDR;
         mRequest.Loc = App.loginUser.UserLoc;
         mRequest.Flag = "";
     }
@@ -53,6 +53,11 @@ public class BaseDrugBillFragment extends BasePresenterFragment<FragmentUnDrugBi
     }
 
     @Override
+    public void refresh() {
+        mDataBinding.refreshLayout.autoRefresh();
+    }
+
+    @Override
     protected DrugBillPresenter initPresenter() {
         return new DrugBillPresenter();
     }
@@ -67,12 +72,21 @@ public class BaseDrugBillFragment extends BasePresenterFragment<FragmentUnDrugBi
 
     @Override
     protected void initData() {
+
+    }
+
+    protected void getDrugListData() {
         mPresenter.getDrugBillList(mRequest);
     }
 
     @Override
     protected void initEvent() {
-        mDataBinding.refreshLayout.setOnRefreshListener(refreshlayout -> initData());
+        mDataBinding.refreshLayout.setOnRefreshListener(refreshlayout -> getDrugListData());
     }
 
+    @Override
+    public void onSupportVisible() {
+        super.onSupportVisible();
+        mDataBinding.refreshLayout.autoRefresh();
+    }
 }

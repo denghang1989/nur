@@ -6,6 +6,7 @@ import szszhospital.cn.com.mobilenurse.base.BaseModel;
 import szszhospital.cn.com.mobilenurse.base.BasePresenter;
 import szszhospital.cn.com.mobilenurse.base.BaseView;
 import szszhospital.cn.com.mobilenurse.remote.request.DrugBillListRequest;
+import szszhospital.cn.com.mobilenurse.remote.request.SaveAuditStatusRequest;
 import szszhospital.cn.com.mobilenurse.remote.response.DrugBill;
 
 /**
@@ -19,6 +20,7 @@ public interface DrugBillContract {
 
         void showDrugBillList(List<DrugBill> list);
 
+        void refresh();
     }
 
     interface Model extends BaseModel {
@@ -27,5 +29,7 @@ public interface DrugBillContract {
 
     interface Presenter extends BasePresenter<View> {
         void getDrugBillList(DrugBillListRequest request);
+
+        void saveAuditStatus(SaveAuditStatusRequest request);
     }
 }
