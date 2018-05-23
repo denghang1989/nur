@@ -23,8 +23,7 @@ public class DrugBillUnCompletedFragment extends BaseDrugBillFragment {
     }
 
     @Override
-    protected void initEvent() {
-        super.initEvent();
+    protected void setOnItemClick() {
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
             //判断一下当前配药单的状态>未发药的状态
             PrescriptionActivity.startPrescriptionActivity(_mActivity, mAdapter.getItem(position).AuditDr);

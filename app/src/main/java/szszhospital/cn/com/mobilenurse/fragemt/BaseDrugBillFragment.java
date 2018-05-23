@@ -32,8 +32,8 @@ import szszhospital.cn.com.mobilenurse.remote.response.DrugBill;
 public class BaseDrugBillFragment extends BasePresenterFragment<FragmentUnDrugBinding, DrugBillPresenter> implements DrugBillContract.View, DialogInterface {
     protected DrugBillListAdapter          mAdapter;
     protected DrugBillListRequest          mRequest;
-    protected DispDetailListDialogFragment mFragment;
-
+    protected DispDetailListDialogFragment mDialogFragment;
+    protected DrugBill                     mDrugBill;
 
     @Override
     public int getLayoutId() {
@@ -90,6 +90,15 @@ public class BaseDrugBillFragment extends BasePresenterFragment<FragmentUnDrugBi
     @Override
     protected void initEvent() {
         mDataBinding.refreshLayout.setOnRefreshListener(refreshlayout -> initData());
+
+        setOnItemClick();
+    }
+
+    protected void setOnItemClick() {
+        mAdapter.setOnItemClickListener((adapter, view, position) -> {
+            mDrugBill = mAdapter.getItem(position);
+            showDialog(mDrugBill);
+        });
     }
 
     @Override
@@ -123,24 +132,27 @@ public class BaseDrugBillFragment extends BasePresenterFragment<FragmentUnDrugBi
 
     @Override
     public void onPositive() {
-
+        updateAuditStatus(mDrugBill);
+        if (mDialogFragment != null) {
+            mDialogFragment.dismiss();
+        }
     }
 
     @Override
     public void onNegative() {
-        if (mFragment != null) {
-            mFragment.dismiss();
+        if (mDialogFragment != null) {
+            mDialogFragment.dismiss();
         }
     }
 
     protected void showDialog(DrugBill drugBill) {
-        mFragment = (DispDetailListDialogFragment) getChildFragmentManager().findFragmentByTag(KEY_TAG);
-        if (mFragment != null) {
-            mFragment.dismiss();
+        mDialogFragment = (DispDetailListDialogFragment) getChildFragmentManager().findFragmentByTag(KEY_TAG);
+        if (mDialogFragment != null) {
+            mDialogFragment.dismiss();
         }
-        mFragment = DispDetailListDialogFragment.newInstance(drugBill.AuditDr);
-        mFragment.setDialogInterface(this);
-        mFragment.show(getChildFragmentManager(), "DispDetailListDialogFragment");
+        mDialogFragment = DispDetailListDialogFragment.newInstance(drugBill.AuditDr);
+        mDialogFragment.setDialogInterface(this);
+        mDialogFragment.show(getChildFragmentManager(), "DispDetailListDialogFragment");
     }
 
     private static final String KEY_TAG = "DispDetailListDialogFragment";

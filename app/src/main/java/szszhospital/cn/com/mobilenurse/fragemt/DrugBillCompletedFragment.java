@@ -10,8 +10,7 @@ import szszhospital.cn.com.mobilenurse.remote.response.DrugBill;
  */
 public class DrugBillCompletedFragment extends BaseDrugBillFragment {
 
-    private SaveAuditStatusRequest       mStatusRequest;
-    private DrugBill mDrugBill;
+    private SaveAuditStatusRequest mStatusRequest;
 
     public static DrugBillCompletedFragment newInstance() {
         return new DrugBillCompletedFragment();
@@ -25,22 +24,9 @@ public class DrugBillCompletedFragment extends BaseDrugBillFragment {
     }
 
     @Override
-    protected void initEvent() {
-        super.initEvent();
-        mAdapter.setOnItemClickListener((adapter, view, position) -> {
-            mDrugBill = mAdapter.getItem(position);
-            showDialog(mDrugBill);
-        });
-    }
-
-    @Override
     protected void updateAuditStatus(DrugBill drugBill) {
         mStatusRequest.Input = drugBill.AuditDr + "^" + "C" + "^" + App.loginUser.UserDR;
         mPresenter.saveAuditStatus(mStatusRequest);
     }
 
-    @Override
-    public void onPositive() {
-        updateAuditStatus(mDrugBill);
-    }
 }
