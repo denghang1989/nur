@@ -33,9 +33,14 @@ public class DrugBillHandoverFragment extends BaseDrugBillFragment {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 DrugBill drugBill = mAdapter.getItem(position);
-                mStatusRequest.Input = drugBill.AuditDr + "^" + "R" + "^" + App.loginUser.UserDR;
-                mPresenter.saveAuditStatus(mStatusRequest);
+                updateAuditStatus(drugBill);
             }
         });
+    }
+
+    @Override
+    protected void updateAuditStatus(DrugBill drugBill) {
+        mStatusRequest.Input = drugBill.AuditDr + "^" + "R" + "^" + App.loginUser.UserDR;
+        mPresenter.saveAuditStatus(mStatusRequest);
     }
 }

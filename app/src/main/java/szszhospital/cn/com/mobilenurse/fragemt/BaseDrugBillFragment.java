@@ -3,6 +3,14 @@ package szszhospital.cn.com.mobilenurse.fragemt;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 
+import com.annimon.stream.Optional;
+import com.annimon.stream.Stream;
+import com.blankj.utilcode.util.StringUtils;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.List;
 
 import szszhospital.cn.com.mobilenurse.App;
@@ -10,6 +18,7 @@ import szszhospital.cn.com.mobilenurse.R;
 import szszhospital.cn.com.mobilenurse.adapter.DrugBillListAdapter;
 import szszhospital.cn.com.mobilenurse.base.BasePresenterFragment;
 import szszhospital.cn.com.mobilenurse.databinding.FragmentUnDrugBinding;
+import szszhospital.cn.com.mobilenurse.event.QRCodeEvent;
 import szszhospital.cn.com.mobilenurse.mvp.contract.DrugBillContract;
 import szszhospital.cn.com.mobilenurse.mvp.presenter.DrugBillPresenter;
 import szszhospital.cn.com.mobilenurse.remote.request.DrugBillListRequest;
@@ -72,21 +81,40 @@ public class BaseDrugBillFragment extends BasePresenterFragment<FragmentUnDrugBi
 
     @Override
     protected void initData() {
-
-    }
-
-    protected void getDrugListData() {
         mPresenter.getDrugBillList(mRequest);
     }
 
     @Override
     protected void initEvent() {
-        mDataBinding.refreshLayout.setOnRefreshListener(refreshlayout -> getDrugListData());
+        mDataBinding.refreshLayout.setOnRefreshListener(refreshlayout -> initData());
     }
 
     @Override
     public void onSupportVisible() {
         super.onSupportVisible();
-        mDataBinding.refreshLayout.autoRefresh();
+        initData();
+    }
+
+    protected void updateAuditStatus(DrugBill drugBill) {
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void handlerCode(QRCodeEvent event) {
+        String code = event.code;
+        Optional<DrugBill> optional = Stream.of(mAdapter.getData()).filter(drugbill -> StringUtils.equalsIgnoreCase(code, drugbill.DispNo)).findFirst();
+        updateAuditStatus(optional.get());
     }
 }

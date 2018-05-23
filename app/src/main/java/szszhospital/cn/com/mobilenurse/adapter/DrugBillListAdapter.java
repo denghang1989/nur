@@ -8,20 +8,19 @@ import szszhospital.cn.com.mobilenurse.remote.response.DrugBill;
 
 /**
  * 发药单列表
- * <p>
- * 1:  	^DHCSTPHACONFIG("PrintType",1)	= 	"KFY^1^0^^0^0^0"
- * 2:  	^DHCSTPHACONFIG("PrintType",2)	= 	"ZJ^0^1^^0^0^0"
- * 3:  	^DHCSTPHACONFIG("PrintType",3)	= 	"DSY^0^1^^0^0^0"
- * 4:  	^DHCSTPHACONFIG("PrintType",4)	= 	"DMY^1^0^^0^0^0"
- * 5:  	^DHCSTPHACONFIG("PrintType",5)	= 	"WYY^1^0^^0^0^0"
- * 6:  	^DHCSTPHACONFIG("PrintType",7)	= 	"ZCY^0^0^PrintZCY^0^0^0"
- * 7:  	^DHCSTPHACONFIG("PrintType",13)	= 	"GZY^1^0^^0^0^0"
- * 8:  	^DHCSTPHACONFIG("PrintType",14)	= 	"JY^1^0^^0^0^0"
- * 9:  	^DHCSTPHACONFIG("PrintType",15)	= 	"JE^1^0^^0^0^0"
- * 10:  	^DHCSTPHACONFIG("PrintType",16)	= 	"RCZZ^1^0^^0^0^0"
- * 11:  	^DHCSTPHACONFIG("PrintType",17)	= 	"YNZJ^1^0^^0^0^0"
- * 12:  	^DHCSTPHACONFIG("PrintType",18)	= 	"DF^1^0^^0^0^0"
- * 13:  	^DHCSTPHACONFIG("PrintType",19)	= 	"OUT^1^0^^0^0^0"
+ * 1	KFY	口服药	KFY	0
+ * 2	ZJ	针剂	ZJ	0
+ * 3	DSY	大输液	DSY	0
+ * 4	DMY	毒麻药	DMY	0
+ * 5	WYY	外用药	WYY	0
+ * 7	ZCY	中草药	ZCY	0
+ * 13	GZY	贵重药	GZY	0
+ * 14	JY	一类精神药物	JY	0
+ * 15	JE	二类精神药物	JE	0
+ * 16	RCZZ	妊娠终止药物	RCZZ	0
+ * 17	YNZJ	院内制剂	YNZJ	0
+ * 18	DF	代发耗材	DF	0
+ * 19	OUT	出院带药	OUT	0
  */
 public class DrugBillListAdapter extends BaseQuickAdapter<DrugBill, BaseViewHolder> {
 
@@ -38,30 +37,34 @@ public class DrugBillListAdapter extends BaseQuickAdapter<DrugBill, BaseViewHold
             case "KFY": //口服药
                 helper.setImageResource(R.id.icon, R.drawable.icon_drug_eat);
                 break;
-            case "ZJ":
+            case "ZJ": //针剂
+                helper.setImageResource(R.id.icon, R.drawable.icon_injection);
                 break;
-            case "DSY":
+            case "DSY": //大输液
+                helper.setImageResource(R.id.icon, R.drawable.icon_dripping);
                 break;
-            case "DMY":
+            case "DMY": //毒麻药
                 break;
             case "WYY": //外用药
                 helper.setImageResource(R.id.icon, R.drawable.icon_band_aid);
                 break;
-            case "ZCY":
+            case "ZCY": //中草药
+                helper.setImageResource(R.id.icon, R.drawable.icon_herbs);
                 break;
-            case "GZY":
+            case "GZY": //贵重药
                 break;
-            case "JY":
+            case "JY": //一类精神药物
                 break;
-            case "JE":
+            case "JE": //二类精神药物
                 break;
-            case "RCZZ":
+            case "RCZZ": //妊娠终止药物
                 break;
-            case "YNZJ":
+            case "YNZJ": //院内制剂
                 break;
-            case "DF":
+            case "DF": //代发耗材
                 break;
-            case "OUT":
+            case "OUT": //出院带药
+                helper.setImageResource(R.id.icon, R.drawable.icon_out);
                 break;
         }
     }

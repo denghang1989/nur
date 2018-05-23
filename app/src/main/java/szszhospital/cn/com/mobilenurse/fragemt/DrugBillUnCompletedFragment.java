@@ -38,4 +38,5 @@ public class DrugBillUnCompletedFragment extends BaseDrugBillFragment {
             initData();
         }
     }
+
 }
