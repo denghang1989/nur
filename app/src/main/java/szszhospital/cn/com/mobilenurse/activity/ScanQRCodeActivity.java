@@ -58,5 +58,8 @@ public class ScanQRCodeActivity extends BaseActivity<ActivityScanQrcodeBinding> 
 
     }
 
-
+    @Override
+    protected void initEvent() {
+        super.initEvent();
+    }
 }

@@ -14,6 +14,7 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.List;
 
 import szszhospital.cn.com.mobilenurse.App;
+import szszhospital.cn.com.mobilenurse.DialogInterface;
 import szszhospital.cn.com.mobilenurse.R;
 import szszhospital.cn.com.mobilenurse.adapter.DrugBillListAdapter;
 import szszhospital.cn.com.mobilenurse.base.BasePresenterFragment;
@@ -28,9 +29,11 @@ import szszhospital.cn.com.mobilenurse.remote.response.DrugBill;
  * 2018/5/20 00
  * 发药流程：发药单状态变化的基类；
  */
-public class BaseDrugBillFragment extends BasePresenterFragment<FragmentUnDrugBinding, DrugBillPresenter> implements DrugBillContract.View {
-    protected DrugBillListAdapter mAdapter;
-    protected DrugBillListRequest mRequest;
+public class BaseDrugBillFragment extends BasePresenterFragment<FragmentUnDrugBinding, DrugBillPresenter> implements DrugBillContract.View, DialogInterface {
+    protected DrugBillListAdapter          mAdapter;
+    protected DrugBillListRequest          mRequest;
+    protected DispDetailListDialogFragment mFragment;
+
 
     @Override
     public int getLayoutId() {
@@ -117,4 +120,28 @@ public class BaseDrugBillFragment extends BasePresenterFragment<FragmentUnDrugBi
         Optional<DrugBill> optional = Stream.of(mAdapter.getData()).filter(drugbill -> StringUtils.equalsIgnoreCase(code, drugbill.DispNo)).findFirst();
         updateAuditStatus(optional.get());
     }
+
+    @Override
+    public void onPositive() {
+
+    }
+
+    @Override
+    public void onNegative() {
+        if (mFragment != null) {
+            mFragment.dismiss();
+        }
+    }
+
+    protected void showDialog(DrugBill drugBill) {
+        mFragment = (DispDetailListDialogFragment) getChildFragmentManager().findFragmentByTag(KEY_TAG);
+        if (mFragment != null) {
+            mFragment.dismiss();
+        }
+        mFragment = DispDetailListDialogFragment.newInstance(drugBill.AuditDr);
+        mFragment.setDialogInterface(this);
+        mFragment.show(getChildFragmentManager(), "DispDetailListDialogFragment");
+    }
+
+    private static final String KEY_TAG = "DispDetailListDialogFragment";
 }

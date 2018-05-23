@@ -1,17 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
 
-    <FrameLayout
+    <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white">
+        android:orientation="vertical">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/green"
+            app:navigationIcon="@drawable/ic_black_32dp"
+            app:title="@string/qr_code"
+            app:titleTextColor="@color/white"/>
 
         <cn.bingoogolapple.qrcode.zxing.ZXingView
             android:id="@+id/zxingview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@drawable/bg"
             app:qrcv_animTime="1000"
             app:qrcv_borderColor="@android:color/white"
             app:qrcv_borderSize="1dp"
@@ -24,5 +34,5 @@
             app:qrcv_scanLineSize="1dp"
             app:qrcv_topOffset="90dp"/>
 
-    </FrameLayout>
+    </LinearLayout>
 </layout>

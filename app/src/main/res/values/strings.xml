@@ -10,7 +10,7 @@
     <string name="select_loc">选择科室</string>
     <string name="drug_bill_qr_code">发药单二维码</string>
     <string name="dispensing">配药</string>
-
+    <string name="qr_code">扫描二维码</string>
 
     <string-array name="drug_list">
         <item>未配药|DrugBillUnCompletedFragment</item>

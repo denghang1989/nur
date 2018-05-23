@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.annimon.stream.Collectors;
@@ -144,10 +145,16 @@ public class PrescriptionFragment extends BasePresenterFragment<FragmentDispensi
             TextView age = mHeadView.findViewById(R.id.age);
             TextView ward = mHeadView.findViewById(R.id.ward);
             TextView bedNo = mHeadView.findViewById(R.id.bedNo);
+            ImageView sex = mHeadView.findViewById(R.id.sex);
             name.setText("姓名:" + response.PatName);
             age.setText("年龄:" + response.Age);
             ward.setText("病区:" + response.ward);
             bedNo.setText(response.Bed + "床");
+            if (StringUtils.equals(response.Sex, "男")) {
+                sex.setImageResource(R.drawable.icon_man);
+            } else {
+                sex.setImageResource(R.drawable.icon_woman);
+            }
         }
     }
 

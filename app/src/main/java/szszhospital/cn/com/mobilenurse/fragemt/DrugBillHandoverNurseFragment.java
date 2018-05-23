@@ -1,9 +1,5 @@
 package szszhospital.cn.com.mobilenurse.fragemt;
 
-import android.view.View;
-
-import com.chad.library.adapter.base.BaseQuickAdapter;
-
 import szszhospital.cn.com.mobilenurse.App;
 import szszhospital.cn.com.mobilenurse.remote.request.SaveAuditStatusRequest;
 import szszhospital.cn.com.mobilenurse.remote.response.DrugBill;
@@ -14,6 +10,7 @@ import szszhospital.cn.com.mobilenurse.remote.response.DrugBill;
 public class DrugBillHandoverNurseFragment extends BaseDrugBillFragment {
 
     private SaveAuditStatusRequest mStatusRequest;
+    private DrugBill mDrugBill;
 
     public static DrugBillHandoverNurseFragment newInstance() {
         return new DrugBillHandoverNurseFragment();
@@ -29,12 +26,9 @@ public class DrugBillHandoverNurseFragment extends BaseDrugBillFragment {
     @Override
     protected void initEvent() {
         super.initEvent();
-        mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                DrugBill drugBill = mAdapter.getItem(position);
-                updateAuditStatus(drugBill);
-            }
+        mAdapter.setOnItemClickListener((adapter, view, position) -> {
+            mDrugBill = mAdapter.getItem(position);
+            showDialog(mDrugBill);
         });
     }
 
@@ -42,5 +36,10 @@ public class DrugBillHandoverNurseFragment extends BaseDrugBillFragment {
     protected void updateAuditStatus(DrugBill drugBill) {
         mStatusRequest.Input = drugBill.AuditDr + "^" + "R" + "^" + App.loginUser.UserDR;
         mPresenter.saveAuditStatus(mStatusRequest);
+    }
+
+    @Override
+    public void onPositive() {
+        updateAuditStatus(mDrugBill);
     }
 }
