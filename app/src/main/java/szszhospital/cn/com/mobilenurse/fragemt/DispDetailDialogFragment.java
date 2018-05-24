@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
+import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -27,7 +27,7 @@ import szszhospital.cn.com.mobilenurse.mvp.presenter.DispDetailListPresenter;
 import szszhospital.cn.com.mobilenurse.remote.request.DispDetailListRequest;
 import szszhospital.cn.com.mobilenurse.remote.response.DispDetailResponse;
 
-public class DispDetailListDialogFragment extends DialogFragment implements DispDetailListContract.View {
+public class DispDetailDialogFragment extends BottomSheetDialogFragment implements DispDetailListContract.View {
 
     private static final String KEY_AUDITDR = "AuditDr";
     private Activity              mActivity;
@@ -43,10 +43,10 @@ public class DispDetailListDialogFragment extends DialogFragment implements Disp
 
     private String okText;
 
-    public static DispDetailListDialogFragment newInstance(String auditdr) {
+    public static DispDetailDialogFragment newInstance(String auditdr) {
         Bundle args = new Bundle();
         args.putString(KEY_AUDITDR, auditdr);
-        DispDetailListDialogFragment fragment = new DispDetailListDialogFragment();
+        DispDetailDialogFragment fragment = new DispDetailDialogFragment();
         fragment.setArguments(args);
         return fragment;
     }

@@ -14,7 +14,6 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.List;
 
 import szszhospital.cn.com.mobilenurse.App;
-import szszhospital.cn.com.mobilenurse.DialogInterface;
 import szszhospital.cn.com.mobilenurse.R;
 import szszhospital.cn.com.mobilenurse.adapter.DrugBillListAdapter;
 import szszhospital.cn.com.mobilenurse.base.BasePresenterFragment;

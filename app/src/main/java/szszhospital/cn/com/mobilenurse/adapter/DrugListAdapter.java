@@ -19,7 +19,8 @@ public class DrugListAdapter extends BaseQuickAdapter<DispDetailResponse, BaseVi
     protected void convert(BaseViewHolder helper, DispDetailResponse item) {
         helper.setText(R.id.drugName, item.InciDesc)
                 .setText(R.id.dispQty, "数量：" + item.DispQty + "   规格：" + item.Spec)
-                .setText(R.id.InciCode, "药品编码：" + item.InciCode);
+                .setText(R.id.InciCode, "药品编码：" + item.InciCode)
+                .setText(R.id.dateTime, "用药时间：" + item.DosDateTime);
         switch (item.ConFirmFlag) {
             case "":
                 helper.setVisible(R.id.icon_flag, false);

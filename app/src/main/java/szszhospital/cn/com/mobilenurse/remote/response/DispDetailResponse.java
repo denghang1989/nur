@@ -41,6 +41,7 @@ public class DispDetailResponse implements Parcelable {
     public String AuditItmDr;
     public String ConFirmFlag;
     public String ward;
+    public String DosDateTime;
 
 
     @Override
