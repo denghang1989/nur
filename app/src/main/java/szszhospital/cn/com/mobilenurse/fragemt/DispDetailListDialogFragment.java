@@ -12,9 +12,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.ScreenUtils;
+import com.blankj.utilcode.util.StringUtils;
 
 import java.util.List;
 
@@ -140,10 +142,20 @@ public class DispDetailListDialogFragment extends DialogFragment implements Disp
             TextView age = mHeadView.findViewById(R.id.age);
             TextView ward = mHeadView.findViewById(R.id.ward);
             TextView bedNo = mHeadView.findViewById(R.id.bedNo);
+            ImageView sex = mHeadView.findViewById(R.id.sex);
             name.setText("姓名:" + response.PatName);
             age.setText("年龄:" + response.Age);
             ward.setText("病区:" + response.ward);
-            bedNo.setText(response.Bed + "床");
+            if (response.Bed.contains("床")) {
+                bedNo.setText(response.Bed);
+            } else {
+                bedNo.setText(response.Bed + "床");
+            }
+            if (StringUtils.equals(response.Sex, "男")) {
+                sex.setImageResource(R.drawable.icon_man);
+            } else {
+                sex.setImageResource(R.drawable.icon_woman);
+            }
         }
     }
 }

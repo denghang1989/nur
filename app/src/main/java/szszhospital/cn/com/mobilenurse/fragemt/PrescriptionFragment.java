@@ -149,7 +149,11 @@ public class PrescriptionFragment extends BasePresenterFragment<FragmentDispensi
             name.setText("姓名:" + response.PatName);
             age.setText("年龄:" + response.Age);
             ward.setText("病区:" + response.ward);
-            bedNo.setText(response.Bed + "床");
+            if (response.Bed.contains("床")) {
+                bedNo.setText(response.Bed);
+            } else {
+                bedNo.setText(response.Bed + "床");
+            }
             if (StringUtils.equals(response.Sex, "男")) {
                 sex.setImageResource(R.drawable.icon_man);
             } else {
