@@ -42,6 +42,8 @@ public class DispDetailListDialogFragment extends DialogFragment implements Disp
     private DrugListAdapter         mAdapter;
     private DialogInterface         mDialogInterface;
 
+    private String okText;
+
     public static DispDetailListDialogFragment newInstance(String auditdr) {
         Bundle args = new Bundle();
         args.putString(KEY_AUDITDR, auditdr);
@@ -85,6 +87,9 @@ public class DispDetailListDialogFragment extends DialogFragment implements Disp
         super.onViewCreated(view, savedInstanceState);
         mRecyclerView = view.findViewById(R.id.recyclerView_dialog);
         mOk = view.findViewById(R.id.ok);
+        if (!StringUtils.isTrimEmpty(okText)) {
+            mOk.setText(okText);
+        }
         mCancel = view.findViewById(R.id.cancel);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
@@ -156,6 +161,12 @@ public class DispDetailListDialogFragment extends DialogFragment implements Disp
             } else {
                 sex.setImageResource(R.drawable.icon_woman);
             }
+        }
+    }
+
+    public void setOkText(String text) {
+        if (!StringUtils.isTrimEmpty(text)) {
+            okText = text;
         }
     }
 }

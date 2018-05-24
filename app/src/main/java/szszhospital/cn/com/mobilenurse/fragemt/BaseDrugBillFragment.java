@@ -126,8 +126,11 @@ public class BaseDrugBillFragment extends BasePresenterFragment<FragmentUnDrugBi
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void handlerCode(QRCodeEvent event) {
         String code = event.code;
-        Optional<DrugBill> optional = Stream.of(mAdapter.getData()).filter(drugbill -> StringUtils.equalsIgnoreCase(code, drugbill.DispNo)).findFirst();
-        updateAuditStatus(optional.get());
+        if (code.startsWith("ZXYF")) {
+            Optional<DrugBill> optional = Stream.of(mAdapter.getData()).filter(drugbill -> StringUtils.equalsIgnoreCase(code, drugbill.DispNo)).findFirst();
+            showDialog(optional.get());
+        }
+
     }
 
     @Override
@@ -151,8 +154,13 @@ public class BaseDrugBillFragment extends BasePresenterFragment<FragmentUnDrugBi
             mDialogFragment.dismiss();
         }
         mDialogFragment = DispDetailListDialogFragment.newInstance(drugBill.AuditDr);
+        mDialogFragment.setOkText(getDialogText());
         mDialogFragment.setDialogInterface(this);
         mDialogFragment.show(getChildFragmentManager(), "DispDetailListDialogFragment");
+    }
+
+    protected String getDialogText() {
+        return "";
     }
 
     private static final String KEY_TAG = "DispDetailListDialogFragment";

@@ -28,5 +28,8 @@ public class DrugBillCheckFragment extends BaseDrugBillFragment {
         mPresenter.saveAuditStatus(mStatusRequest);
     }
 
-
+    @Override
+    protected String getDialogText() {
+        return "交接";
+    }
 }
