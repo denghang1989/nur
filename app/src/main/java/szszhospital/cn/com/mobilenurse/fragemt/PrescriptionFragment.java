@@ -3,7 +3,6 @@ package szszhospital.cn.com.mobilenurse.fragemt;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -13,7 +12,6 @@ import com.annimon.stream.Collectors;
 import com.annimon.stream.Stream;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
-import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -125,18 +123,19 @@ public class PrescriptionFragment extends BasePresenterFragment<FragmentDispensi
     @Override
     protected void initEvent() {
         super.initEvent();
-        mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                DispDetailResponse item = mAdapter.getItem(position);
-                if (StringUtils.isTrimEmpty(item.ConFirmFlag)) {
-                    mRequest.Input = item.AuditItmDr + "^" + item.DispQty + "^" + App.loginUser.UserDR;
-                    mPresenter.updateDrugState(mRequest, item);
-                } else {
-                    ToastUtils.showShort("已配药！");
-                }
-            }
+        mAdapter.setOnItemClickListener((adapter, view, position) -> {
+            DispDetailResponse item = mAdapter.getItem(position);
+            updateDrugState(item);
         });
+    }
+
+    private void updateDrugState(DispDetailResponse item) {
+        if (StringUtils.isTrimEmpty(item.ConFirmFlag)) {
+            mRequest.Input = item.AuditItmDr + "^" + item.DispQty + "^" + App.loginUser.UserDR;
+            mPresenter.updateDrugState(mRequest, item);
+        } else {
+            ToastUtils.showShort("已配药！");
+        }
     }
 
     private void setHeadViewData(DispDetailResponse response) {
@@ -176,6 +175,14 @@ public class PrescriptionFragment extends BasePresenterFragment<FragmentDispensi
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void handlerCode(QRCodeEvent qrCodeEvent) {
-        Log.d(TAG, "handlerCode: " + qrCodeEvent.code);
+        String code = qrCodeEvent.code;
+        if (code.startsWith("drug")) {
+            String drugCode = code.substring("drug".length(), code.length());
+            ToastUtils.showShort(drugCode);
+            List<DispDetailResponse> drugList = Stream.of(mAdapter.getData()).filter(drug -> StringUtils.equals(drugCode, drug.InciCode)).collect(Collectors.toList());
+            for (DispDetailResponse drug : drugList) {
+                updateDrugState(drug);
+            }
+        }
     }
 }
