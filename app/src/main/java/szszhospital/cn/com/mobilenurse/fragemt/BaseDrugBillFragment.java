@@ -15,6 +15,7 @@ import java.util.List;
 
 import szszhospital.cn.com.mobilenurse.App;
 import szszhospital.cn.com.mobilenurse.R;
+import szszhospital.cn.com.mobilenurse.activity.PrescriptionActivity;
 import szszhospital.cn.com.mobilenurse.adapter.DrugBillListAdapter;
 import szszhospital.cn.com.mobilenurse.base.BasePresenterFragment;
 import szszhospital.cn.com.mobilenurse.databinding.FragmentUnDrugBinding;
@@ -65,7 +66,7 @@ public class BaseDrugBillFragment extends BasePresenterFragment<FragmentUnDrugBi
 
     @Override
     public void refresh() {
-        mDataBinding.refreshLayout.autoRefresh();
+        initData();
     }
 
     @Override
@@ -127,7 +128,11 @@ public class BaseDrugBillFragment extends BasePresenterFragment<FragmentUnDrugBi
         String code = event.code;
         if (code.startsWith("ZXYF")) {
             Optional<DrugBill> optional = Stream.of(mAdapter.getData()).filter(drugbill -> StringUtils.equalsIgnoreCase(code, drugbill.DispNo)).findFirst();
-            showDialog(optional.get());
+            if (!StringUtils.isTrimEmpty(mRequest.Flag)) {
+                showDialog(optional.get());
+            } else {
+                PrescriptionActivity.startPrescriptionActivity(_mActivity, optional.get().AuditDr);
+            }
         }
 
     }
