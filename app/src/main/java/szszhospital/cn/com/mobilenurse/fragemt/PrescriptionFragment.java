@@ -180,9 +180,17 @@ public class PrescriptionFragment extends BasePresenterFragment<FragmentDispensi
             String drugCode = code.substring("drug".length(), code.length());
             ToastUtils.showShort(drugCode);
             List<DispDetailResponse> drugList = Stream.of(mAdapter.getData()).filter(drug -> StringUtils.equals(drugCode, drug.InciCode)).collect(Collectors.toList());
-            for (DispDetailResponse drug : drugList) {
-                updateDrugState(drug);
+            if (drugList != null && drugList.size() == 0) {
+                ToastUtils.showShort("当前病人无此药品！");
+            } else {
+                for (DispDetailResponse drug : drugList) {
+                    updateDrugState(drug);
+                }
             }
+        } else if (code.length() == 18) {
+            // 发药机借口
+        } else {
+            ToastUtils.showShort("二维码无法识别，不是本院药架或者发药机打印二维码！");
         }
     }
 }
