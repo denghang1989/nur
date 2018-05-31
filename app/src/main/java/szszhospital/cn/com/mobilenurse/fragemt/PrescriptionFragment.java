@@ -37,6 +37,7 @@ import szszhospital.cn.com.mobilenurse.remote.response.DispDetailResponse;
 public class PrescriptionFragment extends BasePresenterFragment<FragmentDispensingBinding, DispDetailPresenter> implements DispDetailContract.View {
     private static final String TAG            = "PrescriptionFragment";
     private static final String KEY_DATA       = "data";
+    private static final String KEY_DISPNO     = "DispNo";
     private static final String KEY_PATIENT_NO = "key_patient_no";
     private DrugListAdapter mAdapter;
 
@@ -46,11 +47,13 @@ public class PrescriptionFragment extends BasePresenterFragment<FragmentDispensi
     private String             mPatientNo;
     private View               mHeadView;
     private AuditDetailRequest mRequest;
+    private String             mDispNo;
 
-    public static PrescriptionFragment newInstance(ArrayList<DispDetailResponse> drugList, String patientNo) {
+    public static PrescriptionFragment newInstance(ArrayList<DispDetailResponse> drugList, String patientNo, String dispNo) {
         Bundle args = new Bundle();
         args.putParcelableArrayList(KEY_DATA, drugList);
         args.putString(KEY_PATIENT_NO, patientNo);
+        args.putString(KEY_DISPNO, dispNo);
         PrescriptionFragment fragment = new PrescriptionFragment();
         fragment.setArguments(args);
         return fragment;
@@ -66,6 +69,7 @@ public class PrescriptionFragment extends BasePresenterFragment<FragmentDispensi
         super.init();
         setSwipeBackEnable(false);
         mPatientNo = getArguments().getString(KEY_PATIENT_NO);
+        mDispNo = getArguments().getString(KEY_DISPNO);
         mRequest = new AuditDetailRequest();
     }
 
@@ -187,8 +191,9 @@ public class PrescriptionFragment extends BasePresenterFragment<FragmentDispensi
                     updateDrugState(drug);
                 }
             }
-        } else if (code.length() == 18) {
+        } else if (code.startsWith("KF")) {
             // 发药机借口
+
         } else {
             ToastUtils.showShort("二维码无法识别，不是本院药架或者发药机打印二维码！");
         }

@@ -30,15 +30,18 @@ import szszhospital.cn.com.mobilenurse.remote.response.DispDetailResponse;
 public class PrescriptionActivity extends BasePresentActivity<ActivityPrescriptionBinding, DispDetailListPresenter> implements DispDetailListContract.View {
     private static final String TAG          = "PrescriptionActivity";
     private static final String KEY_AUDITDR  = "AuditDr";
+    private static final String KEY_DISPNO   = "DispNo";
     public static final  int    REQUEST_CODE = 200;
     private String                mAuditDr;
+    private String                mDispNo;
     private DispDetailListRequest mRequest;
     private PatientListAdapter    mAdapter;
     private ArrayList<DispDetailResponse> mList = new ArrayList<>(0);
 
-    public static void startPrescriptionActivity(Activity context, String code) {
+    public static void startPrescriptionActivity(Activity context, String code, String dispno) {
         Intent intent = new Intent(context, PrescriptionActivity.class);
         intent.putExtra(KEY_AUDITDR, code);
+        intent.putExtra(KEY_DISPNO, dispno);
         context.startActivityForResult(intent, REQUEST_CODE);
     }
 
@@ -52,6 +55,7 @@ public class PrescriptionActivity extends BasePresentActivity<ActivityPrescripti
         super.init();
         Intent intent = getIntent();
         mAuditDr = intent.getStringExtra(KEY_AUDITDR);
+        mDispNo = intent.getStringExtra(KEY_DISPNO);
         mRequest = new DispDetailListRequest();
         mAdapter = new PatientListAdapter(R.layout.item_patient);
     }
@@ -59,7 +63,7 @@ public class PrescriptionActivity extends BasePresentActivity<ActivityPrescripti
     @Override
     protected void initView() {
         super.initView();
-        loadRootFragment(R.id.container, PrescriptionFragment.newInstance(null, null));
+        loadRootFragment(R.id.container, PrescriptionFragment.newInstance(null, null, null));
         mDataBinding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
         mDataBinding.recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         mDataBinding.recyclerView.setAdapter(mAdapter);
@@ -123,6 +127,6 @@ public class PrescriptionActivity extends BasePresentActivity<ActivityPrescripti
     }
 
     public void switchPatient(String patientNo) {
-        replaceFragment(PrescriptionFragment.newInstance(mList, patientNo), false);
+        replaceFragment(PrescriptionFragment.newInstance(mList, patientNo, mDispNo), false);
     }
 }

@@ -131,7 +131,7 @@ public class BaseDrugBillFragment extends BasePresenterFragment<FragmentUnDrugBi
             if (!StringUtils.isTrimEmpty(mRequest.Flag)) {
                 showDialog(optional.get());
             } else {
-                PrescriptionActivity.startPrescriptionActivity(_mActivity, optional.get().AuditDr);
+                PrescriptionActivity.startPrescriptionActivity(_mActivity, optional.get().AuditDr, optional.get().DispNo);
             }
         }
 
