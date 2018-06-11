@@ -41,15 +41,21 @@ public class LoginPresenter extends RxPresenter<LoginContract.View, LoginContrac
 
                     @Override
                     public void onNext(LoginResponse loginResponse) {
-                        mView.setSpinnerData(loginResponse.Locs);
-                        mModel.save(loginResponse);
-                        user.setLogin(true);
-                        SPUtils.getInstance().put("user_name", user.getName());
+                        if (loginResponse.Locs.size() <= 0) {
+                            ToastUtils.showShort("账号或者密码错误");
+                        } else {
+                            mView.setSpinnerData(loginResponse.Locs);
+                            mModel.save(loginResponse);
+                            user.setLogin(true);
+                            SPUtils.getInstance().put("user_name", user.getName());
+                        }
+
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         mView.hideProgress();
+                        ToastUtils.showShort("账号或者密码错误");
                     }
 
                     @Override

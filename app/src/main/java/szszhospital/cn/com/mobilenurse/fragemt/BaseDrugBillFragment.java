@@ -2,6 +2,7 @@ package szszhospital.cn.com.mobilenurse.fragemt;
 
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 
 import com.annimon.stream.Optional;
 import com.annimon.stream.Stream;
@@ -59,8 +60,11 @@ public class BaseDrugBillFragment extends BasePresenterFragment<FragmentUnDrugBi
         mDataBinding.refreshLayout.finishRefresh();
     }
 
+    private static final String TAG = "BaseDrugBillFragment";
+
     @Override
     public void showDrugBillList(List<DrugBill> list) {
+        Log.d(TAG, "showDrugBillList: "+list);
         mAdapter.setNewData(list);
     }
 

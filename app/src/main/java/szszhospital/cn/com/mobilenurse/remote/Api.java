@@ -12,6 +12,7 @@ import szszhospital.cn.com.mobilenurse.remote.response.AuditDetailResponse;
 import szszhospital.cn.com.mobilenurse.remote.response.DispDetailResponse;
 import szszhospital.cn.com.mobilenurse.remote.response.DrugBill;
 import szszhospital.cn.com.mobilenurse.remote.response.DrugResponse;
+import szszhospital.cn.com.mobilenurse.remote.response.LocAccessResponse;
 import szszhospital.cn.com.mobilenurse.remote.response.LoginResponse;
 import szszhospital.cn.com.mobilenurse.remote.response.PatientInfoResponse;
 import szszhospital.cn.com.mobilenurse.remote.response.SaveAuditStatusResponse;
@@ -59,4 +60,8 @@ public interface Api {
     //更新发药单状态
     @GET("web/Quality.Ajax.AndroidHttpResponse.cls")
     Observable<Response<List<SaveAuditStatusResponse>>> saveAuditStatus(@QueryMap Map<String, String> option);
+
+    //获取登入科室模块
+    @GET("web/Quality.Ajax.AndroidAccessAjax.cls")
+    Observable<Response<List<LocAccessResponse>>> getLocAccess(@QueryMap Map<String, String> option);
 }
