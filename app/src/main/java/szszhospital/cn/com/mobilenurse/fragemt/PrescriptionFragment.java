@@ -29,7 +29,9 @@ import szszhospital.cn.com.mobilenurse.event.QRCodeEvent;
 import szszhospital.cn.com.mobilenurse.mvp.contract.DispDetailContract;
 import szszhospital.cn.com.mobilenurse.mvp.presenter.DispDetailPresenter;
 import szszhospital.cn.com.mobilenurse.remote.request.AuditDetailRequest;
+import szszhospital.cn.com.mobilenurse.remote.request.RobotDrugRequest;
 import szszhospital.cn.com.mobilenurse.remote.response.DispDetailResponse;
+import szszhospital.cn.com.mobilenurse.remote.response.RobotDrugResponse;
 
 /**
  * 配药界面明细的Fragment
@@ -48,6 +50,7 @@ public class PrescriptionFragment extends BasePresenterFragment<FragmentDispensi
     private View               mHeadView;
     private AuditDetailRequest mRequest;
     private String             mDispNo;
+    private RobotDrugRequest   mRobotDrugRequest;
 
     public static PrescriptionFragment newInstance(ArrayList<DispDetailResponse> drugList, String patientNo, String dispNo) {
         Bundle args = new Bundle();
@@ -71,6 +74,7 @@ public class PrescriptionFragment extends BasePresenterFragment<FragmentDispensi
         mPatientNo = getArguments().getString(KEY_PATIENT_NO);
         mDispNo = getArguments().getString(KEY_DISPNO);
         mRequest = new AuditDetailRequest();
+        mRobotDrugRequest = new RobotDrugRequest();
     }
 
     @Override
@@ -102,6 +106,18 @@ public class PrescriptionFragment extends BasePresenterFragment<FragmentDispensi
     @Override
     public void dispComplete() {
         _mActivity.finish();
+    }
+
+    @Override
+    public void refreshRobot(RobotDrugResponse response) {
+        if (response.data.size() > 0) {
+            Stream.of(response.data).forEach(dataBean -> Stream.of(mAdapter.getData()).forEach(dispDetailResponse -> {
+                if (StringUtils.equals(dispDetailResponse.AuditItmDr, dataBean.AuditItmDr)) {
+                    dispDetailResponse.ConFirmFlag = dataBean.ConFirmFlag;
+                }
+            }));
+        }
+        mAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -193,9 +209,11 @@ public class PrescriptionFragment extends BasePresenterFragment<FragmentDispensi
             }
         } else if (code.startsWith("KF")) {
             // 发药机借口
-
+            mRobotDrugRequest.Input = mDispNo + "^" + App.loginUser.UserDR + "^" + code;
+            mPresenter.updateRobotDrugState(mRobotDrugRequest);
         } else {
             ToastUtils.showShort("二维码无法识别，不是本院药架或者发药机打印二维码！");
         }
     }
+
 }

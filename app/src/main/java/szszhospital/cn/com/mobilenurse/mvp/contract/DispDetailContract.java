@@ -4,7 +4,9 @@ import szszhospital.cn.com.mobilenurse.base.BaseModel;
 import szszhospital.cn.com.mobilenurse.base.BasePresenter;
 import szszhospital.cn.com.mobilenurse.base.BaseView;
 import szszhospital.cn.com.mobilenurse.remote.request.AuditDetailRequest;
+import szszhospital.cn.com.mobilenurse.remote.request.RobotDrugRequest;
 import szszhospital.cn.com.mobilenurse.remote.response.DispDetailResponse;
+import szszhospital.cn.com.mobilenurse.remote.response.RobotDrugResponse;
 
 public interface DispDetailContract {
 
@@ -16,6 +18,8 @@ public interface DispDetailContract {
         void refresh();
 
         void dispComplete();
+
+        void refreshRobot(RobotDrugResponse response);
     }
 
     interface Model extends BaseModel {
@@ -23,5 +27,7 @@ public interface DispDetailContract {
 
     interface Presenter extends BasePresenter<View> {
         void updateDrugState(AuditDetailRequest request, DispDetailResponse dispDetailResponse);
+
+        void updateRobotDrugState(RobotDrugRequest robotDrugRequest);
     }
 }

@@ -38,4 +38,11 @@ public class DrugBillUnCompletedFragment extends BaseDrugBillFragment {
         }
     }
 
+    /**
+     * @param code 发药机的code：KF000000000
+     */
+    @Override
+    protected void handlerKFCode(String code) {
+
+    }
 }

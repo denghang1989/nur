@@ -11,13 +11,11 @@ import retrofit2.http.QueryMap;
 import szszhospital.cn.com.mobilenurse.remote.response.AuditDetailResponse;
 import szszhospital.cn.com.mobilenurse.remote.response.DispDetailResponse;
 import szszhospital.cn.com.mobilenurse.remote.response.DrugBill;
-import szszhospital.cn.com.mobilenurse.remote.response.DrugResponse;
 import szszhospital.cn.com.mobilenurse.remote.response.LocAccessResponse;
 import szszhospital.cn.com.mobilenurse.remote.response.LoginResponse;
-import szszhospital.cn.com.mobilenurse.remote.response.PatientInfoResponse;
+import szszhospital.cn.com.mobilenurse.remote.response.RobotDrugResponse;
 import szszhospital.cn.com.mobilenurse.remote.response.SaveAuditStatusResponse;
 import szszhospital.cn.com.mobilenurse.remote.response.SchDateTimeResponse;
-import szszhospital.cn.com.mobilenurse.remote.response.SingleDrugInfoResponse;
 
 /**
  * 2016/11/2 11
@@ -32,18 +30,6 @@ public interface Api {
     //每次登陆清除
     @GET("web/Quality.Ajax.AndroidHttpResponse.cls")
     Observable<Response<SchDateTimeResponse>> clearCacheLogin(@QueryMap Map<String, String> option);
-
-    //获取药品信息
-    @GET("web/Quality.Ajax.AndroidHttpResponse.cls")
-    Observable<Response<DrugResponse>> getDispInfo(@QueryMap Map<String, String> option);
-
-    //获病人信息
-    @GET("web/Quality.Ajax.AndroidHttpResponse.cls")
-    Observable<Response<PatientInfoResponse>> getPatientInfo(@QueryMap Map<String, String> option);
-
-    //获病人信息
-    @GET("web/Quality.Ajax.AndroidHttpResponse.cls")
-    Observable<Response<SingleDrugInfoResponse>> getSingleDrugInfo(@QueryMap Map<String, String> option);
 
     //获取整个发药单信息
     @GET("web/Quality.Ajax.AndroidHttpResponse.cls")
@@ -64,4 +50,8 @@ public interface Api {
     //获取登入科室模块
     @GET("web/Quality.Ajax.AndroidAccessAjax.cls")
     Observable<Response<List<LocAccessResponse>>> getLocAccess(@QueryMap Map<String, String> option);
+
+    //摆药机的药品明细
+    @GET("web/Quality.Ajax.AndroidHttpResponse.cls")
+    Observable<Response<RobotDrugResponse>> updateRobotDrugState(@QueryMap Map<String, String> option);
 }

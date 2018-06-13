@@ -70,7 +70,7 @@ public class PrescriptionActivity extends BasePresentActivity<ActivityPrescripti
     }
 
     @Override
-    protected void initData() {
+    public void initData() {
         super.initData();
         if (!StringUtils.isTrimEmpty(mAuditDr)) {
             getDispInfo(mAuditDr);
@@ -119,11 +119,14 @@ public class PrescriptionActivity extends BasePresentActivity<ActivityPrescripti
                     patient.patName = dispDetailResponse.PatName;
                     patient.age = dispDetailResponse.Age;
                     patient.sex = dispDetailResponse.Sex;
+                    patient.wardDesc = dispDetailResponse.ward;
+                    patient.bedCode = dispDetailResponse.Bed;
                     return patient;
                 }).collect(Collectors.toList());
         mAdapter.setNewData(patients);
         mList.addAll(list);
         switchPatient(patients.get(0).regNo);
+        mDataBinding.sendDrug.setTitle(patients.get(0).wardDesc + "配药");
     }
 
     public void switchPatient(String patientNo) {

@@ -2,7 +2,6 @@ package szszhospital.cn.com.mobilenurse.fragemt;
 
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
-import android.util.Log;
 
 import com.annimon.stream.Optional;
 import com.annimon.stream.Stream;
@@ -64,7 +63,6 @@ public class BaseDrugBillFragment extends BasePresenterFragment<FragmentUnDrugBi
 
     @Override
     public void showDrugBillList(List<DrugBill> list) {
-        Log.d(TAG, "showDrugBillList: "+list);
         mAdapter.setNewData(list);
     }
 
@@ -94,7 +92,6 @@ public class BaseDrugBillFragment extends BasePresenterFragment<FragmentUnDrugBi
     @Override
     protected void initEvent() {
         mDataBinding.refreshLayout.setOnRefreshListener(refreshlayout -> initData());
-
         setOnItemClick();
     }
 
@@ -137,7 +134,19 @@ public class BaseDrugBillFragment extends BasePresenterFragment<FragmentUnDrugBi
             } else {
                 PrescriptionActivity.startPrescriptionActivity(_mActivity, optional.get().AuditDr, optional.get().DispNo);
             }
+        } else if (code.startsWith("KF")) {
+            // 处理包药机
+            handlerKFCode(code);
         }
+
+    }
+
+
+    /**
+     * @param code
+     * @des 子类选择复写处理发药机
+     */
+    protected void handlerKFCode(String code) {
 
     }
 
