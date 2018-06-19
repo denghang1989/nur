@@ -29,5 +29,14 @@ public class DrugListAdapter extends BaseQuickAdapter<DispDetailResponse, BaseVi
                 helper.setVisible(R.id.icon_flag, true);
                 break;
         }
+       /* // 发药机发药的标识
+        switch (item.DrugMechineFlag) {
+            case "0": //发药机不能发药
+                helper.setBackgroundColor(R.id.background,Color.parseColor("#00000000"));
+                break;
+            case "1": //发药机可以发药
+                helper.setBackgroundColor(R.id.background, Color.parseColor("#F2F6FC"));
+                break;
+        }*/
     }
 }

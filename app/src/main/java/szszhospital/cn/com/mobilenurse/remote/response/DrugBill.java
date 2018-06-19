@@ -27,4 +27,6 @@ public class DrugBill {
      */
 
     public String DispTypeCode;
+
+    public String MachineFlag;
 }

@@ -34,7 +34,9 @@ public class DrugBillPresenter extends RxPresenter<DrugBillContract.View, DrugBi
                     @Override
                     public void onNext(List<DrugBill> list) {
                         mView.hideProgress();
-                        mView.showDrugBillList(list);
+                        if (list != null && list.size() > 0) {
+                            mView.showDrugBillList(list);
+                        }
                     }
 
                     @Override

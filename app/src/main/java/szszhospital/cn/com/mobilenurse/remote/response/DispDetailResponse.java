@@ -42,7 +42,7 @@ public class DispDetailResponse implements Parcelable {
     public String ConFirmFlag;
     public String ward;
     public String DosDateTime;
-
+    public String DrugMechineFlag;
 
     @Override
     public int describeContents() {
@@ -64,6 +64,7 @@ public class DispDetailResponse implements Parcelable {
         dest.writeString(this.ConFirmUser);
         dest.writeString(this.ConFirmDateTime);
         dest.writeString(this.Bed);
+        dest.writeString(this.DrugMechineFlag);
     }
 
     public DispDetailResponse() {
@@ -83,6 +84,7 @@ public class DispDetailResponse implements Parcelable {
         this.ConFirmUser = in.readString();
         this.ConFirmDateTime = in.readString();
         this.Bed = in.readString();
+        this.DrugMechineFlag = in.readString();
     }
 
     public static final Creator<DispDetailResponse> CREATOR = new Creator<DispDetailResponse>() {

@@ -15,6 +15,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.annimon.stream.Collectors;
+import com.annimon.stream.Stream;
 import com.blankj.utilcode.util.ScreenUtils;
 import com.blankj.utilcode.util.StringUtils;
 
@@ -134,9 +136,10 @@ public class DispDetailListDialogFragment extends DialogFragment implements Disp
 
     @Override
     public void setDispDetailList(List<DispDetailResponse> list) {
-        mAdapter.setNewData(list);
-        if (list != null && list.size() > 0) {
-            setHeadViewData(list.get(0));
+        List<DispDetailResponse> responses = Stream.of(list).sortBy(response -> response.PatNo).collect(Collectors.toList());
+        mAdapter.setNewData(responses);
+        if (responses != null && responses.size() > 0) {
+            setHeadViewData(responses.get(0));
         }
     }
 

@@ -18,7 +18,7 @@ import java.util.List;
 import szszhospital.cn.com.mobilenurse.R;
 import szszhospital.cn.com.mobilenurse.adapter.PatientListAdapter;
 import szszhospital.cn.com.mobilenurse.base.BasePresentActivity;
-import szszhospital.cn.com.mobilenurse.databinding.ActivityPrescriptionBinding;
+import szszhospital.cn.com.mobilenurse.databinding.ActivityCheckDrugBinding;
 import szszhospital.cn.com.mobilenurse.fragemt.PrescriptionFragment;
 import szszhospital.cn.com.mobilenurse.mvp.contract.DispDetailListContract;
 import szszhospital.cn.com.mobilenurse.mvp.presenter.DispDetailListPresenter;
@@ -27,9 +27,9 @@ import szszhospital.cn.com.mobilenurse.remote.request.DispDetailListRequest;
 import szszhospital.cn.com.mobilenurse.remote.response.DispDetailResponse;
 
 /**
- * 配药明细界面Activity
+ * 配药核对界面Activity
  */
-public class PrescriptionActivity extends BasePresentActivity<ActivityPrescriptionBinding, DispDetailListPresenter> implements DispDetailListContract.View {
+public class DrugCheckActivity extends BasePresentActivity<ActivityCheckDrugBinding, DispDetailListPresenter> implements DispDetailListContract.View {
     private static final String TAG          = "PrescriptionActivity";
     private static final String KEY_AUDITDR  = "AuditDr";
     private static final String KEY_DISPNO   = "DispNo";
@@ -40,8 +40,8 @@ public class PrescriptionActivity extends BasePresentActivity<ActivityPrescripti
     private PatientListAdapter    mAdapter;
     private ArrayList<DispDetailResponse> mList = new ArrayList<>(0);
 
-    public static void startPrescriptionActivity(Activity context, String code, String dispno) {
-        Intent intent = new Intent(context, PrescriptionActivity.class);
+    public static void startDrugCheckActivity(Activity context, String code, String dispno) {
+        Intent intent = new Intent(context, DrugCheckActivity.class);
         intent.putExtra(KEY_AUDITDR, code);
         intent.putExtra(KEY_DISPNO, dispno);
         context.startActivityForResult(intent, REQUEST_CODE);
@@ -49,7 +49,7 @@ public class PrescriptionActivity extends BasePresentActivity<ActivityPrescripti
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_prescription;
+        return R.layout.activity_check_drug;
     }
 
     @Override

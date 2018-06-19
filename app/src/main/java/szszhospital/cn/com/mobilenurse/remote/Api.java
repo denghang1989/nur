@@ -32,11 +32,11 @@ public interface Api {
     Observable<Response<SchDateTimeResponse>> clearCacheLogin(@QueryMap Map<String, String> option);
 
     //获取整个发药单信息
-    @GET("web/Quality.Ajax.AndroidHttpResponse.cls")
+    @GET("web/Quality.Ajax.DispListAjax.cls")
     Observable<Response<List<DrugBill>>> getDrugBillList(@QueryMap Map<String, String> option);
 
     //获取发药单明细列表
-    @GET("web/Quality.Ajax.AndroidHttpResponse.cls")
+    @GET("web/Quality.Ajax.DispDetailListAjax.cls")
     Observable<Response<List<DispDetailResponse>>> getDispDetailList(@QueryMap Map<String, String> option);
 
     //单个药品配药

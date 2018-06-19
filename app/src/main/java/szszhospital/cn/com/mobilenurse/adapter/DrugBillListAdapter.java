@@ -1,5 +1,7 @@
 package szszhospital.cn.com.mobilenurse.adapter;
 
+import android.graphics.Color;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
@@ -33,6 +35,20 @@ public class DrugBillListAdapter extends BaseQuickAdapter<DrugBill, BaseViewHold
         helper.setText(R.id.dispNo, "单号：" + item.DispNo)
                 .setText(R.id.WardDesc, "病区：" + item.WardDesc)
                 .setText(R.id.dispType, item.DispType + "   " + item.DispDateTime + "   " + item.AuditDr);
+        drugType(helper, item);
+
+        switch (item.MachineFlag) {
+            case "0": //发药机不能发药
+                helper.setBackgroundColor(R.id.background, Color.parseColor("#00000000"));
+                break;
+            case "1": //发药机可以发药
+                helper.setBackgroundColor(R.id.background, Color.parseColor("#90EE90"));
+                helper.setImageResource(R.id.icon, R.drawable.icon_machine);
+                break;
+        }
+    }
+
+    private void drugType(BaseViewHolder helper, DrugBill item) {
         switch (item.DispTypeCode) {
             case "KFY": //口服药
                 helper.setImageResource(R.id.icon, R.drawable.icon_drug_eat);

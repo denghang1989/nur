@@ -40,6 +40,7 @@
             android:name=".activity.PrescriptionActivity"
             android:theme="@style/AppTheme.Transparent"
             />
+        <activity android:name=".activity.DrugCheckActivity"/>
 
         <receiver
             android:name=".broadcast.QRCodeBroadcastReceiver"
