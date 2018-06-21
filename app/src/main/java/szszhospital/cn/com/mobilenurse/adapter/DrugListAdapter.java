@@ -36,6 +36,20 @@ public class DrugListAdapter extends BaseQuickAdapter<DispDetailResponse, BaseVi
                 helper.setVisible(R.id.icon_flag, true);
                 break;
         }
+        int flag = getDrugNumberFlag(item);
+        switch (flag) {
+            case 0: //整包
+                helper.setBackgroundColor(R.id.background, Color.parseColor("#00000000"));
+                break;
+            case 1: //非整包
+                helper.setBackgroundColor(R.id.background, Color.parseColor("#8DEEEE"));
+                break;
+        }
+        //TextView drugName = helper.getView(R.id.drugName);
+        //drugName.setSelected(true);
+    }
+
+    private int getDrugNumberFlag(DispDetailResponse item) {
         int flag = 0;
         // 判断是否是整包装
         if (item.Spec != null && item.Spec.contains("*")) {
@@ -46,16 +60,13 @@ public class DrugListAdapter extends BaseQuickAdapter<DispDetailResponse, BaseVi
             if (TextUtils.isDigitsOnly(number) && TextUtils.isDigitsOnly(item.DispQty)) {
                 int dispQty = Integer.parseInt(item.DispQty);
                 int spec = Integer.parseInt(number);
-                flag = dispQty % spec;
+                if (dispQty % spec == 0) {
+                    flag = 0;
+                } else {
+                    flag = 1;
+                }
             }
         }
-        switch (flag) {
-            case 0: //整包
-                helper.setBackgroundColor(R.id.background, Color.parseColor("#00000000"));
-                break;
-            case 1: //非整包
-                helper.setBackgroundColor(R.id.background, Color.parseColor("#8DEEEE"));
-                break;
-        }
+        return flag;
     }
 }

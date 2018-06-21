@@ -35,14 +35,14 @@
                 android:id="@+id/recyclerView"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="2"
+                android:layout_weight="1"
                 android:background="@color/lightGray"/>
 
             <FrameLayout
                 android:id="@+id/container"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="5">
+                android:layout_weight="4">
 
             </FrameLayout>
         </LinearLayout>

@@ -2,6 +2,7 @@ package szszhospital.cn.com.mobilenurse.activity;
 
 import android.Manifest;
 import android.content.Intent;
+import android.view.Gravity;
 
 import com.blankj.utilcode.util.PermissionUtils;
 import com.blankj.utilcode.util.ToastUtils;
@@ -62,6 +63,8 @@ public class MainActivity extends BaseActivity<ActiviyMainBinding> {
                 });
             }
         });
+
+        mDataBinding.toolbar.setNavigationOnClickListener(v -> mDataBinding.drawerLayout.openDrawer(Gravity.START));
     }
 
     @Override
