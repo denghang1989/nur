@@ -15,7 +15,6 @@ import java.util.List;
 
 import szszhospital.cn.com.mobilenurse.App;
 import szszhospital.cn.com.mobilenurse.R;
-import szszhospital.cn.com.mobilenurse.activity.DrugCheckActivity;
 import szszhospital.cn.com.mobilenurse.activity.PrescriptionActivity;
 import szszhospital.cn.com.mobilenurse.adapter.DrugBillListAdapter;
 import szszhospital.cn.com.mobilenurse.base.BasePresenterFragment;
@@ -99,8 +98,8 @@ public class BaseDrugBillFragment extends BasePresenterFragment<FragmentUnDrugBi
     protected void setOnItemClick() {
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
             mDrugBill = mAdapter.getItem(position);
-//            showDialog(mDrugBill);
-            DrugCheckActivity.startDrugCheckActivity(_mActivity, mDrugBill.AuditDr, mDrugBill.DispNo);
+            showDialog(mDrugBill);
+            //DrugCheckActivity.startDrugCheckActivity(_mActivity, mDrugBill.AuditDr, mDrugBill.DispNo);
         });
     }
 
@@ -132,8 +131,8 @@ public class BaseDrugBillFragment extends BasePresenterFragment<FragmentUnDrugBi
         if (code.startsWith("ZXYF")) {
             Optional<DrugBill> optional = Stream.of(mAdapter.getData()).filter(drugbill -> StringUtils.equalsIgnoreCase(code, drugbill.DispNo)).findFirst();
             if (!StringUtils.isTrimEmpty(mRequest.Flag)) {
-                //showDialog(optional.get());
-                DrugCheckActivity.startDrugCheckActivity(_mActivity, optional.get().AuditDr, optional.get().DispNo);
+                showDialog(optional.get());
+                //DrugCheckActivity.startDrugCheckActivity(_mActivity, optional.get().AuditDr, optional.get().DispNo);
             } else {
                 PrescriptionActivity.startPrescriptionActivity(_mActivity, optional.get().AuditDr, optional.get().DispNo);
             }

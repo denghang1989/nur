@@ -98,6 +98,15 @@ public class DrugCheckActivity extends BasePresentActivity<ActivityCheckDrugBind
         });
 
         mDataBinding.sendDrug.setNavigationOnClickListener(v -> finish());
+
+        mDataBinding.cancel.setOnClickListener(v -> finish());
+
+        mDataBinding.ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
     @Override
