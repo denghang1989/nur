@@ -2,11 +2,6 @@ package szszhospital.cn.com.mobilenurse.fragemt;
 
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
-import android.view.View;
-
-import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -43,15 +38,22 @@ public class PatientListFragment extends BasePresenterFragment<FragmentPatientLi
     }
 
     @Override
+    public void refresh() {
+        mDataBinding.refreshLayout.finishRefresh();
+    }
+
+    @Override
     protected void init() {
         super.init();
         mAdapter = new IPatientListAdapter(R.layout.item_patient_list);
         mRequest = new PatientListRequest();
+        setSwipeBackEnable(false);
     }
 
     @Override
     protected void initView() {
         super.initView();
+        mDataBinding.refreshLayout.requestDisallowInterceptTouchEvent(true);
         mDataBinding.patientList.setLayoutManager(new LinearLayoutManager(_mActivity));
         mDataBinding.patientList.addItemDecoration(new DividerItemDecoration(_mActivity, DividerItemDecoration.VERTICAL));
         mDataBinding.patientList.setAdapter(mAdapter);
@@ -71,21 +73,15 @@ public class PatientListFragment extends BasePresenterFragment<FragmentPatientLi
         mPresenter.getPatientList(mRequest);
     }
 
+    private static final String TAG = "PatientListFragment";
+
     @Override
     protected void initEvent() {
         super.initEvent();
-        mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                EventBus.getDefault().post(new SelectPatientEvent(mAdapter.getItem(position)));
-            }
+        mAdapter.setOnItemClickListener((adapter, view, position) -> {
+            EventBus.getDefault().post(new SelectPatientEvent(mAdapter.getItem(position)));
+            mAdapter.setSelected(position);
         });
-
-        mDataBinding.refreshLayout.setOnRefreshListener(new OnRefreshListener() {
-            @Override
-            public void onRefresh(RefreshLayout refreshlayout) {
-                initData();
-            }
-        });
+        mDataBinding.refreshLayout.setOnRefreshListener(refreshlayout -> initData());
     }
 }

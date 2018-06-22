@@ -82,4 +82,21 @@ public class PatientInfo implements Parcelable ,Serializable{
             return new PatientInfo[size];
         }
     };
+
+    @Override
+    public String toString() {
+        return "PatientInfo{" +
+                "Age='" + Age + '\'' +
+                ", Diagnose='" + Diagnose + '\'' +
+                ", DisBed='" + DisBed + '\'' +
+                ", Doctor='" + Doctor + '\'' +
+                ", EpisodeID='" + EpisodeID + '\'' +
+                ", MedicareNo='" + MedicareNo + '\'' +
+                ", PAPMIName='" + PAPMIName + '\'' +
+                ", PaAdmDateTime='" + PaAdmDateTime + '\'' +
+                ", PatientID='" + PatientID + '\'' +
+                ", PayType='" + PayType + '\'' +
+                ", Sex='" + Sex + '\'' +
+                '}';
+    }
 }

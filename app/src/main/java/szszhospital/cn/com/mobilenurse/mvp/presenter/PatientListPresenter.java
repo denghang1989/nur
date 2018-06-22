@@ -31,7 +31,7 @@ public class PatientListPresenter extends RxPresenter<PatientListContract.View, 
                     public void onNext(List<PatientInfo> patientInfos) {
                         List<PatientInfo> list = Stream.of(patientInfos).map(patientInfo -> {
                             if (patientInfo.DisBed == null) {
-                                patientInfo.DisBed = "";
+                                patientInfo.DisBed = "无";
                             }
                             return patientInfo;
                         }).sortBy(patientInfo -> patientInfo.DisBed).collect(Collectors.toList());
@@ -40,12 +40,12 @@ public class PatientListPresenter extends RxPresenter<PatientListContract.View, 
 
                     @Override
                     public void onError(Throwable e) {
-
+                        mView.refresh();
                     }
 
                     @Override
                     public void onComplete() {
-
+                        mView.refresh();
                     }
                 });
     }

@@ -14,6 +14,7 @@ public interface PatientListContract {
 
         void showPatientList(List<PatientInfo> list);
 
+        void refresh();
     }
 
     interface Model extends BaseModel {

@@ -2,6 +2,7 @@ package szszhospital.cn.com.mobilenurse.activity;
 
 import android.Manifest;
 import android.content.Intent;
+import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
 
 import com.blankj.utilcode.util.PermissionUtils;
@@ -20,6 +21,7 @@ import szszhospital.cn.com.mobilenurse.event.QRCodeEvent;
 import szszhospital.cn.com.mobilenurse.fragemt.PatientListFragment;
 
 public class MainActivity extends BaseActivity<ActiviyMainBinding> {
+    private static final String TAG = "MainActivity";
     public static final  int      RESULT_CODE = 100;
     private static final String[] perms       = {Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE};
     private MainActivityAdapter mAdapter;
@@ -37,6 +39,7 @@ public class MainActivity extends BaseActivity<ActiviyMainBinding> {
         mDataBinding.viewPager.setAdapter(mAdapter);
         mDataBinding.toolbar.setTitle(App.loginUser.UserName + "，您好！");
         loadRootFragment(R.id.patientList, PatientListFragment.newInstance());
+        mDataBinding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
     }
 
     @Override
