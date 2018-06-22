@@ -26,7 +26,7 @@ public class DrugBillUnCompletedFragment extends BaseDrugBillFragment {
     protected void setOnItemClick() {
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
             //判断一下当前配药单的状态>未发药的状态
-            PrescriptionActivity.startPrescriptionActivity(_mActivity, mAdapter.getItem(position).AuditDr, mAdapter.getItem(position).DispNo);
+            PrescriptionActivity.startPrescriptionActivity(_mActivity, mAdapter.getItem(position));
         });
     }
 

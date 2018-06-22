@@ -99,7 +99,6 @@ public class BaseDrugBillFragment extends BasePresenterFragment<FragmentUnDrugBi
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
             mDrugBill = mAdapter.getItem(position);
             showDialog(mDrugBill);
-            //DrugCheckActivity.startDrugCheckActivity(_mActivity, mDrugBill.AuditDr, mDrugBill.DispNo);
         });
     }
 
@@ -132,9 +131,8 @@ public class BaseDrugBillFragment extends BasePresenterFragment<FragmentUnDrugBi
             Optional<DrugBill> optional = Stream.of(mAdapter.getData()).filter(drugbill -> StringUtils.equalsIgnoreCase(code, drugbill.DispNo)).findFirst();
             if (!StringUtils.isTrimEmpty(mRequest.Flag)) {
                 showDialog(optional.get());
-                //DrugCheckActivity.startDrugCheckActivity(_mActivity, optional.get().AuditDr, optional.get().DispNo);
             } else {
-                PrescriptionActivity.startPrescriptionActivity(_mActivity, optional.get().AuditDr, optional.get().DispNo);
+                PrescriptionActivity.startPrescriptionActivity(_mActivity, optional.get());
             }
         } else if (code.startsWith("KF")) {
             // 处理包药机

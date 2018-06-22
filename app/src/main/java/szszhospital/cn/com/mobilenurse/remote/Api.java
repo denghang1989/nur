@@ -13,6 +13,7 @@ import szszhospital.cn.com.mobilenurse.remote.response.DispDetailResponse;
 import szszhospital.cn.com.mobilenurse.remote.response.DrugBill;
 import szszhospital.cn.com.mobilenurse.remote.response.LocAccessResponse;
 import szszhospital.cn.com.mobilenurse.remote.response.LoginResponse;
+import szszhospital.cn.com.mobilenurse.remote.response.PatientInfo;
 import szszhospital.cn.com.mobilenurse.remote.response.RobotDrugResponse;
 import szszhospital.cn.com.mobilenurse.remote.response.SaveAuditStatusResponse;
 import szszhospital.cn.com.mobilenurse.remote.response.SchDateTimeResponse;
@@ -54,4 +55,8 @@ public interface Api {
     //摆药机的药品明细
     @GET("web/Quality.Ajax.AndroidHttpResponse.cls")
     Observable<Response<RobotDrugResponse>> updateRobotDrugState(@QueryMap Map<String, String> option);
+
+    //获取病人列表
+    @GET("web/Quality.Ajax.PatientListAjax.cls")
+    Observable<Response<List<PatientInfo>>> getPatientListByLocId(@QueryMap Map<String,String> option);
 }

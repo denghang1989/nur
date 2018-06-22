@@ -17,6 +17,7 @@ import szszhospital.cn.com.mobilenurse.adapter.MainActivityAdapter;
 import szszhospital.cn.com.mobilenurse.base.BaseActivity;
 import szszhospital.cn.com.mobilenurse.databinding.ActiviyMainBinding;
 import szszhospital.cn.com.mobilenurse.event.QRCodeEvent;
+import szszhospital.cn.com.mobilenurse.fragemt.PatientListFragment;
 
 public class MainActivity extends BaseActivity<ActiviyMainBinding> {
     public static final  int      RESULT_CODE = 100;
@@ -35,6 +36,7 @@ public class MainActivity extends BaseActivity<ActiviyMainBinding> {
         setSwipeBackEnable(false);
         mDataBinding.viewPager.setAdapter(mAdapter);
         mDataBinding.toolbar.setTitle(App.loginUser.UserName + "，您好！");
+        loadRootFragment(R.id.patientList, PatientListFragment.newInstance());
     }
 
     @Override

@@ -2,6 +2,7 @@ package szszhospital.cn.com.mobilenurse.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Parcelable;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
@@ -25,6 +26,7 @@ import szszhospital.cn.com.mobilenurse.mvp.presenter.DispDetailListPresenter;
 import szszhospital.cn.com.mobilenurse.remote.model.Patient;
 import szszhospital.cn.com.mobilenurse.remote.request.DispDetailListRequest;
 import szszhospital.cn.com.mobilenurse.remote.response.DispDetailResponse;
+import szszhospital.cn.com.mobilenurse.remote.response.DrugBill;
 
 /**
  * 配药明细界面Activity
@@ -33,17 +35,17 @@ public class PrescriptionActivity extends BasePresentActivity<ActivityPrescripti
     private static final String TAG          = "PrescriptionActivity";
     private static final String KEY_AUDITDR  = "AuditDr";
     private static final String KEY_DISPNO   = "DispNo";
+    private static final String KEY_DRUGBILL = "drugbill";
     public static final  int    REQUEST_CODE = 200;
-    private String                mAuditDr;
-    private String                mDispNo;
+
     private DispDetailListRequest mRequest;
     private PatientListAdapter    mAdapter;
     private ArrayList<DispDetailResponse> mList = new ArrayList<>(0);
+    private DrugBill mDrugBill;
 
-    public static void startPrescriptionActivity(Activity context, String code, String dispno) {
+    public static void startPrescriptionActivity(Activity context, DrugBill drugBill) {
         Intent intent = new Intent(context, PrescriptionActivity.class);
-        intent.putExtra(KEY_AUDITDR, code);
-        intent.putExtra(KEY_DISPNO, dispno);
+        intent.putExtra(KEY_DRUGBILL, (Parcelable) drugBill);
         context.startActivityForResult(intent, REQUEST_CODE);
     }
 
@@ -55,9 +57,7 @@ public class PrescriptionActivity extends BasePresentActivity<ActivityPrescripti
     @Override
     protected void init() {
         super.init();
-        Intent intent = getIntent();
-        mAuditDr = intent.getStringExtra(KEY_AUDITDR);
-        mDispNo = intent.getStringExtra(KEY_DISPNO);
+        mDrugBill = getIntent().getParcelableExtra(KEY_DRUGBILL);
         mRequest = new DispDetailListRequest();
         mAdapter = new PatientListAdapter(R.layout.item_patient);
     }
@@ -74,8 +74,8 @@ public class PrescriptionActivity extends BasePresentActivity<ActivityPrescripti
     @Override
     public void initData() {
         super.initData();
-        if (!StringUtils.isTrimEmpty(mAuditDr)) {
-            getDispInfo(mAuditDr);
+        if (!StringUtils.isTrimEmpty(mDrugBill.AuditDr)) {
+            getDispInfo(mDrugBill.AuditDr);
         }
     }
 
@@ -132,7 +132,7 @@ public class PrescriptionActivity extends BasePresentActivity<ActivityPrescripti
     }
 
     public void switchPatient(String patientNo) {
-        replaceFragment(PrescriptionFragment.newInstance(mList, patientNo, mDispNo), false);
+        replaceFragment(PrescriptionFragment.newInstance(mList, patientNo, mDrugBill.DispNo), false);
     }
 
     public void findPatient(String patientId) {
