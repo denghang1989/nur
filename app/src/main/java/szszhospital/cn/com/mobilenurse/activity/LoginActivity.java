@@ -125,6 +125,7 @@ public class LoginActivity extends BasePresentActivity<ActivityLoginBinding, Log
                 App.loginUser.WardID = mAdapter.getItem(position).WardID;
                 App.loginUser.UserGroupID = mAdapter.getItem(position).GroupID;
                 App.loginUser.UserLocDesc = mAdapter.getItem(position).LocDesc;
+                App.loginUser.LocType = mAdapter.getItem(position).LocType;
                 App.loginUser.UserID = mUser.getName();
                 if (KeyboardUtils.isSoftInputVisible(LoginActivity.this)) {
                     KeyboardUtils.hideSoftInput(LoginActivity.this);

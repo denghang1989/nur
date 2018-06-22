@@ -6,6 +6,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
 
 import com.blankj.utilcode.util.PermissionUtils;
+import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
@@ -69,7 +70,11 @@ public class MainActivity extends BaseActivity<ActiviyMainBinding> {
             }
         });
 
-        mDataBinding.toolbar.setNavigationOnClickListener(v -> mDataBinding.drawerLayout.openDrawer(Gravity.START));
+        mDataBinding.toolbar.setNavigationOnClickListener(v -> {
+            if (StringUtils.equals(App.loginUser.LocType,"E")) {
+                mDataBinding.drawerLayout.openDrawer(Gravity.START);
+            }
+        });
     }
 
     @Override

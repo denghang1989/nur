@@ -8,6 +8,11 @@ import szszhospital.cn.com.mobilenurse.fragemt.DrugBillHandoverFragment;
 import szszhospital.cn.com.mobilenurse.fragemt.DrugBillHandoverNurseFragment;
 import szszhospital.cn.com.mobilenurse.fragemt.DrugBillReceiveFragment;
 import szszhospital.cn.com.mobilenurse.fragemt.DrugBillUnCompletedFragment;
+import szszhospital.cn.com.mobilenurse.fragemt.EMRFragment;
+import szszhospital.cn.com.mobilenurse.fragemt.LisResultFragment;
+import szszhospital.cn.com.mobilenurse.fragemt.NOrdersFragment;
+import szszhospital.cn.com.mobilenurse.fragemt.PacsResultFragment;
+import szszhospital.cn.com.mobilenurse.fragemt.SOrdersFragment;
 
 public class FragmentFactory {
 
@@ -31,6 +36,21 @@ public class FragmentFactory {
                 break;
             case "DrugBillHandoverNurseFragment": // 待接收
                 fragment = DrugBillHandoverNurseFragment.newInstance();
+                break;
+            case "EMRFragment": // 电子病历
+                fragment = EMRFragment.newInstance();
+                break;
+            case "LisResultFragment": // Lis检验报告
+                fragment = LisResultFragment.newInstance();
+                break;
+            case "NOrdersFragment": // 临时医嘱
+                fragment = NOrdersFragment.newInstance();
+                break;
+            case "PacsResultFragment": // PACS检查报告
+                fragment = PacsResultFragment.newInstance();
+                break;
+            case "SOrdersFragment": // 长期医嘱
+                fragment = SOrdersFragment.newInstance();
                 break;
         }
         return fragment;
