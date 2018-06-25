@@ -2,11 +2,8 @@ package szszhospital.cn.com.mobilenurse.activity;
 
 import android.Manifest;
 import android.content.Intent;
-import android.support.v4.widget.DrawerLayout;
-import android.view.Gravity;
 
 import com.blankj.utilcode.util.PermissionUtils;
-import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
@@ -40,7 +37,7 @@ public class MainActivity extends BaseActivity<ActiviyMainBinding> {
         mDataBinding.viewPager.setAdapter(mAdapter);
         mDataBinding.toolbar.setTitle(App.loginUser.UserName + "，您好！");
         loadRootFragment(R.id.patientList, PatientListFragment.newInstance());
-        mDataBinding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+        App.access.toolbarHandler(mDataBinding.drawerLayout);
     }
 
     @Override
@@ -71,9 +68,7 @@ public class MainActivity extends BaseActivity<ActiviyMainBinding> {
         });
 
         mDataBinding.toolbar.setNavigationOnClickListener(v -> {
-            if (StringUtils.equals(App.loginUser.LocType,"E")) {
-                mDataBinding.drawerLayout.openDrawer(Gravity.START);
-            }
+            App.access.openDrawer(mDataBinding.drawerLayout);
         });
     }
 

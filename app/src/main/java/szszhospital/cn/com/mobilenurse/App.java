@@ -9,6 +9,7 @@ import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 
+import szszhospital.cn.com.mobilenurse.control.LocAccess;
 import szszhospital.cn.com.mobilenurse.remote.ApiService;
 import szszhospital.cn.com.mobilenurse.remote.model.LoginUser;
 
@@ -28,6 +29,13 @@ public class App extends MultiDexApplication {
     }
 
     public static LoginUser loginUser = new LoginUser();
+
+
+    public static LocAccess access ;
+
+    public static void setAccess(LocAccess access) {
+        App.access = access;
+    }
 
     @Override
     public void onCreate() {

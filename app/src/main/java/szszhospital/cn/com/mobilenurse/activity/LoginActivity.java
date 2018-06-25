@@ -15,6 +15,8 @@ import szszhospital.cn.com.mobilenurse.App;
 import szszhospital.cn.com.mobilenurse.R;
 import szszhospital.cn.com.mobilenurse.adapter.LoginSpinnerAdapter;
 import szszhospital.cn.com.mobilenurse.base.BasePresentActivity;
+import szszhospital.cn.com.mobilenurse.control.LocAccess;
+import szszhospital.cn.com.mobilenurse.control.LocAccessFactory;
 import szszhospital.cn.com.mobilenurse.databinding.ActivityLoginBinding;
 import szszhospital.cn.com.mobilenurse.databinding.User;
 import szszhospital.cn.com.mobilenurse.db.LocTable;
@@ -129,6 +131,10 @@ public class LoginActivity extends BasePresentActivity<ActivityLoginBinding, Log
                 App.loginUser.UserID = mUser.getName();
                 if (KeyboardUtils.isSoftInputVisible(LoginActivity.this)) {
                     KeyboardUtils.hideSoftInput(LoginActivity.this);
+                }
+                LocAccess locAccess = LocAccessFactory.getInstance(App.loginUser.LocType);
+                if (locAccess != null) {
+                    App.setAccess(locAccess);
                 }
             }
 
