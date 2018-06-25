@@ -2,6 +2,7 @@ package szszhospital.cn.com.mobilenurse.activity;
 
 import android.Manifest;
 import android.content.Intent;
+import android.view.Gravity;
 
 import com.blankj.utilcode.util.PermissionUtils;
 import com.blankj.utilcode.util.ToastUtils;
@@ -19,7 +20,7 @@ import szszhospital.cn.com.mobilenurse.event.QRCodeEvent;
 import szszhospital.cn.com.mobilenurse.fragemt.PatientListFragment;
 
 public class MainActivity extends BaseActivity<ActiviyMainBinding> {
-    private static final String TAG = "MainActivity";
+    private static final String   TAG         = "MainActivity";
     public static final  int      RESULT_CODE = 100;
     private static final String[] perms       = {Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE};
     private MainActivityAdapter mAdapter;
@@ -92,5 +93,9 @@ public class MainActivity extends BaseActivity<ActiviyMainBinding> {
             ToastUtils.showShort(code);
             EventBus.getDefault().post(new QRCodeEvent(code));
         }
+    }
+
+    public void closeDrawer() {
+        mDataBinding.drawerLayout.closeDrawer(Gravity.START);
     }
 }

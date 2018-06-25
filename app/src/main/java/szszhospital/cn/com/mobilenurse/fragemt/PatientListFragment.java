@@ -9,6 +9,7 @@ import java.util.List;
 
 import szszhospital.cn.com.mobilenurse.App;
 import szszhospital.cn.com.mobilenurse.R;
+import szszhospital.cn.com.mobilenurse.activity.MainActivity;
 import szszhospital.cn.com.mobilenurse.adapter.IPatientListAdapter;
 import szszhospital.cn.com.mobilenurse.base.BasePresenterFragment;
 import szszhospital.cn.com.mobilenurse.databinding.FragmentPatientListBinding;
@@ -81,6 +82,7 @@ public class PatientListFragment extends BasePresenterFragment<FragmentPatientLi
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
             EventBus.getDefault().post(new SelectPatientEvent(mAdapter.getItem(position)));
             mAdapter.setSelected(position);
+            ((MainActivity) _mActivity).closeDrawer();
         });
         mDataBinding.refreshLayout.setOnRefreshListener(refreshlayout -> initData());
     }
