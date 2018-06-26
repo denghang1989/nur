@@ -1,11 +1,27 @@
 package szszhospital.cn.com.mobilenurse.fragemt;
 
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.view.View;
+
+import com.blankj.utilcode.util.SPUtils;
+
+import java.util.List;
+
+import szszhospital.cn.com.mobilenurse.App;
 import szszhospital.cn.com.mobilenurse.R;
+import szszhospital.cn.com.mobilenurse.adapter.PacsResultAdapter;
+import szszhospital.cn.com.mobilenurse.databinding.FragmentOrderBinding;
+import szszhospital.cn.com.mobilenurse.mvp.contract.PacsResultContract;
+import szszhospital.cn.com.mobilenurse.mvp.presenter.PacsResultPresenter;
+import szszhospital.cn.com.mobilenurse.remote.response.PacsOrder;
 
 /**
  * PACS检查报告
  */
-public class PacsResultFragment extends BaseDoctorFragment {
+public class PacsResultFragment extends BaseDoctorFragment<FragmentOrderBinding, PacsResultPresenter> implements PacsResultContract.View {
+
+    private PacsResultAdapter mAdapter;
 
     public static PacsResultFragment newInstance() {
         return new PacsResultFragment();
@@ -15,4 +31,61 @@ public class PacsResultFragment extends BaseDoctorFragment {
     public int getLayoutId() {
         return R.layout.fragment_order;
     }
+
+    @Override
+    protected PacsResultPresenter initPresenter() {
+        return new PacsResultPresenter();
+    }
+
+    @Override
+    protected void init() {
+        super.init();
+        mAdapter = new PacsResultAdapter(R.layout.item_pacs_order);
+    }
+
+    @Override
+    protected void initData() {
+        super.initData();
+        if (App.patientInfo != null) {
+            String userCode = SPUtils.getInstance().getString("user_name");
+            mPresenter.getPacsOrderList(App.patientInfo.EpisodeID, userCode);
+        }
+    }
+
+    @Override
+    protected void initEvent() {
+        super.initEvent();
+        mDataBinding.top.setOnClickListener(v -> mDataBinding.orderList.scrollToPosition(0));
+        mDataBinding.refreshLayout.setOnRefreshListener(refreshlayout -> initData());
+    }
+
+    @Override
+    protected void initView() {
+        super.initView();
+        mDataBinding.orderList.setLayoutManager(new LinearLayoutManager(_mActivity));
+        mDataBinding.orderList.addItemDecoration(new DividerItemDecoration(_mActivity, DividerItemDecoration.VERTICAL));
+        mDataBinding.orderList.setAdapter(mAdapter);
+        mDataBinding.refreshLayout.setEnableLoadmore(false);
+    }
+
+    @Override
+    public void showProgress() {
+        mDataBinding.progress.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideProgress() {
+        mDataBinding.progress.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showPacsOrderList(List<PacsOrder> list) {
+        mAdapter.setNewData(list);
+    }
+
+    @Override
+    public void refresh() {
+        mDataBinding.refreshLayout.finishRefresh();
+    }
+
 }

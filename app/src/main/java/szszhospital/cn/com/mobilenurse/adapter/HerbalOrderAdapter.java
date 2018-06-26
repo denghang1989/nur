@@ -31,7 +31,7 @@ public class HerbalOrderAdapter extends BaseQuickAdapter<Order, BaseViewHolder> 
             }
         }
         helper.setText(R.id.order_name, result)
-                .setText(R.id.title,item.OrdCreateDate+" "+item.OrdStartTime)
+                .setText(R.id.title,item.OrdCreateDate)
                 .setText(R.id.order_desc,item.RecipeInfo);
     }
 }
