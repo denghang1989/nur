@@ -44,6 +44,7 @@
         <activity android:name=".activity.LisOrderDetailActivity"
                   android:theme="@style/AppTheme.Transparent"
             />
+        <activity android:name=".activity.PacsDetailActivity"/>
 
         <receiver
             android:name=".broadcast.QRCodeBroadcastReceiver"
