@@ -9,7 +9,7 @@ import szszhospital.cn.com.mobilenurse.remote.response.PatientInfo;
 
 public class IPatientListAdapter extends BaseQuickAdapter<PatientInfo, BaseViewHolder> {
 
-    private int mSelected;
+    private int mSelected = -1;
 
     public IPatientListAdapter(int layoutResId) {
         super(layoutResId);

@@ -37,6 +37,7 @@ public class FragmentFactory {
             case "DrugBillHandoverNurseFragment": // 待接收
                 fragment = DrugBillHandoverNurseFragment.newInstance();
                 break;
+
             case "EMRFragment": // 电子病历
                 fragment = EMRFragment.newInstance();
                 break;

@@ -7,12 +7,15 @@ import java.util.Map;
 import io.reactivex.Observable;
 import retrofit2.Response;
 import retrofit2.http.GET;
+import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 import szszhospital.cn.com.mobilenurse.remote.response.AuditDetailResponse;
 import szszhospital.cn.com.mobilenurse.remote.response.DispDetailResponse;
 import szszhospital.cn.com.mobilenurse.remote.response.DrugBill;
+import szszhospital.cn.com.mobilenurse.remote.response.LisOrder;
 import szszhospital.cn.com.mobilenurse.remote.response.LocAccessResponse;
 import szszhospital.cn.com.mobilenurse.remote.response.LoginResponse;
+import szszhospital.cn.com.mobilenurse.remote.response.Order;
 import szszhospital.cn.com.mobilenurse.remote.response.PatientInfo;
 import szszhospital.cn.com.mobilenurse.remote.response.RobotDrugResponse;
 import szszhospital.cn.com.mobilenurse.remote.response.SaveAuditStatusResponse;
@@ -58,5 +61,13 @@ public interface Api {
 
     //获取病人列表
     @GET("web/Quality.Ajax.PatientListAjax.cls")
-    Observable<Response<List<PatientInfo>>> getPatientListByLocId(@QueryMap Map<String,String> option);
+    Observable<Response<List<PatientInfo>>> getPatientListByLocId(@QueryMap Map<String, String> option);
+
+    //获取医嘱信息
+    @GET("web/Quality.Ajax.OrderAjax.cls")
+    Observable<Response<List<Order>>> getPatientOrderList(@QueryMap Map<String, String> option);
+
+    //获取list医嘱信息
+    @GET("web/Quality.Ajax.LisOrderAjax.cls")
+    Observable<Response<List<LisOrder>>> getPatientLisOrder(@Query("PatientID") String PatientID, @Query("EpisodeID") String EpisodeID);
 }

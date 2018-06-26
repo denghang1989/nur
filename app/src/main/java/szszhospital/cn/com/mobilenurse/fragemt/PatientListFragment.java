@@ -80,9 +80,10 @@ public class PatientListFragment extends BasePresenterFragment<FragmentPatientLi
     protected void initEvent() {
         super.initEvent();
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
-            EventBus.getDefault().post(new SelectPatientEvent(mAdapter.getItem(position)));
             mAdapter.setSelected(position);
+            App.setPatientInfo(mAdapter.getItem(position));
             ((MainActivity) _mActivity).closeDrawer();
+            EventBus.getDefault().post(new SelectPatientEvent(mAdapter.getItem(position)));
         });
         mDataBinding.refreshLayout.setOnRefreshListener(refreshlayout -> initData());
     }

@@ -1,18 +1,16 @@
 package szszhospital.cn.com.mobilenurse.fragemt;
 
-import szszhospital.cn.com.mobilenurse.R;
-
 /**
  * 临时医嘱
  */
-public class NOrdersFragment extends BaseDoctorFragment {
+public class NOrdersFragment extends BaseOrdersFragment{
 
     public static NOrdersFragment newInstance() {
         return new NOrdersFragment();
     }
 
     @Override
-    public int getLayoutId() {
-        return R.layout.fragment_order;
+    protected String getOrderType() {
+        return "N";
     }
 }
