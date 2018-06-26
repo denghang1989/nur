@@ -41,7 +41,9 @@
             android:theme="@style/AppTheme.Transparent"
             />
         <activity android:name=".activity.DrugCheckActivity"/>
-        <activity android:name=".activity.LisOrderDetailActivity"/>
+        <activity android:name=".activity.LisOrderDetailActivity"
+                  android:theme="@style/AppTheme.Transparent"
+            />
 
         <receiver
             android:name=".broadcast.QRCodeBroadcastReceiver"

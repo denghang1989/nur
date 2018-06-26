@@ -13,6 +13,7 @@ import szszhospital.cn.com.mobilenurse.remote.response.AuditDetailResponse;
 import szszhospital.cn.com.mobilenurse.remote.response.DispDetailResponse;
 import szszhospital.cn.com.mobilenurse.remote.response.DrugBill;
 import szszhospital.cn.com.mobilenurse.remote.response.LisOrder;
+import szszhospital.cn.com.mobilenurse.remote.response.LisOrderDetail;
 import szszhospital.cn.com.mobilenurse.remote.response.LocAccessResponse;
 import szszhospital.cn.com.mobilenurse.remote.response.LoginResponse;
 import szszhospital.cn.com.mobilenurse.remote.response.Order;
@@ -70,4 +71,8 @@ public interface Api {
     //获取list医嘱信息
     @GET("web/Quality.Ajax.LisOrderAjax.cls")
     Observable<Response<List<LisOrder>>> getPatientLisOrder(@Query("PatientID") String PatientID, @Query("EpisodeID") String EpisodeID);
+
+    //获取lisdetail详细
+    @GET("web/Quality.Ajax.LisOrderDetailAjax.cls")
+    Observable<Response<List<LisOrderDetail>>> getLisOrderDetail(@Query("ReportDRs") String ReportDRs);
 }

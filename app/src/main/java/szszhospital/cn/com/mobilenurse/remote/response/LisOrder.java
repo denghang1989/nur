@@ -1,6 +1,11 @@
 package szszhospital.cn.com.mobilenurse.remote.response;
 
-public class LisOrder {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.io.Serializable;
+
+public class LisOrder implements Parcelable,Serializable{
 
     /**
      * AdmDate : 2018-05-07
@@ -57,4 +62,84 @@ public class LisOrder {
     public String TSResultAnomaly;
     public String VisitNumberReportDR;
     public String WarnComm;
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.AdmDate);
+        dest.writeString(this.AdmLoc);
+        dest.writeString(this.AdmNo);
+        dest.writeString(this.AdmType);
+        dest.writeString(this.AuthDateTime);
+        dest.writeString(this.HasMC);
+        dest.writeString(this.HasMid);
+        dest.writeString(this.LabEpisode);
+        dest.writeString(this.LabTestSetRow);
+        dest.writeString(this.MajorConclusion);
+        dest.writeString(this.OEOrdItemID);
+        dest.writeString(this.OrdItemName);
+        dest.writeString(this.OrdSpecimen);
+        dest.writeString(this.PreReport);
+        dest.writeString(this.PrintFlag);
+        dest.writeString(this.ReadFlag);
+        dest.writeString(this.RecDateTime);
+        dest.writeString(this.ReceiveNotes);
+        dest.writeString(this.ReqDateTime);
+        dest.writeString(this.ResultStatus);
+        dest.writeString(this.SpecDateTime);
+        dest.writeString(this.StatusDesc);
+        dest.writeString(this.TSMemo);
+        dest.writeString(this.TSResultAnomaly);
+        dest.writeString(this.VisitNumberReportDR);
+        dest.writeString(this.WarnComm);
+    }
+
+    public LisOrder() {
+    }
+
+    protected LisOrder(Parcel in) {
+        this.AdmDate = in.readString();
+        this.AdmLoc = in.readString();
+        this.AdmNo = in.readString();
+        this.AdmType = in.readString();
+        this.AuthDateTime = in.readString();
+        this.HasMC = in.readString();
+        this.HasMid = in.readString();
+        this.LabEpisode = in.readString();
+        this.LabTestSetRow = in.readString();
+        this.MajorConclusion = in.readString();
+        this.OEOrdItemID = in.readString();
+        this.OrdItemName = in.readString();
+        this.OrdSpecimen = in.readString();
+        this.PreReport = in.readString();
+        this.PrintFlag = in.readString();
+        this.ReadFlag = in.readString();
+        this.RecDateTime = in.readString();
+        this.ReceiveNotes = in.readString();
+        this.ReqDateTime = in.readString();
+        this.ResultStatus = in.readString();
+        this.SpecDateTime = in.readString();
+        this.StatusDesc = in.readString();
+        this.TSMemo = in.readString();
+        this.TSResultAnomaly = in.readString();
+        this.VisitNumberReportDR = in.readString();
+        this.WarnComm = in.readString();
+    }
+
+    public static final Creator<LisOrder> CREATOR = new Creator<LisOrder>() {
+        @Override
+        public LisOrder createFromParcel(Parcel source) {
+            return new LisOrder(source);
+        }
+
+        @Override
+        public LisOrder[] newArray(int size) {
+            return new LisOrder[size];
+        }
+    };
 }

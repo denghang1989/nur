@@ -12,6 +12,7 @@ import java.util.List;
 
 import szszhospital.cn.com.mobilenurse.App;
 import szszhospital.cn.com.mobilenurse.R;
+import szszhospital.cn.com.mobilenurse.activity.LisOrderDetailActivity;
 import szszhospital.cn.com.mobilenurse.adapter.LisOrderListAdapter;
 import szszhospital.cn.com.mobilenurse.databinding.FragmentOrderBinding;
 import szszhospital.cn.com.mobilenurse.mvp.contract.LisOrderContract;
@@ -60,7 +61,7 @@ public class LisResultFragment extends BaseDoctorFragment<FragmentOrderBinding, 
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 LisOrder lisOrder = mAdapter.getItem(position);
                 if (StringUtils.equals("3", lisOrder.ResultStatus)) {
-
+                    LisOrderDetailActivity.startLisOrderDetailActivity(_mActivity, lisOrder);
                 } else {
                     ToastUtils.showShort("无报告！");
                 }
