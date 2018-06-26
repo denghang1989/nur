@@ -75,4 +75,8 @@ public interface Api {
     //获取lisdetail详细
     @GET("web/Quality.Ajax.LisOrderDetailAjax.cls")
     Observable<Response<List<LisOrderDetail>>> getLisOrderDetail(@Query("ReportDRs") String ReportDRs);
+
+    //获取草药医嘱
+    @GET("web/Quality.Ajax.HerbalOrderAjax.cls")
+    Observable<Response<List<Order>>> getPatientHerbalOrder(@Query("OrderType") String OrderType, @Query("EpisodeID") String EpisodeID);
 }

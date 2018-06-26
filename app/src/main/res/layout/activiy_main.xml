@@ -25,6 +25,14 @@
                 app:navigationIcon="@drawable/ic_menu_black_32dp"
                 app:titleTextColor="@color/white">
 
+                <TextView
+                    android:id="@+id/patient"
+                    android:layout_gravity="end"
+                    android:textColor="@color/white"
+                    android:layout_marginEnd="16dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
                 <ImageView
                     android:id="@+id/scan_qr"
                     android:layout_width="wrap_content"

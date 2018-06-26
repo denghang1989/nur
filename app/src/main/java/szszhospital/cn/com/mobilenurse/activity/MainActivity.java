@@ -9,6 +9,8 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import io.reactivex.disposables.Disposable;
 import szszhospital.cn.com.mobilenurse.App;
@@ -17,6 +19,7 @@ import szszhospital.cn.com.mobilenurse.adapter.MainActivityAdapter;
 import szszhospital.cn.com.mobilenurse.base.BaseActivity;
 import szszhospital.cn.com.mobilenurse.databinding.ActiviyMainBinding;
 import szszhospital.cn.com.mobilenurse.event.QRCodeEvent;
+import szszhospital.cn.com.mobilenurse.event.SelectPatientEvent;
 import szszhospital.cn.com.mobilenurse.fragemt.PatientListFragment;
 
 public class MainActivity extends BaseActivity<ActiviyMainBinding> {
@@ -46,6 +49,7 @@ public class MainActivity extends BaseActivity<ActiviyMainBinding> {
         super.init();
         mAdapter = new MainActivityAdapter(getSupportFragmentManager());
         mRxPermissions = new RxPermissions(this);
+        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -79,6 +83,7 @@ public class MainActivity extends BaseActivity<ActiviyMainBinding> {
         if (mDisposable != null && !mDisposable.isDisposed()) {
             mDisposable.dispose();
         }
+        EventBus.getDefault().unregister(this);
     }
 
     private void startScanQRCodeActivity() {
@@ -97,5 +102,12 @@ public class MainActivity extends BaseActivity<ActiviyMainBinding> {
 
     public void closeDrawer() {
         mDataBinding.drawerLayout.closeDrawer(Gravity.START);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void selectedPatient(SelectPatientEvent event){
+        if (App.patientInfo!=null) {
+            mDataBinding.patient.setText(App.patientInfo.DisBed+":"+App.patientInfo.PAPMIName);
+        }
     }
 }

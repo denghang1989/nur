@@ -21,10 +21,8 @@ public class LisOrderDetailAdapter extends BaseQuickAdapter<LisOrderDetail, Base
                 .setText(R.id.company,item.Units)
                 .setText(R.id.range,item.RefRanges);
 
-        if (StringUtils.equals(item.AbFlag,"L")) {
+        if (!StringUtils.isTrimEmpty(item.AbFlag)) {
             helper.setBackgroundRes(R.id.remind,R.drawable.remind_l);
-        } else if (StringUtils.equals(item.AbFlag, "H")) {
-            helper.setBackgroundRes(R.id.remind,R.drawable.remind_h);
         } else {
             helper.setBackgroundRes(R.id.remind,R.drawable.remind_n);
         }

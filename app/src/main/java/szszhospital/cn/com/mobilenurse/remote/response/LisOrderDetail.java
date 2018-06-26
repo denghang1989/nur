@@ -36,16 +36,16 @@ public class LisOrderDetail {
     public String MultipleResistant;
     public String PreAbFlag;
     public String PreResult;
-    public int    PreResultDR;
+    public String PreResultDR;
     public String RefRanges;
-    public int    ReportDR;
-    public int    ReportResultDR;
+    public String ReportDR;
+    public String ReportResultDR;
     public String ResClass;
     public String ResNoes;
     public String Result;
     public String ResultFormat;
     public String Synonym;
-    public int    TestCodeDR;
+    public String TestCodeDR;
     public String TestCodeName;
     public String Units;
 }

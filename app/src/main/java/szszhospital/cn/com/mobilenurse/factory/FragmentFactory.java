@@ -9,6 +9,7 @@ import szszhospital.cn.com.mobilenurse.fragemt.DrugBillHandoverNurseFragment;
 import szszhospital.cn.com.mobilenurse.fragemt.DrugBillReceiveFragment;
 import szszhospital.cn.com.mobilenurse.fragemt.DrugBillUnCompletedFragment;
 import szszhospital.cn.com.mobilenurse.fragemt.EMRFragment;
+import szszhospital.cn.com.mobilenurse.fragemt.HerbalOrderFragment;
 import szszhospital.cn.com.mobilenurse.fragemt.LisResultFragment;
 import szszhospital.cn.com.mobilenurse.fragemt.NOrdersFragment;
 import szszhospital.cn.com.mobilenurse.fragemt.PacsResultFragment;
@@ -52,6 +53,9 @@ public class FragmentFactory {
                 break;
             case "SOrdersFragment": // 长期医嘱
                 fragment = SOrdersFragment.newInstance();
+                break;
+            case "HerbalOrderFragment":// 草药
+                fragment = HerbalOrderFragment.newInstance();
                 break;
         }
         return fragment;

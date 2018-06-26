@@ -3,7 +3,7 @@ package szszhospital.cn.com.mobilenurse.control;
 public class LocAccessFactory {
 
     public static LocAccess getInstance(String locType) {
-        String type = locType == null ? "" : locType;
+        String type = locType == null ? "E" : locType;
         LocAccess access = null;
         switch (type) {
             case "E":
