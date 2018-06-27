@@ -18,11 +18,13 @@ import szszhospital.cn.com.mobilenurse.mvp.contract.PatientListContract;
 import szszhospital.cn.com.mobilenurse.mvp.presenter.PatientListPresenter;
 import szszhospital.cn.com.mobilenurse.remote.request.PatientListRequest;
 import szszhospital.cn.com.mobilenurse.remote.response.PatientInfo;
+import szszhospital.cn.com.mobilenurse.viewholder.PatientViewHolder;
 
 public class PatientListFragment extends BasePresenterFragment<FragmentPatientListBinding, PatientListPresenter> implements PatientListContract.View {
 
     private IPatientListAdapter mAdapter;
     private PatientListRequest  mRequest;
+    private PatientViewHolder   mPatientViewHolder;
 
     public static PatientListFragment newInstance() {
         return new PatientListFragment();
@@ -49,6 +51,7 @@ public class PatientListFragment extends BasePresenterFragment<FragmentPatientLi
         mAdapter = new IPatientListAdapter(R.layout.item_patient_list);
         mRequest = new PatientListRequest();
         setSwipeBackEnable(false);
+        mPatientViewHolder = new PatientViewHolder(_mActivity, R.layout.item_patient_head);
     }
 
     @Override
@@ -58,6 +61,7 @@ public class PatientListFragment extends BasePresenterFragment<FragmentPatientLi
         mDataBinding.patientList.setLayoutManager(new LinearLayoutManager(_mActivity));
         mDataBinding.patientList.addItemDecoration(new DividerItemDecoration(_mActivity, DividerItemDecoration.VERTICAL));
         mDataBinding.patientList.setAdapter(mAdapter);
+        mAdapter.addHeaderView(mPatientViewHolder.getConvertView());
         mDataBinding.refreshLayout.setEnableLoadmore(false);
     }
 
@@ -80,10 +84,15 @@ public class PatientListFragment extends BasePresenterFragment<FragmentPatientLi
     protected void initEvent() {
         super.initEvent();
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
+            if (position == 0) {
+                return;
+            }
+            PatientInfo patientInfo = mAdapter.getItem(position - mAdapter.getHeaderLayoutCount());
             mAdapter.setSelected(position);
-            App.setPatientInfo(mAdapter.getItem(position));
+            App.setPatientInfo(patientInfo);
             ((MainActivity) _mActivity).closeDrawer();
-            EventBus.getDefault().post(new SelectPatientEvent(mAdapter.getItem(position)));
+            mPatientViewHolder.setData(patientInfo);
+            EventBus.getDefault().post(new SelectPatientEvent(patientInfo));
         });
         mDataBinding.refreshLayout.setOnRefreshListener(refreshlayout -> initData());
     }
