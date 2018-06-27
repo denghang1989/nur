@@ -84,11 +84,8 @@ public class PatientListFragment extends BasePresenterFragment<FragmentPatientLi
     protected void initEvent() {
         super.initEvent();
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
-            if (position == 0) {
-                return;
-            }
-            PatientInfo patientInfo = mAdapter.getItem(position - mAdapter.getHeaderLayoutCount());
-            mAdapter.setSelected(position);
+            PatientInfo patientInfo = mAdapter.getItem(position);
+            mAdapter.setSelected(position + mAdapter.getHeaderLayoutCount());
             App.setPatientInfo(patientInfo);
             ((MainActivity) _mActivity).closeDrawer();
             mPatientViewHolder.setData(patientInfo);
