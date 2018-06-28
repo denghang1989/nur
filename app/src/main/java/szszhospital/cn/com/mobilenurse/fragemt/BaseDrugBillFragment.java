@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import com.annimon.stream.Optional;
 import com.annimon.stream.Stream;
 import com.blankj.utilcode.util.StringUtils;
+import com.blankj.utilcode.util.ToastUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -137,8 +138,9 @@ public class BaseDrugBillFragment extends BasePresenterFragment<FragmentUnDrugBi
         } else if (code.startsWith("KF")) {
             // 处理包药机
             handlerKFCode(code);
+        } else {
+            ToastUtils.showShort("二维码不正确");
         }
-
     }
 
 

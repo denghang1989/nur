@@ -5,8 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?android:attr/selectableItemBackground"
-    android:layout_margin="16dp">
+    android:layout_margin="16dp"
+    android:background="?android:attr/selectableItemBackground">
 
     <TextView
         android:id="@+id/title"
@@ -22,22 +22,25 @@
         android:id="@+id/order_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:textColor="@color/black"
+        android:lineSpacingExtra="3dp"
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/order_desc"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@+id/title"/>
 
     <TextView
         android:id="@+id/order_desc"
         android:layout_width="match_parent"
         android:layout_height="20dp"
-        android:gravity="right"
+        android:layout_marginTop="8dp"
+        android:gravity="end"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/order_name"
         tools:text="TextView"/>
 
 </android.support.constraint.ConstraintLayout>

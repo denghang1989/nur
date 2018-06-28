@@ -27,7 +27,7 @@ import szszhospital.cn.com.mobilenurse.remote.response.SchDateTimeResponse;
  * 2016/11/2 11
  */
 public interface Api {
-    String BASE_LOGIN_URL = "http://172.18.0.12/trakcarelive/trak/";
+    String BASE_LOGIN_URL = "http://172.18.0.10/trakcarelive/trak/";
 
     //3.账号密码登录
     @GET("web/Quality.Ajax.AndroidHttpResponse.cls")

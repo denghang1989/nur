@@ -17,28 +17,25 @@ public class HerbalOrderAdapter extends BaseQuickAdapter<Order, BaseViewHolder> 
 
     @Override
     protected void convert(BaseViewHolder helper, Order item) {
-        String result = "";
+        StringBuilder sb = new StringBuilder();
         if (!StringUtils.isTrimEmpty(item.ArcimDesc)) {
             String[] hebalOrders = item.ArcimDesc.split(",");
             Optional<String> maxOrder = Stream.of(hebalOrders).max((o1, o2) -> o1.length() - o2.length());
             for (int i = 0; i < hebalOrders.length; i++) {
                 String hebalOrder = hebalOrders[i];
+                sb.append(hebalOrder);
                 int length = maxOrder.get().length() - hebalOrder.length();
                 for (int j = 0; j < length; j++) {
-                    hebalOrder = hebalOrder + " ";
+                    sb.append(" ");
                 }
-                if (i == 0) {
-                    result = hebalOrder;
+                if (i != 0 && i % 4 == 0) {
+                    sb.append("\n");
                 } else {
-                    if (i % 4 == 0) {
-                        result = result + "\n" + hebalOrder;
-                    } else {
-                        result = result + "  " + hebalOrder;
-                    }
+                    sb.append("    ");
                 }
             }
         }
-        helper.setText(R.id.order_name, result)
+        helper.setText(R.id.order_name, sb.toString())
                 .setText(R.id.title, item.OrdCreateDate)
                 .setText(R.id.order_desc, item.RecipeInfo);
     }
