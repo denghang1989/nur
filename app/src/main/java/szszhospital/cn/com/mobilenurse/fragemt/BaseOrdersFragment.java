@@ -2,7 +2,10 @@ package szszhospital.cn.com.mobilenurse.fragemt;
 
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.view.View;
+
+import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import java.util.List;
 
@@ -19,8 +22,8 @@ import szszhospital.cn.com.mobilenurse.remote.response.Order;
  * 临时医嘱
  */
 public abstract class BaseOrdersFragment extends BaseDoctorFragment<FragmentOrderBinding, OrderPresenter> implements OrderContract.View {
-
-    protected OrderRequest mOrderRequest;
+    private static final String TAG = "BaseOrdersFragment";
+    protected OrderRequest     mOrderRequest;
     protected OrderListAdapter mAdapter;
 
     @Override
@@ -46,7 +49,7 @@ public abstract class BaseOrdersFragment extends BaseDoctorFragment<FragmentOrde
 
     @Override
     protected void initData() {
-        if (App.patientInfo!=null) {
+        if (App.patientInfo != null) {
             mOrderRequest.EposideId = App.patientInfo.EpisodeID;
             mPresenter.getPatientOrderList(mOrderRequest);
         }
@@ -56,8 +59,13 @@ public abstract class BaseOrdersFragment extends BaseDoctorFragment<FragmentOrde
     protected void initEvent() {
         super.initEvent();
         mDataBinding.top.setOnClickListener(v -> mDataBinding.orderList.scrollToPosition(0));
-
         mDataBinding.refreshLayout.setOnRefreshListener(refreshlayout -> initData());
+        mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                Log.d(TAG, "onItemClick: " + position);
+            }
+        });
     }
 
     @Override

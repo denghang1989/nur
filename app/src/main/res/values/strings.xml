@@ -21,6 +21,7 @@
 
     <string-array name="nurse_list">
         <item>未接收|DrugBillHandoverNurseFragment</item>
-        <item>已接收|DrugBillReceiveFragment</item>
+        <item>发药|DrugBillReceiveFragment</item>
+        <item>检查|InspectionFragment</item>
     </string-array>
 </resources>

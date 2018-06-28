@@ -16,4 +16,8 @@ public class DrugBillReceiveFragment extends BaseDrugBillFragment {
         mRequest.Flag = "R";
     }
 
+    @Override
+    protected String getDialogText() {
+        return "发药";
+    }
 }
