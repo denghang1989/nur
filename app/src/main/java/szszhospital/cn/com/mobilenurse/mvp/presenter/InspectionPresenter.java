@@ -11,10 +11,11 @@ import szszhospital.cn.com.mobilenurse.remote.RxUtil;
 import szszhospital.cn.com.mobilenurse.remote.request.PacsOrderSubscribeRequest;
 import szszhospital.cn.com.mobilenurse.remote.response.PacsOrderSubscribe;
 
-public class InspectionPresenter extends RxPresenter<InspectionContract.View,InspectionContract.Model> implements InspectionContract.Presenter {
+public class InspectionPresenter extends RxPresenter<InspectionContract.View, InspectionContract.Model> implements InspectionContract.Presenter {
 
     @Override
     public void getPacsOrderList(PacsOrderSubscribeRequest request) {
+        mView.showProgress();
         ApiService.Instance().getService().getPatientPacsSubscribe(obj2Map(request))
                 .compose(RxUtil.rxSchedulerHelper())
                 .compose(RxUtil.httpHandleResponse())
@@ -32,12 +33,13 @@ public class InspectionPresenter extends RxPresenter<InspectionContract.View,Ins
 
                     @Override
                     public void onError(Throwable e) {
-
+                        e.printStackTrace();
+                        mView.hideProgress();
                     }
 
                     @Override
                     public void onComplete() {
-
+                        mView.hideProgress();
                     }
                 });
     }

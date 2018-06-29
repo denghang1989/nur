@@ -15,7 +15,6 @@ public interface InspectionContract {
         void hideProgress();
 
         void showPacsOrderList(List<PacsOrderSubscribe.OrderSubscribe> list);
-
     }
 
     interface Model extends BaseModel {

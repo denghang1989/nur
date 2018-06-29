@@ -1,5 +1,8 @@
 package szszhospital.cn.com.mobilenurse.fragemt;
 
+import android.support.annotation.NonNull;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
 import com.blankj.utilcode.util.StringUtils;
@@ -17,6 +20,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import szszhospital.cn.com.mobilenurse.R;
+import szszhospital.cn.com.mobilenurse.adapter.InspectionAdapter;
 import szszhospital.cn.com.mobilenurse.base.BasePresenterFragment;
 import szszhospital.cn.com.mobilenurse.databinding.FragmentInspectionBinding;
 import szszhospital.cn.com.mobilenurse.event.QRCodeEvent;
@@ -32,15 +36,20 @@ import szszhospital.cn.com.mobilenurse.remote.response.PacsOrderSubscribe;
  */
 public class InspectionFragment extends BasePresenterFragment<FragmentInspectionBinding, InspectionPresenter> implements InspectionContract.View {
     private static final String TAG = "InspectionFragment";
-    private String                    mPreEpisodeID;
     private PacsOrderSubscribeRequest mRequest;
     private String[]                  mParam;
+    private InspectionAdapter         mAdapter;
 
     @Override
     protected void init() {
         super.init();
         mRequest = new PacsOrderSubscribeRequest();
-        mParam = new String[]{"","","","","","","","",""};
+        initParams();
+        mAdapter = new InspectionAdapter(R.layout.item_inspection);
+    }
+
+    private void initParams() {
+        mParam = new String[]{"", "", "", "", "", "", "", "", ""};
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.CHINA);
         Calendar lastDate = Calendar.getInstance();
         mParam[1] = dateFormat.format(lastDate.getTime());
@@ -50,8 +59,7 @@ public class InspectionFragment extends BasePresenterFragment<FragmentInspection
 
     @Override
     protected void initData() {
-        super.initData();
-        if (!StringUtils.isTrimEmpty(mPreEpisodeID)) {
+        if (!StringUtils.isTrimEmpty(mParam[5])) {
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < mParam.length; i++) {
                 sb.append(mParam[i]);
@@ -62,6 +70,14 @@ public class InspectionFragment extends BasePresenterFragment<FragmentInspection
             mRequest.params = sb.toString();
             mPresenter.getPacsOrderList(mRequest);
         }
+    }
+
+    @Override
+    protected void initView() {
+        super.initView();
+        mDataBinding.list.setLayoutManager(new LinearLayoutManager(_mActivity));
+        mDataBinding.list.addItemDecoration(new DividerItemDecoration(_mActivity, DividerItemDecoration.VERTICAL));
+        mDataBinding.list.setAdapter(mAdapter);
     }
 
     @Override
@@ -94,11 +110,7 @@ public class InspectionFragment extends BasePresenterFragment<FragmentInspection
     public void handlerCode(QRCodeEvent event) {
         String code = event.code;
         if (code.startsWith("WB")) {
-            Pattern p = Pattern.compile("[^0-9]");
-            Matcher m = p.matcher(code);
-            String episodeID = m.replaceAll("").trim();
-            mPreEpisodeID = episodeID;
-            ToastUtils.showShort(episodeID);
+            String episodeID = getNumFromString(code);
             mParam[5] = episodeID;
             // 获取病人预约检查信息
             initData();
@@ -107,6 +119,13 @@ public class InspectionFragment extends BasePresenterFragment<FragmentInspection
             ToastUtils.showShort("病人检查时间记录模块，只能扫描病人腕带");
         }
 
+    }
+
+    @NonNull
+    private String getNumFromString(String code) {
+        Pattern p = Pattern.compile("[^0-9]");
+        Matcher m = p.matcher(code);
+        return m.replaceAll("").trim();
     }
 
     @Override
@@ -121,7 +140,7 @@ public class InspectionFragment extends BasePresenterFragment<FragmentInspection
 
     @Override
     public void showPacsOrderList(List<PacsOrderSubscribe.OrderSubscribe> list) {
-
+        mAdapter.setNewData(list);
     }
 
 

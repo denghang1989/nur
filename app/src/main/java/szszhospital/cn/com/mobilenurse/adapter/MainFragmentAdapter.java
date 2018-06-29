@@ -3,14 +3,14 @@ package szszhospital.cn.com.mobilenurse.adapter;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 
 import java.util.List;
 
-import szszhospital.cn.com.mobilenurse.factory.FragmentFactory;
 import szszhospital.cn.com.mobilenurse.entity.ModuleTable;
+import szszhospital.cn.com.mobilenurse.factory.FragmentFactory;
 
-public class MainFragmentAdapter extends FragmentPagerAdapter {
+public class MainFragmentAdapter extends FragmentStatePagerAdapter {
 
     public List<ModuleTable> mList;
 
