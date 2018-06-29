@@ -1,4 +1,4 @@
-package szszhospital.cn.com.mobilenurse.db;
+package szszhospital.cn.com.mobilenurse.entity;
 
 public class ModuleTable {
 

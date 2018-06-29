@@ -1,7 +1,7 @@
 package szszhospital.cn.com.mobilenurse.factory;
 
 import szszhospital.cn.com.mobilenurse.base.BaseFragment;
-import szszhospital.cn.com.mobilenurse.db.ModuleTable;
+import szszhospital.cn.com.mobilenurse.entity.ModuleTable;
 import szszhospital.cn.com.mobilenurse.fragemt.DeliveryFragment;
 import szszhospital.cn.com.mobilenurse.fragemt.DrugBillCheckFragment;
 import szszhospital.cn.com.mobilenurse.fragemt.DrugBillCompletedFragment;

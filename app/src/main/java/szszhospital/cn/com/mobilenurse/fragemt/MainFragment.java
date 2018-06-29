@@ -1,7 +1,6 @@
 package szszhospital.cn.com.mobilenurse.fragemt;
 
 import android.support.design.widget.TabLayout;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +10,7 @@ import szszhospital.cn.com.mobilenurse.R;
 import szszhospital.cn.com.mobilenurse.adapter.MainFragmentAdapter;
 import szszhospital.cn.com.mobilenurse.base.BasePresenterFragment;
 import szszhospital.cn.com.mobilenurse.databinding.FragmentMainBinding;
-import szszhospital.cn.com.mobilenurse.db.ModuleTable;
+import szszhospital.cn.com.mobilenurse.entity.ModuleTable;
 import szszhospital.cn.com.mobilenurse.mvp.contract.LocAccessContract;
 import szszhospital.cn.com.mobilenurse.mvp.presenter.LocAccessPresenter;
 import szszhospital.cn.com.mobilenurse.remote.request.LocAccessRequest;
@@ -65,7 +64,6 @@ public class MainFragment extends BasePresenterFragment<FragmentMainBinding, Loc
 
     @Override
     public void setPageAdapter(List<LocAccessResponse> list) {
-        Log.d(TAG, "setPageAdapter: " + list);
         List<ModuleTable> moduleTableList = new ArrayList<>();
         for (int i = 0; i < list.size(); i++) {
             LocAccessResponse response = list.get(i);

@@ -19,7 +19,7 @@ import szszhospital.cn.com.mobilenurse.control.LocAccess;
 import szszhospital.cn.com.mobilenurse.control.LocAccessFactory;
 import szszhospital.cn.com.mobilenurse.databinding.ActivityLoginBinding;
 import szszhospital.cn.com.mobilenurse.databinding.User;
-import szszhospital.cn.com.mobilenurse.db.LocTable;
+import szszhospital.cn.com.mobilenurse.entity.LocTable;
 import szszhospital.cn.com.mobilenurse.mvp.contract.LoginContract;
 import szszhospital.cn.com.mobilenurse.mvp.presenter.LoginPresenter;
 import szszhospital.cn.com.mobilenurse.remote.request.LoginRequest;

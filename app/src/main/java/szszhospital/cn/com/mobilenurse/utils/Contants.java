@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import szszhospital.cn.com.mobilenurse.R;
-import szszhospital.cn.com.mobilenurse.db.ModuleTable;
+import szszhospital.cn.com.mobilenurse.entity.ModuleTable;
 
 public class Contants {
 

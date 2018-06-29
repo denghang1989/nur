@@ -12,7 +12,7 @@ public class LocAccessResponse {
 
     public String Active;
     public String Model;
-    public Object ModelDesc;
+    public String ModelDesc;
     public String RowId;
     public String Title;
 

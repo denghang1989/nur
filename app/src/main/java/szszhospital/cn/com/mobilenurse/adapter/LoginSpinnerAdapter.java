@@ -10,7 +10,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import szszhospital.cn.com.mobilenurse.R;
-import szszhospital.cn.com.mobilenurse.db.LocTable;
+import szszhospital.cn.com.mobilenurse.entity.LocTable;
 
 public class LoginSpinnerAdapter extends BaseAdapter {
 
