@@ -24,4 +24,6 @@
         <item>发药|DrugBillReceiveFragment</item>
         <item>检查|InspectionFragment</item>
     </string-array>
+
+    <string name="inspection_other">就诊科室：%1$s  床号：%2$s </string>
 </resources>

@@ -1,5 +1,8 @@
 package szszhospital.cn.com.mobilenurse.mvp.presenter;
 
+import com.annimon.stream.Stream;
+import com.blankj.utilcode.util.StringUtils;
+
 import java.util.List;
 
 import io.reactivex.Observer;
@@ -27,8 +30,8 @@ public class InspectionPresenter extends RxPresenter<InspectionContract.View, In
 
                     @Override
                     public void onNext(PacsOrderSubscribe pacsOrderSubscribe) {
-                        List<PacsOrderSubscribe.OrderSubscribe> orderSubscribes = pacsOrderSubscribe.rows;
-                        mView.showPacsOrderList(orderSubscribes);
+                        List<PacsOrderSubscribe.OrderSubscribe> list = Stream.of(pacsOrderSubscribe.rows).filter(value -> !StringUtils.equals(value.StatusCode, "执行")).toList();
+                        mView.showPacsOrderList(list);
                     }
 
                     @Override

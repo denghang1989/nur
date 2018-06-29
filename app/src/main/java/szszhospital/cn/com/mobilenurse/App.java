@@ -1,5 +1,6 @@
 package szszhospital.cn.com.mobilenurse;
 
+import android.content.Context;
 import android.support.multidex.MultiDexApplication;
 
 import com.blankj.utilcode.util.Utils;
@@ -30,8 +31,7 @@ public class App extends MultiDexApplication {
 
     public static LoginUser loginUser = new LoginUser();
 
-
-    public static LocAccess access ;
+    public static LocAccess access;
 
     public static void setAccess(LocAccess access) {
         App.access = access;
@@ -43,10 +43,13 @@ public class App extends MultiDexApplication {
         App.patientInfo = patientInfo;
     }
 
+    public static Context mContext;
+
     @Override
     public void onCreate() {
         super.onCreate();
         Utils.init(this);
         ApiService.init(this);
+        mContext = getApplicationContext();
     }
 }

@@ -3,10 +3,13 @@ package szszhospital.cn.com.mobilenurse.activity;
 import android.app.Activity;
 import android.content.Intent;
 
+import org.greenrobot.eventbus.EventBus;
+
 import cn.bingoogolapple.qrcode.core.QRCodeView;
 import szszhospital.cn.com.mobilenurse.R;
 import szszhospital.cn.com.mobilenurse.base.BaseActivity;
 import szszhospital.cn.com.mobilenurse.databinding.ActivityScanQrcodeBinding;
+import szszhospital.cn.com.mobilenurse.event.QRCodeEvent;
 
 public class ScanQRCodeActivity extends BaseActivity<ActivityScanQrcodeBinding> implements QRCodeView.Delegate {
 
@@ -49,7 +52,7 @@ public class ScanQRCodeActivity extends BaseActivity<ActivityScanQrcodeBinding> 
     @Override
     public void onScanQRCodeSuccess(String result) {
         mDataBinding.zxingview.startSpot();
-        setResult(RESULT_CODE, new Intent().putExtra("code", result));
+        EventBus.getDefault().post(new QRCodeEvent(result));
         finish();
     }
 

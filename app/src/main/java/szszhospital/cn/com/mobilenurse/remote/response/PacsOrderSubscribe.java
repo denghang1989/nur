@@ -30,7 +30,7 @@ public class PacsOrderSubscribe {
          * ReqUser : 张淑琼
          * ReserInfo :  --
          * Status :
-         * StatusCode : 核实
+         * StatusCode : 核实/执行
          * Type : 检查
          * arExLocDesc : FSYXK-放射影像科
          * arRepID : 294572

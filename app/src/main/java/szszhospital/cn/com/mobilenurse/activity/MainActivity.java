@@ -1,34 +1,26 @@
 package szszhospital.cn.com.mobilenurse.activity;
 
-import android.Manifest;
-import android.content.Intent;
+import android.support.v7.view.menu.MenuBuilder;
 import android.view.Gravity;
-
-import com.blankj.utilcode.util.PermissionUtils;
-import com.blankj.utilcode.util.ToastUtils;
-import com.tbruyelle.rxpermissions2.RxPermissions;
+import android.view.Menu;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import io.reactivex.disposables.Disposable;
+import java.lang.reflect.Method;
+
 import szszhospital.cn.com.mobilenurse.App;
 import szszhospital.cn.com.mobilenurse.R;
 import szszhospital.cn.com.mobilenurse.adapter.MainActivityAdapter;
 import szszhospital.cn.com.mobilenurse.base.BaseActivity;
 import szszhospital.cn.com.mobilenurse.databinding.ActiviyMainBinding;
-import szszhospital.cn.com.mobilenurse.event.QRCodeEvent;
 import szszhospital.cn.com.mobilenurse.event.SelectPatientEvent;
 import szszhospital.cn.com.mobilenurse.fragemt.PatientListFragment;
 
 public class MainActivity extends BaseActivity<ActiviyMainBinding> {
-    private static final String   TAG         = "MainActivity";
-    public static final  int      RESULT_CODE = 100;
-    private static final String[] perms       = {Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE};
+    private static final String TAG = "MainActivity";
     private MainActivityAdapter mAdapter;
-    private RxPermissions       mRxPermissions;
-    private Disposable          mDisposable;
 
     @Override
     protected int getLayoutId() {
@@ -42,36 +34,19 @@ public class MainActivity extends BaseActivity<ActiviyMainBinding> {
         mDataBinding.toolbar.setTitle(App.loginUser.UserName + "，您好！");
         loadRootFragment(R.id.patientList, PatientListFragment.newInstance());
         App.access.toolbarHandler(mDataBinding.drawerLayout);
+        setSupportActionBar(mDataBinding.toolbar);
     }
 
     @Override
     protected void init() {
         super.init();
         mAdapter = new MainActivityAdapter(getSupportFragmentManager());
-        mRxPermissions = new RxPermissions(this);
         EventBus.getDefault().register(this);
     }
 
     @Override
     protected void initEvent() {
         super.initEvent();
-        mDataBinding.scanQr.setOnClickListener(v -> {
-            if (PermissionUtils.isGranted(perms)) {
-                startScanQRCodeActivity();
-            } else {
-                if (mDisposable != null && !mDisposable.isDisposed()) {
-                    mDisposable.dispose();
-                }
-                mDisposable = mRxPermissions.request(perms).subscribe(aBoolean -> {
-                    if (aBoolean) {
-                        startScanQRCodeActivity();
-                    } else {
-                        ToastUtils.showShort("需要相机权限");
-                    }
-                });
-            }
-        });
-
         mDataBinding.toolbar.setNavigationOnClickListener(v -> {
             App.access.openDrawer(mDataBinding.drawerLayout);
         });
@@ -80,24 +55,7 @@ public class MainActivity extends BaseActivity<ActiviyMainBinding> {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (mDisposable != null && !mDisposable.isDisposed()) {
-            mDisposable.dispose();
-        }
         EventBus.getDefault().unregister(this);
-    }
-
-    private void startScanQRCodeActivity() {
-        ScanQRCodeActivity.startScanQRCodeActivityForResult(MainActivity.this);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_CODE) {
-            String code = data.getStringExtra("code");
-            ToastUtils.showShort(code);
-            EventBus.getDefault().post(new QRCodeEvent(code));
-        }
     }
 
     public void closeDrawer() {
@@ -105,9 +63,30 @@ public class MainActivity extends BaseActivity<ActiviyMainBinding> {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void selectedPatient(SelectPatientEvent event){
-        if (App.patientInfo!=null) {
-            mDataBinding.patient.setText(App.patientInfo.DisBed+":"+App.patientInfo.PAPMIName);
+    public void selectedPatient(SelectPatientEvent event) {
+        if (App.patientInfo != null) {
+            mDataBinding.patient.setText(App.patientInfo.DisBed + ":" + App.patientInfo.PAPMIName);
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.app, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        if (menu != null) {
+            if (menu.getClass() == MenuBuilder.class) {
+                try {
+                    Method m = menu.getClass().getDeclaredMethod("setOptionalIconsVisible", Boolean.TYPE);
+                    m.setAccessible(true);
+                    m.invoke(menu, true);
+                } catch (Exception e) {
+                }
+            }
+        }
+        return super.onPrepareOptionsMenu(menu);
     }
 }

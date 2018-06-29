@@ -50,4 +50,29 @@
         app:layout_constraintTop_toBottomOf="@+id/dateTime"
         tools:text="科室：放射影像科"
         />
+
+    <TextView
+        android:id="@+id/patient_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/loc"
+        tools:text="姓名：小赵"/>
+
+    <TextView
+        android:id="@+id/otherDesc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/patient_name"
+        app:layout_constraintVertical_bias="0.0"
+        tools:text="就诊科室：测试病区  床号：0006  就诊类型：住院"/>
 </android.support.constraint.ConstraintLayout>
