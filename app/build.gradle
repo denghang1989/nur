@@ -28,8 +28,6 @@ android {
 
 }
 
-def dbflow_version = "4.2.4"
-
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:27.1.1'
@@ -59,13 +57,10 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.1.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.6.0'
     implementation 'com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0'
-    annotationProcessor "com.github.Raizlabs.DBFlow:dbflow-processor:${dbflow_version}"
-    implementation "com.github.Raizlabs.DBFlow:dbflow-core:${dbflow_version}"
-    implementation "com.github.Raizlabs.DBFlow:dbflow:${dbflow_version}"
-    implementation "com.github.Raizlabs.DBFlow:dbflow-rx2:${dbflow_version}"
     implementation 'cn.bingoogolapple:bga-qrcode-zxing:1.2.1'
     implementation 'com.annimon:stream:1.2.0'
     implementation 'com.android.support:multidex:1.0.3'
     implementation 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.5@aar'
     implementation 'com.annimon:stream:1.2.0'
+    implementation 'com.github.huangyanbin:SmartTable:2.2.0'
 }

@@ -18,6 +18,7 @@ import szszhospital.cn.com.mobilenurse.remote.response.LocAccessResponse;
 import szszhospital.cn.com.mobilenurse.remote.response.LoginResponse;
 import szszhospital.cn.com.mobilenurse.remote.response.Order;
 import szszhospital.cn.com.mobilenurse.remote.response.PacsOrder;
+import szszhospital.cn.com.mobilenurse.remote.response.PacsOrderSubscribe;
 import szszhospital.cn.com.mobilenurse.remote.response.PatientInfo;
 import szszhospital.cn.com.mobilenurse.remote.response.RobotDrugResponse;
 import szszhospital.cn.com.mobilenurse.remote.response.SaveAuditStatusResponse;
@@ -83,6 +84,9 @@ public interface Api {
 
     //获取pacs医嘱
     @GET("web/Quality.Ajax.PacsOrderAjax.cls")
-    Observable<Response<List<PacsOrder>>> getPatientPacsOrder(@Query("EposideId") String EpisodeID,@Query("userCode") String userCode);
+    Observable<Response<List<PacsOrder>>> getPatientPacsOrder(@Query("EposideId") String EpisodeID, @Query("userCode") String userCode);
+
+    @GET("web/Quality.Ajax.InspectionAjax.cls")
+    Observable<Response<PacsOrderSubscribe>> getPatientPacsSubscribe(@QueryMap Map<String, String> option);
 
 }
