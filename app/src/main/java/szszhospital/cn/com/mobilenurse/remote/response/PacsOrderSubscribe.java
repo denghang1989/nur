@@ -12,7 +12,7 @@ public class PacsOrderSubscribe {
      * total : 1
      */
 
-    public int total;
+    public int                  total;
     public List<OrderSubscribe> rows;
 
     public static class OrderSubscribe {
@@ -37,6 +37,7 @@ public class PacsOrderSubscribe {
          * arReqNo : APPI2018062701233
          * arcListData : DR【鼻骨侧位*(1)、鼻咽侧位*(1)、蝶鞍侧位*(1)】
          * repEmgFlag : 否
+         * transportStatus:A
          */
 
         public String AdmBed;
@@ -59,5 +60,6 @@ public class PacsOrderSubscribe {
         public String arReqNo;
         public String arcListData;
         public String repEmgFlag;
+        public String transportStatus;
     }
 }

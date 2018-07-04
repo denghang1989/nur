@@ -5,6 +5,7 @@ import java.util.List;
 import szszhospital.cn.com.mobilenurse.base.BaseModel;
 import szszhospital.cn.com.mobilenurse.base.BasePresenter;
 import szszhospital.cn.com.mobilenurse.base.BaseView;
+import szszhospital.cn.com.mobilenurse.remote.request.InspectionRequest;
 import szszhospital.cn.com.mobilenurse.remote.request.PacsOrderSubscribeRequest;
 import szszhospital.cn.com.mobilenurse.remote.response.PacsOrderSubscribe;
 
@@ -15,6 +16,7 @@ public interface InspectionContract {
         void hideProgress();
 
         void showPacsOrderList(List<PacsOrderSubscribe.OrderSubscribe> list);
+
     }
 
     interface Model extends BaseModel {
@@ -22,5 +24,7 @@ public interface InspectionContract {
 
     interface Presenter extends BasePresenter<View> {
         void getPacsOrderList(PacsOrderSubscribeRequest request);
+
+        void saveOrUpdateLog(InspectionRequest request);
     }
 }

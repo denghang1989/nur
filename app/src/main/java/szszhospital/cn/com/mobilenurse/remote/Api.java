@@ -12,6 +12,8 @@ import retrofit2.http.QueryMap;
 import szszhospital.cn.com.mobilenurse.remote.response.AuditDetailResponse;
 import szszhospital.cn.com.mobilenurse.remote.response.DispDetailResponse;
 import szszhospital.cn.com.mobilenurse.remote.response.DrugBill;
+import szszhospital.cn.com.mobilenurse.remote.response.HandlerInspectionLog;
+import szszhospital.cn.com.mobilenurse.remote.response.InspectionLogDetail;
 import szszhospital.cn.com.mobilenurse.remote.response.LisOrder;
 import szszhospital.cn.com.mobilenurse.remote.response.LisOrderDetail;
 import szszhospital.cn.com.mobilenurse.remote.response.LocAccessResponse;
@@ -86,7 +88,15 @@ public interface Api {
     @GET("web/Quality.Ajax.PacsOrderAjax.cls")
     Observable<Response<List<PacsOrder>>> getPatientPacsOrder(@Query("EposideId") String EpisodeID, @Query("userCode") String userCode);
 
+    //获取病人检查病理申请单信息
     @GET("web/Quality.Ajax.InspectionAjax.cls")
     Observable<Response<PacsOrderSubscribe>> getPatientPacsSubscribe(@QueryMap Map<String, String> option);
+
+    //获取病人检查病理申请单明细
+    @GET("web/Quality.Ajax.InspectionLogAjax.cls")
+    Observable<Response<List<InspectionLogDetail>>> getInspectionLogDetail(@QueryMap Map<String, String> option);
+
+    @GET("web/Quality.Ajax.InspectionLogAjax.cls")
+    Observable<Response<HandlerInspectionLog>> saveOrUpdateLog(@QueryMap Map<String, String> option);
 
 }

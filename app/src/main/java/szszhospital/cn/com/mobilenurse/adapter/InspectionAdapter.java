@@ -3,7 +3,6 @@ package szszhospital.cn.com.mobilenurse.adapter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
-import szszhospital.cn.com.mobilenurse.App;
 import szszhospital.cn.com.mobilenurse.R;
 import szszhospital.cn.com.mobilenurse.remote.response.PacsOrderSubscribe;
 
@@ -15,12 +14,10 @@ public class InspectionAdapter extends BaseQuickAdapter<PacsOrderSubscribe.Order
 
     @Override
     protected void convert(BaseViewHolder helper, PacsOrderSubscribe.OrderSubscribe item) {
-        String string = App.mContext.getString(R.string.inspection_other);
         helper.setText(R.id.name, "项目：" + item.arcListData)
                 .setText(R.id.dateTime, "申请时间：" + item.ReqData + "    " + item.ReqTime)
                 .setText(R.id.loc, "接收科室：" + item.arExLocDesc)
-                .setText(R.id.patient_name,"姓名："+item.PatName)
-                .setText(R.id.otherDesc,String.format(string,item.PatLoc,item.AdmBed));
+                .setText(R.id.type,"检查类型："+item.Type);
     }
 
 }

@@ -26,4 +26,7 @@
     </string-array>
 
     <string name="inspection_other">就诊科室：%1$s  床号：%2$s </string>
+    <string name="title">提示</string>
+    <string name="disagree">取消</string>
+    <string name="agree">确定</string>
 </resources>
