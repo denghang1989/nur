@@ -15,7 +15,7 @@ public interface InspectionContract {
 
         void hideProgress();
 
-        void showPacsOrderList(List<PacsOrderSubscribe.OrderSubscribe> list);
+        void showPacsOrderList(List<PacsOrderSubscribe> list);
 
     }
 

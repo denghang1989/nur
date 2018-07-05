@@ -7,7 +7,7 @@ import com.blankj.utilcode.util.StringUtils;
 import szszhospital.cn.com.mobilenurse.R;
 import szszhospital.cn.com.mobilenurse.remote.response.PacsOrderSubscribe;
 
-public class InspectionViewHolder extends BaseViewHolder<PacsOrderSubscribe.OrderSubscribe> {
+public class InspectionViewHolder extends BaseViewHolder<PacsOrderSubscribe> {
 
     public InspectionViewHolder(Context context, int id) {
         super(context, id);

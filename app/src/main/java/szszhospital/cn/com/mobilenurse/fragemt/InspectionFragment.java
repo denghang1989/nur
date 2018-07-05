@@ -25,6 +25,7 @@ import java.util.regex.Pattern;
 
 import szszhospital.cn.com.mobilenurse.App;
 import szszhospital.cn.com.mobilenurse.R;
+import szszhospital.cn.com.mobilenurse.activity.InspectionStepActivity;
 import szszhospital.cn.com.mobilenurse.adapter.InspectionAdapter;
 import szszhospital.cn.com.mobilenurse.base.BasePresenterFragment;
 import szszhospital.cn.com.mobilenurse.databinding.FragmentInspectionBinding;
@@ -49,8 +50,7 @@ public class InspectionFragment extends BasePresenterFragment<FragmentInspection
     private InspectionViewHolder              mViewHolder;
     private MaterialDialog                    mDialog;
     private InspectionRequest                 mInspection;
-    private String                            mStatus;
-    private PacsOrderSubscribe.OrderSubscribe mOrderSubscribe;
+    private PacsOrderSubscribe                mOrderSubscribe;
 
     @Override
     protected void init() {
@@ -117,32 +117,33 @@ public class InspectionFragment extends BasePresenterFragment<FragmentInspection
         mAdapter.setOnItemLongClickListener(new BaseQuickAdapter.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(BaseQuickAdapter adapter, View view, int position) {
-
+                InspectionStepActivity.startInspectionStepActivity(_mActivity, mAdapter.getItem(position));
                 return true;
             }
         });
     }
 
     private void createLog(int position) {
-        mOrderSubscribe = mAdapter.getItem(position);
         String content = "";
+        String status = "";
+        mOrderSubscribe = mAdapter.getItem(position);
         if (!StringUtils.isTrimEmpty(mOrderSubscribe.transportStatus)) {
             switch (mOrderSubscribe.transportStatus) {
                 case "A":
                     content = "检查完成，回病房！";
-                    mStatus = "B";
+                    status = "B";
                     break;
                 case "B":
                     content = "病人到达病房！";
-                    mStatus = "C";
+                    status = "C";
                     break;
             }
         } else {
             content = "去检查，离开病房！";
-            mStatus = "A";
+            status = "A";
         }
         mInspection.EpisodeID = mOrderSubscribe.PatNo;
-        mInspection.Status = mStatus;
+        mInspection.Status = status;
         mInspection.UserID = App.loginUser.UserDR;
         mInspection.ARRepID = mOrderSubscribe.arRepID;
         mInspection.Action = "save";
@@ -193,7 +194,7 @@ public class InspectionFragment extends BasePresenterFragment<FragmentInspection
     }
 
     @Override
-    public void showPacsOrderList(List<PacsOrderSubscribe.OrderSubscribe> list) {
+    public void showPacsOrderList(List<PacsOrderSubscribe> list) {
         mAdapter.setNewData(list);
         if (list.size() > 0) {
             mViewHolder.setData(list.get(0));
