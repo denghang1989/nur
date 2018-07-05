@@ -9,7 +9,6 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
-import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -114,12 +113,9 @@ public class InspectionFragment extends BasePresenterFragment<FragmentInspection
         super.initEvent();
         mAdapter.setOnItemClickListener((adapter, view, position) -> createLog(position));
 
-        mAdapter.setOnItemLongClickListener(new BaseQuickAdapter.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(BaseQuickAdapter adapter, View view, int position) {
-                InspectionStepActivity.startInspectionStepActivity(_mActivity, mAdapter.getItem(position));
-                return true;
-            }
+        mAdapter.setOnItemLongClickListener((adapter, view, position) -> {
+            InspectionStepActivity.startInspectionStepActivity(_mActivity, mAdapter.getItem(position),mParam[5]);
+            return true;
         });
     }
 

@@ -19,21 +19,35 @@
             app:layout_constraintTop_toTopOf="parent"
             app:navigationIcon="@drawable/ic_black_32dp"
             app:title="检查时间轴"
-            app:titleTextColor="@color/white"/>
+            app:titleTextColor="@color/white">
+
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginRight="16sp"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                tools:text="张三"/>
+        </android.support.v7.widget.Toolbar>
 
         <com.baoyachi.stepview.HorizontalStepView
             android:id="@+id/step_view"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:background="@color/green"
+            android:paddingBottom="8dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbar"
             />
 
         <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
