@@ -43,13 +43,13 @@ import szszhospital.cn.com.mobilenurse.viewholder.InspectionViewHolder;
  */
 public class InspectionFragment extends BasePresenterFragment<FragmentInspectionBinding, InspectionPresenter> implements InspectionContract.View, MaterialDialog.SingleButtonCallback {
     private static final String TAG = "InspectionFragment";
-    private PacsOrderSubscribeRequest         mRequest;
-    private String[]                          mParam;
-    private InspectionAdapter                 mAdapter;
-    private InspectionViewHolder              mViewHolder;
-    private MaterialDialog                    mDialog;
-    private InspectionRequest                 mInspection;
-    private PacsOrderSubscribe                mOrderSubscribe;
+    private PacsOrderSubscribeRequest mRequest;
+    private String[]                  mParam;
+    private InspectionAdapter         mAdapter;
+    private InspectionViewHolder      mViewHolder;
+    private MaterialDialog            mDialog;
+    private InspectionRequest         mInspection;
+    private PacsOrderSubscribe        mOrderSubscribe;
 
     @Override
     protected void init() {
@@ -114,7 +114,7 @@ public class InspectionFragment extends BasePresenterFragment<FragmentInspection
         mAdapter.setOnItemClickListener((adapter, view, position) -> createLog(position));
 
         mAdapter.setOnItemLongClickListener((adapter, view, position) -> {
-            InspectionStepActivity.startInspectionStepActivity(_mActivity, mAdapter.getItem(position),mParam[5]);
+            InspectionStepActivity.startInspectionStepActivity(_mActivity, mAdapter.getItem(position), mParam[5]);
             return true;
         });
     }
@@ -123,19 +123,20 @@ public class InspectionFragment extends BasePresenterFragment<FragmentInspection
         String content = "";
         String status = "";
         mOrderSubscribe = mAdapter.getItem(position);
+        String loc = mOrderSubscribe.PatLoc.contains("-") ? mOrderSubscribe.PatLoc.split("-")[1] : mOrderSubscribe.PatLoc;
         if (!StringUtils.isTrimEmpty(mOrderSubscribe.transportStatus)) {
             switch (mOrderSubscribe.transportStatus) {
                 case "A":
-                    content = "检查完成，回病房！";
+                    content = "到达" + loc + "进行检查！";
                     status = "B";
                     break;
                 case "B":
-                    content = "病人到达病房！";
+                    content = "完成检查，病人到达病房！";
                     status = "C";
                     break;
             }
         } else {
-            content = "去检查，离开病房！";
+            content = "去" + loc + "，离开病房！";
             status = "A";
         }
         mInspection.EpisodeID = mParam[5];
@@ -193,6 +194,11 @@ public class InspectionFragment extends BasePresenterFragment<FragmentInspection
         mAdapter.setNewData(list);
         if (list.size() > 0) {
             mViewHolder.setData(list.get(0));
+            mViewHolder.setVisible(R.id.Layout, true);
+            mDataBinding.data.setVisibility(View.GONE);
+        } else {
+            mViewHolder.setVisible(R.id.Layout, false);
+            mDataBinding.data.setVisibility(View.VISIBLE);
         }
     }
 
