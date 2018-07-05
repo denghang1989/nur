@@ -18,6 +18,20 @@ public class InspectionAdapter extends BaseQuickAdapter<PacsOrderSubscribe, Base
                 .setText(R.id.dateTime, "申请时间：" + item.ReqData + "    " + item.ReqTime)
                 .setText(R.id.loc, "接收科室：" + item.arExLocDesc)
                 .setText(R.id.type,"检查类型："+item.Type);
+        switch (item.transportStatus) {
+            case "":
+                helper.setVisible(R.id.icon,false);
+                break;
+            case "A":
+                helper.setImageResource(R.id.icon,R.drawable.icon_leave_home);
+                break;
+            case "B":
+                helper.setImageResource(R.id.icon,R.drawable.icon_check);
+                break;
+            case "C":
+                helper.setImageResource(R.id.icon,R.drawable.icon_go_home);
+                break;
+        }
     }
 
 }

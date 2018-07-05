@@ -17,6 +17,7 @@ public interface InspectionContract {
 
         void showPacsOrderList(List<PacsOrderSubscribe> list);
 
+        void refresh();
     }
 
     interface Model extends BaseModel {

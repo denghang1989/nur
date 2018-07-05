@@ -1,9 +1,8 @@
 package szszhospital.cn.com.mobilenurse.mvp.presenter;
 
-import android.util.Log;
-
 import com.annimon.stream.Stream;
 import com.blankj.utilcode.util.StringUtils;
+import com.blankj.utilcode.util.ToastUtils;
 
 import java.util.List;
 
@@ -27,15 +26,15 @@ public class InspectionPresenter extends RxPresenter<InspectionContract.View, In
         ApiService.Instance().getService().getPatientPacsSubscribe(obj2Map(request))
                 .compose(RxUtil.rxSchedulerHelper())
                 .compose(RxUtil.httpHandleResponse())
-                .subscribe(new Observer<PacsOrderSubscribe>() {
+                .subscribe(new Observer<List<PacsOrderSubscribe>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
 
                     }
 
                     @Override
-                    public void onNext(PacsOrderSubscribe pacsOrderSubscribe) {
-                        List<PacsOrderSubscribe> list = Stream.of(pacsOrderSubscribe).filter(value -> !StringUtils.equals(value.StatusCode, "执行")).toList();
+                    public void onNext(List<PacsOrderSubscribe> pacsOrderSubscribes) {
+                        List<PacsOrderSubscribe> list = Stream.of(pacsOrderSubscribes).filter(value -> !StringUtils.equals(value.StatusCode, "执行")).toList();
                         mView.showPacsOrderList(list);
                     }
 
@@ -66,17 +65,28 @@ public class InspectionPresenter extends RxPresenter<InspectionContract.View, In
 
                     @Override
                     public void onNext(HandlerInspectionLog handlerInspectionLog) {
-                        Log.d(TAG, "onNext: ");
+                        mView.refresh();
+                        switch (request.Status) {
+                            case "A":
+                                ToastUtils.showShort("病人离开病区，前往检查！");
+                                break;
+                            case "B":
+                                ToastUtils.showShort("到达检查科室");
+                                break;
+                            case "C":
+                                ToastUtils.showShort("病人回到病区！");
+                                break;
+                        }
                     }
 
                     @Override
                     public void onError(Throwable e) {
-
+                        mView.hideProgress();
                     }
 
                     @Override
                     public void onComplete() {
-
+                        mView.hideProgress();
                     }
                 });
     }

@@ -142,7 +142,7 @@ public class InspectionFragment extends BasePresenterFragment<FragmentInspection
             content = "去检查，离开病房！";
             status = "A";
         }
-        mInspection.EpisodeID = mOrderSubscribe.PatNo;
+        mInspection.EpisodeID = mParam[5];
         mInspection.Status = status;
         mInspection.UserID = App.loginUser.UserDR;
         mInspection.ARRepID = mOrderSubscribe.arRepID;
@@ -171,7 +171,6 @@ public class InspectionFragment extends BasePresenterFragment<FragmentInspection
             // 获取病人预约检查信息
             initData();
         } else {
-            // 处理包药机
             ToastUtils.showShort("病人检查时间记录模块，只能扫描病人腕带");
         }
     }
@@ -201,6 +200,10 @@ public class InspectionFragment extends BasePresenterFragment<FragmentInspection
         }
     }
 
+    @Override
+    public void refresh() {
+        initData();
+    }
 
     private MaterialDialog createMaterialDialog(String content) {
         if (mDialog != null) {

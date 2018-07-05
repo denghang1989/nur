@@ -90,7 +90,7 @@ public interface Api {
 
     //获取病人检查病理申请单信息
     @GET("web/Quality.Ajax.InspectionAjax.cls")
-    Observable<Response<PacsOrderSubscribe>> getPatientPacsSubscribe(@QueryMap Map<String, String> option);
+    Observable<Response<List<PacsOrderSubscribe>>> getPatientPacsSubscribe(@QueryMap Map<String, String> option);
 
     //获取病人检查病理申请单明细
     @GET("web/Quality.Ajax.InspectionLogAjax.cls")
