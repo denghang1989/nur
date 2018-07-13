@@ -52,5 +52,15 @@
         app:layout_constraintTop_toBottomOf="@+id/name"
         tools:text="科室：风湿病区"/>
 
+    <ImageView
+        android:id="@+id/icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/icon_test_receive"/>
+
 
 </android.support.constraint.ConstraintLayout>

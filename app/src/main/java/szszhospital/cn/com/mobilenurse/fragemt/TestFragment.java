@@ -17,6 +17,7 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import szszhospital.cn.com.mobilenurse.App;
 import szszhospital.cn.com.mobilenurse.R;
+import szszhospital.cn.com.mobilenurse.activity.TestStepActivity;
 import szszhospital.cn.com.mobilenurse.adapter.TestAdapter;
 import szszhospital.cn.com.mobilenurse.base.BasePresenterFragment;
 import szszhospital.cn.com.mobilenurse.databinding.FragmentTestBinding;
@@ -77,11 +78,10 @@ public class TestFragment extends BasePresenterFragment<FragmentTestBinding, Tes
     @Override
     protected void initEvent() {
         super.initEvent();
-        mAdapter.setOnItemLongClickListener(new BaseQuickAdapter.OnItemLongClickListener() {
+        mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
-            public boolean onItemLongClick(BaseQuickAdapter adapter, View view, int position) {
-
-                return false;
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                TestStepActivity.start(_mActivity, mAdapter.getItem(position));
             }
         });
     }

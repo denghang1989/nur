@@ -28,29 +28,51 @@
             android:name=".activity.MainActivity"
             android:screenOrientation="portrait"
             />
+
         <activity
             android:name=".activity.QRCodeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"/>
+
         <activity
             android:name=".activity.ScanQRCodeActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
             />
+
         <activity
             android:name=".activity.PrescriptionActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
             />
-        <activity android:name=".activity.DrugCheckActivity"/>
+
+        <activity
+            android:name=".activity.DrugCheckActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Transparent"
+            />
+
         <activity
             android:name=".activity.LisOrderDetailActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
             />
+
         <activity
             android:name=".activity.PacsDetailActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
             />
+
         <activity
             android:name=".activity.InspectionStepActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Transparent"
+            />
+
+        <activity
+            android:name=".activity.TestStepActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
             />
 

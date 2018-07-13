@@ -26,6 +26,7 @@ import szszhospital.cn.com.mobilenurse.remote.response.RobotDrugResponse;
 import szszhospital.cn.com.mobilenurse.remote.response.SaveAuditStatusResponse;
 import szszhospital.cn.com.mobilenurse.remote.response.SchDateTimeResponse;
 import szszhospital.cn.com.mobilenurse.remote.response.Test;
+import szszhospital.cn.com.mobilenurse.remote.response.TestStep;
 
 /**
  * 2016/11/2 11
@@ -104,5 +105,9 @@ public interface Api {
     //获取检验号对应的检验信息
     @GET("web/Quality.Ajax.TestAjax.cls")
     Observable<Response<List<Test>>> getLabNoInfo(@Query("LisNo") String libNo,@Query("UserID") String useId);
+
+    //获取检验号运送的详细信息
+    @GET("web/Quality.Ajax.TestLogDetailAjax.cls")
+    Observable<Response<List<TestStep>>> getLabNoLogDetail(@Query("EpisodeID") String EpisodeID,@Query("LisNo") String libNo);
 
 }
