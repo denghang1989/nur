@@ -34,7 +34,7 @@ public class InspectionPresenter extends RxPresenter<InspectionContract.View, In
 
                     @Override
                     public void onNext(List<PacsOrderSubscribe> pacsOrderSubscribes) {
-                        List<PacsOrderSubscribe> list = Stream.of(pacsOrderSubscribes).filter(value -> !StringUtils.equals(value.StatusCode, "执行")).toList();
+                        List<PacsOrderSubscribe> list = Stream.of(pacsOrderSubscribes).filter(value -> StringUtils.equals(value.repEmgFlag, "否")).toList();
                         mView.showPacsOrderList(list);
                     }
 

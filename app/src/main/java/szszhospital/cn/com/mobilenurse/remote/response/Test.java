@@ -2,25 +2,27 @@ package szszhospital.cn.com.mobilenurse.remote.response;
 
 public class Test {
 
+
     /**
-     * AdmType : 病人就诊类型
-     * Age : 18岁
-     * BedNo : 001床
-     * Diagnose : 主要诊断
-     * Doctor : 主管医生
-     * EposideId : 就诊号RowID
-     * LabNo : 7896381
-     * LocDesc : 就诊科室
-     * PatientName : 病人姓名
-     * PatientNo : 病人登记号
-     * TestSetDesc : 急诊肾功能3项
-     * Ward : 住院病区
+     * AdmType : 门诊
+     * Age : 34
+     * BedNo :
+     * Diagnosem : 阴道和外阴特指炎症,带下病
+     * Doctor : 周紫琼
+     * EposideId : 15594984
+     * LabNo : 7938589
+     * LocDesc : 妇科门诊
+     * PatientName : 李慧柳
+     * PatientNo : 141357
+     * TestSetDesc : 支原体培养及药敏
+     * Ward :
+     * Status：A
      */
 
     public String AdmType;
     public String Age;
     public String BedNo;
-    public String Diagnose;
+    public String Diagnosem;
     public String Doctor;
     public String EposideId;
     public String LabNo;
@@ -29,4 +31,5 @@ public class Test {
     public String PatientNo;
     public String TestSetDesc;
     public String Ward;
+    public String Status;
 }

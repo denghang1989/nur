@@ -25,6 +25,7 @@ import szszhospital.cn.com.mobilenurse.remote.response.PatientInfo;
 import szszhospital.cn.com.mobilenurse.remote.response.RobotDrugResponse;
 import szszhospital.cn.com.mobilenurse.remote.response.SaveAuditStatusResponse;
 import szszhospital.cn.com.mobilenurse.remote.response.SchDateTimeResponse;
+import szszhospital.cn.com.mobilenurse.remote.response.Test;
 
 /**
  * 2016/11/2 11
@@ -96,7 +97,12 @@ public interface Api {
     @GET("web/Quality.Ajax.InspectionLogAjax.cls")
     Observable<Response<List<InspectionLogDetail>>> getInspectionLogDetail(@QueryMap Map<String, String> option);
 
+    //更新病人检查病理申请单的状态
     @GET("web/Quality.Ajax.InspectionLogAjax.cls")
     Observable<Response<HandlerInspectionLog>> saveOrUpdateLog(@QueryMap Map<String, String> option);
+
+    //获取检验号对应的检验信息
+    @GET("web/Quality.Ajax.TestAjax.cls")
+    Observable<Response<List<Test>>> getLabNoInfo(@Query("LisNo") String libNo,@Query("UserID") String useId);
 
 }

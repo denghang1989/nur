@@ -3,9 +3,11 @@ package szszhospital.cn.com.mobilenurse.fragemt;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 
+import com.annimon.stream.IntPair;
+import com.annimon.stream.Optional;
+import com.annimon.stream.Stream;
 import com.blankj.utilcode.util.StringUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 
@@ -13,6 +15,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import szszhospital.cn.com.mobilenurse.App;
 import szszhospital.cn.com.mobilenurse.R;
 import szszhospital.cn.com.mobilenurse.adapter.TestAdapter;
 import szszhospital.cn.com.mobilenurse.base.BasePresenterFragment;
@@ -20,6 +23,7 @@ import szszhospital.cn.com.mobilenurse.databinding.FragmentTestBinding;
 import szszhospital.cn.com.mobilenurse.event.QRCodeEvent;
 import szszhospital.cn.com.mobilenurse.mvp.contract.TestContract;
 import szszhospital.cn.com.mobilenurse.mvp.presenter.TestPresenter;
+import szszhospital.cn.com.mobilenurse.remote.response.Test;
 
 /**
  * 检验标本运送时间抽
@@ -48,9 +52,18 @@ public class TestFragment extends BasePresenterFragment<FragmentTestBinding, Tes
     }
 
     @Override
+    public void showListView(Test test) {
+        Optional<IntPair<Test>> optional = Stream.of(mAdapter.getData()).findIndexed((index, value) -> StringUtils.equals(value.LabNo, test.LabNo));
+        if (!optional.isPresent()) {
+            mAdapter.addData(test);
+            mDataBinding.listView.scrollToPosition(mAdapter.getData().size() - 1);
+        }
+    }
+
+    @Override
     protected void init() {
         super.init();
-        mAdapter= new TestAdapter(R.layout.item_test);
+        mAdapter = new TestAdapter(R.layout.item_test);
     }
 
     @Override
@@ -71,11 +84,6 @@ public class TestFragment extends BasePresenterFragment<FragmentTestBinding, Tes
                 return false;
             }
         });
-    }
-
-    @Override
-    protected void initData() {
-        super.initData();
     }
 
     @Override
@@ -101,10 +109,11 @@ public class TestFragment extends BasePresenterFragment<FragmentTestBinding, Tes
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void handlerCode(QRCodeEvent event) {
-        String code = event.code;
-        Log.d(TAG, "handlerCode: " + code);
-        if (!StringUtils.isTrimEmpty(code) && TextUtils.isDigitsOnly(code)) {
-
+        if (isSupportVisible()) {
+            String code = event.code;
+            if (!StringUtils.isTrimEmpty(code) && TextUtils.isDigitsOnly(code)) {
+                mPresenter.getLisNoInfo(code, App.loginUser.UserDR);
+            }
         }
     }
 

@@ -115,7 +115,7 @@ public class InspectionFragment extends BasePresenterFragment<FragmentInspection
 
         mAdapter.setOnItemLongClickListener((adapter, view, position) -> {
             InspectionStepActivity.startInspectionStepActivity(_mActivity, mAdapter.getItem(position), mParam[5]);
-            return true;
+            return false;
         });
     }
 
@@ -123,7 +123,7 @@ public class InspectionFragment extends BasePresenterFragment<FragmentInspection
         String content = "";
         String status = "";
         mOrderSubscribe = mAdapter.getItem(position);
-        String loc = mOrderSubscribe.PatLoc.contains("-") ? mOrderSubscribe.PatLoc.split("-")[1] : mOrderSubscribe.PatLoc;
+        String loc = mOrderSubscribe.arExLocDesc.contains("-") ? mOrderSubscribe.arExLocDesc.split("-")[1] : mOrderSubscribe.arExLocDesc;
         if (!StringUtils.isTrimEmpty(mOrderSubscribe.transportStatus)) {
             switch (mOrderSubscribe.transportStatus) {
                 case "A":
@@ -161,14 +161,16 @@ public class InspectionFragment extends BasePresenterFragment<FragmentInspection
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void handlerCode(QRCodeEvent event) {
-        String code = event.code;
-        if (code.startsWith("WB")) {
-            String episodeID = getNumFromString(code);
-            mParam[5] = episodeID;
-            // 获取病人预约检查信息
-            initData();
-        } else {
-            ToastUtils.showShort("病人检查时间记录模块，只能扫描病人腕带");
+        if (isSupportVisible()) {
+            String code = event.code;
+            if (code.startsWith("WB")) {
+                String episodeID = getNumFromString(code);
+                mParam[5] = episodeID;
+                // 获取病人预约检查信息
+                initData();
+            } else {
+                ToastUtils.showShort("病人检查时间记录模块，只能扫描病人腕带");
+            }
         }
     }
 

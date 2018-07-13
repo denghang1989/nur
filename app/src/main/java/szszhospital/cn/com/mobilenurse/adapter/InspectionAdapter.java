@@ -23,12 +23,15 @@ public class InspectionAdapter extends BaseQuickAdapter<PacsOrderSubscribe, Base
                 helper.setVisible(R.id.icon,false);
                 break;
             case "A":
+                helper.setVisible(R.id.icon,true);
                 helper.setImageResource(R.id.icon,R.drawable.icon_leave_home);
                 break;
             case "B":
+                helper.setVisible(R.id.icon,true);
                 helper.setImageResource(R.id.icon,R.drawable.icon_check);
                 break;
             case "C":
+                helper.setVisible(R.id.icon,true);
                 helper.setImageResource(R.id.icon,R.drawable.icon_go_home);
                 break;
         }
