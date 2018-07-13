@@ -14,6 +14,7 @@ public class TestStepPresenter extends RxPresenter<TestStepContract.View,TestSte
 
     @Override
     public void getTestStepDetail(String EpisodeID, String LabNo) {
+        mView.showProgress();
         ApiService.Instance().getService().getLabNoLogDetail(EpisodeID,LabNo)
                 .compose(RxUtil.rxSchedulerHelper())
                 .compose(RxUtil.httpHandleResponse())
@@ -30,12 +31,13 @@ public class TestStepPresenter extends RxPresenter<TestStepContract.View,TestSte
 
                     @Override
                     public void onError(Throwable e) {
-
+                        e.printStackTrace();
+                        mView.hideProgress();
                     }
 
                     @Override
                     public void onComplete() {
-
+                        mView.hideProgress();
                     }
                 });
 
