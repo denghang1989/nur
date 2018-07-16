@@ -65,7 +65,7 @@ public class FragmentFactory {
             case "InspectionFragment": //运送对：运送病人去检查
                 fragment = InspectionFragment.newInstance();
                 break;
-            case "TestFragment": //
+            case "TestFragment": // 运送对：运送检验标本
                 fragment = TestFragment.newInstance();
                 break;
         }

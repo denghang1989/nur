@@ -9,4 +9,10 @@
         android:id="@+id/tools_patient_list"
         android:icon="@drawable/icon_patient_list"
         android:title="就诊记录"/>
+
+    <item
+        android:id="@+id/tools_patient_calendar"
+        android:icon="@drawable/icon_calendar"
+        android:title="就诊日历"/>
+
 </menu>
