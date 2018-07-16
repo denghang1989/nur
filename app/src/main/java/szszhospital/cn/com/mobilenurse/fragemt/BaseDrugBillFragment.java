@@ -127,19 +127,21 @@ public class BaseDrugBillFragment extends BasePresenterFragment<FragmentUnDrugBi
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void handlerCode(QRCodeEvent event) {
-        String code = event.code;
-        if (code.startsWith("ZXYF")) {
-            Optional<DrugBill> optional = Stream.of(mAdapter.getData()).filter(drugbill -> StringUtils.equalsIgnoreCase(code, drugbill.DispNo)).findFirst();
-            if (!StringUtils.isTrimEmpty(mRequest.Flag)) {
-                showDialog(optional.get());
+        if (isSupportVisible()) {
+            String code = event.code;
+            if (code.startsWith("ZXYF")) {
+                Optional<DrugBill> optional = Stream.of(mAdapter.getData()).filter(drugbill -> StringUtils.equalsIgnoreCase(code, drugbill.DispNo)).findFirst();
+                if (!StringUtils.isTrimEmpty(mRequest.Flag)) {
+                    showDialog(optional.get());
+                } else {
+                    PrescriptionActivity.startPrescriptionActivity(_mActivity, optional.get());
+                }
+            } else if (code.startsWith("KF")) {
+                // 处理包药机
+                handlerKFCode(code);
             } else {
-                PrescriptionActivity.startPrescriptionActivity(_mActivity, optional.get());
+                ToastUtils.showShort("二维码不正确");
             }
-        } else if (code.startsWith("KF")) {
-            // 处理包药机
-            handlerKFCode(code);
-        } else {
-            ToastUtils.showShort("二维码不正确");
         }
     }
 

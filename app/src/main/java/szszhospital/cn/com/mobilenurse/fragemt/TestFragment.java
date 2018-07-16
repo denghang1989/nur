@@ -58,6 +58,8 @@ public class TestFragment extends BasePresenterFragment<FragmentTestBinding, Tes
         if (!optional.isPresent()) {
             mAdapter.addData(test);
             mDataBinding.listView.scrollToPosition(mAdapter.getData().size() - 1);
+        } else {
+            mAdapter.setData(optional.get().getFirst(),test);
         }
     }
 

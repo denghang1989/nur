@@ -123,6 +123,9 @@ public class InspectionFragment extends BasePresenterFragment<FragmentInspection
         String content = "";
         String status = "";
         mOrderSubscribe = mAdapter.getItem(position);
+        if (StringUtils.equals("C", mOrderSubscribe.transportStatus)) {
+            return;
+        }
         String loc = mOrderSubscribe.arExLocDesc.contains("-") ? mOrderSubscribe.arExLocDesc.split("-")[1] : mOrderSubscribe.arExLocDesc;
         if (!StringUtils.isTrimEmpty(mOrderSubscribe.transportStatus)) {
             switch (mOrderSubscribe.transportStatus) {
