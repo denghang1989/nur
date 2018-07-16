@@ -75,6 +75,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
             />
+        <activity android:name=".activity.EpisodeListActivity"/>
 
         <receiver
             android:name=".broadcast.QRCodeBroadcastReceiver"

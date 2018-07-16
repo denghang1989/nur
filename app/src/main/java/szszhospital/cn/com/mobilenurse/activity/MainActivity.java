@@ -3,6 +3,9 @@ package szszhospital.cn.com.mobilenurse.activity;
 import android.support.v7.view.menu.MenuBuilder;
 import android.view.Gravity;
 import android.view.Menu;
+import android.view.MenuItem;
+
+import com.blankj.utilcode.util.ToastUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -88,5 +91,19 @@ public class MainActivity extends BaseActivity<ActiviyMainBinding> {
             }
         }
         return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.tools_scan:
+                break;
+            case R.id.tools_patient_list:
+                break;
+            case R.id.tools_patient_calendar:
+                break;
+        }
+        ToastUtils.showShort(item.getItemId() + "");
+        return true;
     }
 }

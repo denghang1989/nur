@@ -23,6 +23,7 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:navigationIcon="@drawable/ic_menu_black_32dp"
+                app:popupTheme="@style/OverflowMenuStyle"
                 app:titleTextColor="@color/white">
 
                 <TextView
