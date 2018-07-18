@@ -18,7 +18,7 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:navigationIcon="@drawable/ic_black_32dp"
-            app:title="检查时间轴"
+            app:title="检验时间轴"
             app:titleTextColor="@color/white">
 
             <TextView

@@ -66,7 +66,7 @@ public class InspectionFragment extends BasePresenterFragment<FragmentInspection
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.CHINA);
         mParam[1] = dateFormat.format(new Date());
         Calendar lastDate = Calendar.getInstance();
-        lastDate.add(Calendar.DATE, -7);
+        lastDate.add(Calendar.DATE, -40);
         mParam[0] = dateFormat.format(lastDate.getTime());
     }
 
