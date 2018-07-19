@@ -16,14 +16,21 @@ import java.lang.reflect.Method;
 import szszhospital.cn.com.mobilenurse.App;
 import szszhospital.cn.com.mobilenurse.R;
 import szszhospital.cn.com.mobilenurse.adapter.MainActivityAdapter;
-import szszhospital.cn.com.mobilenurse.base.BaseActivity;
+import szszhospital.cn.com.mobilenurse.base.BasePresentActivity;
 import szszhospital.cn.com.mobilenurse.databinding.ActiviyMainBinding;
 import szszhospital.cn.com.mobilenurse.event.SelectPatientEvent;
+import szszhospital.cn.com.mobilenurse.fragemt.DialogInterface;
 import szszhospital.cn.com.mobilenurse.fragemt.PatientListFragment;
+import szszhospital.cn.com.mobilenurse.fragemt.UpdateDialogFragment;
+import szszhospital.cn.com.mobilenurse.mvp.contract.MainContract;
+import szszhospital.cn.com.mobilenurse.mvp.presenter.MainPresenter;
+import szszhospital.cn.com.mobilenurse.remote.response.UpdateApp;
 
-public class MainActivity extends BaseActivity<ActiviyMainBinding> {
+public class MainActivity extends BasePresentActivity<ActiviyMainBinding, MainPresenter> implements MainContract.View, DialogInterface {
     private static final String TAG = "MainActivity";
-    private MainActivityAdapter mAdapter;
+    private MainActivityAdapter  mAdapter;
+    private UpdateDialogFragment mUpdateDialogFragment;
+    private UpdateApp            mUpdateApp;
 
     @Override
     protected int getLayoutId() {
@@ -53,6 +60,17 @@ public class MainActivity extends BaseActivity<ActiviyMainBinding> {
         mDataBinding.toolbar.setNavigationOnClickListener(v -> {
             App.access.openDrawer(mDataBinding.drawerLayout);
         });
+    }
+
+    @Override
+    protected void initData() {
+        super.initData();
+        mPresenter.getUpdateApp();
+    }
+
+    @Override
+    protected MainPresenter initPresenter() {
+        return new MainPresenter();
     }
 
     @Override
@@ -105,5 +123,37 @@ public class MainActivity extends BaseActivity<ActiviyMainBinding> {
         }
         ToastUtils.showShort(item.getItemId() + "");
         return true;
+    }
+
+    @Override
+    public void showProgress() {
+
+    }
+
+    @Override
+    public void hideProgress() {
+
+    }
+
+    @Override
+    public void showDialog(UpdateApp updateApp) {
+
+        mUpdateDialogFragment = (UpdateDialogFragment) getSupportFragmentManager().findFragmentByTag(UpdateDialogFragment.tag);
+        if (mUpdateDialogFragment != null) {
+            mUpdateDialogFragment.dismiss();
+        }
+        mUpdateDialogFragment = UpdateDialogFragment.newInstance();
+        mUpdateDialogFragment.setDialogInterface(this);
+        mUpdateDialogFragment.show(getSupportFragmentManager(), UpdateDialogFragment.tag);
+    }
+
+    @Override
+    public void onPositive() {
+
+    }
+
+    @Override
+    public void onNegative() {
+
     }
 }

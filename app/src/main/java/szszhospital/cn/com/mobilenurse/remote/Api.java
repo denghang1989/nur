@@ -27,6 +27,7 @@ import szszhospital.cn.com.mobilenurse.remote.response.SaveAuditStatusResponse;
 import szszhospital.cn.com.mobilenurse.remote.response.SchDateTimeResponse;
 import szszhospital.cn.com.mobilenurse.remote.response.Test;
 import szszhospital.cn.com.mobilenurse.remote.response.TestStep;
+import szszhospital.cn.com.mobilenurse.remote.response.UpdateApp;
 
 /**
  * 2016/11/2 11
@@ -110,4 +111,7 @@ public interface Api {
     @GET("web/Quality.Ajax.TestLogDetailAjax.cls")
     Observable<Response<List<TestStep>>> getLabNoLogDetail(@Query("EpisodeID") String EpisodeID,@Query("LisNo") String libNo);
 
+    //检查apk 更新
+    @GET("web/Quality.Ajax.UpdateAppAjax.cls")
+    Observable<Response<UpdateApp>> getUpdateAppInfo();
 }

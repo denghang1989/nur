@@ -9,11 +9,12 @@ import com.annimon.stream.IntPair;
 import com.annimon.stream.Optional;
 import com.annimon.stream.Stream;
 import com.blankj.utilcode.util.StringUtils;
-import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+
+import java.util.ArrayList;
 
 import szszhospital.cn.com.mobilenurse.App;
 import szszhospital.cn.com.mobilenurse.R;
@@ -25,13 +26,15 @@ import szszhospital.cn.com.mobilenurse.event.QRCodeEvent;
 import szszhospital.cn.com.mobilenurse.mvp.contract.TestContract;
 import szszhospital.cn.com.mobilenurse.mvp.presenter.TestPresenter;
 import szszhospital.cn.com.mobilenurse.remote.response.Test;
+import szszhospital.cn.com.mobilenurse.viewholder.TestFooterViewHolder;
 
 /**
  * 检验标本运送时间抽
  */
 public class TestFragment extends BasePresenterFragment<FragmentTestBinding, TestPresenter> implements TestContract.View {
     private static final String TAG = "TestFragment";
-    private TestAdapter mAdapter;
+    private TestAdapter          mAdapter;
+    private TestFooterViewHolder mFooterViewHolder;
 
     @Override
     public int getLayoutId() {
@@ -59,14 +62,17 @@ public class TestFragment extends BasePresenterFragment<FragmentTestBinding, Tes
             mAdapter.addData(test);
             mDataBinding.listView.scrollToPosition(mAdapter.getData().size() - 1);
         } else {
-            mAdapter.setData(optional.get().getFirst(),test);
+            mAdapter.setData(optional.get().getFirst(), test);
         }
+        mFooterViewHolder.setData(" --- 总数：" + mAdapter.getData().size() + " --- ");
     }
 
     @Override
     protected void init() {
         super.init();
         mAdapter = new TestAdapter(R.layout.item_test);
+        mFooterViewHolder = new TestFooterViewHolder(_mActivity, R.layout.footer_item_test);
+        mAdapter.addFooterView(mFooterViewHolder.getConvertView());
     }
 
     @Override
@@ -80,11 +86,11 @@ public class TestFragment extends BasePresenterFragment<FragmentTestBinding, Tes
     @Override
     protected void initEvent() {
         super.initEvent();
-        mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                TestStepActivity.start(_mActivity, mAdapter.getItem(position));
-            }
+        mAdapter.setOnItemClickListener((adapter, view, position) -> TestStepActivity.start(_mActivity, mAdapter.getItem(position)));
+
+        mDataBinding.clear.setOnClickListener(v -> {
+            mAdapter.setNewData(new ArrayList<Test>());
+            mFooterViewHolder.setData("");
         });
     }
 

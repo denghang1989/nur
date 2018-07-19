@@ -1,35 +1,30 @@
 package szszhospital.cn.com.mobilenurse.mvp.presenter;
 
-import java.util.List;
-
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 import szszhospital.cn.com.mobilenurse.base.RxPresenter;
-import szszhospital.cn.com.mobilenurse.mvp.contract.TestContract;
+import szszhospital.cn.com.mobilenurse.mvp.contract.MainContract;
 import szszhospital.cn.com.mobilenurse.remote.ApiService;
 import szszhospital.cn.com.mobilenurse.remote.RxUtil;
-import szszhospital.cn.com.mobilenurse.remote.response.Test;
+import szszhospital.cn.com.mobilenurse.remote.response.UpdateApp;
 
-public class TestPresenter extends RxPresenter<TestContract.View, TestContract.Model> implements TestContract.Presenter {
-
+public class MainPresenter extends RxPresenter<MainContract.View, MainContract.Model> implements MainContract.Presenter {
 
     @Override
-    public void getLisNoInfo(String LisNo, String useId) {
+    public void getUpdateApp() {
         mView.showProgress();
-        ApiService.Instance().getService().getLabNoInfo(LisNo, useId)
+        ApiService.Instance().getService().getUpdateAppInfo()
                 .compose(RxUtil.rxSchedulerHelper())
                 .compose(RxUtil.httpHandleResponse())
-                .subscribe(new Observer<List<Test>>() {
+                .subscribe(new Observer<UpdateApp>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-
+                        addSubscribe(d);
                     }
 
                     @Override
-                    public void onNext(List<Test> tests) {
-                        if (tests != null && tests.size() == 1) {
-                            mView.showListView(tests.get(0));
-                        }
+                    public void onNext(UpdateApp updateApp) {
+                        mView.showDialog(updateApp);
                     }
 
                     @Override

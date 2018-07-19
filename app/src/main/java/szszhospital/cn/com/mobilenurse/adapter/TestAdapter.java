@@ -15,7 +15,10 @@ public class TestAdapter extends BaseQuickAdapter<Test, BaseViewHolder> {
     protected void convert(BaseViewHolder helper, Test item) {
         helper.setText(R.id.LabNo, "检验号:" + item.LabNo)
                 .setText(R.id.patientNo, "登记号：" + item.PatientNo)
-                .setText(R.id.name, item.PatientName + "  " + item.Age +"  "+ item.BedNo)
+                .setText(R.id.name, item.PatientName + "  " + item.Age + "  " + item.BedNo)
+                .setText(R.id.RecDeptDesc, "接收科室：" + item.RecDeptDesc)
+                .setText(R.id.Specimen, item.Specimen)
+                .setText(R.id.TestSetDesc,item.TestSetDesc)
                 .setText(R.id.loc, "就诊科室：" + item.LocDesc);
         switch (item.Status) {
             case "A":

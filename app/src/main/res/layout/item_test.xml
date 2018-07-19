@@ -36,9 +36,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        tools:text="姓名：张三"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/patientNo"/>
+        app:layout_constraintTop_toBottomOf="@+id/patientNo"
+        tools:text="姓名：张三"/>
 
     <TextView
         android:id="@+id/loc"
@@ -47,7 +47,7 @@
         android:layout_marginBottom="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/TestSetDesc"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/name"
         tools:text="科室：风湿病区"/>
@@ -61,6 +61,43 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/icon_test_receive"/>
+
+    <TextView
+        android:id="@+id/Specimen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.2"
+        app:layout_constraintStart_toEndOf="@+id/LabNo"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="TextView"/>
+
+    <TextView
+        android:id="@+id/RecDeptDesc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        app:layout_constraintBottom_toBottomOf="@+id/loc"
+        app:layout_constraintStart_toEndOf="@+id/loc"
+        tools:text="TextView"/>
+
+    <TextView
+        android:id="@+id/TestSetDesc"
+        android:layout_width="wrap_content"
+        android:layout_height="16dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="TextView"/>
 
 
 </android.support.constraint.ConstraintLayout>

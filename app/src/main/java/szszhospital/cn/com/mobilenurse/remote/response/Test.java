@@ -37,6 +37,16 @@ public class Test implements Parcelable,Serializable{
     public String TestSetDesc;
     public String Ward;
     public String Status;
+    /**
+     * EposideId : 15641172
+     * LabNo : 7964041
+     * PatientNo : 3599920
+     * RecDeptDesc : 生化室
+     * Specimen : 血清
+     */
+
+    public String RecDeptDesc;
+    public String Specimen;
 
 
     @Override
@@ -59,6 +69,8 @@ public class Test implements Parcelable,Serializable{
         dest.writeString(this.TestSetDesc);
         dest.writeString(this.Ward);
         dest.writeString(this.Status);
+        dest.writeString(this.RecDeptDesc);
+        dest.writeString(this.Specimen);
     }
 
     public Test() {
@@ -78,6 +90,8 @@ public class Test implements Parcelable,Serializable{
         this.TestSetDesc = in.readString();
         this.Ward = in.readString();
         this.Status = in.readString();
+        this.RecDeptDesc = in.readString();
+        this.Specimen = in.readString();
     }
 
     public static final Creator<Test> CREATOR = new Creator<Test>() {
