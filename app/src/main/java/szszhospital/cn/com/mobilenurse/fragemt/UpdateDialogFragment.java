@@ -9,11 +9,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.ScreenUtils;
+import com.blankj.utilcode.util.SizeUtils;
+
 import szszhospital.cn.com.mobilenurse.R;
 
 public class UpdateDialogFragment extends DialogFragment {
-    public static final String tag = "UpdateDialogFragment";
-
+    public static final  String tag     = "UpdateDialogFragment";
+    private static final String CONTENT = "content";
     private DialogInterface mDialogInterface;
     private TextView        mTitle;
     private TextView        mContent;
@@ -24,8 +27,12 @@ public class UpdateDialogFragment extends DialogFragment {
         mDialogInterface = dialogInterface;
     }
 
-    public static UpdateDialogFragment newInstance() {
-        return new UpdateDialogFragment();
+    public static UpdateDialogFragment newInstance(String content) {
+        Bundle args = new Bundle();
+        args.putString(CONTENT, content);
+        UpdateDialogFragment fragment = new UpdateDialogFragment();
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Nullable
@@ -39,6 +46,7 @@ public class UpdateDialogFragment extends DialogFragment {
         super.onViewCreated(view, savedInstanceState);
         mTitle = view.findViewById(R.id.title);
         mContent = view.findViewById(R.id.content);
+
         mCancel = view.findViewById(R.id.cancel);
         mOk = view.findViewById(R.id.ok);
     }
@@ -46,13 +54,23 @@ public class UpdateDialogFragment extends DialogFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
+        String content = getArguments().getString(CONTENT);
+        mContent.setText(content);
         if (mDialogInterface != null) {
             mCancel.setOnClickListener(v -> {
                 mDialogInterface.onNegative();
                 dismiss();
             });
-            mOk.setOnClickListener(v -> mDialogInterface.onPositive());
+            mOk.setOnClickListener(v -> {
+                mDialogInterface.onPositive();
+                dismiss();
+            });
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getDialog().getWindow().setLayout(ScreenUtils.getScreenWidth(), SizeUtils.dp2px(300));
     }
 }

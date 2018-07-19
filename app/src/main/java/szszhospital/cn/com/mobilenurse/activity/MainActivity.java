@@ -1,18 +1,26 @@
 package szszhospital.cn.com.mobilenurse.activity;
 
+import android.content.Intent;
+import android.os.Environment;
 import android.support.v7.view.menu.MenuBuilder;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.blankj.utilcode.util.IntentUtils;
+import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.FileCallBack;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.io.File;
 import java.lang.reflect.Method;
 
+import okhttp3.Call;
 import szszhospital.cn.com.mobilenurse.App;
 import szszhospital.cn.com.mobilenurse.R;
 import szszhospital.cn.com.mobilenurse.adapter.MainActivityAdapter;
@@ -25,6 +33,7 @@ import szszhospital.cn.com.mobilenurse.fragemt.UpdateDialogFragment;
 import szszhospital.cn.com.mobilenurse.mvp.contract.MainContract;
 import szszhospital.cn.com.mobilenurse.mvp.presenter.MainPresenter;
 import szszhospital.cn.com.mobilenurse.remote.response.UpdateApp;
+import szszhospital.cn.com.mobilenurse.utils.AppUtil;
 
 public class MainActivity extends BasePresentActivity<ActiviyMainBinding, MainPresenter> implements MainContract.View, DialogInterface {
     private static final String TAG = "MainActivity";
@@ -137,19 +146,35 @@ public class MainActivity extends BasePresentActivity<ActiviyMainBinding, MainPr
 
     @Override
     public void showDialog(UpdateApp updateApp) {
-
-        mUpdateDialogFragment = (UpdateDialogFragment) getSupportFragmentManager().findFragmentByTag(UpdateDialogFragment.tag);
-        if (mUpdateDialogFragment != null) {
-            mUpdateDialogFragment.dismiss();
+        if (updateApp.versionCode > AppUtil.getLocalVersion(this)) {
+            mUpdateDialogFragment = (UpdateDialogFragment) getSupportFragmentManager().findFragmentByTag(UpdateDialogFragment.tag);
+            if (mUpdateDialogFragment != null) {
+                mUpdateDialogFragment.dismiss();
+            }
+            mUpdateDialogFragment = UpdateDialogFragment.newInstance(updateApp.desc);
+            mUpdateDialogFragment.setDialogInterface(this);
+            mUpdateDialogFragment.show(getSupportFragmentManager(), UpdateDialogFragment.tag);
+            mUpdateApp = updateApp;
         }
-        mUpdateDialogFragment = UpdateDialogFragment.newInstance();
-        mUpdateDialogFragment.setDialogInterface(this);
-        mUpdateDialogFragment.show(getSupportFragmentManager(), UpdateDialogFragment.tag);
     }
 
     @Override
     public void onPositive() {
+        if (!StringUtils.isTrimEmpty(mUpdateApp.url)) {
+            OkHttpUtils.get().url(mUpdateApp.url).build().
+                    execute(new FileCallBack(Environment.getExternalStorageDirectory().getAbsolutePath(), "App.apk") {
+                        @Override
+                        public void onError(Call call, Exception e, int id) {
 
+                        }
+
+                        @Override
+                        public void onResponse(File response, int id) {
+                            Intent intent = IntentUtils.getInstallAppIntent(response);
+                            startActivity(intent);
+                        }
+                    });
+        }
     }
 
     @Override
