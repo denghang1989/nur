@@ -15,17 +15,20 @@ public class PatientViewHolder extends BaseViewHolder<PatientInfo> {
 
     @Override
     protected void refreshViewByData() {
-        if (StringUtils.equals(mData.Sex, "男")) {
-            setImageResource(R.id.icon, R.drawable.icon_man);
-        } else {
-            setImageResource(R.id.icon, R.drawable.icon_woman);
-        }
+        setVisible(R.id.icon, true);
+
         setText(R.id.name, "姓名：" + mData.PAPMIName)
                 .setText(R.id.bed, mData.DisBed)
                 .setText(R.id.patientId, "登记号：" + mData.PatientID)
                 .setText(R.id.dateTime, "入院日期：" + mData.PaAdmDateTime)
                 .setText(R.id.diagnose, "诊断：" + mData.Diagnose)
                 .setText(R.id.payType, "费用类型：" + mData.PayType);
+
+        if (StringUtils.equals(mData.Sex, "男")) {
+            setImageResource(R.id.icon, R.drawable.icon_man);
+        } else {
+            setImageResource(R.id.icon, R.drawable.icon_woman);
+        }
 
     }
 }

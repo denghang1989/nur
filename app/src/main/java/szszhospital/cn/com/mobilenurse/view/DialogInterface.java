@@ -1,4 +1,4 @@
-package szszhospital.cn.com.mobilenurse.fragemt;
+package szszhospital.cn.com.mobilenurse.view;
 
 public interface DialogInterface {
     void onPositive();

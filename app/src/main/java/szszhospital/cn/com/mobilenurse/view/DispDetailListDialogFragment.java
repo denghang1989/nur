@@ -1,4 +1,4 @@
-package szszhospital.cn.com.mobilenurse.fragemt;
+package szszhospital.cn.com.mobilenurse.view;
 
 import android.app.Activity;
 import android.content.Context;

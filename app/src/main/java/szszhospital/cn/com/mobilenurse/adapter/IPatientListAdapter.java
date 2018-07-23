@@ -25,6 +25,7 @@ public class IPatientListAdapter extends BaseQuickAdapter<PatientInfo, BaseViewH
         helper.setText(R.id.patient_name, "姓名：" + item.PAPMIName)
                 .setText(R.id.age, "年龄：" + item.Age)
                 .setText(R.id.diagnose, "诊断：" + item.Diagnose)
+                .setText(R.id.date, "入院日期：" + item.PaAdmDateTime)
                 .setText(R.id.bedNo, item.DisBed);
         if (StringUtils.equals("男", item.Sex)) {
             helper.setImageResource(R.id.sex, R.drawable.icon_man);

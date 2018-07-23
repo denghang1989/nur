@@ -6,6 +6,8 @@
     <uses-permission android:name="android.permission.CAMERA"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
     <application
         android:name=".App"
@@ -83,6 +85,13 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.BARCODEDATA"/>
+            </intent-filter>
+        </receiver>
+        <receiver android:name=".broadcast.WifiReceiver">
+            <intent-filter>
+                <action android:name="android.net.wifi.RSSI_CHANGED"/>
+                <action android:name="android.net.wifi.STATE_CHANGE"/>
+                <action android:name="android.net.wifi.WIFI_STATE_CHANGED"/>
             </intent-filter>
         </receiver>
     </application>

@@ -19,6 +19,7 @@ import szszhospital.cn.com.mobilenurse.remote.response.LisOrderDetail;
 import szszhospital.cn.com.mobilenurse.remote.response.LocAccessResponse;
 import szszhospital.cn.com.mobilenurse.remote.response.LoginResponse;
 import szszhospital.cn.com.mobilenurse.remote.response.Order;
+import szszhospital.cn.com.mobilenurse.remote.response.OrderExecuteInfo;
 import szszhospital.cn.com.mobilenurse.remote.response.PacsOrder;
 import szszhospital.cn.com.mobilenurse.remote.response.PacsOrderSubscribe;
 import szszhospital.cn.com.mobilenurse.remote.response.PatientInfo;
@@ -114,4 +115,8 @@ public interface Api {
     //检查apk 更新
     @GET("web/Quality.Ajax.UpdateAppAjax.cls")
     Observable<Response<UpdateApp>> getUpdateAppInfo();
+
+    //医嘱执行记录
+    @GET("web/Quality.Ajax.OrderExecuteAjax.cls")
+    Observable<Response<List<OrderExecuteInfo>>> getOrderExecuteList(@Query("OrderId") String orderId);
 }

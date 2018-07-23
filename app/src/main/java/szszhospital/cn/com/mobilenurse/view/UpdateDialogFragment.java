@@ -1,4 +1,4 @@
-package szszhospital.cn.com.mobilenurse.fragemt;
+package szszhospital.cn.com.mobilenurse.view;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

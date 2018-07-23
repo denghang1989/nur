@@ -2,10 +2,7 @@ package szszhospital.cn.com.mobilenurse.fragemt;
 
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
-import android.util.Log;
 import android.view.View;
-
-import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import java.util.List;
 
@@ -17,14 +14,16 @@ import szszhospital.cn.com.mobilenurse.mvp.contract.OrderContract;
 import szszhospital.cn.com.mobilenurse.mvp.presenter.OrderPresenter;
 import szszhospital.cn.com.mobilenurse.remote.request.OrderRequest;
 import szszhospital.cn.com.mobilenurse.remote.response.Order;
+import szszhospital.cn.com.mobilenurse.view.OrderExtDialogFragment;
 
 /**
  * 临时医嘱
  */
 public abstract class BaseOrdersFragment extends BaseDoctorFragment<FragmentOrderBinding, OrderPresenter> implements OrderContract.View {
     private static final String TAG = "BaseOrdersFragment";
-    protected OrderRequest     mOrderRequest;
-    protected OrderListAdapter mAdapter;
+    protected OrderRequest           mOrderRequest;
+    protected OrderListAdapter       mAdapter;
+    protected OrderExtDialogFragment mDialogFragment;
 
     @Override
     public int getLayoutId() {
@@ -60,12 +59,7 @@ public abstract class BaseOrdersFragment extends BaseDoctorFragment<FragmentOrde
         super.initEvent();
         mDataBinding.top.setOnClickListener(v -> mDataBinding.orderList.scrollToPosition(0));
         mDataBinding.refreshLayout.setOnRefreshListener(refreshlayout -> initData());
-        mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                Log.d(TAG, "onItemClick: " + position);
-            }
-        });
+        mAdapter.setOnItemClickListener((adapter, view, position) -> shwoDialog(mAdapter.getItem(position)));
     }
 
     @Override
@@ -94,4 +88,14 @@ public abstract class BaseOrdersFragment extends BaseDoctorFragment<FragmentOrde
     }
 
     protected abstract String getOrderType();
+
+    protected void shwoDialog(Order order) {
+        mDialogFragment = (OrderExtDialogFragment) getChildFragmentManager().findFragmentByTag(OrderExtDialogFragment.TAG);
+        if (mDialogFragment != null) {
+            mDialogFragment.dismiss();
+        }
+
+        mDialogFragment = OrderExtDialogFragment.newInstance(order);
+        mDialogFragment.show(getChildFragmentManager(), OrderExtDialogFragment.TAG);
+    }
 }

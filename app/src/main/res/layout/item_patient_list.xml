@@ -5,13 +5,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="?android:attr/selectableItemBackground"
-    android:layout_height="82dp">
+    android:layout_height="wrap_content"
+    android:background="?android:attr/selectableItemBackground">
 
     <TextView
         android:id="@+id/select"
         android:layout_width="4dp"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:background="@color/red"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -55,11 +55,25 @@
         android:id="@+id/age"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:gravity="center"
         android:textSize="14sp"
+        app:layout_constraintLeft_toRightOf="@+id/patient_name"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="16"/>
+
+    <!--入院日期-->
+    <TextView
+        android:id="@+id/date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/diagnose"
         app:layout_constraintStart_toEndOf="@+id/bedNo"
@@ -68,8 +82,8 @@
 
     <ImageView
         android:id="@+id/sex"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_marginRight="16dp"
         android:layout_marginTop="8dp"
         android:src="@drawable/icon_man"
@@ -80,7 +94,7 @@
         android:id="@+id/diagnose"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="3dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:singleLine="true"

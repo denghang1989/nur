@@ -25,6 +25,8 @@ import szszhospital.cn.com.mobilenurse.mvp.contract.DrugBillContract;
 import szszhospital.cn.com.mobilenurse.mvp.presenter.DrugBillPresenter;
 import szszhospital.cn.com.mobilenurse.remote.request.DrugBillListRequest;
 import szszhospital.cn.com.mobilenurse.remote.response.DrugBill;
+import szszhospital.cn.com.mobilenurse.view.DialogInterface;
+import szszhospital.cn.com.mobilenurse.view.DispDetailListDialogFragment;
 
 /**
  * 2018/5/20 00
