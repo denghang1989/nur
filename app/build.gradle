@@ -62,8 +62,8 @@ dependencies {
     implementation 'com.android.support:multidex:1.0.3'
     implementation 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.5@aar'
     implementation 'com.annimon:stream:1.2.0'
-    implementation 'com.github.huangyanbin:SmartTable:2.2.0'
     implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
     implementation 'com.github.baoyachi:StepView:1.9'
     implementation 'com.zhy:okhttputils:2.6.2'
+    implementation 'com.evrencoskun.library:tableview:0.8.8'
 }
