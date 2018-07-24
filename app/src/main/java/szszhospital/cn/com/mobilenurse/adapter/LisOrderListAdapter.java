@@ -17,7 +17,7 @@ public class LisOrderListAdapter extends BaseQuickAdapter<LisOrder, BaseViewHold
     protected void convert(BaseViewHolder helper, LisOrder item) {
         helper.setText(R.id.lis_name, item.OrdItemName)
                 .setText(R.id.dateTime, item.AuthDateTime)
-                .setText(R.id.desc_flag, item.TSMemo);
+                .setText(R.id.desc_flag, item.StatusDesc);
         if (StringUtils.equals("1", item.TSResultAnomaly)) {
             helper.setImageResource(R.id.flag, R.drawable.icon_abnormal);
         } else if (StringUtils.equals("0", item.TSResultAnomaly)) {

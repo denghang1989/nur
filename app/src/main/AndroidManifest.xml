@@ -78,6 +78,7 @@
             android:theme="@style/AppTheme.Transparent"
             />
         <activity android:name=".activity.EpisodeListActivity"/>
+        <activity android:name=".activity.ImageActivity"/>
 
         <receiver
             android:name=".broadcast.QRCodeBroadcastReceiver"

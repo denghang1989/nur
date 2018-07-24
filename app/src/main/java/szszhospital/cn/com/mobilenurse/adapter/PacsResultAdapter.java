@@ -16,7 +16,9 @@ public class PacsResultAdapter extends BaseQuickAdapter<PacsOrder, BaseViewHolde
     @Override
     protected void convert(BaseViewHolder helper, PacsOrder item) {
         helper.setText(R.id.dateTime, item.TItemDate)
-                .setText(R.id.name, item.TItemName);
+                .setText(R.id.name, item.TItemName)
+                .addOnClickListener(R.id.icon)
+                .addOnClickListener(R.id.photo);
         if (!StringUtils.isTrimEmpty(item.Memo)) {
             if (StringUtils.equals("S^已发布", item.Memo)) {
                 helper.setVisible(R.id.icon, true);

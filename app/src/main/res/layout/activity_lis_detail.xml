@@ -25,10 +25,28 @@
             android:id="@+id/tableView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            app:show_horizontal_separator="true"
+            app:show_vertical_separator="true"
+            app:row_header_width="@dimen/row_header_width"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbar"/>
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:visibility="gone"
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/tableView"
+            app:layout_constraintEnd_toEndOf="@+id/tableView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/toolbar"/>
 
     </android.support.constraint.ConstraintLayout>
 

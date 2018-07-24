@@ -3,16 +3,15 @@ package szszhospital.cn.com.mobilenurse.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Parcelable;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
 import java.util.List;
 
 import szszhospital.cn.com.mobilenurse.R;
-import szszhospital.cn.com.mobilenurse.adapter.LisOrderDetailAdapter;
+import szszhospital.cn.com.mobilenurse.adapter.LisTableAdapter;
 import szszhospital.cn.com.mobilenurse.base.BasePresentActivity;
 import szszhospital.cn.com.mobilenurse.databinding.ActivityLisDetailBinding;
+import szszhospital.cn.com.mobilenurse.entity.LisTableViewModel;
 import szszhospital.cn.com.mobilenurse.mvp.contract.LisOrderDetailContract;
 import szszhospital.cn.com.mobilenurse.mvp.presenter.LisOrderDetailPresenter;
 import szszhospital.cn.com.mobilenurse.remote.response.LisOrder;
@@ -21,8 +20,8 @@ import szszhospital.cn.com.mobilenurse.remote.response.LisOrderDetail;
 public class LisOrderDetailActivity extends BasePresentActivity<ActivityLisDetailBinding, LisOrderDetailPresenter> implements LisOrderDetailContract.View {
 
     private static final String KEY_DATA = "data";
-    private LisOrder              mLisOrder;
-    private LisOrderDetailAdapter mAdapter;
+    private LisOrder        mLisOrder;
+    private LisTableAdapter mTableViewAdapter;
 
     public static void startLisOrderDetailActivity(Context context, LisOrder lisOrder) {
         Intent intent = new Intent(context, LisOrderDetailActivity.class);
@@ -34,7 +33,6 @@ public class LisOrderDetailActivity extends BasePresentActivity<ActivityLisDetai
     protected void init() {
         super.init();
         mLisOrder = getIntent().getParcelableExtra(KEY_DATA);
-        mAdapter = new LisOrderDetailAdapter(R.layout.item_lis_order_detail);
     }
 
     @Override
@@ -46,21 +44,13 @@ public class LisOrderDetailActivity extends BasePresentActivity<ActivityLisDetai
     @Override
     protected void initView() {
         super.initView();
-        mDataBinding.list.setLayoutManager(new LinearLayoutManager(this));
-        mDataBinding.list.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
-        mDataBinding.list.setAdapter(mAdapter);
         mDataBinding.toolbar.setTitle(mLisOrder.OrdItemName);
     }
 
     @Override
     protected void initEvent() {
         super.initEvent();
-        mDataBinding.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        mDataBinding.toolbar.setNavigationOnClickListener(v -> finish());
     }
 
     @Override
@@ -70,17 +60,20 @@ public class LisOrderDetailActivity extends BasePresentActivity<ActivityLisDetai
 
     @Override
     public void showProgress() {
-
+        mDataBinding.progressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideProgress() {
-
+        mDataBinding.progressBar.setVisibility(View.GONE);
     }
 
     @Override
     public void showLisOrderListDetail(List<LisOrderDetail> list) {
-        mAdapter.setNewData(list);
+        LisTableViewModel tableViewModel = new LisTableViewModel(list);
+        mTableViewAdapter = new LisTableAdapter(getApplicationContext(), tableViewModel);
+        mDataBinding.tableView.setAdapter(mTableViewAdapter);
+        mTableViewAdapter.setAllItems(tableViewModel.getSimpleColumnHeaderList(), tableViewModel.getSimpleRowHeaderList(), tableViewModel.getCellList());
     }
 
     @Override

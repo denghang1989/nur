@@ -12,6 +12,7 @@ import java.util.List;
 
 import szszhospital.cn.com.mobilenurse.App;
 import szszhospital.cn.com.mobilenurse.R;
+import szszhospital.cn.com.mobilenurse.activity.ImageActivity;
 import szszhospital.cn.com.mobilenurse.activity.PacsDetailActivity;
 import szszhospital.cn.com.mobilenurse.adapter.PacsResultAdapter;
 import szszhospital.cn.com.mobilenurse.databinding.FragmentOrderBinding;
@@ -67,6 +68,19 @@ public class PacsResultFragment extends BaseDoctorFragment<FragmentOrderBinding,
                 PacsDetailActivity.startPacsDetailActivity(_mActivity, pacsOrder);
             } else {
                 ToastUtils.showShort("无报告");
+            }
+        });
+
+        mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            int id = view.getId();
+            PacsOrder pacsOrder = mAdapter.getItem(position);
+            switch (id) {
+                case R.id.icon:
+                    PacsDetailActivity.startPacsDetailActivity(_mActivity, pacsOrder);
+                    break;
+                case R.id.photo:
+                    ImageActivity.startImageActivity(_mActivity, pacsOrder);
+                    break;
             }
         });
     }

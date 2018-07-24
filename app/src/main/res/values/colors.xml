@@ -10,4 +10,8 @@
     <color name="gray">@android:color/darker_gray</color>
     <color name="red">@android:color/holo_red_light</color>
     <color name="lightGray">#F2F6FC</color>
+
+    <color name="cell_background_color">@android:color/darker_gray</color>
+    <color name="header_line_color">@android:color/holo_red_light</color>
+    <color name="blue">#87CEFF</color>
 </resources>
