@@ -1,6 +1,8 @@
 package szszhospital.cn.com.mobilenurse.activity;
 
+import android.Manifest;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Environment;
 import android.support.v7.view.menu.MenuBuilder;
 import android.view.Gravity;
@@ -10,6 +12,7 @@ import android.view.MenuItem;
 import com.blankj.utilcode.util.IntentUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.FileCallBack;
 
@@ -20,6 +23,7 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.io.File;
 import java.lang.reflect.Method;
 
+import io.reactivex.disposables.Disposable;
 import okhttp3.Call;
 import szszhospital.cn.com.mobilenurse.App;
 import szszhospital.cn.com.mobilenurse.R;
@@ -27,19 +31,20 @@ import szszhospital.cn.com.mobilenurse.adapter.MainActivityAdapter;
 import szszhospital.cn.com.mobilenurse.base.BasePresentActivity;
 import szszhospital.cn.com.mobilenurse.databinding.ActiviyMainBinding;
 import szszhospital.cn.com.mobilenurse.event.SelectPatientEvent;
-import szszhospital.cn.com.mobilenurse.view.DialogInterface;
 import szszhospital.cn.com.mobilenurse.fragemt.PatientListFragment;
-import szszhospital.cn.com.mobilenurse.view.UpdateDialogFragment;
 import szszhospital.cn.com.mobilenurse.mvp.contract.MainContract;
 import szszhospital.cn.com.mobilenurse.mvp.presenter.MainPresenter;
 import szszhospital.cn.com.mobilenurse.remote.response.UpdateApp;
 import szszhospital.cn.com.mobilenurse.utils.AppUtil;
+import szszhospital.cn.com.mobilenurse.view.DialogInterface;
+import szszhospital.cn.com.mobilenurse.view.UpdateDialogFragment;
 
 public class MainActivity extends BasePresentActivity<ActiviyMainBinding, MainPresenter> implements MainContract.View, DialogInterface {
     private static final String TAG = "MainActivity";
     private MainActivityAdapter  mAdapter;
     private UpdateDialogFragment mUpdateDialogFragment;
     private UpdateApp            mUpdateApp;
+    private Disposable mDisposable;
 
     @Override
     protected int getLayoutId() {
@@ -61,6 +66,21 @@ public class MainActivity extends BasePresentActivity<ActiviyMainBinding, MainPr
         super.init();
         mAdapter = new MainActivityAdapter(getSupportFragmentManager());
         EventBus.getDefault().register(this);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            requestPermissions();
+        }
+    }
+
+    private void requestPermissions() {
+        final RxPermissions rxPermissions = new RxPermissions(this);
+        mDisposable = rxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
+                .subscribe(granted -> {
+                    if (granted) {
+
+                    } else {
+
+                    }
+                });
     }
 
     @Override
@@ -86,6 +106,7 @@ public class MainActivity extends BasePresentActivity<ActiviyMainBinding, MainPr
     protected void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+        mDisposable.dispose();
     }
 
     public void closeDrawer() {

@@ -3,21 +3,31 @@ package szszhospital.cn.com.mobilenurse.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.Environment;
 import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
+import android.webkit.DownloadListener;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.blankj.utilcode.util.StringUtils;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.FileCallBack;
+
+import java.io.File;
 
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
+import okhttp3.Call;
+import okhttp3.Request;
 import szszhospital.cn.com.mobilenurse.R;
 import szszhospital.cn.com.mobilenurse.base.BaseActivity;
 import szszhospital.cn.com.mobilenurse.databinding.ActivityPacsDetailBinding;
+import szszhospital.cn.com.mobilenurse.factory.ReportFactory;
+import szszhospital.cn.com.mobilenurse.factory.report.ReportUrl;
 import szszhospital.cn.com.mobilenurse.remote.ApiService;
 import szszhospital.cn.com.mobilenurse.remote.RxUtil;
 import szszhospital.cn.com.mobilenurse.remote.response.PacsOrder;
@@ -119,6 +129,8 @@ public class PacsDetailActivity extends BaseActivity<ActivityPacsDetailBinding> 
                 Log.d(TAG, "onPageFinished: " + "结束加载");
             }
         });
+
+        webView.setDownloadListener(new MyWebViewDownLoadListener());
     }
 
     @Override
@@ -136,12 +148,12 @@ public class PacsDetailActivity extends BaseActivity<ActivityPacsDetailBinding> 
                     @Override
                     public void onNext(PascClinicSetting pascClinicSetting) {
                         if (StringUtils.equals("0", pascClinicSetting.Code)) {
-                            String data = pascClinicSetting.Data;
-                            String[] split = data.split("\\^");
-                            String reportFullFil = split[0];
-                            if (!reportFullFil.contains(".exe") && reportFullFil.startsWith("http")) {
-                                String url = reportFullFil + mPacsorder.TRegNo;
-                                mDataBinding.webView.loadUrl(url);
+                            ReportUrl reportUrl = ReportFactory.getInstance(mPacsorder);
+                            if (reportUrl != null) {
+                                String url = reportUrl.getReportUrl(pascClinicSetting, mPacsorder);
+                                if (!StringUtils.isTrimEmpty(url)) {
+                                    mDataBinding.webView.loadUrl(url);
+                                }
                             }
                         }
                     }
@@ -163,7 +175,13 @@ public class PacsDetailActivity extends BaseActivity<ActivityPacsDetailBinding> 
     @Override
     protected void initEvent() {
         super.initEvent();
-        mDataBinding.toolbar.setNavigationOnClickListener(v -> finish());
+        mDataBinding.toolbar.setNavigationOnClickListener(v -> {
+            if (mDataBinding.webView.canGoBack()) {
+                mDataBinding.webView.goBack();
+            } else {
+                finish();
+            }
+        });
     }
 
     @Override
@@ -183,5 +201,40 @@ public class PacsDetailActivity extends BaseActivity<ActivityPacsDetailBinding> 
         super.onDestroy();
         mDataBinding.webView.destroy();
         md.dispose();
+    }
+
+    private class MyWebViewDownLoadListener implements DownloadListener {
+
+        @Override
+        public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimetype, long contentLength) {
+            if (url.contains("pdf")) {
+                OkHttpUtils.get().url(url).build().
+                        buildCall(new FileCallBack(Environment.getExternalStorageDirectory().getAbsolutePath(), "PacsDetailActivity.pdf") {
+
+                            @Override
+                            public void onBefore(Request request, int id) {
+                                super.onBefore(request, id);
+                                Log.d(TAG, "onBefore: ");
+                            }
+
+                            @Override
+                            public void onAfter(int id) {
+                                super.onAfter(id);
+                                Log.d(TAG, "onAfter: ");
+                            }
+
+                            @Override
+                            public void onError(Call call, Exception e, int id) {
+                                e.printStackTrace();
+                                Log.d(TAG, "onError: ");
+                            }
+
+                            @Override
+                            public void onResponse(File response, int id) {
+                                Log.d(TAG, "onResponse: " + id);
+                            }
+                        });
+            }
+        }
     }
 }
