@@ -14,20 +14,16 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.blankj.utilcode.util.StringUtils;
-import com.zhy.http.okhttp.OkHttpUtils;
-import com.zhy.http.okhttp.callback.Callback;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
-import okhttp3.Call;
-import okhttp3.Response;
 import szszhospital.cn.com.mobilenurse.R;
 import szszhospital.cn.com.mobilenurse.base.BaseActivity;
 import szszhospital.cn.com.mobilenurse.databinding.ActivityPacsDetailBinding;
@@ -86,15 +82,11 @@ public class PacsDetailActivity extends BaseActivity<ActivityPacsDetailBinding> 
         webSettings.setDisplayZoomControls(false); //隐藏原生的缩放控件
 
         //其他细节操作
-        webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK); //关闭webview中缓存
+        webSettings.setCacheMode(WebSettings.LOAD_DEFAULT); //关闭webview中缓存
         webSettings.setAllowFileAccess(true); //设置可以访问文件
         webSettings.setJavaScriptCanOpenWindowsAutomatically(true); //支持通过JS打开新窗口
         webSettings.setLoadsImagesAutomatically(true); //支持自动加载图片
         webSettings.setDefaultTextEncodingName("utf-8");//设置编码格式
-
-        //不使用缓存:
-        webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
-
 
         //设置不用系统浏览器打开,直接显示在当前Webview
         webView.setWebViewClient(new WebViewClient() {
@@ -215,40 +207,41 @@ public class PacsDetailActivity extends BaseActivity<ActivityPacsDetailBinding> 
             /*Uri uri = Uri.parse(url);
             Intent intent = new Intent(Intent.ACTION_VIEW, uri);
             startActivity(intent);*/
-            String[] splits = url.split("/");
-            String fileName = splits[splits.length - 1];
-            OkHttpUtils.get().url(url).build().buildCall(new Callback<Response>() {
-
+            String[] split = url.split("/");
+            String name = split[split.length - 1];
+            new Thread(new Runnable() {
                 @Override
-                public Response parseNetworkResponse(Response response, int id) throws Exception {
-                    return response;
-                }
-
-                @Override
-                public void onError(Call call, Exception e, int id) {
-                    e.printStackTrace();
-                }
-
-                @Override
-                public void onResponse(Response response, int id) {
+                public void run() {
                     try {
-                        InputStream inputStream = response.body().byteStream();
-                        String file = Environment.getDownloadCacheDirectory().getAbsoluteFile() + "/pdf";
-                        OutputStream outputStream = new FileOutputStream(new File(file,fileName));
-                        BufferedOutputStream bs = new BufferedOutputStream(outputStream);
-                        int length = 0;
-                        byte[] buff = new byte[1024];
-                        while ((length = inputStream.read(buff)) > 0) {
-                            bs.write(buff, 0, length);
+                        URL urls = new URL(url);
+                        HttpURLConnection connection = (HttpURLConnection) urls.openConnection();
+                        // 设置请求方式
+                        connection.setRequestMethod("GET");
+                        // 设置超时时间
+                        connection.setConnectTimeout(3000);
+                        // 连接
+                        connection.connect();
+                        // 4. 得到响应状态码的返回值 responseCode
+                        int code = connection.getResponseCode();
+                        if (code == 200) {
+                            BufferedInputStream bis = new BufferedInputStream(connection.getInputStream());
+                            File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath(), name);
+                            BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
+                            byte[] buff = new byte[1024 * 10];
+                            int length = 0;
+                            while ((length = bis.read(buff)) > 0) {
+                                bos.write(buff, 0, length);
+                            }
+                            bos.close();
+                            bis.close();
                         }
-
-                        bs.close();
-                        inputStream.close();
-                    } catch (IOException e) {
+                        // 5. 断开连接
+                        connection.disconnect();
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
-            });
+            }).start();
         }
     }
 }
