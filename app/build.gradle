@@ -67,4 +67,5 @@ dependencies {
     implementation 'com.zhy:okhttputils:2.6.2'
     implementation 'com.evrencoskun.library:tableview:0.8.8'
     implementation 'com.github.barteksc:android-pdf-viewer:3.1.0-beta.1'
+    implementation 'com.google.guava:guava:25.1-android'
 }

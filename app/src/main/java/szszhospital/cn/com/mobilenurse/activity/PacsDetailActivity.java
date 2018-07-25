@@ -15,14 +15,19 @@ import android.webkit.WebViewClient;
 
 import com.blankj.utilcode.util.StringUtils;
 import com.zhy.http.okhttp.OkHttpUtils;
-import com.zhy.http.okhttp.callback.FileCallBack;
+import com.zhy.http.okhttp.callback.Callback;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 import okhttp3.Call;
-import okhttp3.Request;
+import okhttp3.Response;
 import szszhospital.cn.com.mobilenurse.R;
 import szszhospital.cn.com.mobilenurse.base.BaseActivity;
 import szszhospital.cn.com.mobilenurse.databinding.ActivityPacsDetailBinding;
@@ -207,34 +212,43 @@ public class PacsDetailActivity extends BaseActivity<ActivityPacsDetailBinding> 
 
         @Override
         public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimetype, long contentLength) {
-            if (url.contains("pdf")) {
-                OkHttpUtils.get().url(url).build().
-                        buildCall(new FileCallBack(Environment.getExternalStorageDirectory().getAbsolutePath(), "PacsDetailActivity.pdf") {
+            /*Uri uri = Uri.parse(url);
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            startActivity(intent);*/
+            String[] splits = url.split("/");
+            String fileName = splits[splits.length - 1];
+            OkHttpUtils.get().url(url).build().buildCall(new Callback<Response>() {
 
-                            @Override
-                            public void onBefore(Request request, int id) {
-                                super.onBefore(request, id);
-                                Log.d(TAG, "onBefore: ");
-                            }
+                @Override
+                public Response parseNetworkResponse(Response response, int id) throws Exception {
+                    return response;
+                }
 
-                            @Override
-                            public void onAfter(int id) {
-                                super.onAfter(id);
-                                Log.d(TAG, "onAfter: ");
-                            }
+                @Override
+                public void onError(Call call, Exception e, int id) {
+                    e.printStackTrace();
+                }
 
-                            @Override
-                            public void onError(Call call, Exception e, int id) {
-                                e.printStackTrace();
-                                Log.d(TAG, "onError: ");
-                            }
+                @Override
+                public void onResponse(Response response, int id) {
+                    try {
+                        InputStream inputStream = response.body().byteStream();
+                        String file = Environment.getDownloadCacheDirectory().getAbsoluteFile() + "/pdf";
+                        OutputStream outputStream = new FileOutputStream(new File(file,fileName));
+                        BufferedOutputStream bs = new BufferedOutputStream(outputStream);
+                        int length = 0;
+                        byte[] buff = new byte[1024];
+                        while ((length = inputStream.read(buff)) > 0) {
+                            bs.write(buff, 0, length);
+                        }
 
-                            @Override
-                            public void onResponse(File response, int id) {
-                                Log.d(TAG, "onResponse: " + id);
-                            }
-                        });
-            }
+                        bs.close();
+                        inputStream.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
         }
     }
 }
