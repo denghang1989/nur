@@ -12,6 +12,7 @@ import retrofit2.http.QueryMap;
 import szszhospital.cn.com.mobilenurse.remote.response.AuditDetailResponse;
 import szszhospital.cn.com.mobilenurse.remote.response.DispDetailResponse;
 import szszhospital.cn.com.mobilenurse.remote.response.DrugBill;
+import szszhospital.cn.com.mobilenurse.remote.response.FtpConfig;
 import szszhospital.cn.com.mobilenurse.remote.response.HandlerInspectionLog;
 import szszhospital.cn.com.mobilenurse.remote.response.InspectionLogDetail;
 import szszhospital.cn.com.mobilenurse.remote.response.LisOrder;
@@ -107,11 +108,11 @@ public interface Api {
 
     //获取检验号对应的检验信息
     @GET("web/Quality.Ajax.TestAjax.cls")
-    Observable<Response<List<Test>>> getLabNoInfo(@Query("LisNo") String libNo,@Query("UserID") String useId);
+    Observable<Response<List<Test>>> getLabNoInfo(@Query("LisNo") String libNo, @Query("UserID") String useId);
 
     //获取检验号运送的详细信息
     @GET("web/Quality.Ajax.TestLogDetailAjax.cls")
-    Observable<Response<List<TestStep>>> getLabNoLogDetail(@Query("EpisodeID") String EpisodeID,@Query("LisNo") String libNo);
+    Observable<Response<List<TestStep>>> getLabNoLogDetail(@Query("EpisodeID") String EpisodeID, @Query("LisNo") String libNo);
 
     //检查apk 更新
     @GET("web/Quality.Ajax.UpdateAppAjax.cls")
@@ -124,4 +125,8 @@ public interface Api {
     //获取检查url
     @GET("web/Quality.Ajax.ClinicSettingAjax.cls")
     Observable<Response<PascClinicSetting>> getClinicSetting(@Query("LocDr") String LocDr);
+
+    //获取ftpConfig
+    @GET("web/Quality.Ajax.FtpConfigAjax.cls")
+    Observable<Response<FtpConfig>> getFtpConfig();
 }

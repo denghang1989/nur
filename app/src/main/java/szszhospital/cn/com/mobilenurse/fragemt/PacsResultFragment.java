@@ -5,15 +5,13 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
 import com.blankj.utilcode.util.SPUtils;
-import com.blankj.utilcode.util.StringUtils;
-import com.blankj.utilcode.util.ToastUtils;
 
 import java.util.List;
 
 import szszhospital.cn.com.mobilenurse.App;
 import szszhospital.cn.com.mobilenurse.R;
-import szszhospital.cn.com.mobilenurse.activity.PacsImageActivity;
 import szszhospital.cn.com.mobilenurse.activity.PacsDetailActivity;
+import szszhospital.cn.com.mobilenurse.activity.PacsImageActivity;
 import szszhospital.cn.com.mobilenurse.adapter.PacsResultAdapter;
 import szszhospital.cn.com.mobilenurse.databinding.FragmentOrderBinding;
 import szszhospital.cn.com.mobilenurse.mvp.contract.PacsResultContract;
@@ -61,15 +59,6 @@ public class PacsResultFragment extends BaseDoctorFragment<FragmentOrderBinding,
         super.initEvent();
         mDataBinding.top.setOnClickListener(v -> mDataBinding.orderList.scrollToPosition(0));
         mDataBinding.refreshLayout.setOnRefreshListener(refreshlayout -> initData());
-        mAdapter.setOnItemClickListener((adapter, view, position) -> {
-            PacsOrder pacsOrder = mAdapter.getItem(position);
-            String memo = pacsOrder.Memo;
-            if (StringUtils.equals(memo, "S^已发布")) {
-                PacsDetailActivity.startPacsDetailActivity(_mActivity, pacsOrder);
-            } else {
-                ToastUtils.showShort("无报告");
-            }
-        });
 
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             int id = view.getId();
