@@ -1,6 +1,8 @@
 package szszhospital.cn.com.mobilenurse;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.HandlerThread;
 import android.support.multidex.MultiDexApplication;
 
 import com.blankj.utilcode.util.Utils;
@@ -13,6 +15,7 @@ import szszhospital.cn.com.mobilenurse.control.LocAccess;
 import szszhospital.cn.com.mobilenurse.remote.ApiService;
 import szszhospital.cn.com.mobilenurse.remote.model.LoginUser;
 import szszhospital.cn.com.mobilenurse.remote.response.PatientInfo;
+import szszhospital.cn.com.mobilenurse.utils.AsynHandlerThread;
 
 public class App extends MultiDexApplication {
 
@@ -31,7 +34,8 @@ public class App extends MultiDexApplication {
 
     public static LoginUser loginUser = new LoginUser();
 
-    public static LocAccess access;
+    public static  LocAccess access;
+    private static Handler   mAsynHandler;
 
     public static void setAccess(LocAccess access) {
         App.access = access;
@@ -51,5 +55,12 @@ public class App extends MultiDexApplication {
         Utils.init(this);
         ApiService.init(this);
         mContext = getApplicationContext();
+        HandlerThread handlerThread = new AsynHandlerThread();
+        handlerThread.start();
+        mAsynHandler = new Handler(handlerThread.getLooper());
+    }
+
+    public static Handler getAsynHandler() {
+        return mAsynHandler;
     }
 }

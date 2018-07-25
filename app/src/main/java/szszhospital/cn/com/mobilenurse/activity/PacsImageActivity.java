@@ -9,12 +9,12 @@ import szszhospital.cn.com.mobilenurse.base.BaseActivity;
 import szszhospital.cn.com.mobilenurse.databinding.ActivityImageBinding;
 import szszhospital.cn.com.mobilenurse.remote.response.PacsOrder;
 
-public class ImageActivity extends BaseActivity<ActivityImageBinding> {
+public class PacsImageActivity extends BaseActivity<ActivityImageBinding> {
 
     private static final String KEY_DATA = "data";
 
     public static void startImageActivity(Context context, PacsOrder pacsorder) {
-        Intent intent = new Intent(context, ImageActivity.class);
+        Intent intent = new Intent(context, PacsImageActivity.class);
         intent.putExtra(KEY_DATA, (Parcelable) pacsorder);
         context.startActivity(intent);
     }

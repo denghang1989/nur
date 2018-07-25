@@ -1,30 +1,23 @@
 package szszhospital.cn.com.mobilenurse.activity;
 
 import android.Manifest;
-import android.content.Intent;
 import android.os.Build;
-import android.os.Environment;
 import android.support.v7.view.menu.MenuBuilder;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.blankj.utilcode.util.IntentUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.tbruyelle.rxpermissions2.RxPermissions;
-import com.zhy.http.okhttp.OkHttpUtils;
-import com.zhy.http.okhttp.callback.FileCallBack;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.io.File;
 import java.lang.reflect.Method;
 
 import io.reactivex.disposables.Disposable;
-import okhttp3.Call;
 import szszhospital.cn.com.mobilenurse.App;
 import szszhospital.cn.com.mobilenurse.R;
 import szszhospital.cn.com.mobilenurse.adapter.MainActivityAdapter;
@@ -182,19 +175,7 @@ public class MainActivity extends BasePresentActivity<ActiviyMainBinding, MainPr
     @Override
     public void onPositive() {
         if (!StringUtils.isTrimEmpty(mUpdateApp.url)) {
-            OkHttpUtils.get().url(mUpdateApp.url).build().
-                    execute(new FileCallBack(Environment.getExternalStorageDirectory().getAbsolutePath(), "App.apk") {
-                        @Override
-                        public void onError(Call call, Exception e, int id) {
 
-                        }
-
-                        @Override
-                        public void onResponse(File response, int id) {
-                            Intent intent = IntentUtils.getInstallAppIntent(response);
-                            startActivity(intent);
-                        }
-                    });
         }
     }
 

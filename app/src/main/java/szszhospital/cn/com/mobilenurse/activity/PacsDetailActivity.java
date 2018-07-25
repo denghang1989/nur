@@ -3,7 +3,6 @@ package szszhospital.cn.com.mobilenurse.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.os.Environment;
 import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
@@ -15,15 +14,11 @@ import android.webkit.WebViewClient;
 
 import com.blankj.utilcode.util.StringUtils;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
+import szszhospital.cn.com.mobilenurse.App;
 import szszhospital.cn.com.mobilenurse.R;
 import szszhospital.cn.com.mobilenurse.base.BaseActivity;
 import szszhospital.cn.com.mobilenurse.databinding.ActivityPacsDetailBinding;
@@ -33,6 +28,8 @@ import szszhospital.cn.com.mobilenurse.remote.ApiService;
 import szszhospital.cn.com.mobilenurse.remote.RxUtil;
 import szszhospital.cn.com.mobilenurse.remote.response.PacsOrder;
 import szszhospital.cn.com.mobilenurse.remote.response.PascClinicSetting;
+import szszhospital.cn.com.mobilenurse.utils.FileCallback;
+import szszhospital.cn.com.mobilenurse.utils.FileDownUtil;
 
 public class PacsDetailActivity extends BaseActivity<ActivityPacsDetailBinding> {
     private static final String TAG      = "PacsDetailActivity";
@@ -204,44 +201,25 @@ public class PacsDetailActivity extends BaseActivity<ActivityPacsDetailBinding> 
 
         @Override
         public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimetype, long contentLength) {
-            /*Uri uri = Uri.parse(url);
-            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-            startActivity(intent);*/
-            String[] split = url.split("/");
-            String name = split[split.length - 1];
-            new Thread(new Runnable() {
+            App.getAsynHandler().post(new Runnable() {
                 @Override
                 public void run() {
-                    try {
-                        URL urls = new URL(url);
-                        HttpURLConnection connection = (HttpURLConnection) urls.openConnection();
-                        // 设置请求方式
-                        connection.setRequestMethod("GET");
-                        // 设置超时时间
-                        connection.setConnectTimeout(3000);
-                        // 连接
-                        connection.connect();
-                        // 4. 得到响应状态码的返回值 responseCode
-                        int code = connection.getResponseCode();
-                        if (code == 200) {
-                            BufferedInputStream bis = new BufferedInputStream(connection.getInputStream());
-                            File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath(), name);
-                            BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
-                            byte[] buff = new byte[1024 * 10];
-                            int length = 0;
-                            while ((length = bis.read(buff)) > 0) {
-                                bos.write(buff, 0, length);
+                    FileDownUtil.downFile(url, new FileCallback() {
+                        @Override
+                        public void success(File file) {
+                            if (file.getName().endsWith(".pdf")) {
+                                PdfActivity.startPdfActivity(getApplicationContext(), file);
                             }
-                            bos.close();
-                            bis.close();
                         }
-                        // 5. 断开连接
-                        connection.disconnect();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+
+                        @Override
+                        public void error(Exception e) {
+
+                        }
+                    });
                 }
-            }).start();
+            });
         }
     }
+
 }

@@ -2,7 +2,8 @@ package szszhospital.cn.com.mobilenurse.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
+
+import java.io.File;
 
 import szszhospital.cn.com.mobilenurse.R;
 import szszhospital.cn.com.mobilenurse.base.BaseActivity;
@@ -11,34 +12,29 @@ import szszhospital.cn.com.mobilenurse.databinding.ActivityPdfBinding;
 public class PdfActivity extends BaseActivity<ActivityPdfBinding> {
 
     private static final String KEY_DATA = "data";
-    private Uri mUri;
+    private File mFile;
 
     @Override
     protected int getLayoutId() {
         return R.layout.activity_pdf;
     }
 
-    public static void startPdfActivity(Context context, Uri uri) {
-        Intent intent = new Intent(context, PacsDetailActivity.class);
-        intent.putExtra(KEY_DATA, uri);
-        context.startActivity(intent);
-    }
-
-    public static void startPdfActivity(Context context) {
-        Intent intent = new Intent(context, PacsDetailActivity.class);
+    public static void startPdfActivity(Context context, File file) {
+        Intent intent = new Intent(context, PdfActivity.class);
+        intent.putExtra(KEY_DATA, file);
         context.startActivity(intent);
     }
 
     @Override
     protected void init() {
         super.init();
-       // mUri = getIntent().getParcelableExtra(KEY_DATA);
+        mFile = (File) getIntent().getSerializableExtra(KEY_DATA);
     }
 
     @Override
     protected void initView() {
         super.initView();
-       // mDataBinding.pdfView.fromUri(mUri);
+        mDataBinding.pdfView.fromFile(mFile).load();
     }
 
     @Override

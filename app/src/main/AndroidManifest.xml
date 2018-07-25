@@ -77,9 +77,21 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
             />
-        <activity android:name=".activity.EpisodeListActivity"/>
-        <activity android:name=".activity.ImageActivity"/>
-        <activity android:name=".activity.PdfActivity"/>
+        <activity
+            android:name=".activity.EpisodeListActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Transparent"
+            />
+        <activity
+            android:name=".activity.PacsImageActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Transparent"
+            />
+        <activity
+            android:name=".activity.PdfActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Transparent"
+            />
 
         <receiver
             android:name=".broadcast.QRCodeBroadcastReceiver"
@@ -89,6 +101,7 @@
                 <action android:name="android.intent.action.BARCODEDATA"/>
             </intent-filter>
         </receiver>
+
         <receiver android:name=".broadcast.WifiReceiver">
             <intent-filter>
                 <action android:name="android.net.wifi.RSSI_CHANGED"/>
@@ -96,6 +109,7 @@
                 <action android:name="android.net.wifi.WIFI_STATE_CHANGED"/>
             </intent-filter>
         </receiver>
+
     </application>
 
 </manifest>
