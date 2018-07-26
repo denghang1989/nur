@@ -9,6 +9,9 @@ import szszhospital.cn.com.mobilenurse.R;
 import szszhospital.cn.com.mobilenurse.base.BaseActivity;
 import szszhospital.cn.com.mobilenurse.databinding.ActivityPdfBinding;
 
+/**
+ * pdf查看工具
+ */
 public class PdfActivity extends BaseActivity<ActivityPdfBinding> {
 
     private static final String KEY_DATA = "data";

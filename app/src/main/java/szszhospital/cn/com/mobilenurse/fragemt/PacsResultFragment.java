@@ -10,7 +10,7 @@ import java.util.List;
 
 import szszhospital.cn.com.mobilenurse.App;
 import szszhospital.cn.com.mobilenurse.R;
-import szszhospital.cn.com.mobilenurse.activity.PacsDetailActivity;
+import szszhospital.cn.com.mobilenurse.activity.PacsWebViewDetailActivity;
 import szszhospital.cn.com.mobilenurse.activity.PacsImageActivity;
 import szszhospital.cn.com.mobilenurse.adapter.PacsResultAdapter;
 import szszhospital.cn.com.mobilenurse.databinding.FragmentOrderBinding;
@@ -59,13 +59,12 @@ public class PacsResultFragment extends BaseDoctorFragment<FragmentOrderBinding,
         super.initEvent();
         mDataBinding.top.setOnClickListener(v -> mDataBinding.orderList.scrollToPosition(0));
         mDataBinding.refreshLayout.setOnRefreshListener(refreshlayout -> initData());
-
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
-            int id = view.getId();
             PacsOrder pacsOrder = mAdapter.getItem(position);
+            int id = view.getId();
             switch (id) {
                 case R.id.icon:
-                    PacsDetailActivity.startPacsDetailActivity(_mActivity, pacsOrder);
+                    PacsWebViewDetailActivity.startPacsDetailActivity(_mActivity, pacsOrder);
                     break;
                 case R.id.photo:
                     PacsImageActivity.startImageActivity(_mActivity, pacsOrder);

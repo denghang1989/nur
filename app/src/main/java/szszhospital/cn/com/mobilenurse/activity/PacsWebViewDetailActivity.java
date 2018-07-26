@@ -31,14 +31,14 @@ import szszhospital.cn.com.mobilenurse.remote.response.PascClinicSetting;
 import szszhospital.cn.com.mobilenurse.utils.FileCallback;
 import szszhospital.cn.com.mobilenurse.utils.FileDownUtil;
 
-public class PacsDetailActivity extends BaseActivity<ActivityPacsDetailBinding> {
-    private static final String TAG      = "PacsDetailActivity";
+public class PacsWebViewDetailActivity extends BaseActivity<ActivityPacsDetailBinding> {
+    private static final String TAG      = "PacsWebViewDetailActivity";
     private static final String KEY_DATA = "data";
     private PacsOrder  mPacsorder;
     private Disposable md;
 
     public static void startPacsDetailActivity(Context context, PacsOrder pacsorder) {
-        Intent intent = new Intent(context, PacsDetailActivity.class);
+        Intent intent = new Intent(context, PacsWebViewDetailActivity.class);
         intent.putExtra(KEY_DATA, (Parcelable) pacsorder);
         context.startActivity(intent);
     }

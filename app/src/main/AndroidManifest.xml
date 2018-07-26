@@ -61,7 +61,7 @@
             />
 
         <activity
-            android:name=".activity.PacsDetailActivity"
+            android:name=".activity.PacsWebViewDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
             />
@@ -89,6 +89,7 @@
             />
         <activity
             android:name=".activity.PdfActivity"
+            android:process=":pdf"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
             />
