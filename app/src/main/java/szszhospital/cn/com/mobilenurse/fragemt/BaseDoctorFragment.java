@@ -26,7 +26,7 @@ public abstract class BaseDoctorFragment<T extends ViewDataBinding, P extends Ba
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void selectedPatient(SelectPatientEvent event){
+    public void selectedPatient(SelectPatientEvent event) {
         initData();
     }
 }

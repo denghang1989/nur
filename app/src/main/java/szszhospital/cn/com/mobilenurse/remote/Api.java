@@ -12,6 +12,8 @@ import retrofit2.http.QueryMap;
 import szszhospital.cn.com.mobilenurse.remote.response.AuditDetailResponse;
 import szszhospital.cn.com.mobilenurse.remote.response.DispDetailResponse;
 import szszhospital.cn.com.mobilenurse.remote.response.DrugBill;
+import szszhospital.cn.com.mobilenurse.remote.response.EMREposideInfo;
+import szszhospital.cn.com.mobilenurse.remote.response.EMRImageInfo;
 import szszhospital.cn.com.mobilenurse.remote.response.FtpConfig;
 import szszhospital.cn.com.mobilenurse.remote.response.HandlerInspectionLog;
 import szszhospital.cn.com.mobilenurse.remote.response.InspectionLogDetail;
@@ -132,7 +134,9 @@ public interface Api {
 
     //获取病人图片的列表
     @GET("web/Quality.Ajax.EMREposideListAjax.cls")
-    Observable<Response<FtpConfig>> EMREposideList(@Query("EpisodeID") String EpisodeID);
+    Observable<Response<List<EMREposideInfo>>> getEMREposideList(@Query("EpisodeID") String EpisodeID);
 
     //获取图片的ftp地址  Quality.Ajax.EMRImageListAjax
+    @GET("web/Quality.Ajax.EMRImageListAjax.cls")
+    Observable<Response<List<EMRImageInfo>>> getEMRImageList(@Query("EpisodeID") String EpisodeID, @Query("InternalID") String InternalID);
 }

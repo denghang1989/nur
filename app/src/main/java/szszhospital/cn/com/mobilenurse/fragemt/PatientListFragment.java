@@ -25,6 +25,7 @@ public class PatientListFragment extends BasePresenterFragment<FragmentPatientLi
     private IPatientListAdapter mAdapter;
     private PatientListRequest  mRequest;
     private PatientViewHolder   mPatientViewHolder;
+    private int mSelectPatient = -1;
 
     public static PatientListFragment newInstance() {
         return new PatientListFragment();
@@ -89,7 +90,10 @@ public class PatientListFragment extends BasePresenterFragment<FragmentPatientLi
             App.setPatientInfo(patientInfo);
             ((MainActivity) _mActivity).closeDrawer();
             mPatientViewHolder.setData(patientInfo);
-            EventBus.getDefault().post(new SelectPatientEvent(patientInfo));
+            if (position != mSelectPatient) {
+                EventBus.getDefault().post(new SelectPatientEvent(patientInfo));
+            }
+            mSelectPatient = position;
         });
         mDataBinding.refreshLayout.setOnRefreshListener(refreshlayout -> initData());
     }
