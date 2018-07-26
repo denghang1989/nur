@@ -129,4 +129,10 @@ public interface Api {
     //获取ftpConfig
     @GET("web/Quality.Ajax.FtpConfigAjax.cls")
     Observable<Response<FtpConfig>> getFtpConfig();
+
+    //获取病人图片的列表
+    @GET("web/Quality.Ajax.EMREposideListAjax.cls")
+    Observable<Response<FtpConfig>> EMREposideList(@Query("EpisodeID") String EpisodeID);
+
+    //获取图片的ftp地址  Quality.Ajax.EMRImageListAjax
 }

@@ -15,6 +15,7 @@ import szszhospital.cn.com.mobilenurse.remote.ApiService;
 import szszhospital.cn.com.mobilenurse.remote.RxUtil;
 import szszhospital.cn.com.mobilenurse.remote.request.LoginRequest;
 import szszhospital.cn.com.mobilenurse.remote.request.SchDateTimeRequest;
+import szszhospital.cn.com.mobilenurse.remote.response.FtpConfig;
 import szszhospital.cn.com.mobilenurse.remote.response.LoginResponse;
 import szszhospital.cn.com.mobilenurse.remote.response.SchDateTimeResponse;
 
@@ -48,6 +49,7 @@ public class LoginPresenter extends RxPresenter<LoginContract.View, LoginContrac
                             mModel.save(loginResponse);
                             user.setLogin(true);
                             SPUtils.getInstance().put("user_name", user.getName());
+                            ftpConfig();
                         }
 
                     }
@@ -100,6 +102,34 @@ public class LoginPresenter extends RxPresenter<LoginContract.View, LoginContrac
                 mView.hideProgress();
             }
         });
+    }
+
+    @Override
+    public void ftpConfig() {
+        ApiService.Instance().getService().getFtpConfig()
+                .compose(RxUtil.rxSchedulerHelper())
+                .compose(RxUtil.httpHandleResponse())
+                .subscribe(new Observer<FtpConfig>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        addSubscribe(d);
+                    }
+
+                    @Override
+                    public void onNext(FtpConfig ftpConfig) {
+                        mModel.saveFtpConfig(ftpConfig);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 
 }
