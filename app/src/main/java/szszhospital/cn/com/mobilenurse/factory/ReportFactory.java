@@ -5,6 +5,7 @@ import szszhospital.cn.com.mobilenurse.factory.report.CSYXReport;
 import szszhospital.cn.com.mobilenurse.factory.report.CTSReport;
 import szszhospital.cn.com.mobilenurse.factory.report.DTXDReport;
 import szszhospital.cn.com.mobilenurse.factory.report.FSYXKReport;
+import szszhospital.cn.com.mobilenurse.factory.report.JDTSReport;
 import szszhospital.cn.com.mobilenurse.factory.report.JLDPReport;
 import szszhospital.cn.com.mobilenurse.factory.report.JRSReport;
 import szszhospital.cn.com.mobilenurse.factory.report.NDTSReport;
@@ -67,7 +68,7 @@ public class ReportFactory {
                 handler = new NDTSReport();
                 break;
             case "165": //JDTS-肌电图室
-                handler = new JLDPReport();
+                handler = new JDTSReport();
                 break;
             default:
                 break;
