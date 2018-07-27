@@ -36,7 +36,7 @@ public class PacsResultAdapter extends BaseQuickAdapter<PacsOrder, BaseViewHolde
     public String getPath(PacsOrder item) {
         String path = "";
         String tReplocpath = item.TReplocpath;
-        if (StringUtils.isTrimEmpty(tReplocpath)) {
+        if (!StringUtils.isTrimEmpty(tReplocpath)) {
             String[] split = tReplocpath.split("\\^");
             path = split[0];
         }

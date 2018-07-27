@@ -1,15 +1,23 @@
 package szszhospital.cn.com.mobilenurse.factory.report;
 
+import android.webkit.WebView;
+
 import szszhospital.cn.com.mobilenurse.remote.response.PacsOrder;
-import szszhospital.cn.com.mobilenurse.remote.response.PascClinicSetting;
 
 
 /**
  * CTS-CT室
  */
-public class CTSReport implements ReportUrl {
+public class CTSReport implements WebViewReportHandler {
+
+
     @Override
-    public String getReportUrl(PascClinicSetting pascClinicSetting, PacsOrder pacsOrder) {
-        return null;
+    public void openReport(PacsOrder pacsOrder, WebView view) {
+
+    }
+
+    @Override
+    public void openImage(PacsOrder pacsOrder) {
+
     }
 }

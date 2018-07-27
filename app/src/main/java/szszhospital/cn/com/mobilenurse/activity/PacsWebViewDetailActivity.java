@@ -12,22 +12,16 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import com.blankj.utilcode.util.StringUtils;
-
 import java.io.File;
 
-import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 import szszhospital.cn.com.mobilenurse.App;
 import szszhospital.cn.com.mobilenurse.R;
 import szszhospital.cn.com.mobilenurse.base.BaseActivity;
 import szszhospital.cn.com.mobilenurse.databinding.ActivityPacsDetailBinding;
 import szszhospital.cn.com.mobilenurse.factory.ReportFactory;
-import szszhospital.cn.com.mobilenurse.factory.report.ReportUrl;
-import szszhospital.cn.com.mobilenurse.remote.ApiService;
-import szszhospital.cn.com.mobilenurse.remote.RxUtil;
+import szszhospital.cn.com.mobilenurse.factory.report.WebViewReportHandler;
 import szszhospital.cn.com.mobilenurse.remote.response.PacsOrder;
-import szszhospital.cn.com.mobilenurse.remote.response.PascClinicSetting;
 import szszhospital.cn.com.mobilenurse.utils.FileCallback;
 import szszhospital.cn.com.mobilenurse.utils.FileDownUtil;
 
@@ -35,7 +29,6 @@ public class PacsWebViewDetailActivity extends BaseActivity<ActivityPacsDetailBi
     private static final String TAG      = "PacsWebViewDetailActivity";
     private static final String KEY_DATA = "data";
     private PacsOrder  mPacsorder;
-    private Disposable md;
 
     public static void startPacsDetailActivity(Context context, PacsOrder pacsorder) {
         Intent intent = new Intent(context, PacsWebViewDetailActivity.class);
@@ -130,40 +123,10 @@ public class PacsWebViewDetailActivity extends BaseActivity<ActivityPacsDetailBi
     @Override
     protected void initData() {
         super.initData();
-        ApiService.Instance().getService().getClinicSetting(mPacsorder.TreplocDr)
-                .compose(RxUtil.httpHandleResponse())
-                .compose(RxUtil.rxSchedulerHelper())
-                .subscribe(new Observer<PascClinicSetting>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                        md = d;
-                    }
-
-                    @Override
-                    public void onNext(PascClinicSetting pascClinicSetting) {
-                        if (StringUtils.equals("0", pascClinicSetting.Code)) {
-                            ReportUrl reportUrl = ReportFactory.getInstance(mPacsorder);
-                            if (reportUrl != null) {
-                                String url = reportUrl.getReportUrl(pascClinicSetting, mPacsorder);
-                                if (!StringUtils.isTrimEmpty(url)) {
-                                    mDataBinding.webView.loadUrl(url);
-                                }
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });
-
-
+        WebViewReportHandler reportUrl = ReportFactory.getInstance(mPacsorder);
+        if (reportUrl != null) {
+            reportUrl.openReport(mPacsorder, mDataBinding.webView);
+        }
     }
 
     @Override
@@ -194,7 +157,6 @@ public class PacsWebViewDetailActivity extends BaseActivity<ActivityPacsDetailBi
     protected void onDestroy() {
         super.onDestroy();
         mDataBinding.webView.destroy();
-        md.dispose();
     }
 
     private class MyWebViewDownLoadListener implements DownloadListener {

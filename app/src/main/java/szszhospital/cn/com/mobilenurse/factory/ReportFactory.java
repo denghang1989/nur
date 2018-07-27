@@ -9,7 +9,7 @@ import szszhospital.cn.com.mobilenurse.factory.report.JLDPReport;
 import szszhospital.cn.com.mobilenurse.factory.report.JRSReport;
 import szszhospital.cn.com.mobilenurse.factory.report.NDTSReport;
 import szszhospital.cn.com.mobilenurse.factory.report.NKJSReport;
-import szszhospital.cn.com.mobilenurse.factory.report.ReportUrl;
+import szszhospital.cn.com.mobilenurse.factory.report.WebViewReportHandler;
 import szszhospital.cn.com.mobilenurse.factory.report.XDTSReport;
 import szszhospital.cn.com.mobilenurse.remote.response.PacsOrder;
 
@@ -30,49 +30,49 @@ import szszhospital.cn.com.mobilenurse.remote.response.PacsOrder;
  */
 public class ReportFactory {
 
-    public static ReportUrl getInstance(PacsOrder pacsOrder) {
+    public static WebViewReportHandler getInstance(PacsOrder pacsOrder) {
         String treplocDr = pacsOrder.TreplocDr;
-        ReportUrl url = null;
+        WebViewReportHandler handler = null;
         switch (treplocDr) {
             case "9": //FSYXK-放射影像科
-                url = new FSYXKReport();
+                handler = new FSYXKReport();
                 break;
             case "11": //CTS-CT室
-                url = new CTSReport();
+                handler = new CTSReport();
                 break;
             case "12": //JRS-介入室
-                url = new JRSReport();
+                handler = new JRSReport();
                 break;
             case "13": //BLK-病理科
-                url = new BLKReport();
+                handler = new BLKReport();
                 break;
             case "14": //CSYX-超声影像科
-                url = new CSYXReport();
+                handler = new CSYXReport();
                 break;
             case "15": //XDTS-心电图室
-                url = new XDTSReport();
+                handler = new XDTSReport();
                 break;
             case "16": //DTXD-动态心电图室
-                url = new DTXDReport();
+                handler = new DTXDReport();
                 break;
             case "17": //JLDP-经颅多普勒室
-                url = new JLDPReport();
+                handler = new JLDPReport();
                 break;
             case "77": //NKJS-内窥镜室
-                url = new NKJSReport();
+                handler = new NKJSReport();
                 break;
             case "112": //YMZB-一门诊B超室
                 break;
             case "164": //NDTS-脑电图室
-                url = new NDTSReport();
+                handler = new NDTSReport();
                 break;
             case "165": //JDTS-肌电图室
-                url = new JLDPReport();
+                handler = new JLDPReport();
                 break;
             default:
                 break;
         }
-        return url;
+        return handler;
     }
 
 }

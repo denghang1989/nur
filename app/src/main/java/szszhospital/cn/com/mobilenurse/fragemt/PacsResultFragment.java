@@ -5,6 +5,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
 import com.blankj.utilcode.util.SPUtils;
+import com.blankj.utilcode.util.StringUtils;
 
 import java.util.List;
 
@@ -12,11 +13,13 @@ import szszhospital.cn.com.mobilenurse.App;
 import szszhospital.cn.com.mobilenurse.R;
 import szszhospital.cn.com.mobilenurse.activity.PacsWebViewDetailActivity;
 import szszhospital.cn.com.mobilenurse.activity.PacsImageActivity;
+import szszhospital.cn.com.mobilenurse.activity.PdfFromHttpActivity;
 import szszhospital.cn.com.mobilenurse.adapter.PacsResultAdapter;
 import szszhospital.cn.com.mobilenurse.databinding.FragmentOrderBinding;
 import szszhospital.cn.com.mobilenurse.mvp.contract.PacsResultContract;
 import szszhospital.cn.com.mobilenurse.mvp.presenter.PacsResultPresenter;
 import szszhospital.cn.com.mobilenurse.remote.response.PacsOrder;
+import szszhospital.cn.com.mobilenurse.utils.AppUtil;
 
 /**
  * PACS检查报告
@@ -64,7 +67,16 @@ public class PacsResultFragment extends BaseDoctorFragment<FragmentOrderBinding,
             int id = view.getId();
             switch (id) {
                 case R.id.icon:
-                    PacsWebViewDetailActivity.startPacsDetailActivity(_mActivity, pacsOrder);
+                    //pdf
+                    if (!StringUtils.isTrimEmpty(pacsOrder.TPdfPath)) {
+                        PdfFromHttpActivity.startPdfActivity(_mActivity, pacsOrder.TPdfPath);
+                        return;
+                    }
+                    //http
+                    if (AppUtil.IsUrl(mAdapter.getPath(pacsOrder))) {
+                        PacsWebViewDetailActivity.startPacsDetailActivity(_mActivity, pacsOrder);
+                        return;
+                    }
                     break;
                 case R.id.photo:
                     PacsImageActivity.startImageActivity(_mActivity, pacsOrder);
