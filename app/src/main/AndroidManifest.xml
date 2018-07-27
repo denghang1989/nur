@@ -93,6 +93,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
             />
+        <activity android:name=".activity.PdfFromHttpActivity"/>
 
         <receiver
             android:name=".broadcast.QRCodeBroadcastReceiver"

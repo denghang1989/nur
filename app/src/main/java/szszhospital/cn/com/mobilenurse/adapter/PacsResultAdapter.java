@@ -6,6 +6,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 
 import szszhospital.cn.com.mobilenurse.R;
 import szszhospital.cn.com.mobilenurse.remote.response.PacsOrder;
+import szszhospital.cn.com.mobilenurse.utils.AppUtil;
 
 public class PacsResultAdapter extends BaseQuickAdapter<PacsOrder, BaseViewHolder> {
 
@@ -15,6 +16,7 @@ public class PacsResultAdapter extends BaseQuickAdapter<PacsOrder, BaseViewHolde
 
     @Override
     protected void convert(BaseViewHolder helper, PacsOrder item) {
+        String path = getPath(item);
         helper.setText(R.id.dateTime, item.TItemDate)
                 .setText(R.id.name_order, item.TItemName)
                 .setText(R.id.loc_order, item.TLocName)
@@ -22,10 +24,23 @@ public class PacsResultAdapter extends BaseQuickAdapter<PacsOrder, BaseViewHolde
                 .addOnClickListener(R.id.photo);
         if (!StringUtils.isTrimEmpty(item.Memo)) {
             if (StringUtils.equals("S^已发布", item.Memo)) {
-                helper.setVisible(R.id.icon, true);
+                if (StringUtils.isTrimEmpty(item.TPdfPath) || AppUtil.IsUrl(path)) {
+                    helper.setVisible(R.id.icon, true);
+                }
             }
         } else {
             helper.setVisible(R.id.icon, false);
         }
     }
+
+    public String getPath(PacsOrder item) {
+        String path = "";
+        String tReplocpath = item.TReplocpath;
+        if (StringUtils.isTrimEmpty(tReplocpath)) {
+            String[] split = tReplocpath.split("\\^");
+            path = split[0];
+        }
+        return path;
+    }
+
 }
