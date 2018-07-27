@@ -33,6 +33,7 @@ import szszhospital.cn.com.mobilenurse.remote.response.SchDateTimeResponse;
 import szszhospital.cn.com.mobilenurse.remote.response.Test;
 import szszhospital.cn.com.mobilenurse.remote.response.TestStep;
 import szszhospital.cn.com.mobilenurse.remote.response.UpdateApp;
+import szszhospital.cn.com.mobilenurse.remote.response.VitalSignsPath;
 
 /**
  * 2016/11/2 11
@@ -139,4 +140,8 @@ public interface Api {
     //获取图片的ftp地址  Quality.Ajax.EMRImageListAjax
     @GET("web/Quality.Ajax.EMRImageListAjax.cls")
     Observable<Response<List<EMRImageInfo>>> getEMRImageList(@Query("EpisodeID") String EpisodeID, @Query("InternalID") String InternalID);
+
+    //获取护理病历的地址
+    @GET("web/Quality.Ajax.VitalSignsAjax.cls.cls")
+    Observable<Response<VitalSignsPath>> getVitalSignsPath(@Query("EpisodeID") String EpisodeID, @Query("PatientID") String PatientID);
 }

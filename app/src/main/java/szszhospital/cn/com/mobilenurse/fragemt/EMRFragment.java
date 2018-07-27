@@ -4,8 +4,6 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
-
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
@@ -61,26 +59,20 @@ public class EMRFragment extends BaseDoctorFragment<FragmentEmrBinding, EMRPrese
     @Override
     protected void initEvent() {
         super.initEvent();
-        mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                mAdapter.setSelectPosition(position);
-                mAdapter.notifyDataSetChanged();
-                EMREposideInfo item = mAdapter.getItem(position);
-                EventBus.getDefault().post(new SelectEmrRecordEvent(item));
-            }
+        mAdapter.setOnItemClickListener((adapter, view, position) -> {
+            mAdapter.setSelectPosition(position);
+            mAdapter.notifyDataSetChanged();
+            EMREposideInfo item = mAdapter.getItem(position);
+            EventBus.getDefault().post(new SelectEmrRecordEvent(item));
         });
 
-        mDataBinding.show.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mDataBinding.listView.getVisibility() == View.VISIBLE) {
-                    mDataBinding.listView.setVisibility(View.GONE);
-                    mDataBinding.show.setText("显示");
-                } else {
-                    mDataBinding.listView.setVisibility(View.VISIBLE);
-                    mDataBinding.show.setText("隐藏");
-                }
+        mDataBinding.show.setOnClickListener(v -> {
+            if (mDataBinding.listView.getVisibility() == View.VISIBLE) {
+                mDataBinding.listView.setVisibility(View.GONE);
+                mDataBinding.show.setText("显示");
+            } else {
+                mDataBinding.listView.setVisibility(View.VISIBLE);
+                mDataBinding.show.setText("隐藏");
             }
         });
     }
