@@ -50,7 +50,6 @@ public class EMRFragment extends BaseDoctorFragment<FragmentEmrBinding, EMRPrese
         super.initData();
         if (App.patientInfo != null) {
             mPresenter.getEMREposideList(App.patientInfo.EpisodeID);
-            //mPresenter.getEMREposideList("15490232");
         }
     }
 
@@ -66,8 +65,22 @@ public class EMRFragment extends BaseDoctorFragment<FragmentEmrBinding, EMRPrese
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 mAdapter.setSelectPosition(position);
+                mAdapter.notifyDataSetChanged();
                 EMREposideInfo item = mAdapter.getItem(position);
                 EventBus.getDefault().post(new SelectEmrRecordEvent(item));
+            }
+        });
+
+        mDataBinding.show.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mDataBinding.listView.getVisibility() == View.VISIBLE) {
+                    mDataBinding.listView.setVisibility(View.GONE);
+                    mDataBinding.show.setText("显示");
+                } else {
+                    mDataBinding.listView.setVisibility(View.VISIBLE);
+                    mDataBinding.show.setText("隐藏");
+                }
             }
         });
     }
@@ -89,10 +102,14 @@ public class EMRFragment extends BaseDoctorFragment<FragmentEmrBinding, EMRPrese
 
     @Override
     public void showEMRList(List<EMREposideInfo> list) {
-        mAdapter.setNewData(list);
         if (list.size() > 0) {
+            mAdapter.setSelectPosition(0);
             EventBus.getDefault().post(new SelectEmrRecordEvent(list.get(0)));
+        } else {
+            mAdapter.setSelectPosition(-1);
+            EventBus.getDefault().post(new SelectEmrRecordEvent(null));
         }
+        mAdapter.setNewData(list);
     }
 
     @Override

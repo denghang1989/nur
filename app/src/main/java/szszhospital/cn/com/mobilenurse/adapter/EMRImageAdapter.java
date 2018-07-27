@@ -20,4 +20,9 @@ public class EMRImageAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
         ImageView imageView = helper.getView(R.id.emr_image);
         Glide.with(mContext).load(http + url).into(imageView);
     }
+
+    public void clear() {
+        mData.clear();
+        notifyDataSetChanged();
+    }
 }

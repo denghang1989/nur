@@ -12,7 +12,6 @@ public class EMRAdapter extends BaseQuickAdapter<EMREposideInfo, BaseViewHolder>
 
     public void setSelectPosition(int selectPosition) {
         this.selectPosition = selectPosition;
-        notifyDataSetChanged();
     }
 
     public EMRAdapter(int layoutResId) {

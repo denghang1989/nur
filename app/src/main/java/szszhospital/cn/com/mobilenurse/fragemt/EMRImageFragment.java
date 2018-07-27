@@ -41,7 +41,8 @@ public class EMRImageFragment extends BasePresenterFragment<FragmentEmrImageBind
         super.initData();
         if (mEmrEposideInfo != null && App.patientInfo != null) {
             mPresenter.getEMRImageInfoList(App.patientInfo.EpisodeID, mEmrEposideInfo.InternalID);
-            //mPresenter.getEMRImageInfoList("15490232", mEmrEposideInfo.InternalID);
+        } else {
+            mAdapter.clear();
         }
     }
 
