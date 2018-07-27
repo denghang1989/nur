@@ -24,9 +24,9 @@ import szszhospital.cn.com.mobilenurse.remote.response.PacsOrder;
  * 7:  	^DHCRBCi("LocClinicSet",16,8)	= 	""
  * 8:  	^DHCRBCi("LocClinicSet",17,9)	= 	""
  * 9:  	^DHCRBCi("LocClinicSet",77,4)	= 	""
- * 10:  	^DHCRBCi("LocClinicSet",112,12)	= 	""
- * 11:  	^DHCRBCi("LocClinicSet",164,10)	= 	""
- * 12:  	^DHCRBCi("LocClinicSet",165,11)	= 	""
+ * 10:  ^DHCRBCi("LocClinicSet",112,12)	= 	""
+ * 11:  ^DHCRBCi("LocClinicSet",164,10)	= 	""
+ * 12:  ^DHCRBCi("LocClinicSet",165,11)	= 	""
  */
 public class ReportFactory {
 

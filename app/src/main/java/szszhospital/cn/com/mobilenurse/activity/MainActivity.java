@@ -8,7 +8,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.blankj.utilcode.util.StringUtils;
-import com.blankj.utilcode.util.ToastUtils;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import org.greenrobot.eventbus.EventBus;
@@ -37,7 +36,7 @@ public class MainActivity extends BasePresentActivity<ActiviyMainBinding, MainPr
     private MainActivityAdapter  mAdapter;
     private UpdateDialogFragment mUpdateDialogFragment;
     private UpdateApp            mUpdateApp;
-    private Disposable mDisposable;
+    private Disposable           mDisposable;
 
     @Override
     protected int getLayoutId() {
@@ -66,7 +65,9 @@ public class MainActivity extends BasePresentActivity<ActiviyMainBinding, MainPr
 
     private void requestPermissions() {
         final RxPermissions rxPermissions = new RxPermissions(this);
-        mDisposable = rxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
+        mDisposable = rxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+                , Manifest.permission.CAMERA)
                 .subscribe(granted -> {
                     if (granted) {
 
@@ -138,13 +139,13 @@ public class MainActivity extends BasePresentActivity<ActiviyMainBinding, MainPr
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.tools_scan:
+                ScanQRCodeActivity.startScanQRCodeActivityForResult(this);
                 break;
             case R.id.tools_patient_list:
                 break;
             case R.id.tools_patient_calendar:
                 break;
         }
-        ToastUtils.showShort(item.getItemId() + "");
         return true;
     }
 

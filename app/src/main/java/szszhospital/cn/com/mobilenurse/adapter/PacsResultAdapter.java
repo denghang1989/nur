@@ -16,7 +16,8 @@ public class PacsResultAdapter extends BaseQuickAdapter<PacsOrder, BaseViewHolde
     @Override
     protected void convert(BaseViewHolder helper, PacsOrder item) {
         helper.setText(R.id.dateTime, item.TItemDate)
-                .setText(R.id.name, item.TItemName)
+                .setText(R.id.name_order, item.TItemName)
+                .setText(R.id.loc_order, item.TLocName)
                 .addOnClickListener(R.id.icon)
                 .addOnClickListener(R.id.photo);
         if (!StringUtils.isTrimEmpty(item.Memo)) {

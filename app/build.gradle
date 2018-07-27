@@ -57,7 +57,7 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.1.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.6.0'
     implementation 'com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0'
-    implementation 'cn.bingoogolapple:bga-qrcode-zxing:1.2.1'
+    implementation 'cn.bingoogolapple:bga-qrcode-zxing:1.2.5'
     implementation 'com.annimon:stream:1.2.0'
     implementation 'com.android.support:multidex:1.0.3'
     implementation 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.5@aar'

@@ -48,6 +48,15 @@ public class PacsOrder implements Parcelable ,Serializable{
     public String TRegNo;
     public String TStudyNo;
     public String TreplocDr;
+    /**
+     * TPdfPath :
+     * TRegNo : 2411736
+     * TReplocpath : http://172.18.0.48/HisReportList.aspx?ApplyCode=^Y^ ^N^ ^ ^^N^ ^Y^ ^ ^N^ ^ ^N
+     * TreplocDr : 15
+     */
+
+    public String TPdfPath;
+    public String TReplocpath;
 
 
     @Override

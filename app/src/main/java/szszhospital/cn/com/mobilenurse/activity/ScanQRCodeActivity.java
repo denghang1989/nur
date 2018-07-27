@@ -2,6 +2,7 @@ package szszhospital.cn.com.mobilenurse.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.util.Log;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -11,7 +12,11 @@ import szszhospital.cn.com.mobilenurse.base.BaseActivity;
 import szszhospital.cn.com.mobilenurse.databinding.ActivityScanQrcodeBinding;
 import szszhospital.cn.com.mobilenurse.event.QRCodeEvent;
 
+/**
+ * 扫描二维码
+ */
 public class ScanQRCodeActivity extends BaseActivity<ActivityScanQrcodeBinding> implements QRCodeView.Delegate {
+    private static final String TAG = "ScanQRCodeActivity";
 
     public static final int RESULT_CODE = 100;
 
@@ -24,6 +29,16 @@ public class ScanQRCodeActivity extends BaseActivity<ActivityScanQrcodeBinding> 
     protected void init() {
         super.init();
         mDataBinding.zxingview.setDelegate(this);
+    }
+
+    @Override
+    protected void initView() {
+        super.initView();
+    }
+
+    @Override
+    protected void initData() {
+        super.initData();
     }
 
     @Override
@@ -58,11 +73,13 @@ public class ScanQRCodeActivity extends BaseActivity<ActivityScanQrcodeBinding> 
 
     @Override
     public void onScanQRCodeOpenCameraError() {
-
+        Log.d(TAG, "onScanQRCodeOpenCameraError: ");
     }
 
     @Override
     protected void initEvent() {
         super.initEvent();
+        mDataBinding.toolbar.setNavigationOnClickListener(v -> finish());
     }
+
 }
