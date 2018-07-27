@@ -1,11 +1,7 @@
 package szszhospital.cn.com.mobilenurse.fragemt;
 
-import android.os.Environment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
-
-import com.adeel.library.easyFTP;
-import com.blankj.utilcode.util.EncryptUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -26,7 +22,6 @@ import szszhospital.cn.com.mobilenurse.remote.response.EMRImageInfo;
 
 public class EMRImageFragment extends BasePresenterFragment<FragmentEmrImageBinding, EMRImagePresenter> implements EMRImageContract.View {
     private static final String KEY_DATA = "data";
-
     private EMRImageAdapter mAdapter;
     private EMREposideInfo  mEmrEposideInfo;
 
@@ -45,8 +40,8 @@ public class EMRImageFragment extends BasePresenterFragment<FragmentEmrImageBind
     protected void initData() {
         super.initData();
         if (mEmrEposideInfo != null && App.patientInfo != null) {
-            //mPresenter.getEMRImageInfoList(App.patientInfo.EpisodeID, mEmrEposideInfo.InternalID);
-            mPresenter.getEMRImageInfoList("15490232", mEmrEposideInfo.InternalID);
+            mPresenter.getEMRImageInfoList(App.patientInfo.EpisodeID, mEmrEposideInfo.InternalID);
+            //mPresenter.getEMRImageInfoList("15490232", mEmrEposideInfo.InternalID);
         }
     }
 
@@ -101,22 +96,6 @@ public class EMRImageFragment extends BasePresenterFragment<FragmentEmrImageBind
         if (list != null && list.size() > 0) {
             List<String> urLs = list.get(0).ImagePathURLs;
             mAdapter.setNewData(urLs);
-
-            App.getAsynHandler().post(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        String url = urLs.get(0);
-                        String md5ToString = EncryptUtils.encryptMD5ToString(url);
-                        String name = md5ToString + ".jpg";
-                        easyFTP ftp = new easyFTP();
-                        ftp.connect(App.getFtpConfig().FtpIP, App.getFtpConfig().FtpUserName, App.getFtpConfig().FtpUserPassWord);
-                        ftp.downloadFile(url, Environment.getExternalStorageDirectory().getAbsolutePath() +  "/" + name);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
         }
     }
 

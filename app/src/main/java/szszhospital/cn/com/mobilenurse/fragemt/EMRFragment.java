@@ -43,15 +43,14 @@ public class EMRFragment extends BaseDoctorFragment<FragmentEmrBinding, EMRPrese
         mDataBinding.listView.setLayoutManager(new LinearLayoutManager(_mActivity));
         mDataBinding.listView.addItemDecoration(new DividerItemDecoration(_mActivity, DividerItemDecoration.VERTICAL));
         mDataBinding.listView.setAdapter(mAdapter);
-        mDataBinding.refreshLayout.setEnableLoadmore(false);
     }
 
     @Override
     protected void initData() {
         super.initData();
         if (App.patientInfo != null) {
-            //mPresenter.getEMREposideList(App.patientInfo.EpisodeID);
-            mPresenter.getEMREposideList("15490232");
+            mPresenter.getEMREposideList(App.patientInfo.EpisodeID);
+            //mPresenter.getEMREposideList("15490232");
         }
     }
 
