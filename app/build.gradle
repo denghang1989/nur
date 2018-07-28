@@ -67,4 +67,5 @@ dependencies {
     implementation 'com.evrencoskun.library:tableview:0.8.8'
     implementation 'com.github.barteksc:android-pdf-viewer:3.1.0-beta.1'
     implementation 'com.github.chrisbanes:PhotoView:2.1.4'
+    implementation 'com.github.florent37:viewanimator:1.0.5'
 }
