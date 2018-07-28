@@ -14,7 +14,6 @@ import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import szszhospital.cn.com.mobilenurse.control.LocAccess;
 import szszhospital.cn.com.mobilenurse.remote.ApiService;
 import szszhospital.cn.com.mobilenurse.remote.model.LoginUser;
-import szszhospital.cn.com.mobilenurse.remote.response.FtpConfig;
 import szszhospital.cn.com.mobilenurse.remote.response.PatientInfo;
 import szszhospital.cn.com.mobilenurse.utils.AsynHandlerThread;
 
@@ -51,7 +50,6 @@ public class App extends MultiDexApplication {
 
     public static Context mContext;
 
-    public static FtpConfig mFtpConfig;
 
     @Override
     public void onCreate() {
@@ -68,11 +66,4 @@ public class App extends MultiDexApplication {
         return mAsynHandler;
     }
 
-    public static FtpConfig getFtpConfig() {
-        return mFtpConfig == null ? new FtpConfig() : mFtpConfig;
-    }
-
-    public static void setFtpConfig(FtpConfig mFtpConfig) {
-        App.mFtpConfig = mFtpConfig;
-    }
 }

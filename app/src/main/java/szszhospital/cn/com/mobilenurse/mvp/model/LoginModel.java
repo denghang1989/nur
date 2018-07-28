@@ -15,6 +15,5 @@ public class LoginModel implements LoginContract.Model {
 
     @Override
     public void saveFtpConfig(FtpConfig ftpConfig) {
-        App.setFtpConfig(ftpConfig);
     }
 }

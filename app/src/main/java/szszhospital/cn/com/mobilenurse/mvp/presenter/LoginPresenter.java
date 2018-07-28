@@ -1,7 +1,5 @@
 package szszhospital.cn.com.mobilenurse.mvp.presenter;
 
-import android.util.Log;
-
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
 
@@ -51,7 +49,6 @@ public class LoginPresenter extends RxPresenter<LoginContract.View, LoginContrac
                             mModel.save(loginResponse);
                             user.setLogin(true);
                             SPUtils.getInstance().put("user_name", user.getName());
-                            ftpConfig();
                         }
 
                     }
@@ -119,7 +116,6 @@ public class LoginPresenter extends RxPresenter<LoginContract.View, LoginContrac
 
                     @Override
                     public void onNext(FtpConfig ftpConfig) {
-                        Log.d(TAG, "onNext: "+ ftpConfig);
                         mModel.saveFtpConfig(ftpConfig);
                     }
 
