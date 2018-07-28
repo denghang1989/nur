@@ -3,7 +3,6 @@ package szszhospital.cn.com.mobilenurse.activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.widget.ImageView;
 
 import szszhospital.cn.com.mobilenurse.R;
@@ -25,18 +24,8 @@ public class DragPhotoActivity extends AppCompatActivity {
         mBack = findViewById(R.id.back);
         mDragPhotoView = findViewById(R.id.dragPhotoView);
 
-        mBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+        mBack.setOnClickListener(view -> finish());
 
-        mDragPhotoView.setOnExitListener(new DragPhotoView.OnExitListener() {
-            @Override
-            public void onExit(DragPhotoView view, float translateX, float translateY, float w, float h) {
-                view.finishAnimationCallBack();
-            }
-        });
+        mDragPhotoView.setOnExitListener((view, translateX, translateY, w, h) -> view.finishAnimationCallBack());
     }
 }

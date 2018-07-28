@@ -19,6 +19,7 @@
     <szszhospital.cn.com.mobilenurse.view.DragPhotoView
         android:id="@+id/dragPhotoView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:transitionName="emr"/>
 
 </android.support.constraint.ConstraintLayout>

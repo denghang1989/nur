@@ -1,7 +1,12 @@
 package szszhospital.cn.com.mobilenurse.fragemt;
 
+import android.app.ActivityOptions;
+import android.content.Intent;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
+import android.view.View;
+
+import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -11,6 +16,7 @@ import java.util.List;
 
 import szszhospital.cn.com.mobilenurse.App;
 import szszhospital.cn.com.mobilenurse.R;
+import szszhospital.cn.com.mobilenurse.activity.DragPhotoActivity;
 import szszhospital.cn.com.mobilenurse.adapter.EMRImageAdapter;
 import szszhospital.cn.com.mobilenurse.base.BasePresenterFragment;
 import szszhospital.cn.com.mobilenurse.databinding.FragmentEmrImageBinding;
@@ -52,6 +58,19 @@ public class EMRImageFragment extends BasePresenterFragment<FragmentEmrImageBind
         mDataBinding.listView.setLayoutManager(new LinearLayoutManager(_mActivity));
         mDataBinding.listView.addItemDecoration(new DividerItemDecoration(_mActivity, DividerItemDecoration.VERTICAL));
         mDataBinding.listView.setAdapter(mAdapter);
+    }
+
+    @Override
+    protected void initEvent() {
+        super.initEvent();
+        mAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                startActivity(new Intent(_mActivity, DragPhotoActivity.class),
+                        ActivityOptions.makeSceneTransitionAnimation(_mActivity, view, "emr").toBundle());
+
+            }
+        });
     }
 
     @Override
