@@ -66,9 +66,9 @@ public class EMRImageFragment extends BasePresenterFragment<FragmentEmrImageBind
         mAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                startActivity(new Intent(_mActivity, DragPhotoActivity.class),
-                        ActivityOptions.makeSceneTransitionAnimation(_mActivity, view, "emr").toBundle());
-
+                Intent intent = new Intent(_mActivity, DragPhotoActivity.class);
+                intent.putExtra(KEY_DATA, mAdapter.getItem(position));
+                startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(_mActivity, view, "emr").toBundle());
             }
         });
     }
