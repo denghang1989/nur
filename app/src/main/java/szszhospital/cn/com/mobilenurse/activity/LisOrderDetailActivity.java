@@ -45,6 +45,7 @@ public class LisOrderDetailActivity extends BasePresentActivity<ActivityLisDetai
     protected void initView() {
         super.initView();
         mDataBinding.toolbar.setTitle(mLisOrder.OrdItemName);
+        mDataBinding.toolbar.setSubtitle("申请日期:" + mLisOrder.RecDateTime + "   报告日期:" + mLisOrder.ReqDateTime);
     }
 
     @Override

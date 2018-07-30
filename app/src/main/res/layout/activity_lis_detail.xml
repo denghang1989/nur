@@ -18,6 +18,7 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:navigationIcon="@drawable/ic_black_32dp"
+            app:subtitleTextColor="@color/white"
             app:titleTextColor="@color/white">
         </android.support.v7.widget.Toolbar>
 
@@ -25,13 +26,13 @@
             android:id="@+id/tableView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:show_horizontal_separator="true"
-            app:show_vertical_separator="true"
-            app:row_header_width="@dimen/row_header_width"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar"/>
+            app:layout_constraintTop_toBottomOf="@+id/toolbar"
+            app:row_header_width="@dimen/row_header_width"
+            app:show_horizontal_separator="true"
+            app:show_vertical_separator="true"/>
 
         <ProgressBar
             android:id="@+id/progressBar"
@@ -41,8 +42,8 @@
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
-            android:visibility="gone"
             android:layout_marginTop="8dp"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/tableView"
             app:layout_constraintEnd_toEndOf="@+id/tableView"
             app:layout_constraintStart_toStartOf="parent"
