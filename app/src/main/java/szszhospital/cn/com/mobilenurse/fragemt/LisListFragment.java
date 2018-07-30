@@ -22,12 +22,12 @@ import szszhospital.cn.com.mobilenurse.remote.response.LisOrder;
 /**
  * Lis检验报告
  */
-public class LisResultFragment extends BaseDoctorFragment<FragmentOrderBinding, LisOrderPresenter> implements LisOrderContract.View {
+public class LisListFragment extends BaseDoctorFragment<FragmentOrderBinding, LisOrderPresenter> implements LisOrderContract.View {
 
     private LisOrderListAdapter mAdapter;
 
-    public static LisResultFragment newInstance() {
-        return new LisResultFragment();
+    public static LisListFragment newInstance() {
+        return new LisListFragment();
     }
 
     @Override

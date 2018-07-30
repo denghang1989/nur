@@ -25,12 +25,12 @@ import szszhospital.cn.com.mobilenurse.utils.AppUtil;
 /**
  * PACS检查报告
  */
-public class PacsResultFragment extends BaseDoctorFragment<FragmentOrderBinding, PacsResultPresenter> implements PacsResultContract.View {
+public class PacsListFragment extends BaseDoctorFragment<FragmentOrderBinding, PacsResultPresenter> implements PacsResultContract.View {
 
     private PacsResultAdapter mAdapter;
 
-    public static PacsResultFragment newInstance() {
-        return new PacsResultFragment();
+    public static PacsListFragment newInstance() {
+        return new PacsListFragment();
     }
 
     @Override

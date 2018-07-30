@@ -11,9 +11,9 @@ import szszhospital.cn.com.mobilenurse.fragemt.DrugBillUnCompletedFragment;
 import szszhospital.cn.com.mobilenurse.fragemt.EMRFragment;
 import szszhospital.cn.com.mobilenurse.fragemt.HerbalOrderFragment;
 import szszhospital.cn.com.mobilenurse.fragemt.InspectionFragment;
-import szszhospital.cn.com.mobilenurse.fragemt.LisResultFragment;
+import szszhospital.cn.com.mobilenurse.fragemt.LisListFragment;
 import szszhospital.cn.com.mobilenurse.fragemt.NOrdersFragment;
-import szszhospital.cn.com.mobilenurse.fragemt.PacsResultFragment;
+import szszhospital.cn.com.mobilenurse.fragemt.PacsListFragment;
 import szszhospital.cn.com.mobilenurse.fragemt.SOrdersFragment;
 import szszhospital.cn.com.mobilenurse.fragemt.TestFragment;
 import szszhospital.cn.com.mobilenurse.fragemt.VitalSignsFragment;
@@ -44,14 +44,14 @@ public class FragmentFactory {
             case "EMRFragment": // 电子病历
                 fragment = EMRFragment.newInstance();
                 break;
-            case "LisResultFragment": // Lis检验报告
-                fragment = LisResultFragment.newInstance();
+            case "LisListFragment": // Lis检验报告
+                fragment = LisListFragment.newInstance();
                 break;
             case "NOrdersFragment": // 临时医嘱
                 fragment = NOrdersFragment.newInstance();
                 break;
-            case "PacsResultFragment": // PACS检查报告
-                fragment = PacsResultFragment.newInstance();
+            case "PacsListFragment": // PACS检查报告
+                fragment = PacsListFragment.newInstance();
                 break;
             case "SOrdersFragment": // 长期医嘱
                 fragment = SOrdersFragment.newInstance();
