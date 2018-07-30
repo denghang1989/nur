@@ -7,7 +7,7 @@ import szszhospital.cn.com.mobilenurse.base.BasePresenter;
 import szszhospital.cn.com.mobilenurse.base.BaseView;
 import szszhospital.cn.com.mobilenurse.remote.response.PacsOrder;
 
-public interface PacsResultContract {
+public interface PacsListContract {
     interface View extends BaseView {
         void showProgress();
 

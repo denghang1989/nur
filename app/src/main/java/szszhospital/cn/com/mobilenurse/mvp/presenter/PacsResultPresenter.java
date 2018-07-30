@@ -5,12 +5,12 @@ import java.util.List;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 import szszhospital.cn.com.mobilenurse.base.RxPresenter;
-import szszhospital.cn.com.mobilenurse.mvp.contract.PacsResultContract;
+import szszhospital.cn.com.mobilenurse.mvp.contract.PacsListContract;
 import szszhospital.cn.com.mobilenurse.remote.ApiService;
 import szszhospital.cn.com.mobilenurse.remote.RxUtil;
 import szszhospital.cn.com.mobilenurse.remote.response.PacsOrder;
 
-public class PacsResultPresenter extends RxPresenter<PacsResultContract.View,PacsResultContract.Model> implements PacsResultContract.Presenter{
+public class PacsResultPresenter extends RxPresenter<PacsListContract.View,PacsListContract.Model> implements PacsListContract.Presenter{
 
     @Override
     public void getPacsOrderList(String EpisodeID, String userCode) {
