@@ -24,5 +24,23 @@ public class PacsResult {
         public String ExamDesc;
         public String strResult;
         public String strOrderName;
+
+        @Override
+        public String toString() {
+            return "RowsBean{" +
+                    "OEItemRowID='" + OEItemRowID + '\'' +
+                    ", ExamDesc='" + ExamDesc + '\'' +
+                    ", strResult='" + strResult + '\'' +
+                    ", strOrderName='" + strOrderName + '\'' +
+                    '}';
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "PacsResult{" +
+                "total=" + total +
+                ", rows=" + rows +
+                '}';
     }
 }

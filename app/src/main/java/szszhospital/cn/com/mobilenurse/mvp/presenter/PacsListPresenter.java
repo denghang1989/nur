@@ -1,34 +1,38 @@
 package szszhospital.cn.com.mobilenurse.mvp.presenter;
 
+import java.util.List;
+
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 import szszhospital.cn.com.mobilenurse.base.RxPresenter;
-import szszhospital.cn.com.mobilenurse.mvp.contract.PacsResultContract;
+import szszhospital.cn.com.mobilenurse.mvp.contract.PacsListContract;
 import szszhospital.cn.com.mobilenurse.remote.ApiService;
 import szszhospital.cn.com.mobilenurse.remote.RxUtil;
-import szszhospital.cn.com.mobilenurse.remote.response.PacsResult;
+import szszhospital.cn.com.mobilenurse.remote.response.PacsOrder;
 
-public class PacsResultPresenter extends RxPresenter<PacsResultContract.View, PacsResultContract.Model> implements PacsResultContract.Presenter {
+public class PacsListPresenter extends RxPresenter<PacsListContract.View,PacsListContract.Model> implements PacsListContract.Presenter{
 
     @Override
-    public void getPacsResult(String ItemOrderId) {
+    public void getPacsOrderList(String EpisodeID, String userCode) {
         mView.showProgress();
-        ApiService.Instance().getService().getPacsResultByOrderId(ItemOrderId)
+        ApiService.Instance().getService().getPatientPacsOrder(EpisodeID,userCode)
                 .compose(RxUtil.rxSchedulerHelper())
                 .compose(RxUtil.httpHandleResponse())
-                .subscribe(new Observer<PacsResult>() {
+                .subscribe(new Observer<List<PacsOrder>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-                        addSubscribe(d);
+
                     }
 
                     @Override
-                    public void onNext(PacsResult pacsResult) {
-                        mView.showPacsResult(pacsResult);
+                    public void onNext(List<PacsOrder> pacsOrders) {
+                        mView.showPacsOrderList(pacsOrders);
+                        mView.refresh();
                     }
 
                     @Override
                     public void onError(Throwable e) {
+                        e.printStackTrace();
                         mView.hideProgress();
                     }
 

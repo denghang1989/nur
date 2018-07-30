@@ -18,14 +18,14 @@ import szszhospital.cn.com.mobilenurse.activity.PdfFromHttpActivity;
 import szszhospital.cn.com.mobilenurse.adapter.PacsResultAdapter;
 import szszhospital.cn.com.mobilenurse.databinding.FragmentOrderBinding;
 import szszhospital.cn.com.mobilenurse.mvp.contract.PacsListContract;
-import szszhospital.cn.com.mobilenurse.mvp.presenter.PacsResultPresenter;
+import szszhospital.cn.com.mobilenurse.mvp.presenter.PacsListPresenter;
 import szszhospital.cn.com.mobilenurse.remote.response.PacsOrder;
 import szszhospital.cn.com.mobilenurse.utils.AppUtil;
 
 /**
  * PACS检查报告
  */
-public class PacsListFragment extends BaseDoctorFragment<FragmentOrderBinding, PacsResultPresenter> implements PacsListContract.View {
+public class PacsListFragment extends BaseDoctorFragment<FragmentOrderBinding, PacsListPresenter> implements PacsListContract.View {
 
     private PacsResultAdapter mAdapter;
 
@@ -39,8 +39,8 @@ public class PacsListFragment extends BaseDoctorFragment<FragmentOrderBinding, P
     }
 
     @Override
-    protected PacsResultPresenter initPresenter() {
-        return new PacsResultPresenter();
+    protected PacsListPresenter initPresenter() {
+        return new PacsListPresenter();
     }
 
     @Override
