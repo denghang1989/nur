@@ -17,6 +17,7 @@ public class DragPhotoActivity extends AppCompatActivity {
     private static final String KEY_DATA = "data";
     private ImageView     mBack;
     private DragPhotoView mDragPhotoView;
+    private static final String http = "http://172.18.0.27/dhcemr";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -25,8 +26,8 @@ public class DragPhotoActivity extends AppCompatActivity {
         String photoPath = getIntent().getStringExtra(KEY_DATA);
         mBack = findViewById(R.id.back);
         mDragPhotoView = findViewById(R.id.dragPhotoView);
-        Glide.with(this).load(photoPath).into(mDragPhotoView);
-        mBack.setOnClickListener(view -> finish());
-        mDragPhotoView.setOnExitListener((view, translateX, translateY, w, h) -> view.finishAnimationCallBack());
+        Glide.with(this).load(http + photoPath).into(mDragPhotoView);
+        mBack.setOnClickListener(view -> onBackPressed());
+        mDragPhotoView.setOnExitListener((view, translateX, translateY, w, h) -> onBackPressed());
     }
 }
