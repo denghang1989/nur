@@ -25,6 +25,7 @@ import szszhospital.cn.com.mobilenurse.remote.response.Order;
 import szszhospital.cn.com.mobilenurse.remote.response.OrderExecuteInfo;
 import szszhospital.cn.com.mobilenurse.remote.response.PacsOrder;
 import szszhospital.cn.com.mobilenurse.remote.response.PacsOrderSubscribe;
+import szszhospital.cn.com.mobilenurse.remote.response.PacsResult;
 import szszhospital.cn.com.mobilenurse.remote.response.PascClinicSetting;
 import szszhospital.cn.com.mobilenurse.remote.response.PatientInfo;
 import szszhospital.cn.com.mobilenurse.remote.response.RobotDrugResponse;
@@ -144,4 +145,8 @@ public interface Api {
     //获取护理病历的地址
     @GET("web/Quality.Ajax.VitalSignsAjax.cls.cls")
     Observable<Response<VitalSignsPath>> getVitalSignsPath(@Query("EpisodeID") String EpisodeID, @Query("PatientID") String PatientID);
+
+    //获取pacs结果
+    @GET("web/Quality.Ajax.PacsResultAjax.cls")
+    Observable<Response<PacsResult>> getPacsResultByOrderId(@Query("OEItemRowID") String OEItemRowID);
 }

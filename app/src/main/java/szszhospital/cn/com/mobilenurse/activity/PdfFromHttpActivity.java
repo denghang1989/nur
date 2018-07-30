@@ -2,11 +2,15 @@ package szszhospital.cn.com.mobilenurse.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 
+import java.io.File;
+
+import szszhospital.cn.com.mobilenurse.App;
 import szszhospital.cn.com.mobilenurse.R;
 import szszhospital.cn.com.mobilenurse.base.BaseActivity;
 import szszhospital.cn.com.mobilenurse.databinding.ActivityPdfBinding;
+import szszhospital.cn.com.mobilenurse.utils.FileCallback;
+import szszhospital.cn.com.mobilenurse.utils.FileDownUtil;
 
 /**
  * pdf查看工具
@@ -36,17 +40,38 @@ public class PdfFromHttpActivity extends BaseActivity<ActivityPdfBinding> {
     @Override
     protected void initView() {
         super.initView();
-        mDataBinding.pdfView.fromUri(Uri.parse(mPath)).load();
     }
 
     @Override
     protected void initData() {
         super.initData();
+        App.getAsynHandler().post(new Runnable() {
+            @Override
+            public void run() {
+                FileDownUtil.downFile(mPath, new FileCallback() {
+                    @Override
+                    public void success(File file) {
+                        mDataBinding.pdfView.fromFile(file).load();
+                    }
+
+                    @Override
+                    public void error(Exception e) {
+
+                    }
+                });
+            }
+        });
     }
 
     @Override
     protected void initEvent() {
         super.initEvent();
         mDataBinding.toolbar.setNavigationOnClickListener(v -> finish());
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        App.getAsynHandler().removeCallbacksAndMessages(null);
     }
 }

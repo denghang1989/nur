@@ -96,12 +96,14 @@
         <activity
             android:name=".activity.PdfFromHttpActivity"
             android:screenOrientation="portrait"
+            android:process=":pdf"
             android:theme="@style/AppTheme.Transparent"/>
 
         <activity
             android:name=".activity.DragPhotoActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"/>
+        <activity android:name=".activity.PacsResultActivity"/>
 
         <receiver
             android:name=".broadcast.QRCodeBroadcastReceiver"

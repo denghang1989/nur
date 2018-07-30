@@ -28,6 +28,10 @@ import szszhospital.cn.com.mobilenurse.remote.response.PacsOrder;
  * 10:  ^DHCRBCi("LocClinicSet",112,12)	= 	""
  * 11:  ^DHCRBCi("LocClinicSet",164,10)	= 	""
  * 12:  ^DHCRBCi("LocClinicSet",165,11)	= 	""
+ *
+ * 显示方式： 超声在his里面是.exe 的方式，使用接口
+ *          html 网页的形式显示
+ *          pdf 文件的形式显示
  */
 public class ReportFactory {
 

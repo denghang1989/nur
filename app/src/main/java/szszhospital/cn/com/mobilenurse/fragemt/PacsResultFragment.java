@@ -11,6 +11,7 @@ import java.util.List;
 
 import szszhospital.cn.com.mobilenurse.App;
 import szszhospital.cn.com.mobilenurse.R;
+import szszhospital.cn.com.mobilenurse.activity.PacsResultActivity;
 import szszhospital.cn.com.mobilenurse.activity.PacsWebViewDetailActivity;
 import szszhospital.cn.com.mobilenurse.activity.PacsImageActivity;
 import szszhospital.cn.com.mobilenurse.activity.PdfFromHttpActivity;
@@ -75,6 +76,11 @@ public class PacsResultFragment extends BaseDoctorFragment<FragmentOrderBinding,
                     //http
                     if (AppUtil.IsUrl(mAdapter.getPath(pacsOrder))) {
                         PacsWebViewDetailActivity.startPacsDetailActivity(_mActivity, pacsOrder);
+                        return;
+                    }
+                    //超声影像科报告
+                    if (StringUtils.equals(pacsOrder.TreplocDr, "14")) {
+                        PacsResultActivity.startPacsResultActivity(_mActivity, pacsOrder);
                         return;
                     }
                     break;
