@@ -51,6 +51,11 @@ public class PacsResultActivity extends BasePresentActivity<ActivityPacsResultBi
     protected void initView() {
         super.initView();
         initWebView(mDataBinding.webView);
+        initToolbar(mPacsOrder);
+    }
+
+    private void initToolbar(PacsOrder pacsOrder) {
+        mDataBinding.toolbar.setTitle(pacsOrder.TItemName);
     }
 
     private void initWebView(BridgeWebView webView) {

@@ -1,5 +1,7 @@
 package szszhospital.cn.com.mobilenurse.adapter;
 
+import android.util.Log;
+
 import com.annimon.stream.Optional;
 import com.annimon.stream.Stream;
 import com.blankj.utilcode.util.StringUtils;
@@ -21,6 +23,7 @@ public class HerbalOrderAdapter extends BaseQuickAdapter<Order, BaseViewHolder> 
         if (!StringUtils.isTrimEmpty(item.ArcimDesc)) {
             String[] hebalOrders = item.ArcimDesc.split(",");
             Optional<String> maxOrder = Stream.of(hebalOrders).max((o1, o2) -> o1.length() - o2.length());
+            Log.d(TAG, "convert: " + maxOrder.get().length());
             for (int i = 0; i < hebalOrders.length; i++) {
                 String hebalOrder = hebalOrders[i];
                 sb.append(hebalOrder);
@@ -28,7 +31,7 @@ public class HerbalOrderAdapter extends BaseQuickAdapter<Order, BaseViewHolder> 
                 for (int j = 0; j < length; j++) {
                     sb.append(" ");
                 }
-                if (i != 0 && i % 4 == 0) {
+                if (i != 0 && i % 3 == 0) {
                     sb.append("\n");
                 } else {
                     sb.append("    ");
