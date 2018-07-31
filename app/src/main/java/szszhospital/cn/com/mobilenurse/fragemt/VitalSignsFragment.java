@@ -28,7 +28,6 @@ import szszhospital.cn.com.mobilenurse.remote.response.VitalSignsPath;
  */
 public class VitalSignsFragment extends BaseFragment<FragmentVitalSignsBinding> {
     private static final String TAG = "VitalSignsFragment";
-    private Disposable mDisposable;
 
     @Override
     public int getLayoutId() {
@@ -121,7 +120,6 @@ public class VitalSignsFragment extends BaseFragment<FragmentVitalSignsBinding> 
                     .subscribe(new Observer<VitalSignsPath>() {
                         @Override
                         public void onSubscribe(Disposable d) {
-                            mDisposable = d;
                         }
 
                         @Override
@@ -167,9 +165,6 @@ public class VitalSignsFragment extends BaseFragment<FragmentVitalSignsBinding> 
     public void onDestroy() {
         super.onDestroy();
         mDataBinding.webView.destroy();
-        if (mDisposable.isDisposed()) {
-            mDisposable.dispose();
-        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

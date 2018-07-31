@@ -2,7 +2,9 @@ package szszhospital.cn.com.mobilenurse.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Parcelable;
+import android.util.Log;
 import android.view.View;
 import android.webkit.DownloadListener;
 import android.webkit.WebChromeClient;
@@ -101,6 +103,21 @@ public class PacsWebViewDetailActivity extends BaseActivity<ActivityPacsDetailBi
                 } else if (newProgress == 100) {
                     mDataBinding.progressBar.setVisibility(View.GONE);
                 }
+            }
+        });
+
+        //设置WebViewClient类
+        webView.setWebViewClient(new WebViewClient() {
+            //设置加载前的函数
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                Log.d(TAG, "onPageStarted: " + "开始加载");
+            }
+
+            //设置结束加载函数
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                Log.d(TAG, "onPageFinished: " + "结束加载");
             }
         });
 

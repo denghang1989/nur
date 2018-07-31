@@ -54,8 +54,13 @@ public abstract class BaseFragment<T extends ViewDataBinding> extends SwipeBackF
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        initData();
         initEvent();
+    }
+
+    @Override
+    public void onLazyInitView(@Nullable Bundle savedInstanceState) {
+        super.onLazyInitView(savedInstanceState);
+        initData();
     }
 
     protected void initEvent() {

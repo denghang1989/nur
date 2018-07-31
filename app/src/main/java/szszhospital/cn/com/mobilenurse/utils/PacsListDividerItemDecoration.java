@@ -40,10 +40,13 @@ public class PacsListDividerItemDecoration extends RecyclerView.ItemDecoration {
             int position = parent.getLayoutManager().getPosition(child);
             if (position == 0) {
                 if (mAdapter.getData().size() > 1) {
-                    PacsOrder item = mAdapter.getItem(position);
-                    PacsOrder item1 = mAdapter.getItem(position + 1);
+                    PacsOrder current = mAdapter.getItem(position);
+                    PacsOrder next = mAdapter.getItem(position + 1);
+                    if (StringUtils.isTrimEmpty(current.TStudyNo) || StringUtils.isTrimEmpty(next.TStudyNo)) {
+                        return;
+                    }
                     // 相同的报告单（第一条记录）
-                    if (StringUtils.equals(item.TStudyNo, item1.TStudyNo)) {
+                    if (StringUtils.equals(current.TStudyNo, next.TStudyNo)) {
                         drawHLine(c, childHeight);
                         drawVTop2Line(c, childHeight);
                     }
@@ -53,7 +56,9 @@ public class PacsListDividerItemDecoration extends RecyclerView.ItemDecoration {
                     //最后一个节点
                     PacsOrder pre = mAdapter.getItem(position - 1);
                     PacsOrder current = mAdapter.getItem(position);
-
+                    if (StringUtils.isTrimEmpty(current.TStudyNo) || StringUtils.isTrimEmpty(pre.TStudyNo)) {
+                        return;
+                    }
                     //中间节点画竖线
                     if (StringUtils.equals(current.TStudyNo, pre.TStudyNo)) {
                         drawHLine(c, childHeight);
@@ -64,7 +69,9 @@ public class PacsListDividerItemDecoration extends RecyclerView.ItemDecoration {
                     PacsOrder pre = mAdapter.getItem(position - 1);
                     PacsOrder current = mAdapter.getItem(position);
                     PacsOrder next = mAdapter.getItem(position + 1);
-
+                    if (StringUtils.isTrimEmpty(current.TStudyNo) || StringUtils.isTrimEmpty(next.TStudyNo)||StringUtils.isTrimEmpty(pre.TStudyNo)) {
+                        return;
+                    }
                     //中间节点画竖线
                     if (StringUtils.equals(current.TStudyNo, pre.TStudyNo) && StringUtils.equals(current.TStudyNo, next.TStudyNo)) {
                         drawVLine(c);
