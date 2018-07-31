@@ -6,6 +6,7 @@ import android.os.HandlerThread;
 import android.support.multidex.MultiDexApplication;
 
 import com.blankj.utilcode.util.Utils;
+import com.raizlabs.android.dbflow.config.FlowManager;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
@@ -56,6 +57,7 @@ public class App extends MultiDexApplication {
         super.onCreate();
         Utils.init(this);
         ApiService.init(this);
+        FlowManager.init(this);
         mContext = getApplicationContext();
         HandlerThread handlerThread = new AsynHandlerThread();
         handlerThread.start();

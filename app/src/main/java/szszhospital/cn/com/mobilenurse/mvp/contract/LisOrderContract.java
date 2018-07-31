@@ -20,6 +20,7 @@ public interface LisOrderContract {
     }
 
     interface Model extends BaseModel {
+        void save(List<LisOrder> list);
     }
 
     interface Presenter extends BasePresenter<View> {

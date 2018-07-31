@@ -1,5 +1,7 @@
 apply plugin: 'com.android.application'
 
+def dbflow_version = "4.2.4"
+
 android {
     compileSdkVersion 27
     defaultConfig {
@@ -67,4 +69,8 @@ dependencies {
     implementation 'com.github.chrisbanes:PhotoView:2.1.4'
     implementation 'com.github.florent37:viewanimator:1.0.5'
     implementation 'com.github.lzyzsd:jsbridge:1.0.4'
+    // if Java use this. If using Kotlin do NOT use this.
+    annotationProcessor "com.github.Raizlabs.DBFlow:dbflow-processor:${dbflow_version}"
+    implementation "com.github.Raizlabs.DBFlow:dbflow-core:${dbflow_version}"
+    implementation "com.github.Raizlabs.DBFlow:dbflow:${dbflow_version}"
 }

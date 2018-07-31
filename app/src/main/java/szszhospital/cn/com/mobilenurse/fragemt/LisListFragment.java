@@ -18,6 +18,7 @@ import szszhospital.cn.com.mobilenurse.databinding.FragmentOrderBinding;
 import szszhospital.cn.com.mobilenurse.mvp.contract.LisOrderContract;
 import szszhospital.cn.com.mobilenurse.mvp.presenter.LisOrderPresenter;
 import szszhospital.cn.com.mobilenurse.remote.response.LisOrder;
+import szszhospital.cn.com.mobilenurse.utils.LisListDividerItemDecoration;
 
 /**
  * Lis检验报告
@@ -50,6 +51,7 @@ public class LisListFragment extends BaseDoctorFragment<FragmentOrderBinding, Li
         mDataBinding.orderList.addItemDecoration(new DividerItemDecoration(_mActivity, DividerItemDecoration.VERTICAL));
         mDataBinding.orderList.setAdapter(mAdapter);
         mDataBinding.refreshLayout.setEnableLoadmore(false);
+        mDataBinding.orderList.addItemDecoration(new LisListDividerItemDecoration(mAdapter, _mActivity));
     }
 
     @Override
@@ -57,7 +59,6 @@ public class LisListFragment extends BaseDoctorFragment<FragmentOrderBinding, Li
         super.initEvent();
         mDataBinding.top.setOnClickListener(v -> mDataBinding.orderList.scrollToPosition(0));
         mDataBinding.refreshLayout.setOnRefreshListener(refreshlayout -> initData());
-
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
@@ -69,6 +70,7 @@ public class LisListFragment extends BaseDoctorFragment<FragmentOrderBinding, Li
                 }
             }
         });
+
     }
 
     @Override
