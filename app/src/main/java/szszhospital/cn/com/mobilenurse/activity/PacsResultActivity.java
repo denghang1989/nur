@@ -2,15 +2,19 @@ package szszhospital.cn.com.mobilenurse.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
-import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 
+import com.github.lzyzsd.jsbridge.BridgeWebView;
+import com.github.lzyzsd.jsbridge.CallBackFunction;
+import com.github.lzyzsd.jsbridge.DefaultHandler;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import szszhospital.cn.com.mobilenurse.App;
 import szszhospital.cn.com.mobilenurse.R;
 import szszhospital.cn.com.mobilenurse.base.BasePresentActivity;
 import szszhospital.cn.com.mobilenurse.databinding.ActivityPacsResultBinding;
@@ -18,6 +22,7 @@ import szszhospital.cn.com.mobilenurse.mvp.contract.PacsResultContract;
 import szszhospital.cn.com.mobilenurse.mvp.presenter.PacsResultPresenter;
 import szszhospital.cn.com.mobilenurse.remote.response.PacsOrder;
 import szszhospital.cn.com.mobilenurse.remote.response.PacsResult;
+import szszhospital.cn.com.mobilenurse.utils.GsonUtil;
 
 public class PacsResultActivity extends BasePresentActivity<ActivityPacsResultBinding, PacsResultPresenter> implements PacsResultContract.View {
 
@@ -48,7 +53,7 @@ public class PacsResultActivity extends BasePresentActivity<ActivityPacsResultBi
         initWebView(mDataBinding.webView);
     }
 
-    private void initWebView(WebView webView) {
+    private void initWebView(BridgeWebView webView) {
         //声明WebSettings子类
         WebSettings webSettings = webView.getSettings();
 
@@ -73,51 +78,30 @@ public class PacsResultActivity extends BasePresentActivity<ActivityPacsResultBi
         webSettings.setLoadsImagesAutomatically(true); //支持自动加载图片
         webSettings.setDefaultTextEncodingName("utf-8");//设置编码格式
 
-        //设置不用系统浏览器打开,直接显示在当前Webview
-        webView.setWebViewClient(new WebViewClient() {
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                view.loadUrl(url);
-                return true;
-            }
-        });
-
-        //设置WebChromeClient类
-        webView.setWebChromeClient(new WebChromeClient() {
-
-            //获取加载进度
-            @Override
-            public void onProgressChanged(WebView view, int newProgress) {
-                if (newProgress < 100) {
-                    mDataBinding.progressBar.setVisibility(View.VISIBLE);
-                    mDataBinding.progressBar.setProgress(newProgress);
-                } else if (newProgress == 100) {
-                    mDataBinding.progressBar.setVisibility(View.GONE);
-                }
-            }
-        });
-
-        //设置WebViewClient类
-        webView.setWebViewClient(new WebViewClient() {
-            //设置加载前的函数
-            @Override
-            public void onPageStarted(WebView view, String url, Bitmap favicon) {
-                Log.d(TAG, "onPageStarted: " + "开始加载");
-            }
-
-            //设置结束加载函数
-            @Override
-            public void onPageFinished(WebView view, String url) {
-                Log.d(TAG, "onPageFinished: " + "结束加载");
-            }
-        });
-
+        webView.setDefaultHandler(new DefaultHandler());
+        webView.loadUrl("file:///android_asset/pacs/index.html");
     }
 
     @Override
     protected void initData() {
         super.initData();
         mPresenter.getPacsResult(mPacsOrder.TOEOrderDr);
+        Map<String, String> map = new HashMap<>();
+        map.put("recordNo", App.patientInfo.MedicareNo);
+        map.put("name", App.patientInfo.PAPMIName);
+        map.put("sex", App.patientInfo.Sex);
+        map.put("age", App.patientInfo.Age);
+        map.put("patientNo", App.patientInfo.PatientID);
+        map.put("bedNo", App.patientInfo.DisBed);
+        String userLocDesc = App.loginUser.UserLocDesc;
+        String[] split = userLocDesc.split("-");
+        map.put("loc", split[0]);
+        mDataBinding.webView.callHandler("sendPatientInfo", GsonUtil.GsonString(map), new CallBackFunction() {
+            @Override
+            public void onCallBack(String data) {
+                Log.d(TAG, "onCallBack: ");
+            }
+        });
     }
 
     @Override
@@ -137,6 +121,15 @@ public class PacsResultActivity extends BasePresentActivity<ActivityPacsResultBi
 
     @Override
     public void showPacsResult(PacsResult pacsResult) {
-        Log.d(TAG, "showPacsResult: " + pacsResult.toString());
+        Map<String, String> map = new HashMap<>();
+        map.put("method", pacsResult.rows.get(0).strOrderName);
+        map.put("observe", pacsResult.rows.get(0).ExamDesc);
+        map.put("opinion", pacsResult.rows.get(0).strResult);
+        mDataBinding.webView.callHandler("sendReport", GsonUtil.GsonString(map), new CallBackFunction() {
+            @Override
+            public void onCallBack(String data) {
+                Log.d(TAG, "onCallBack: ");
+            }
+        });
     }
 }

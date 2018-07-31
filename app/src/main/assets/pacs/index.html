@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<script src="./jquery.min.js"></script>
+	<link rel="stylesheet" href="./index.css">
+	<style>
+		html, body {
+			width: 100%;
+			height: 100%;
+			padding: 0;
+			margin: 0;
+			font-size: 1.3em;
+		}
+	</style>
+</head>
+<body>
+	<div id="header">
+		<h3 id="title">深 圳 市 中 医 院</h3>
+		<div id="patientInfo">
+			<div id="patientInfo_1">
+				<div>
+					病历号：
+					<span id="recordNo"></span>
+				</div>
+				<div>
+					姓名：
+					<span id="name"></span>
+				</div>
+				<div>
+					性别：
+					<span id="sex"></span>
+				</div>
+				<div>
+					年龄：
+					<span id="age"></span>
+				</div>
+			</div>
+			<div id="patientInfo_2">
+				<div>
+					住院号：
+					<span id="patientNo"></span>
+				</div>
+				<div>
+					床号：
+					<span id="bedNo"></span>
+				</div>
+				<div>
+					科室：
+					<span id="loc"></span>
+				</div>
+				<div>
+				</div>
+			</div>
+			<div id="patientInfo_3">
+				检查部位：
+				<span id="part"></span>
+			</div>
+		</div>
+	</div>
+	
+	<hr id="line">
+	
+	<div id="container">
+		<div>检查所见:
+			<br>
+			<span id="observe"></span>
+		</div>
+		<div>诊断意见:
+			<br>
+			<span id="opinion"></span>
+		</div>
+		<div>检查方法:
+			<br>
+			<span id="method"></span>
+		</div>
+	</div>
+	
+	<div id="footer">
+	
+	</div>
+	
+	<script src="./index.js"></script>
+</body>
+</html>
