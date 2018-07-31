@@ -23,6 +23,7 @@ import szszhospital.cn.com.mobilenurse.remote.response.LisOrder;
  * Lis检验报告
  */
 public class LisListFragment extends BaseDoctorFragment<FragmentOrderBinding, LisOrderPresenter> implements LisOrderContract.View {
+    private static final String TAG = "LisListFragment";
 
     private LisOrderListAdapter mAdapter;
 
@@ -44,7 +45,8 @@ public class LisListFragment extends BaseDoctorFragment<FragmentOrderBinding, Li
     @Override
     protected void initView() {
         super.initView();
-        mDataBinding.orderList.setLayoutManager(new LinearLayoutManager(_mActivity));
+        LinearLayoutManager layout = new LinearLayoutManager(_mActivity);
+        mDataBinding.orderList.setLayoutManager(layout);
         mDataBinding.orderList.addItemDecoration(new DividerItemDecoration(_mActivity, DividerItemDecoration.VERTICAL));
         mDataBinding.orderList.setAdapter(mAdapter);
         mDataBinding.refreshLayout.setEnableLoadmore(false);

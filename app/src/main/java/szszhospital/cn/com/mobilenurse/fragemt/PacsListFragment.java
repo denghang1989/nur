@@ -11,9 +11,9 @@ import java.util.List;
 
 import szszhospital.cn.com.mobilenurse.App;
 import szszhospital.cn.com.mobilenurse.R;
+import szszhospital.cn.com.mobilenurse.activity.PacsImageActivity;
 import szszhospital.cn.com.mobilenurse.activity.PacsResultActivity;
 import szszhospital.cn.com.mobilenurse.activity.PacsWebViewDetailActivity;
-import szszhospital.cn.com.mobilenurse.activity.PacsImageActivity;
 import szszhospital.cn.com.mobilenurse.activity.PdfFromHttpActivity;
 import szszhospital.cn.com.mobilenurse.adapter.PacsResultAdapter;
 import szszhospital.cn.com.mobilenurse.databinding.FragmentOrderBinding;
@@ -21,6 +21,7 @@ import szszhospital.cn.com.mobilenurse.mvp.contract.PacsListContract;
 import szszhospital.cn.com.mobilenurse.mvp.presenter.PacsListPresenter;
 import szszhospital.cn.com.mobilenurse.remote.response.PacsOrder;
 import szszhospital.cn.com.mobilenurse.utils.AppUtil;
+import szszhospital.cn.com.mobilenurse.utils.PacsListDividerItemDecoration;
 
 /**
  * PACS检查报告
@@ -94,10 +95,13 @@ public class PacsListFragment extends BaseDoctorFragment<FragmentOrderBinding, P
     @Override
     protected void initView() {
         super.initView();
-        mDataBinding.orderList.setLayoutManager(new LinearLayoutManager(_mActivity));
+        LinearLayoutManager layout = new LinearLayoutManager(_mActivity);
+        mDataBinding.orderList.setLayoutManager(layout);
         mDataBinding.orderList.addItemDecoration(new DividerItemDecoration(_mActivity, DividerItemDecoration.VERTICAL));
         mDataBinding.orderList.setAdapter(mAdapter);
         mDataBinding.refreshLayout.setEnableLoadmore(false);
+
+        mDataBinding.orderList.addItemDecoration(new PacsListDividerItemDecoration(mAdapter, _mActivity));
     }
 
     @Override

@@ -16,26 +16,26 @@
 #patientInfo_1, #patientInfo_2, #patientInfo_3 {
 	display: flex;
 	flex-direction: row;
-	justify-content: space-between;
 	margin-bottom: 10px;
 	width: 100%;
 }
 
-#patientInfo_1 > div {
+#patientInfo_1 .cell {
 	flex: 1;
 }
 
-#patientInfo_2 > div{
+#patientInfo_2 .cell{
 	flex: 1;
 }
 
-#patientInfo_3 > div{
-	flex: 1;
-}
-
-#loc{
+#patientInfo_2 .cell-2{
     flex:2;
 }
+
+#patientInfo_3 .cell{
+	flex: 1;
+}
+
 
 #line {
 	margin: 10px 20px;
@@ -51,6 +51,7 @@
 	margin-bottom: 20px;
 }
 
-#footer {
 
+.title{
+    font-weight:bold
 }

@@ -105,6 +105,12 @@ public class PacsResultActivity extends BasePresentActivity<ActivityPacsResultBi
     }
 
     @Override
+    protected void initEvent() {
+        super.initEvent();
+        mDataBinding.toolbar.setNavigationOnClickListener(v -> finish());
+    }
+
+    @Override
     protected PacsResultPresenter initPresenter() {
         return new PacsResultPresenter();
     }
