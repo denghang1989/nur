@@ -80,7 +80,7 @@ public class PacsListFragment extends BaseDoctorFragment<FragmentOrderBinding, P
                         return;
                     }
                     //超声影像科报告
-                    if (StringUtils.equals(pacsOrder.TreplocDr, "14")) {
+                    if (StringUtils.equals(pacsOrder.TreplocDr, "14")||StringUtils.equals(pacsOrder.TreplocDr, "11")||StringUtils.equals(pacsOrder.TreplocDr, "9")) {
                         PacsResultActivity.startPacsResultActivity(_mActivity, pacsOrder);
                         return;
                     }
@@ -100,7 +100,6 @@ public class PacsListFragment extends BaseDoctorFragment<FragmentOrderBinding, P
         mDataBinding.orderList.addItemDecoration(new DividerItemDecoration(_mActivity, DividerItemDecoration.VERTICAL));
         mDataBinding.orderList.setAdapter(mAdapter);
         mDataBinding.refreshLayout.setEnableLoadmore(false);
-
         mDataBinding.orderList.addItemDecoration(new PacsListDividerItemDecoration(mAdapter, _mActivity));
     }
 
