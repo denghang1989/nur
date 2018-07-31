@@ -143,7 +143,7 @@ public interface Api {
     Observable<Response<List<EMRImageInfo>>> getEMRImageList(@Query("EpisodeID") String EpisodeID, @Query("InternalID") String InternalID);
 
     //获取护理病历的地址
-    @GET("web/Quality.Ajax.VitalSignsAjax.cls.cls")
+    @GET("web/Quality.Ajax.VitalSignsAjax.cls")
     Observable<Response<VitalSignsPath>> getVitalSignsPath(@Query("EpisodeID") String EpisodeID, @Query("PatientID") String PatientID);
 
     //获取pacs结果
