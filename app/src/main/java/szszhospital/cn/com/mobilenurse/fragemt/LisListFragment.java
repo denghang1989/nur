@@ -6,7 +6,6 @@ import android.view.View;
 
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
-import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import java.util.List;
 
@@ -59,15 +58,12 @@ public class LisListFragment extends BaseDoctorFragment<FragmentOrderBinding, Li
         super.initEvent();
         mDataBinding.top.setOnClickListener(v -> mDataBinding.orderList.scrollToPosition(0));
         mDataBinding.refreshLayout.setOnRefreshListener(refreshlayout -> initData());
-        mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                LisOrder lisOrder = mAdapter.getItem(position);
-                if (StringUtils.equals("3", lisOrder.ResultStatus)) {
-                    LisOrderDetailActivity.startLisOrderDetailActivity(_mActivity, lisOrder);
-                } else {
-                    ToastUtils.showShort("无报告！");
-                }
+        mAdapter.setOnItemClickListener((adapter, view, position) -> {
+            LisOrder lisOrder = mAdapter.getItem(position);
+            if (StringUtils.equals("3", lisOrder.ResultStatus)) {
+                LisOrderDetailActivity.startLisOrderDetailActivity(_mActivity, lisOrder);
+            } else {
+                ToastUtils.showShort("无报告！");
             }
         });
 
