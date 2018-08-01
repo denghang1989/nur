@@ -10,7 +10,7 @@ import szszhospital.cn.com.mobilenurse.remote.response.LisOrderDetail;
 
 public class LisTableViewModel {
     private List<LisOrderDetail> mList;
-    private static final String[] ColumnHeaders = new String[]{"项目名称", "结果", "结果提示", "异常提示", "单位", "参考范围", "辅助诊断", "前次结果", "检验仪器", "检测方法", "临床意义"};
+    private static final String[] ColumnHeaders = new String[]{"结果", "提示", "单位", "参考范围", "检测方法", "结果提示", "前次结果"};
 
     public LisTableViewModel(List<LisOrderDetail> list) {
         mList = list;
@@ -20,7 +20,7 @@ public class LisTableViewModel {
         List<RowHeader> list = new ArrayList<>();
         for (int i = 0; i < mList.size(); i++) {
             LisOrderDetail lisOrderDetail = mList.get(i);
-            RowHeader rowHeader = new RowHeader(String.valueOf(i), lisOrderDetail.Synonym);
+            RowHeader rowHeader = new RowHeader(String.valueOf(i), lisOrderDetail.TestCodeName);
             list.add(rowHeader);
         }
         return list;
@@ -57,7 +57,7 @@ public class LisTableViewModel {
                     case "结果提示":
                         cellData = lisOrderDetail.ResultFormat;
                         break;
-                    case "异常提示":
+                    case "提示":
                         cellData = lisOrderDetail.AbFlag;
                         isFlag = true;
                         break;

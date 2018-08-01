@@ -70,6 +70,8 @@ public class LisTableAdapter extends AbstractTableAdapter<ColumnHeader, RowHeade
                     viewHolder.mTextView.setTextColor(mContext.getResources().getColor(R.color.gray));
                     break;
             }
+        } else {
+            viewHolder.mTextView.setTextColor(mContext.getResources().getColor(R.color.gray));
         }
     }
 

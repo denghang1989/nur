@@ -30,7 +30,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbar"
-            app:row_header_width="@dimen/row_header_width"
+            app:row_header_width="150dp"
             app:show_horizontal_separator="true"
             app:show_vertical_separator="true"/>
 

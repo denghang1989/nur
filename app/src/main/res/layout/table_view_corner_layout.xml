@@ -17,16 +17,17 @@
   -->
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="@dimen/row_header_width"
+                android:layout_width="wrap_content"
                 android:layout_height="@dimen/cell_height"
                 android:background="@color/cell_background_color">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:text="缩写"
+        android:gravity="center"
+        android:text="项目名称"
         android:textColor="@color/table_view_default_text_color"
         android:textSize="@dimen/text_size"/>
 
