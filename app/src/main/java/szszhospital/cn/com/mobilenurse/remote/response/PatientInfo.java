@@ -32,7 +32,31 @@ public class PatientInfo implements Parcelable ,Serializable{
     public String PatientID;
     public String PayType;
     public String Sex;
+    /**
+     * PatientNo : 00879448
+     */
 
+    public String PatientNo;
+
+
+
+
+    @Override
+    public String toString() {
+        return "PatientInfo{" +
+                "Age='" + Age + '\'' +
+                ", Diagnose='" + Diagnose + '\'' +
+                ", DisBed='" + DisBed + '\'' +
+                ", Doctor='" + Doctor + '\'' +
+                ", EpisodeID='" + EpisodeID + '\'' +
+                ", MedicareNo='" + MedicareNo + '\'' +
+                ", PAPMIName='" + PAPMIName + '\'' +
+                ", PaAdmDateTime='" + PaAdmDateTime + '\'' +
+                ", PatientID='" + PatientID + '\'' +
+                ", PayType='" + PayType + '\'' +
+                ", Sex='" + Sex + '\'' +
+                '}';
+    }
 
     @Override
     public int describeContents() {
@@ -52,6 +76,7 @@ public class PatientInfo implements Parcelable ,Serializable{
         dest.writeString(this.PatientID);
         dest.writeString(this.PayType);
         dest.writeString(this.Sex);
+        dest.writeString(this.PatientNo);
     }
 
     public PatientInfo() {
@@ -69,6 +94,7 @@ public class PatientInfo implements Parcelable ,Serializable{
         this.PatientID = in.readString();
         this.PayType = in.readString();
         this.Sex = in.readString();
+        this.PatientNo = in.readString();
     }
 
     public static final Creator<PatientInfo> CREATOR = new Creator<PatientInfo>() {
@@ -82,21 +108,4 @@ public class PatientInfo implements Parcelable ,Serializable{
             return new PatientInfo[size];
         }
     };
-
-    @Override
-    public String toString() {
-        return "PatientInfo{" +
-                "Age='" + Age + '\'' +
-                ", Diagnose='" + Diagnose + '\'' +
-                ", DisBed='" + DisBed + '\'' +
-                ", Doctor='" + Doctor + '\'' +
-                ", EpisodeID='" + EpisodeID + '\'' +
-                ", MedicareNo='" + MedicareNo + '\'' +
-                ", PAPMIName='" + PAPMIName + '\'' +
-                ", PaAdmDateTime='" + PaAdmDateTime + '\'' +
-                ", PatientID='" + PatientID + '\'' +
-                ", PayType='" + PayType + '\'' +
-                ", Sex='" + Sex + '\'' +
-                '}';
-    }
 }

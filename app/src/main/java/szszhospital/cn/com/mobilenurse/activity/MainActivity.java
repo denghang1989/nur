@@ -142,6 +142,7 @@ public class MainActivity extends BasePresentActivity<ActiviyMainBinding, MainPr
                 ScanQRCodeActivity.startScanQRCodeActivityForResult(this);
                 break;
             case R.id.tools_patient_list:
+                EpisodeListActivity.startEpisodeListActivity(this);
                 break;
             case R.id.tools_patient_calendar:
                 break;

@@ -22,6 +22,7 @@ import szszhospital.cn.com.mobilenurse.viewholder.PatientViewHolder;
 
 public class PatientListFragment extends BasePresenterFragment<FragmentPatientListBinding, PatientListPresenter> implements PatientListContract.View {
 
+    private static final String TAG = "PatientListFragment";
     private IPatientListAdapter mAdapter;
     private PatientListRequest  mRequest;
     private PatientViewHolder   mPatientViewHolder;
@@ -78,8 +79,6 @@ public class PatientListFragment extends BasePresenterFragment<FragmentPatientLi
         mRequest.UserId = App.loginUser.UserDR;
         mPresenter.getPatientList(mRequest);
     }
-
-    private static final String TAG = "PatientListFragment";
 
     @Override
     protected void initEvent() {

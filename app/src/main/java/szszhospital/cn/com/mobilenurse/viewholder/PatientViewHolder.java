@@ -19,7 +19,7 @@ public class PatientViewHolder extends BaseViewHolder<PatientInfo> {
 
         setText(R.id.name, "姓名：" + mData.PAPMIName)
                 .setText(R.id.bed, mData.DisBed)
-                .setText(R.id.patientId, "登记号：" + mData.PatientID)
+                .setText(R.id.patientId, "登记号：" + mData.PatientNo)
                 .setText(R.id.dateTime, "入院日期：" + mData.PaAdmDateTime)
                 .setText(R.id.diagnose, "诊断：" + mData.Diagnose)
                 .setText(R.id.payType, "费用类型：" + mData.PayType);
