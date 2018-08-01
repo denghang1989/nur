@@ -19,8 +19,8 @@
                 android:layout_weight="3"
                 android:background="@color/lightGray"/>
 
-            <FrameLayout
-                android:id="@+id/frameLayout_container"
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/emr"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="17"/>

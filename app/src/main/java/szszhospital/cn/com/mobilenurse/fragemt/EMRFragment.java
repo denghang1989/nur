@@ -1,28 +1,36 @@
 package szszhospital.cn.com.mobilenurse.fragemt;
 
+import android.app.ActivityOptions;
+import android.content.Intent;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
-import org.greenrobot.eventbus.EventBus;
+import com.blankj.utilcode.util.ToastUtils;
 
 import java.util.List;
 
 import szszhospital.cn.com.mobilenurse.App;
 import szszhospital.cn.com.mobilenurse.R;
+import szszhospital.cn.com.mobilenurse.activity.DragPhotoActivity;
 import szszhospital.cn.com.mobilenurse.adapter.EMRAdapter;
+import szszhospital.cn.com.mobilenurse.adapter.EMRImageAdapter;
 import szszhospital.cn.com.mobilenurse.databinding.FragmentEmrBinding;
-import szszhospital.cn.com.mobilenurse.event.SelectEmrRecordEvent;
 import szszhospital.cn.com.mobilenurse.mvp.contract.EMRContract;
 import szszhospital.cn.com.mobilenurse.mvp.presenter.EMRPresenter;
 import szszhospital.cn.com.mobilenurse.remote.response.EMREposideInfo;
+import szszhospital.cn.com.mobilenurse.remote.response.EMRImageInfo;
 
 /**
  * 电子病历
  */
 public class EMRFragment extends BaseDoctorFragment<FragmentEmrBinding, EMRPresenter> implements EMRContract.View {
 
-    private EMRAdapter mAdapter;
+    private EMRAdapter      mAdapter;
+    private EMRImageAdapter mEMRImageAdapter;
+    private static final String KEY_DATA = "data";
+    private static final String TAG      = "EMRFragment";
+    private LinearLayoutManager mEMRLayoutManager;
 
     public static EMRFragment newInstance() {
         return new EMRFragment();
@@ -32,12 +40,24 @@ public class EMRFragment extends BaseDoctorFragment<FragmentEmrBinding, EMRPrese
     protected void init() {
         super.init();
         mAdapter = new EMRAdapter(R.layout.item_emr_record);
+        mEMRImageAdapter = new EMRImageAdapter(R.layout.item_emr_image);
     }
 
     @Override
     protected void initView() {
         super.initView();
-        loadRootFragment(R.id.frameLayout_container, EMRImageFragment.newInstance());
+        initMenu();
+        initEMR();
+    }
+
+    private void initEMR() {
+        mEMRLayoutManager = new LinearLayoutManager(_mActivity);
+        mDataBinding.emr.setLayoutManager(mEMRLayoutManager);
+        mDataBinding.listView.addItemDecoration(new DividerItemDecoration(_mActivity, DividerItemDecoration.VERTICAL));
+        mDataBinding.emr.setAdapter(mEMRImageAdapter);
+    }
+
+    private void initMenu() {
         mDataBinding.listView.setLayoutManager(new LinearLayoutManager(_mActivity));
         mDataBinding.listView.addItemDecoration(new DividerItemDecoration(_mActivity, DividerItemDecoration.VERTICAL));
         mDataBinding.listView.setAdapter(mAdapter);
@@ -63,7 +83,13 @@ public class EMRFragment extends BaseDoctorFragment<FragmentEmrBinding, EMRPrese
             mAdapter.setSelectPosition(position);
             mAdapter.notifyDataSetChanged();
             EMREposideInfo item = mAdapter.getItem(position);
-            EventBus.getDefault().post(new SelectEmrRecordEvent(item));
+            mPresenter.getEMRImageInfoList(App.patientInfo.EpisodeID, item.InternalID);
+            mEMRLayoutManager.scrollToPosition(0);
+        });
+
+        mEMRImageAdapter.setOnItemClickListener((adapter, view, position) -> {
+            ToastUtils.showShort(position);
+            startDragPhotoActivity(view, position);
         });
 
         mDataBinding.show.setOnClickListener(v -> {
@@ -75,6 +101,12 @@ public class EMRFragment extends BaseDoctorFragment<FragmentEmrBinding, EMRPrese
                 mDataBinding.show.setText("隐藏");
             }
         });
+    }
+
+    private void startDragPhotoActivity(View view, int position) {
+        Intent intent = new Intent(_mActivity, DragPhotoActivity.class);
+        intent.putExtra(KEY_DATA, mEMRImageAdapter.getItem(position));
+        startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(_mActivity, view, "emr").toBundle());
     }
 
     @Override
@@ -93,13 +125,14 @@ public class EMRFragment extends BaseDoctorFragment<FragmentEmrBinding, EMRPrese
     }
 
     @Override
-    public void showEMRList(List<EMREposideInfo> list) {
+    public void showMenuList(List<EMREposideInfo> list) {
         if (list.size() > 0) {
             mAdapter.setSelectPosition(0);
-            EventBus.getDefault().post(new SelectEmrRecordEvent(list.get(0)));
+            EMREposideInfo item = list.get(0);
+            mPresenter.getEMRImageInfoList(App.patientInfo.EpisodeID, item.InternalID);
         } else {
             mAdapter.setSelectPosition(-1);
-            EventBus.getDefault().post(new SelectEmrRecordEvent(null));
+            mEMRImageAdapter.clear();
         }
         mAdapter.setNewData(list);
     }
@@ -107,6 +140,14 @@ public class EMRFragment extends BaseDoctorFragment<FragmentEmrBinding, EMRPrese
     @Override
     public void refresh() {
         initData();
+    }
+
+    @Override
+    public void showEMRList(List<EMRImageInfo> list) {
+        if (list != null && list.size() > 0) {
+            List<String> urLs = list.get(0).ImagePathURLs;
+            mEMRImageAdapter.setNewData(urLs);
+        }
     }
 
 

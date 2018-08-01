@@ -6,6 +6,7 @@ import szszhospital.cn.com.mobilenurse.base.BaseModel;
 import szszhospital.cn.com.mobilenurse.base.BasePresenter;
 import szszhospital.cn.com.mobilenurse.base.BaseView;
 import szszhospital.cn.com.mobilenurse.remote.response.EMREposideInfo;
+import szszhospital.cn.com.mobilenurse.remote.response.EMRImageInfo;
 
 public interface EMRContract {
 
@@ -14,9 +15,12 @@ public interface EMRContract {
 
         void hideProgress();
 
-        void showEMRList(List<EMREposideInfo> list);
+        void showMenuList(List<EMREposideInfo> list);
 
         void refresh();
+
+        void showEMRList(List<EMRImageInfo> list);
+
     }
 
     interface Model extends BaseModel {
@@ -25,5 +29,7 @@ public interface EMRContract {
 
     interface Presenter extends BasePresenter<View> {
         void getEMREposideList(String  eposideId);
+
+        void getEMRImageInfoList(String eposideId, String InternalID);
     }
 }
