@@ -31,7 +31,7 @@ public class HerbalOrderAdapter extends BaseQuickAdapter<Order, BaseViewHolder> 
                 for (int j = 0; j < length; j++) {
                     sb.append(" ");
                 }
-                if (i != 0 && i % 3 == 0) {
+                if (i != 0 && (i + 1) % 4 == 0) {
                     sb.append("\n");
                 } else {
                     sb.append("    ");
