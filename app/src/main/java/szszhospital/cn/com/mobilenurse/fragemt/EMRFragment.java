@@ -6,8 +6,6 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
-import com.blankj.utilcode.util.ToastUtils;
-
 import java.util.List;
 
 import szszhospital.cn.com.mobilenurse.App;
@@ -87,8 +85,7 @@ public class EMRFragment extends BaseDoctorFragment<FragmentEmrBinding, EMRPrese
             mEMRLayoutManager.scrollToPosition(0);
         });
 
-        mEMRImageAdapter.setOnItemClickListener((adapter, view, position) -> {
-            ToastUtils.showShort(position);
+        mEMRImageAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             startDragPhotoActivity(view, position);
         });
 
