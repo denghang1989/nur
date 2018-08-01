@@ -1,8 +1,12 @@
 package szszhospital.cn.com.mobilenurse.adapter;
 
 import com.blankj.utilcode.util.StringUtils;
+import com.blankj.utilcode.util.TimeUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 import szszhospital.cn.com.mobilenurse.R;
 import szszhospital.cn.com.mobilenurse.remote.response.Order;
@@ -15,8 +19,10 @@ public class OrderListAdapter extends BaseQuickAdapter<Order, BaseViewHolder> {
 
     @Override
     protected void convert(BaseViewHolder helper, Order item) {
-        helper.setText(R.id.date, item.OrdStartDate)
-                .setText(R.id.time, item.OrdCreateTime)
+        long millis = TimeUtils.string2Millis(item.OrdStartDate + " " + item.OrdStartTime, new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.CHINA));
+        String startTimeString = TimeUtils.millis2String(millis, new SimpleDateFormat("MM-dd HH:mm", Locale.CHINA));
+        helper.setText(R.id.StartDateTime, startTimeString)
+                .setText(R.id.stopDateTime, "")
                 .setText(R.id.doctor, item.Doctor);
         String arcimDesc = item.ArcimDesc;
         if (!StringUtils.isTrimEmpty(item.OrdDepProcNotes)) {
