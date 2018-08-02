@@ -2,7 +2,11 @@ package szszhospital.cn.com.mobilenurse.fragemt;
 
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
+
+import com.blankj.utilcode.util.ConvertUtils;
+import com.github.florent37.viewanimator.ViewAnimator;
 
 import java.util.List;
 
@@ -24,6 +28,7 @@ public abstract class BaseOrdersFragment extends BaseDoctorFragment<FragmentOrde
     protected OrderRequest           mOrderRequest;
     protected OrderListAdapter       mAdapter;
     protected OrderExtDialogFragment mDialogFragment;
+    private boolean isTextViewShow = true;
 
     @Override
     public int getLayoutId() {
@@ -60,6 +65,35 @@ public abstract class BaseOrdersFragment extends BaseDoctorFragment<FragmentOrde
         mDataBinding.top.setOnClickListener(v -> mDataBinding.orderList.scrollToPosition(0));
         mDataBinding.refreshLayout.setOnRefreshListener(refreshlayout -> initData());
         mAdapter.setOnItemClickListener((adapter, view, position) -> shwoDialog(mAdapter.getItem(position)));
+
+        mDataBinding.orderList.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    showTextView();
+                } else {
+                    hideTextView();
+                }
+            }
+        });
+    }
+
+    private void hideTextView() {
+        int span = ConvertUtils.dp2px(10) + mDataBinding.top.getHeight();
+        ViewAnimator.animate(mDataBinding.top)
+                .translationY(span)
+                .duration(250)
+                .start();
+        isTextViewShow = false;
+    }
+
+    private void showTextView() {
+        isTextViewShow = true;
+        ViewAnimator.animate(mDataBinding.top)
+                .translationY(0)
+                .duration(250)
+                .start();
     }
 
     @Override

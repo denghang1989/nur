@@ -4,7 +4,11 @@ import android.app.ActivityOptions;
 import android.content.Intent;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
+
+import com.blankj.utilcode.util.ConvertUtils;
+import com.github.florent37.viewanimator.ViewAnimator;
 
 import java.util.List;
 
@@ -24,11 +28,13 @@ import szszhospital.cn.com.mobilenurse.remote.response.EMRImageInfo;
  */
 public class EMRFragment extends BaseDoctorFragment<FragmentEmrBinding, EMRPresenter> implements EMRContract.View {
 
-    private EMRAdapter      mAdapter;
-    private EMRImageAdapter mEMRImageAdapter;
-    private static final String KEY_DATA = "data";
     private static final String TAG      = "EMRFragment";
+    private static final String KEY_DATA = "data";
+    private EMRAdapter          mAdapter;
+    private EMRImageAdapter     mEMRImageAdapter;
     private LinearLayoutManager mEMRLayoutManager;
+    private boolean isShow         = true;
+    private boolean isTextViewShow = true;
 
     public static EMRFragment newInstance() {
         return new EMRFragment();
@@ -90,14 +96,69 @@ public class EMRFragment extends BaseDoctorFragment<FragmentEmrBinding, EMRPrese
         });
 
         mDataBinding.show.setOnClickListener(v -> {
-            if (mDataBinding.listView.getVisibility() == View.VISIBLE) {
-                mDataBinding.listView.setVisibility(View.GONE);
-                mDataBinding.show.setText("显示");
+            int menuWidth = mDataBinding.listView.getWidth();
+            int emrWidth = mDataBinding.emr.getWidth();
+            int with = menuWidth + emrWidth;
+            float scale = with / (emrWidth * 1.0f);
+            if (isShow) {
+                hideMenu(menuWidth, scale);
             } else {
-                mDataBinding.listView.setVisibility(View.VISIBLE);
-                mDataBinding.show.setText("隐藏");
+                showMenu();
             }
         });
+
+        mDataBinding.emr.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    showTextView();
+                } else {
+                    hideTextView();
+                }
+            }
+        });
+    }
+
+    private void hideTextView() {
+        isTextViewShow = false;
+        int span = ConvertUtils.dp2px(60);
+        ViewAnimator.animate(mDataBinding.show)
+                .translationY(span)
+                .duration(250)
+                .start();
+    }
+
+    private void showTextView() {
+        isTextViewShow = true;
+        ViewAnimator.animate(mDataBinding.show)
+                .translationY(0)
+                .duration(250)
+                .start();
+    }
+
+    private void showMenu() {
+        isShow = true;
+        ViewAnimator.animate(mDataBinding.listView)
+                .translationX(0)
+                .duration(200)
+                .andAnimate(mDataBinding.emr)
+                .translationX(0)
+                .scale(1)
+                .duration(200)
+                .start();
+    }
+
+    private void hideMenu(int menuWidth, float scale) {
+        isShow = false;
+        ViewAnimator.animate(mDataBinding.listView)
+                .translationX(-menuWidth)
+                .duration(200)
+                .andAnimate(mDataBinding.emr)
+                .translationX(-menuWidth / 2)
+                .scale(scale)
+                .duration(200)
+                .start();
     }
 
     private void startDragPhotoActivity(View view, int position) {
