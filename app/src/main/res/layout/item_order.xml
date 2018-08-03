@@ -7,10 +7,10 @@
     android:layout_height="wrap_content"
     android:background="?android:attr/selectableItemBackground"
     android:gravity="center_vertical"
-    android:minHeight="50dp"
+    android:minHeight="36dp"
     android:orientation="horizontal"
-    android:paddingBottom="8dp"
-    android:paddingTop="8dp">
+    android:paddingBottom="4dp"
+    android:paddingTop="4dp">
 
     <TextView
         android:id="@+id/StartDateTime"

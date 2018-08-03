@@ -5,8 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:minWidth="@dimen/row_header_width"
-    android:layout_height="@dimen/cell_height"
-    android:background="@color/cell_background_color">
+    android:layout_height="@dimen/cell_height">
 
     <TextView
         android:id="@+id/col"

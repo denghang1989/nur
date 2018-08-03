@@ -109,6 +109,10 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"/>
 
+        <activity android:name=".activity.PatientListActivity"
+                  android:screenOrientation="portrait"
+                  android:theme="@style/AppTheme.Transparent"/>
+
         <receiver
             android:name=".broadcast.QRCodeBroadcastReceiver"
             android:enabled="true"

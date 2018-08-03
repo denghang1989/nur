@@ -28,9 +28,9 @@ public class OrderListAdapter extends BaseQuickAdapter<Order, BaseViewHolder> {
         if (!StringUtils.isTrimEmpty(item.OrdDepProcNotes)) {
             arcimDesc = arcimDesc + " (" + item.OrdDepProcNotes + ")";
         }
-        if (!StringUtils.isTrimEmpty(item.DoseQty)) {
+/*        if (!StringUtils.isTrimEmpty(item.DoseQty)) {
             arcimDesc = arcimDesc + "  " + item.DoseQty + item.DoseUnit;
-        }
+        }*/
         if (!StringUtils.isTrimEmpty(item.Instr)) {
             arcimDesc = arcimDesc + "   " + item.Instr;
         }

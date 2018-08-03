@@ -39,6 +39,13 @@ public class PatientListFragment extends BasePresenterFragment<FragmentPatientLi
 
     @Override
     public void showPatientList(List<PatientInfo> list) {
+        if (list.size() > 0) {
+            PatientInfo patientInfo = list.get(0);
+            App.setPatientInfo(patientInfo);
+            mSelectPatient = 0;
+            mAdapter.setSelected(mSelectPatient + mAdapter.getHeaderLayoutCount());
+            mPatientViewHolder.setData(patientInfo);
+        }
         mAdapter.setNewData(list);
     }
 
