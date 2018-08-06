@@ -45,6 +45,7 @@ public class PatientListFragment extends BasePresenterFragment<FragmentPatientLi
             mSelectPatient = 0;
             mAdapter.setSelected(mSelectPatient + mAdapter.getHeaderLayoutCount());
             mPatientViewHolder.setData(patientInfo);
+            EventBus.getDefault().post(new SelectPatientEvent(patientInfo));
         }
         mAdapter.setNewData(list);
     }

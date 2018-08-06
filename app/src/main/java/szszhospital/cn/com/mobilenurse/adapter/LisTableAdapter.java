@@ -1,7 +1,6 @@
 package szszhospital.cn.com.mobilenurse.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,7 +55,6 @@ public class LisTableAdapter extends AbstractTableAdapter<ColumnHeader, RowHeade
         Cell cell = (Cell) cellItemModel;
         CellViewHolder viewHolder = (CellViewHolder) holder;
         viewHolder.mTextView.setText(cell.getData());
-        Log.d(TAG, "onBindCellViewHolder: " + cell.isFlag());
         if (cell.isFlag()) {
             switch (cell.getData()) {
                 case "L":
@@ -71,7 +69,7 @@ public class LisTableAdapter extends AbstractTableAdapter<ColumnHeader, RowHeade
                     break;
             }
         } else {
-            viewHolder.mTextView.setTextColor(mContext.getResources().getColor(R.color.gray));
+            viewHolder.mTextView.setTextColor(mContext.getResources().getColor(R.color.black));
         }
     }
 
