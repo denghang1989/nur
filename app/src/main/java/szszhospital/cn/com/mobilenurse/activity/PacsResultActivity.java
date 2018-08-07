@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.webkit.WebSettings;
 
 import com.github.lzyzsd.jsbridge.BridgeWebView;
@@ -107,6 +109,24 @@ public class PacsResultActivity extends BasePresentActivity<ActivityPacsResultBi
                 Log.d(TAG, "onCallBack: ");
             }
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        if( mDataBinding.webView!=null) {
+            ViewParent parent = mDataBinding.webView.getParent();
+            if (parent != null) {
+                ((ViewGroup) parent).removeView(mDataBinding.webView);
+            }
+
+            mDataBinding.webView.stopLoading();
+            mDataBinding.webView.getSettings().setJavaScriptEnabled(false);
+            mDataBinding.webView.clearHistory();
+            mDataBinding.webView.clearView();
+            mDataBinding.webView.removeAllViews();
+            mDataBinding.webView.destroy();
+        }
+        super.onDestroy();
     }
 
     @Override

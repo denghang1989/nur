@@ -6,6 +6,8 @@ import android.graphics.Bitmap;
 import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.webkit.DownloadListener;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
@@ -159,8 +161,20 @@ public class PacsWebViewDetailActivity extends BaseActivity<ActivityPacsDetailBi
 
     @Override
     protected void onDestroy() {
+        if( mDataBinding.webView!=null) {
+            ViewParent parent = mDataBinding.webView.getParent();
+            if (parent != null) {
+                ((ViewGroup) parent).removeView(mDataBinding.webView);
+            }
+
+            mDataBinding.webView.stopLoading();
+            mDataBinding.webView.getSettings().setJavaScriptEnabled(false);
+            mDataBinding.webView.clearHistory();
+            mDataBinding.webView.clearView();
+            mDataBinding.webView.removeAllViews();
+            mDataBinding.webView.destroy();
+        }
         super.onDestroy();
-        mDataBinding.webView.destroy();
     }
 
     private class MyWebViewDownLoadListener implements DownloadListener {

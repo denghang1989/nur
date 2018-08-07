@@ -45,22 +45,17 @@ public class PdfFromHttpActivity extends BaseActivity<ActivityPdfBinding> {
     @Override
     protected void initData() {
         super.initData();
-        App.getAsynHandler().post(new Runnable() {
+        App.getAsynHandler().post(() -> FileDownUtil.downFile(mPath, new FileCallback() {
             @Override
-            public void run() {
-                FileDownUtil.downFile(mPath, new FileCallback() {
-                    @Override
-                    public void success(File file) {
-                        mDataBinding.pdfView.fromFile(file).load();
-                    }
-
-                    @Override
-                    public void error(Exception e) {
-
-                    }
-                });
+            public void success(File file) {
+                mDataBinding.pdfView.fromFile(file).load();
             }
-        });
+
+            @Override
+            public void error(Exception e) {
+
+            }
+        }));
     }
 
     @Override

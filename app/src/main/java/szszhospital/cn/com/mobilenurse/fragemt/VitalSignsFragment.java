@@ -3,6 +3,8 @@ package szszhospital.cn.com.mobilenurse.fragemt;
 import android.graphics.Bitmap;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -163,8 +165,21 @@ public class VitalSignsFragment extends BaseFragment<FragmentVitalSignsBinding> 
 
     @Override
     public void onDestroy() {
+        if( mDataBinding.webView!=null) {
+            ViewParent parent = mDataBinding.webView.getParent();
+            if (parent != null) {
+                ((ViewGroup) parent).removeView(mDataBinding.webView);
+            }
+
+            mDataBinding.webView.stopLoading();
+            mDataBinding.webView.getSettings().setJavaScriptEnabled(false);
+            mDataBinding.webView.clearHistory();
+            mDataBinding.webView.clearView();
+            mDataBinding.webView.removeAllViews();
+            mDataBinding.webView.destroy();
+        }
         super.onDestroy();
-        mDataBinding.webView.destroy();
+
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
