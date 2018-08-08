@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.blankj.utilcode.util.ConvertUtils;
+import com.blankj.utilcode.util.StringUtils;
 import com.github.florent37.viewanimator.ViewAnimator;
 
 import java.util.List;
@@ -40,7 +41,7 @@ public abstract class BaseOrdersFragment extends BaseDoctorFragment<FragmentOrde
         super.init();
         mOrderRequest = new OrderRequest();
         mOrderRequest.OrderType = getOrderType();
-        mAdapter = new OrderListAdapter(R.layout.item_order);
+        mAdapter = new OrderListAdapter(R.layout.item_order, getOrderType());
     }
 
     @Override
@@ -108,7 +109,13 @@ public abstract class BaseOrdersFragment extends BaseDoctorFragment<FragmentOrde
 
     @Override
     public void showPatientOrderList(List<Order> list) {
-        mAdapter.setNewData(list);
+        //长期医嘱
+        if (StringUtils.equals("S", getOrderType())) {
+            mAdapter.setNewData(list);
+        } else {
+        //临时医嘱
+
+        }
     }
 
     @Override

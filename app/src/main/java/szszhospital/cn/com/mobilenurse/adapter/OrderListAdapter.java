@@ -12,9 +12,15 @@ import szszhospital.cn.com.mobilenurse.R;
 import szszhospital.cn.com.mobilenurse.remote.response.Order;
 
 public class OrderListAdapter extends BaseQuickAdapter<Order, BaseViewHolder> {
+    private String mType;
 
     public OrderListAdapter(int layoutResId) {
         super(layoutResId);
+    }
+
+    public OrderListAdapter(int layoutResId, String type) {
+        super(layoutResId);
+        mType = type;
     }
 
     @Override
@@ -28,9 +34,6 @@ public class OrderListAdapter extends BaseQuickAdapter<Order, BaseViewHolder> {
         if (!StringUtils.isTrimEmpty(item.OrdDepProcNotes)) {
             arcimDesc = arcimDesc + " (" + item.OrdDepProcNotes + ")";
         }
-/*        if (!StringUtils.isTrimEmpty(item.DoseQty)) {
-            arcimDesc = arcimDesc + "  " + item.DoseQty + item.DoseUnit;
-        }*/
         if (!StringUtils.isTrimEmpty(item.Instr)) {
             arcimDesc = arcimDesc + "   " + item.Instr;
         }

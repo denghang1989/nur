@@ -125,7 +125,7 @@ public class EMRFragment extends BaseDoctorFragment<FragmentEmrBinding, EMRPrese
         int span = ConvertUtils.dp2px(60);
         ViewAnimator.animate(mDataBinding.show)
                 .translationY(span)
-                .duration(250)
+                .duration(300)
                 .start();
     }
 
@@ -133,7 +133,7 @@ public class EMRFragment extends BaseDoctorFragment<FragmentEmrBinding, EMRPrese
         isTextViewShow = true;
         ViewAnimator.animate(mDataBinding.show)
                 .translationY(0)
-                .duration(250)
+                .duration(300)
                 .start();
     }
 
@@ -141,11 +141,11 @@ public class EMRFragment extends BaseDoctorFragment<FragmentEmrBinding, EMRPrese
         isShow = true;
         ViewAnimator.animate(mDataBinding.listView)
                 .translationX(0)
-                .duration(200)
+                .duration(300)
                 .andAnimate(mDataBinding.emr)
                 .translationX(0)
                 .scale(1)
-                .duration(200)
+                .duration(300)
                 .start();
     }
 
@@ -153,11 +153,11 @@ public class EMRFragment extends BaseDoctorFragment<FragmentEmrBinding, EMRPrese
         isShow = false;
         ViewAnimator.animate(mDataBinding.listView)
                 .translationX(-menuWidth)
-                .duration(200)
+                .duration(300)
                 .andAnimate(mDataBinding.emr)
                 .translationX(-menuWidth / 2)
                 .scale(scale)
-                .duration(200)
+                .duration(300)
                 .start();
     }
 
