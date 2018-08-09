@@ -139,6 +139,7 @@ public class EMRFragment extends BaseDoctorFragment<FragmentEmrBinding, EMRPrese
 
     private void showMenu() {
         isShow = true;
+        mDataBinding.show.setText("显示");
         ViewAnimator.animate(mDataBinding.listView)
                 .translationX(0)
                 .duration(300)
@@ -151,6 +152,7 @@ public class EMRFragment extends BaseDoctorFragment<FragmentEmrBinding, EMRPrese
 
     private void hideMenu(int menuWidth, float scale) {
         isShow = false;
+        mDataBinding.show.setText("隐藏");
         ViewAnimator.animate(mDataBinding.listView)
                 .translationX(-menuWidth)
                 .duration(300)
