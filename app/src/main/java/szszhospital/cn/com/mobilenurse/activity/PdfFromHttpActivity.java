@@ -3,6 +3,8 @@ package szszhospital.cn.com.mobilenurse.activity;
 import android.content.Context;
 import android.content.Intent;
 
+import com.blankj.utilcode.util.ToastUtils;
+
 import java.io.File;
 
 import szszhospital.cn.com.mobilenurse.App;
@@ -53,7 +55,7 @@ public class PdfFromHttpActivity extends BaseActivity<ActivityPdfBinding> {
 
             @Override
             public void error(Exception e) {
-
+                ToastUtils.showShort("pdf文件不存在！");
             }
         }));
     }

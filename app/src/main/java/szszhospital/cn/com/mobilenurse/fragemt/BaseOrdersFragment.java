@@ -114,7 +114,7 @@ public abstract class BaseOrdersFragment extends BaseDoctorFragment<FragmentOrde
             mAdapter.setNewData(list);
         } else {
         //临时医嘱
-
+            mAdapter.setNewData(list);
         }
     }
 

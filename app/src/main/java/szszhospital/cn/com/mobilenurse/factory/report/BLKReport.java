@@ -7,7 +7,7 @@ import szszhospital.cn.com.mobilenurse.utils.GenericCode;
 
 
 /**
- * BLK-病理科
+ * BLK-病理科   http://172.18.0.136/PIMSWebView.asp?EXAMID=00117725
  */
 public class BLKReport implements WebViewReportHandler {
 

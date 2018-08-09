@@ -84,6 +84,10 @@ public class PacsListFragment extends BaseDoctorFragment<FragmentOrderBinding, P
                         PacsResultActivity.startPacsResultActivity(_mActivity, pacsOrder);
                         return;
                     }
+                    //病理报告
+                    if (StringUtils.equals(pacsOrder.TreplocDr, "13")) {
+                        PacsWebViewDetailActivity.startPacsDetailActivity(_mActivity, pacsOrder);
+                    }
                     break;
                 case R.id.photo:
                     PacsImageActivity.startImageActivity(_mActivity, pacsOrder);

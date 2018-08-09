@@ -1,11 +1,6 @@
 package szszhospital.cn.com.mobilenurse.mvp.presenter;
 
-import com.blankj.utilcode.util.TimeUtils;
-
-import java.text.SimpleDateFormat;
-import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
@@ -32,12 +27,6 @@ public class PacsListPresenter extends RxPresenter<PacsListContract.View, PacsLi
 
                     @Override
                     public void onNext(List<PacsOrder> pacsOrders) {
-                        Collections.sort(pacsOrders, (o1, o2) -> {
-                            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.CHINA);
-                            long o1Time = TimeUtils.string2Millis(o1.TItemDate, format);
-                            long o2Time = TimeUtils.string2Millis(o2.TItemDate, format);
-                            return (int) (o2Time - o1Time);
-                        });
                         mView.showPacsOrderList(pacsOrders);
                         mView.refresh();
                     }

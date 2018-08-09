@@ -31,6 +31,10 @@ public class PacsResultAdapter extends BaseQuickAdapter<PacsOrder, BaseViewHolde
         } else {
             helper.setVisible(R.id.icon, false);
         }
+        // 病理
+        if (StringUtils.equals(item.TreplocDr, "13")) {
+            helper.setVisible(R.id.icon, true);
+        }
     }
 
     public String getPath(PacsOrder item) {
