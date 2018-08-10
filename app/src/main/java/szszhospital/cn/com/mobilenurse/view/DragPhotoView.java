@@ -7,7 +7,9 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
+import android.view.ViewConfiguration;
 
 import com.github.chrisbanes.photoview.PhotoView;
 
@@ -17,6 +19,7 @@ import com.github.chrisbanes.photoview.PhotoView;
  */
 
 public class DragPhotoView extends PhotoView {
+    private static final String TAG = "DragPhotoView";
     private Paint mPaint;
 
     // downX
@@ -29,18 +32,19 @@ public class DragPhotoView extends PhotoView {
     private float mScale = 1;
     private int mWidth;
     private int mHeight;
-    private float mMinScale = 0.5f;
-    private int mAlpha = 255;
-    private final static int MAX_TRANSLATE_Y = 200;
+    private              float mMinScale       = 0.5f;
+    private              int   mAlpha          = 255;
+    private final static int   MAX_TRANSLATE_Y = 300;
 
-    private final static long DURATION = 300;
-    private boolean canFinish = false;
-    private boolean isAnimate = false;
+    private final static long    DURATION  = 300;
+    private              boolean canFinish = false;
+    private              boolean isAnimate = false;
 
     //is event on PhotoView
     private boolean isTouchEvent = false;
-    private OnTapListener mTapListener;
+    private OnTapListener  mTapListener;
     private OnExitListener mExitListener;
+    private int            mTouchSlop;
 
     public DragPhotoView(Context context) {
         this(context, null);
@@ -54,6 +58,7 @@ public class DragPhotoView extends PhotoView {
         super(context, attr, defStyle);
         mPaint = new Paint();
         mPaint.setColor(Color.BLACK);
+        mTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
     }
 
     @Override
@@ -87,27 +92,31 @@ public class DragPhotoView extends PhotoView {
 
                     break;
                 case MotionEvent.ACTION_MOVE:
-
-                    //in viewpager
-                    if (mTranslateY == 0 && mTranslateX != 0) {
+                    float moveY = event.getY();
+                    float moveX = event.getX();
+                    mTranslateX = moveX - mDownX;
+                    mTranslateY = moveY - mDownY;
+                    float isX = Math.abs(mTranslateX) - Math.abs(mTranslateY);
+                    //in viewpager   x轴滑动
+                    if (isX > 0) {
                         //如果不消费事件，则不作操作
+                        mTranslateX = 0;
+                        mTranslateY = 0;
                         if (!isTouchEvent) {
                             mScale = 1;
                             return super.dispatchTouchEvent(event);
                         }
-                    }
-
-                    //single finger drag  down
-                    if (mTranslateY >= 0 && event.getPointerCount() == 1) {
-                        onActionMove(event);
-
-                        //如果有上下位移 则不交给viewpager
-                        if (mTranslateY != 0) {
-                            isTouchEvent = true;
+                    } else {
+                        //single finger drag  down
+                        if (Math.abs(mTranslateY) >= mTouchSlop && event.getPointerCount() == 1) {
+                            onActionMove(event);
+                            //如果有上下位移 则不交给viewpager
+                            if (mTranslateY != 0) {
+                                isTouchEvent = true;
+                            }
+                            return true;
                         }
-                        return true;
                     }
-
 
                     //防止下拉的时候双手缩放
                     if (mTranslateY >= 0 && mScale < 0.95) {
@@ -136,12 +145,10 @@ public class DragPhotoView extends PhotoView {
                     }
             }
         }
-
         return super.dispatchTouchEvent(event);
     }
 
     private void onActionUp(MotionEvent event) {
-
         if (mTranslateY > MAX_TRANSLATE_Y) {
             if (mExitListener != null) {
                 mExitListener.onExit(this, mTranslateX, mTranslateY, mWidth, mHeight);

@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.blankj.utilcode.util.BarUtils;
 import com.bumptech.glide.Glide;
 import com.rd.PageIndicatorView;
 import com.rd.animation.type.AnimationType;
@@ -35,6 +36,7 @@ public class DragPhotoActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        BarUtils.setStatusBarAlpha(this,0);
         setContentView(R.layout.activity_drag_photo);
         init();
         initView();
@@ -77,7 +79,10 @@ public class DragPhotoActivity extends AppCompatActivity {
             public Object instantiateItem(ViewGroup container, int position) {
                 DragPhotoView dragPhotoView = (DragPhotoView) LayoutInflater.from(DragPhotoActivity.this).inflate(R.layout.item_drag_photo, null);
                 Glide.with(DragPhotoActivity.this).load(PHOTO_PATH + mPhotoPaths.get(position)).into(dragPhotoView);
-                dragPhotoView.setOnExitListener((view, translateX, translateY, w, h) -> onBackPressed());
+                dragPhotoView.setOnExitListener((view, translateX, translateY, w, h) -> {
+                    finish();
+                    overridePendingTransition(R.anim.anim_in,R.anim.anim_out);
+                });
                 container.addView(dragPhotoView);
                 return dragPhotoView;
             }
@@ -94,6 +99,7 @@ public class DragPhotoActivity extends AppCompatActivity {
 
 
         });
+        mViewPager.setCurrentItem(mIndex);
     }
 
     private void initData() {

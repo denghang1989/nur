@@ -1,6 +1,5 @@
 package szszhospital.cn.com.mobilenurse.fragemt;
 
-import android.app.ActivityOptions;
 import android.content.Intent;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -94,7 +93,7 @@ public class EMRFragment extends BaseDoctorFragment<FragmentEmrBinding, EMRPrese
         });
 
         mEMRImageAdapter.setOnItemChildClickListener((adapter, view, position) -> {
-            startDragPhotoActivity(view, position);
+            startDragPhotoActivity(position);
         });
 
         mDataBinding.show.setOnClickListener(v -> {
@@ -165,11 +164,12 @@ public class EMRFragment extends BaseDoctorFragment<FragmentEmrBinding, EMRPrese
                 .start();
     }
 
-    private void startDragPhotoActivity(View view, int position) {
+    private void startDragPhotoActivity(int position) {
         Intent intent = new Intent(_mActivity, DragPhotoActivity.class);
         intent.putStringArrayListExtra(KEY_DATA, (ArrayList<String>) mEMRImageAdapter.getData());
         intent.putExtra(KEY_INDEX, position);
-        startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(_mActivity, view, "emr").toBundle());
+        startActivity(intent);
+        _mActivity.overridePendingTransition(R.anim.anim_in,R.anim.anim_out);
     }
 
     @Override
