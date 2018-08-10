@@ -1,30 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/black">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/back"
+
+    <szszhospital.cn.com.mobilenurse.view.FixMultiViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </szszhospital.cn.com.mobilenurse.view.FixMultiViewPager>
+
+    <com.rd.PageIndicatorView
+        android:id="@+id/pageIndicatorView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:src="@drawable/ic_black_32dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_marginBottom="10dp"
+        app:piv_animationType="scale"
+        app:piv_dynamicCount="true"
+        app:piv_interactiveAnimation="true"
+        app:piv_padding="6dp"
+        app:piv_radius="4dp"
+        app:piv_selectedColor="@color/gray_50"
+        app:piv_unselectedColor="@color/gray_300"
+        app:piv_viewPager="@id/viewPager"/>
 
-    <szszhospital.cn.com.mobilenurse.view.DragPhotoView
-        android:id="@+id/dragPhotoView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:transitionName="emr"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/back"/>
-
-
-</android.support.constraint.ConstraintLayout>
+</FrameLayout>

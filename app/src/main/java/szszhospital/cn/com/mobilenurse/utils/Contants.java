@@ -10,6 +10,8 @@ import szszhospital.cn.com.mobilenurse.entity.ModuleTable;
 
 public class Contants {
 
+    public static final String PHOTO_PATH = "http://172.18.0.27/dhcemr";
+
     public static List<ModuleTable> getModuleList(String locId, Context context) {
         List<ModuleTable> list = new ArrayList<>();
         switch (locId) {

@@ -10,6 +10,7 @@ import android.view.View;
 import com.blankj.utilcode.util.ConvertUtils;
 import com.github.florent37.viewanimator.ViewAnimator;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import szszhospital.cn.com.mobilenurse.App;
@@ -28,8 +29,9 @@ import szszhospital.cn.com.mobilenurse.remote.response.EMRImageInfo;
  */
 public class EMRFragment extends BaseDoctorFragment<FragmentEmrBinding, EMRPresenter> implements EMRContract.View {
 
-    private static final String TAG      = "EMRFragment";
-    private static final String KEY_DATA = "data";
+    private static final String TAG       = "EMRFragment";
+    private static final String KEY_DATA  = "data";
+    private static final String KEY_INDEX = "index";
     private EMRAdapter          mAdapter;
     private EMRImageAdapter     mEMRImageAdapter;
     private LinearLayoutManager mEMRLayoutManager;
@@ -165,7 +167,8 @@ public class EMRFragment extends BaseDoctorFragment<FragmentEmrBinding, EMRPrese
 
     private void startDragPhotoActivity(View view, int position) {
         Intent intent = new Intent(_mActivity, DragPhotoActivity.class);
-        intent.putExtra(KEY_DATA, mEMRImageAdapter.getItem(position));
+        intent.putStringArrayListExtra(KEY_DATA, (ArrayList<String>) mEMRImageAdapter.getData());
+        intent.putExtra(KEY_INDEX, position);
         startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(_mActivity, view, "emr").toBundle());
     }
 

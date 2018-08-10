@@ -1,4 +1,4 @@
-package szszhospital.cn.com.mobilenurse.fragemt;
+package szszhospital.cn.com.mobilenurse.clear;
 
 import android.app.ActivityOptions;
 import android.content.Intent;

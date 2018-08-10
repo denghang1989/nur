@@ -90,7 +90,6 @@ public class DragPhotoView extends PhotoView {
 
                     //in viewpager
                     if (mTranslateY == 0 && mTranslateX != 0) {
-
                         //如果不消费事件，则不作操作
                         if (!isTouchEvent) {
                             mScale = 1;
