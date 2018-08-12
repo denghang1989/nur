@@ -15,7 +15,6 @@ public class GenericCode {
         // num 代表长度为4
         // d 代表参数为正数型
         result = String.format("%0" + num + "d", Integer.parseInt(code));
-
         return result;
     }
 }

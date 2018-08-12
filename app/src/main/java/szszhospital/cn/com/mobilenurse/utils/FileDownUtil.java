@@ -2,6 +2,8 @@ package szszhospital.cn.com.mobilenurse.utils;
 
 import android.os.Environment;
 
+import com.blankj.utilcode.util.CloseUtils;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -11,6 +13,11 @@ import java.net.URL;
 
 public class FileDownUtil {
 
+    /**
+     * @param url
+     * @param callback
+     * @desc : 下载ftp文件
+     */
     public static void downFile(String url, FileCallback callback) {
         try {
             String[] split = url.split("/");
@@ -34,8 +41,8 @@ public class FileDownUtil {
                 while ((length = bis.read(buff)) > 0) {
                     bos.write(buff, 0, length);
                 }
-                bos.close();
-                bis.close();
+                // 关闭流
+                CloseUtils.closeIOQuietly(bos,bis);
                 // 6. 回调
                 callback.success(file);
             }
