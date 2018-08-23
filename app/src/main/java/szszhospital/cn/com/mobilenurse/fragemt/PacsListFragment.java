@@ -74,19 +74,15 @@ public class PacsListFragment extends BaseDoctorFragment<FragmentOrderBinding, P
                         PdfFromHttpActivity.startPdfActivity(_mActivity, pacsOrder.TPdfPath);
                         return;
                     }
-                    //http
-                    if (AppUtil.IsUrl(mAdapter.getPath(pacsOrder))) {
+                    //http //病理报告
+                    if (AppUtil.IsUrl(mAdapter.getPath(pacsOrder)) || StringUtils.equals(pacsOrder.TreplocDr, "13") ) {
                         PacsWebViewDetailActivity.startPacsDetailActivity(_mActivity, pacsOrder);
                         return;
                     }
-                    //超声影像科报告
+                    //超声影像科报告,走接口调用数据
                     if (StringUtils.equals(pacsOrder.TreplocDr, "14")||StringUtils.equals(pacsOrder.TreplocDr, "11")||StringUtils.equals(pacsOrder.TreplocDr, "9")) {
                         PacsResultActivity.startPacsResultActivity(_mActivity, pacsOrder);
                         return;
-                    }
-                    //病理报告
-                    if (StringUtils.equals(pacsOrder.TreplocDr, "13")) {
-                        PacsWebViewDetailActivity.startPacsDetailActivity(_mActivity, pacsOrder);
                     }
                     break;
                 case R.id.photo:

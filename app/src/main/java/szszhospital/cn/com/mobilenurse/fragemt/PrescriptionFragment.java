@@ -70,7 +70,6 @@ public class PrescriptionFragment extends BasePresenterFragment<FragmentDispensi
     @Override
     protected void init() {
         super.init();
-        setSwipeBackEnable(false);
         mPatientNo = getArguments().getString(KEY_PATIENT_NO);
         mDispNo = getArguments().getString(KEY_DISPNO);
         mRequest = new AuditDetailRequest();

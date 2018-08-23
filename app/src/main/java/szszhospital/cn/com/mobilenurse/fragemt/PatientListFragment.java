@@ -60,7 +60,6 @@ public class PatientListFragment extends BasePresenterFragment<FragmentPatientLi
         super.init();
         mAdapter = new IPatientListAdapter(R.layout.item_patient_list);
         mRequest = new PatientListRequest();
-        setSwipeBackEnable(false);
         mPatientViewHolder = new PatientViewHolder(_mActivity, R.layout.item_patient_head);
     }
 

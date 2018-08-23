@@ -84,7 +84,7 @@
             />
         <activity
             android:name=".activity.PacsImageActivity"
-            android:screenOrientation="portrait"
+            android:screenOrientation="landscape"
             android:theme="@style/AppTheme.Transparent"
             />
         <activity
@@ -112,6 +112,7 @@
         <activity android:name=".activity.PatientListActivity"
                   android:screenOrientation="portrait"
                   android:theme="@style/AppTheme.Transparent"/>
+        <activity android:name=".activity.PacsImagesActivity"/>
 
         <receiver
             android:name=".broadcast.QRCodeBroadcastReceiver"

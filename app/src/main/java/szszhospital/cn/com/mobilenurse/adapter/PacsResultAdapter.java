@@ -35,6 +35,11 @@ public class PacsResultAdapter extends BaseQuickAdapter<PacsOrder, BaseViewHolde
         if (StringUtils.equals(item.TreplocDr, "13")) {
             helper.setVisible(R.id.icon, true);
         }
+
+        //心电图屏蔽图像标签
+        if (StringUtils.equals(item.TreplocDr, "15") || StringUtils.equals(item.TreplocDr, "16")) {
+            helper.setVisible(R.id.photo, false);
+        }
     }
 
     public String getPath(PacsOrder item) {

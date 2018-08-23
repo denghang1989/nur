@@ -24,6 +24,7 @@ import szszhospital.cn.com.mobilenurse.remote.response.LocAccessResponse;
 import szszhospital.cn.com.mobilenurse.remote.response.LoginResponse;
 import szszhospital.cn.com.mobilenurse.remote.response.Order;
 import szszhospital.cn.com.mobilenurse.remote.response.OrderExecuteInfo;
+import szszhospital.cn.com.mobilenurse.remote.response.PacsImagePath;
 import szszhospital.cn.com.mobilenurse.remote.response.PacsOrder;
 import szszhospital.cn.com.mobilenurse.remote.response.PacsOrderSubscribe;
 import szszhospital.cn.com.mobilenurse.remote.response.PacsResult;
@@ -154,4 +155,8 @@ public interface Api {
     //获取就诊列表
     @GET("web/EMRservice.Ajax.hisData.cls")
     Observable<Response<EposideInfo>> getEposideInfoList(@Query("EpisodeID") String EpisodeID, @Query("PatientID") String PatientID);
-}
+
+    //获取图片列表
+    @GET("web/Quality.Ajax.PacsImagePathAjax.cls")
+    Observable<Response<PacsImagePath>> getPacsImageFtpPath(@Query("studyId") String studyId, @Query("type") String type);
+ }

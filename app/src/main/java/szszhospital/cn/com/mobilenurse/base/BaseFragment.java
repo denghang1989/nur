@@ -11,9 +11,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import me.yokeyword.fragmentation_swipeback.SwipeBackFragment;
+import me.yokeyword.fragmentation.SupportFragment;
 
-public abstract class BaseFragment<T extends ViewDataBinding> extends SwipeBackFragment {
+public abstract class BaseFragment<T extends ViewDataBinding> extends SupportFragment {
 
     protected T        mDataBinding;
     protected Activity _mActivity;
