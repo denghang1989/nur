@@ -73,5 +73,5 @@ dependencies {
     implementation "com.github.Raizlabs.DBFlow:dbflow-core:${dbflow_version}"
     implementation "com.github.Raizlabs.DBFlow:dbflow:${dbflow_version}"
     implementation 'com.romandanylyk:pageindicatorview:1.0.1'
-    implementation 'com.adeel:easyFTP:1.0'
+    implementation files('libs/commons-net-3.3.jar')
 }

@@ -12,8 +12,8 @@ import szszhospital.cn.com.mobilenurse.entity.ModuleTable;
 
 public class Contants {
 
-    public static final String PHOTO_PATH = "http://172.18.0.27/dhcemr";
-    public static final String PACS_DCM_DOWNLOAD_PATH = Environment.getExternalStorageDirectory().getAbsolutePath()+ File.separator+"pacs";
+    public static final String PHOTO_PATH             = "http://172.18.0.27/dhcemr";
+    public static final String PACS_DCM_DOWNLOAD_PATH = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "pacs";
 
     public static List<ModuleTable> getModuleList(String locId, Context context) {
         List<ModuleTable> list = new ArrayList<>();

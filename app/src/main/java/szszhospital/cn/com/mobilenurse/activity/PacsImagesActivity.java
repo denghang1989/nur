@@ -3,9 +3,6 @@ package szszhospital.cn.com.mobilenurse.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Parcelable;
-import android.util.Log;
-
-import com.adeel.library.easyFTP;
 
 import org.apache.commons.net.ftp.FTPFile;
 
@@ -17,9 +14,10 @@ import szszhospital.cn.com.mobilenurse.base.BasePresentActivity;
 import szszhospital.cn.com.mobilenurse.databinding.ActivityPacsImagesBinding;
 import szszhospital.cn.com.mobilenurse.mvp.contract.PacsImagesContract;
 import szszhospital.cn.com.mobilenurse.mvp.presenter.PacsImagesPresenter;
+import szszhospital.cn.com.mobilenurse.remote.response.DcmName;
 import szszhospital.cn.com.mobilenurse.remote.response.PacsImagePath;
 import szszhospital.cn.com.mobilenurse.remote.response.PacsOrder;
-import szszhospital.cn.com.mobilenurse.utils.Contants;
+import szszhospital.cn.com.mobilenurse.utils.FtpUtil;
 
 public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBinding, PacsImagesPresenter> implements PacsImagesContract.View {
 
@@ -29,7 +27,7 @@ public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBi
     private static final String USER_NAME = "annetftp";
     private static final String PASSWORD  = "annet";
     private PacsOrder mPacsorder;
-    private easyFTP   mFtp;
+    private FtpUtil   mFtp;
 
     public static void startPacsImagesActivity(Context context, PacsOrder pacsorder) {
         Intent intent = new Intent(context, PacsImagesActivity.class);
@@ -46,7 +44,7 @@ public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBi
     protected void init() {
         super.init();
         mPacsorder = getIntent().getParcelableExtra(KEY_DATA);
-        mFtp = new easyFTP();
+        mFtp = new FtpUtil();
         FtpConnect();
     }
 
@@ -102,11 +100,14 @@ public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBi
                     String ftpPath = obj.IMAGEPATH;
                     FTPFile[] ftpFiles = mFtp.getFtpClient().listFiles(ftpPath);
                     for (int j = 0; j < ftpFiles.length; j++) {
-                        if ((i == 0) && (j == 0)) {
-                            Log.d(TAG, "getRealImagePath: "+ftpPath + ftpFiles[j].getName());
-                            mFtp.downloadFile(ftpPath + ftpFiles[j].getName(), Contants.PACS_DCM_DOWNLOAD_PATH);
-                        }
+                        String fileName = ftpFiles[j].getName();
+                        DcmName dcmName = new DcmName();
+                        dcmName.KEY = ftpPath + fileName;
+                        dcmName.IMAGENAME = fileName;
+                        dcmName.IMAGEPATH = ftpPath;
+                        dcmName.save();
                     }
+                    obj.save();
                 }
             } catch (Exception e) {
                 e.printStackTrace();
