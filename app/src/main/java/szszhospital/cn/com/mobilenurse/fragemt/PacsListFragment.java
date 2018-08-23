@@ -11,7 +11,7 @@ import java.util.List;
 
 import szszhospital.cn.com.mobilenurse.App;
 import szszhospital.cn.com.mobilenurse.R;
-import szszhospital.cn.com.mobilenurse.activity.PacsImageActivity;
+import szszhospital.cn.com.mobilenurse.activity.PacsImagesActivity;
 import szszhospital.cn.com.mobilenurse.activity.PacsResultActivity;
 import szszhospital.cn.com.mobilenurse.activity.PacsWebViewDetailActivity;
 import szszhospital.cn.com.mobilenurse.activity.PdfFromHttpActivity;
@@ -86,7 +86,8 @@ public class PacsListFragment extends BaseDoctorFragment<FragmentOrderBinding, P
                     }
                     break;
                 case R.id.photo:
-                    PacsImageActivity.startImageActivity(_mActivity, pacsOrder);
+                    //PacsImageActivity.startImageActivity(_mActivity, pacsOrder);
+                    PacsImagesActivity.startPacsImagesActivity(_mActivity,pacsOrder);
                     break;
             }
         });

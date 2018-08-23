@@ -1,5 +1,7 @@
 package szszhospital.cn.com.mobilenurse.mvp.contract;
 
+import java.util.List;
+
 import szszhospital.cn.com.mobilenurse.base.BaseModel;
 import szszhospital.cn.com.mobilenurse.base.BasePresenter;
 import szszhospital.cn.com.mobilenurse.base.BaseView;
@@ -13,7 +15,7 @@ public interface PacsImagesContract {
 
         void showImages();
 
-        void getRealImagePath(PacsImagePath pacsImagePath);
+        void getRealImagePath(List<PacsImagePath> pacsImagePaths);
     }
 
     interface Model extends BaseModel {

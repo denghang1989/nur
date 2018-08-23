@@ -35,7 +35,6 @@ public class EMRFragment extends BaseDoctorFragment<FragmentEmrBinding, EMRPrese
     private EMRImageAdapter     mEMRImageAdapter;
     private LinearLayoutManager mEMRLayoutManager;
     private boolean isShow         = true;
-    private boolean isTextViewShow = true;
 
     public static EMRFragment newInstance() {
         return new EMRFragment();
@@ -122,7 +121,6 @@ public class EMRFragment extends BaseDoctorFragment<FragmentEmrBinding, EMRPrese
     }
 
     private void hideTextView() {
-        isTextViewShow = false;
         int span = ConvertUtils.dp2px(60);
         ViewAnimator.animate(mDataBinding.show)
                 .translationY(span)
@@ -131,7 +129,6 @@ public class EMRFragment extends BaseDoctorFragment<FragmentEmrBinding, EMRPrese
     }
 
     private void showTextView() {
-        isTextViewShow = true;
         ViewAnimator.animate(mDataBinding.show)
                 .translationY(0)
                 .duration(300)

@@ -158,5 +158,5 @@ public interface Api {
 
     //获取图片列表
     @GET("web/Quality.Ajax.PacsImagePathAjax.cls")
-    Observable<Response<PacsImagePath>> getPacsImageFtpPath(@Query("studyId") String studyId, @Query("type") String type);
+    Observable<Response<List<PacsImagePath>>> getPacsImageFtpPath(@Query("studyId") String studyId, @Query("type") String type);
  }

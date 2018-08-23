@@ -1,6 +1,10 @@
 package szszhospital.cn.com.mobilenurse.remote.response;
 
-public class PacsImagePath {
+import com.raizlabs.android.dbflow.annotation.Column;
+import com.raizlabs.android.dbflow.annotation.PrimaryKey;
+import com.raizlabs.android.dbflow.structure.BaseModel;
+
+public class PacsImagePath extends BaseModel {
 
     /**
      * FEXAMKIND : 01
@@ -10,9 +14,26 @@ public class PacsImagePath {
      * STUDYID : A1033325
      */
 
+    @Column
     public String FEXAMKIND;
+    @Column
     public String SERIESUID;
+    @PrimaryKey
+    @Column
     public String IMAGEPATH;
+    @Column
     public String MODALITY;
+    @Column
     public String STUDYID;
+
+    @Override
+    public String toString() {
+        return "PacsImagePath{" +
+                "FEXAMKIND='" + FEXAMKIND + '\'' +
+                ", SERIESUID='" + SERIESUID + '\'' +
+                ", IMAGEPATH='" + IMAGEPATH + '\'' +
+                ", MODALITY='" + MODALITY + '\'' +
+                ", STUDYID='" + STUDYID + '\'' +
+                '}';
+    }
 }
