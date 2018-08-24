@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Parcelable;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.View;
@@ -36,11 +37,11 @@ public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBi
 
     private static final String TAG       = "PacsImagesActivity";
     private static final String KEY_DATA  = "data";
-    public static final String FTP_PATH  = "172.18.0.143";
-    public static final String USER_NAME = "annetftp";
-    public static final String PASSWORD  = "annet";
-    private PacsOrder mPacsorder;
-    private FtpUtil   mFtp;
+    public static final  String FTP_PATH  = "172.18.0.143";
+    public static final  String USER_NAME = "annetftp";
+    public static final  String PASSWORD  = "annet";
+    private PacsOrder      mPacsorder;
+    private FtpUtil        mFtp;
     private PacsFtpAdapter mAdapter;
     private VelocityTracker vTracker = null;
 
@@ -60,7 +61,7 @@ public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBi
         super.init();
         mPacsorder = getIntent().getParcelableExtra(KEY_DATA);
         mFtp = new FtpUtil();
-        mAdapter = new PacsFtpAdapter(R.layout.item_pacs_ftp,mFtp,this);
+        mAdapter = new PacsFtpAdapter(R.layout.item_pacs_ftp, mFtp, this);
         FtpConnect();
     }
 
@@ -75,7 +76,7 @@ public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBi
     @Override
     protected void initView() {
         super.initView();
-        mDataBinding.recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
+        mDataBinding.recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         mDataBinding.recyclerView.setAdapter(mAdapter);
     }
 
@@ -99,13 +100,40 @@ public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBi
                     DcmName dcmName = dcmNames.get(i);
                     String imagePath = dcmName.IMAGEPATH;
                     String imagename = dcmName.IMAGENAME;
-                    File file = new File(Contants.PACS_DCM_DOWNLOAD_PATH,imagename);
+                    File file = new File(Contants.PACS_DCM_DOWNLOAD_PATH, imagename);
                     if (file.exists()) {
                         Glide.with(App.mContext).load(DcmUtil.readFile(file.getAbsolutePath())).into(mDataBinding.container);
                     } else {
-                        App.getAsynHandler().post(() -> mFtp.downloadFile(imagePath+ imagename, file.getAbsolutePath(),null));
+                        App.getAsynHandler().post(() -> mFtp.downloadFile(imagePath + imagename, file.getAbsolutePath(), null));
                     }
                 }
+            }
+        });
+
+        mDataBinding.touch.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                int action = event.getAction();
+                switch (action) {
+                    case MotionEvent.ACTION_DOWN:
+                        if (vTracker == null) {
+                            vTracker = VelocityTracker.obtain();
+                        } else {
+                            vTracker.clear();
+                        }
+                        vTracker.addMovement(event);
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        vTracker.addMovement(event);
+                        vTracker.computeCurrentVelocity(1000);
+                        Log.d(TAG, "onTouch: " + vTracker.getXVelocity());
+                        Log.d(TAG, "onTouch: " + vTracker.getYVelocity());
+                        break;
+                    case MotionEvent.ACTION_UP:
+                    case MotionEvent.ACTION_CANCEL:
+                        break;
+                }
+                return true;
             }
         });
     }
@@ -165,30 +193,10 @@ public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBi
     protected void onDestroy() {
         super.onDestroy();
         mFtp.disconnect();
+        if (vTracker != null) {
+            vTracker.recycle();
+            vTracker = null;
+        }
     }
 
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent event) {
-        int action = event.getAction();
-        switch(action){
-            case MotionEvent.ACTION_DOWN:
-                if(vTracker == null){
-                    vTracker = VelocityTracker.obtain();
-                }else{
-                    vTracker.clear();
-                }
-                vTracker.addMovement(event);
-                break;
-            case MotionEvent.ACTION_MOVE:
-                vTracker.addMovement(event);
-                vTracker.computeCurrentVelocity(1000);
-                break;
-            case MotionEvent.ACTION_UP:
-            case MotionEvent.ACTION_CANCEL:
-                vTracker.recycle();
-                break;
-        }
-        event.recycle();
-        return super.dispatchTouchEvent(event);
-    }
 }
