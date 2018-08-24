@@ -128,7 +128,7 @@ public class FtpUtil {
         }
     }
 
-    public void downloadFile(String remoteFilePath, String dest, FileCallback callback) throws Exception {
+    public void downloadFile(String remoteFilePath, String dest, FileCallback callback){
         File downloadFile = new File(dest);
         File parentDir = downloadFile.getParentFile();
         if (!parentDir.exists())
@@ -152,7 +152,10 @@ public class FtpUtil {
                 try {
                     outputStream.close();
                 } catch (IOException e) {
-                    throw e;
+                   e.printStackTrace();
+                    if (callback != null) {
+                        callback.error(e);
+                    }
                 }
             }
         }

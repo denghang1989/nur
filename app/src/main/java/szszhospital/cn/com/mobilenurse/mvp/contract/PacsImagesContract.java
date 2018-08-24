@@ -13,8 +13,6 @@ public interface PacsImagesContract {
 
         void hideProgress();
 
-        void showImages();
-
         void getRealImagePath(List<PacsImagePath> pacsImagePaths);
     }
 

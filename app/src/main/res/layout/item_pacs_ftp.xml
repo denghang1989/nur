@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="120dp"
+    android:layout_height="match_parent"
+    android:padding="5dp">
+
+    <ImageView
+        android:id="@+id/pacs_image"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/black"
+        android:padding="2dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <ImageView
+        android:id="@+id/tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="2dp"
+        android:src="@drawable/icon_select"
+        android:visibility="gone"
+        app:layout_constraintRight_toRightOf="@+id/pacs_image"
+        app:layout_constraintTop_toTopOf="@+id/pacs_image"/>
+
+</android.support.constraint.ConstraintLayout>

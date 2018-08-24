@@ -2,18 +2,18 @@ package szszhospital.cn.com.mobilenurse.remote.response;
 
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
+import com.raizlabs.android.dbflow.annotation.Table;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 
-public class DcmName extends BaseModel {
+import szszhospital.cn.com.mobilenurse.entity.AppDatabase;
 
-    @PrimaryKey
-    @Column
-    public String KEY;
+@Table(database = AppDatabase.class)
+public class DcmName extends BaseModel {
 
     @Column
     public String IMAGEPATH;
 
-    @Column
+    @PrimaryKey
     public String IMAGENAME;
 
     @Override

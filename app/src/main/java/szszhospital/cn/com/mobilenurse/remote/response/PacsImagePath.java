@@ -2,10 +2,12 @@ package szszhospital.cn.com.mobilenurse.remote.response;
 
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
+import com.raizlabs.android.dbflow.annotation.Table;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 
-import java.util.List;
+import szszhospital.cn.com.mobilenurse.entity.AppDatabase;
 
+@Table(database = AppDatabase.class)
 public class PacsImagePath extends BaseModel {
 
     /**
@@ -27,11 +29,10 @@ public class PacsImagePath extends BaseModel {
     public String MODALITY;
     @Column
     public String STUDYID;
-
-    public List<DcmName> mDcmNames;
-
     @Column
     public String thumbnailPath;
+    @Column
+    public String name;
 
     @Override
     public String toString() {
