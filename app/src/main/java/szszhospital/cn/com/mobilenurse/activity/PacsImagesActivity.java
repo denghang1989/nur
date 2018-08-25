@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Parcelable;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
@@ -130,10 +131,14 @@ public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBi
                     case MotionEvent.ACTION_DOWN:
                         mDownX = event.getX();
                         mDownY = event.getY();
+                        Log.d(TAG, "onTouchXXXX: "+mDownX);
+                        Log.d(TAG, "onTouchYYYY: "+mDownY);
                         break;
                     case MotionEvent.ACTION_MOVE:
                         float moveX = event.getX();
                         float moveY = event.getY();
+                        Log.d(TAG, "onTouchXXXXACTION_MOVE: "+moveX);
+                        Log.d(TAG, "onTouchYYYYACTION_MOVE: "+moveY);
                         // x 轴移动
                         if (Math.abs(moveX - mDownX) > Math.abs(moveY - mDownY)) {
                             if (mCurrentDcmNames != null && mCurrentDcmNames.size() > 1) {
