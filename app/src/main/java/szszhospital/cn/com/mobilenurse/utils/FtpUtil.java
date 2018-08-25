@@ -140,7 +140,7 @@ public class FtpUtil {
             boolean status = mFtpClient.retrieveFile(remoteFilePath, outputStream);
             Log.e("Status", String.valueOf(status));
             if (callback != null) {
-                callback.success(new File(dest));
+                callback.success(downloadFile);
             }
         } catch (Exception e) {
             e.printStackTrace();

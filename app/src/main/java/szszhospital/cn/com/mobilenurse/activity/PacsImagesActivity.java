@@ -4,11 +4,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Parcelable;
 import android.support.v7.widget.LinearLayoutManager;
-import android.util.Log;
 import android.view.MotionEvent;
-import android.view.VelocityTracker;
 import android.view.View;
+import android.view.ViewConfiguration;
 
+import com.blankj.utilcode.util.NetworkUtils;
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.raizlabs.android.dbflow.sql.language.Select;
@@ -43,7 +43,9 @@ public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBi
     private PacsOrder      mPacsorder;
     private FtpUtil        mFtp;
     private PacsFtpAdapter mAdapter;
-    private VelocityTracker vTracker = null;
+    private List<DcmName>  mCurrentDcmNames;
+    private int            mSelectImage;
+    private int            mSlop;
 
     public static void startPacsImagesActivity(Context context, PacsOrder pacsorder) {
         Intent intent = new Intent(context, PacsImagesActivity.class);
@@ -61,13 +63,16 @@ public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBi
         super.init();
         mPacsorder = getIntent().getParcelableExtra(KEY_DATA);
         mFtp = new FtpUtil();
-        mAdapter = new PacsFtpAdapter(R.layout.item_pacs_ftp, mFtp, this);
         FtpConnect();
+        mAdapter = new PacsFtpAdapter(R.layout.item_pacs_ftp, mFtp, this);
+        mSlop = ViewConfiguration.get(this).getScaledTouchSlop();
     }
 
     private void FtpConnect() {
         try {
-            mFtp.connect(FTP_PATH, USER_NAME, PASSWORD);
+            if (NetworkUtils.isConnected()) {
+                mFtp.connect(FTP_PATH, USER_NAME, PASSWORD);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -92,17 +97,19 @@ public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBi
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                mAdapter.setSelected(position);
-                mAdapter.notifyDataSetChanged();
+                changeMark(position);
+                mSelectImage = 0;
                 PacsImagePath item = mAdapter.getItem(position);
-                List<DcmName> dcmNames = new Select().from(DcmName.class).where(DcmName_Table.IMAGEPATH.eq(item.IMAGEPATH)).queryList();
-                for (int i = 0; i < dcmNames.size(); i++) {
-                    DcmName dcmName = dcmNames.get(i);
+                mCurrentDcmNames = new Select().from(DcmName.class).where(DcmName_Table.IMAGEPATH.eq(item.IMAGEPATH)).queryList();
+                for (int i = 0; i < mCurrentDcmNames.size(); i++) {
+                    DcmName dcmName = mCurrentDcmNames.get(i);
                     String imagePath = dcmName.IMAGEPATH;
                     String imagename = dcmName.IMAGENAME;
                     File file = new File(Contants.PACS_DCM_DOWNLOAD_PATH, imagename);
                     if (file.exists()) {
-                        Glide.with(App.mContext).load(DcmUtil.readFile(file.getAbsolutePath())).into(mDataBinding.container);
+                        if (i == 0) {
+                            Glide.with(App.mContext).load(DcmUtil.readFile(file.getAbsolutePath())).into(mDataBinding.container);
+                        }
                     } else {
                         App.getAsynHandler().post(() -> mFtp.downloadFile(imagePath + imagename, file.getAbsolutePath(), null));
                     }
@@ -110,24 +117,38 @@ public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBi
             }
         });
 
+
         mDataBinding.touch.setOnTouchListener(new View.OnTouchListener() {
+
+            private float mDownY;
+            private float mDownX;
+
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 int action = event.getAction();
                 switch (action) {
                     case MotionEvent.ACTION_DOWN:
-                        if (vTracker == null) {
-                            vTracker = VelocityTracker.obtain();
-                        } else {
-                            vTracker.clear();
-                        }
-                        vTracker.addMovement(event);
+                        mDownX = event.getX();
+                        mDownY = event.getY();
                         break;
                     case MotionEvent.ACTION_MOVE:
-                        vTracker.addMovement(event);
-                        vTracker.computeCurrentVelocity(1000);
-                        Log.d(TAG, "onTouch: " + vTracker.getXVelocity());
-                        Log.d(TAG, "onTouch: " + vTracker.getYVelocity());
+                        float moveX = event.getX();
+                        float moveY = event.getY();
+                        // x 轴移动
+                        if (Math.abs(moveX - mDownX) > Math.abs(moveY - mDownY)) {
+                            if (mCurrentDcmNames != null && mCurrentDcmNames.size() > 1) {
+                                // --->移动
+                                if ((moveX - mDownX > 0) && (moveX - mDownX > mSlop) && (mSelectImage < mCurrentDcmNames.size())) {
+                                    mSelectImage = mSelectImage + 1;
+                                    changedPacsImage();
+                                }
+                                // <---移动
+                                if ((moveX - mDownX < 0) && (Math.abs(moveX - mDownX) > mSlop) && (mSelectImage > 0)) {
+                                    mSelectImage = mSelectImage - 1;
+                                    changedPacsImage();
+                                }
+                            }
+                        }
                         break;
                     case MotionEvent.ACTION_UP:
                     case MotionEvent.ACTION_CANCEL:
@@ -136,6 +157,20 @@ public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBi
                 return true;
             }
         });
+    }
+
+    private void changedPacsImage() {
+        DcmName dcmName = mCurrentDcmNames.get(mSelectImage);
+        String imagename = dcmName.IMAGENAME;
+        File file = new File(Contants.PACS_DCM_DOWNLOAD_PATH, imagename);
+        if (file.exists()) {
+            Glide.with(App.mContext).load(DcmUtil.readFile(file.getAbsolutePath())).into(mDataBinding.container);
+        }
+    }
+
+    private void changeMark(int position) {
+        mAdapter.setSelected(position);
+        mAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -193,10 +228,6 @@ public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBi
     protected void onDestroy() {
         super.onDestroy();
         mFtp.disconnect();
-        if (vTracker != null) {
-            vTracker.recycle();
-            vTracker = null;
-        }
     }
 
 }

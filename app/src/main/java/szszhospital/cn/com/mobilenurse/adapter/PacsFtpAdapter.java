@@ -1,7 +1,6 @@
 package szszhospital.cn.com.mobilenurse.adapter;
 
 import android.app.Activity;
-import android.util.Log;
 import android.widget.ImageView;
 
 import com.blankj.utilcode.util.StringUtils;
@@ -39,7 +38,6 @@ public class PacsFtpAdapter extends BaseQuickAdapter<PacsImagePath, BaseViewHold
     @Override
     protected void convert(BaseViewHolder helper, PacsImagePath item) {
         int position = helper.getAdapterPosition();
-        Log.d(TAG, "convert: " + position + "------mSelected: " + mSelected);
         if (position == mSelected) {
             helper.setVisible(R.id.tag, true);
         } else {
