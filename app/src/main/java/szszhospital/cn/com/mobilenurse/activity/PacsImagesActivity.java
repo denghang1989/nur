@@ -13,8 +13,6 @@ import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.raizlabs.android.dbflow.sql.language.Select;
 
-import org.apache.commons.net.ftp.FTPFile;
-
 import java.io.File;
 import java.util.List;
 
@@ -60,21 +58,24 @@ public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBi
 
     @Override
     protected void init() {
-        super.init();
-        mPacsorder = getIntent().getParcelableExtra(KEY_DATA);
         mFtp = new FtpUtil();
         FtpConnect();
+        super.init();
+        mPacsorder = getIntent().getParcelableExtra(KEY_DATA);
         mAdapter = new PacsFtpAdapter(R.layout.item_pacs_ftp, mFtp, this);
         mSlop = ViewConfiguration.get(this).getScaledTouchSlop();
     }
 
     private void FtpConnect() {
-        try {
-            if (NetworkUtils.isConnected()) {
-                mFtp.connect(FTP_PATH, USER_NAME, PASSWORD);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (NetworkUtils.isConnected()) {
+            App.getAsynHandler().post(() -> {
+                try {
+                    mFtp.connect(FTP_PATH, USER_NAME, PASSWORD);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
+
         }
     }
 
@@ -187,43 +188,12 @@ public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBi
 
     @Override
     public void getRealImagePath(List<PacsImagePath> pacsImagePaths) {
-        showProgress();
-        App.getAsynHandler().post(() -> {
-            try {
-                boolean connected = mFtp.getFtpClient().isConnected();
-                if (!connected) {
-                    FtpConnect();
-                }
-                for (int i = 0; i < pacsImagePaths.size(); i++) {
-                    PacsImagePath obj = pacsImagePaths.get(i);
-                    String ftpPath = obj.IMAGEPATH;
-                    FTPFile[] ftpFiles = mFtp.getFtpClient().listFiles(ftpPath);
-                    for (int j = 0; j < ftpFiles.length; j++) {
-                        String fileName = ftpFiles[j].getName();
-                        DcmName dcmName = new DcmName();
-                        dcmName.IMAGENAME = fileName;
-                        dcmName.IMAGEPATH = ftpPath;
-                        dcmName.save();
-                        if (j == 0) {
-                            obj.thumbnailPath = ftpPath + fileName;
-                            obj.name = fileName;
-                        }
-                    }
-                    obj.save();
-                }
-                runOnUiThread(() -> {
-                    mAdapter.setNewData(pacsImagePaths);
-                    hideProgress();
-                });
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
+        mAdapter.setNewData(pacsImagePaths);
     }
 
     @Override
     protected PacsImagesPresenter initPresenter() {
-        return new PacsImagesPresenter();
+        return new PacsImagesPresenter(mFtp);
     }
 
     @Override

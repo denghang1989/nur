@@ -11,8 +11,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.SocketException;
-import java.net.UnknownHostException;
 
 /**
  * A simple FTPCeint WRAPPER CLASS to perform basic Upload/Download Operations
@@ -22,6 +20,10 @@ import java.net.UnknownHostException;
 public class FtpUtil {
 
     private FTPClient mFtpClient = null;
+
+    public boolean isConnected() {
+        return mFtpClient.isConnected();
+    }
 
     public FtpUtil() {
         mFtpClient = new FTPClient();
@@ -85,7 +87,7 @@ public class FtpUtil {
         }
     }
 
-    public void connect(String ip, String userName, String pass) throws Exception {
+    public boolean connect(String ip, String userName, String pass) throws Exception {
         boolean status = false;
         try {
             try {
@@ -94,12 +96,8 @@ public class FtpUtil {
                 e.printStackTrace();
             }
             status = mFtpClient.login(userName, pass);
-            Log.e("isEasyFTPConnected", String.valueOf(status));
-        } catch (SocketException e) {
-            throw e;
-        } catch (UnknownHostException e) {
-            throw e;
-        } catch (IOException e) {
+            return status;
+        } catch (Exception e) {
             throw e;
         }
     } //Passing InputStream and fileName
@@ -128,7 +126,7 @@ public class FtpUtil {
         }
     }
 
-    public void downloadFile(String remoteFilePath, String dest, FileCallback callback){
+    public void downloadFile(String remoteFilePath, String dest, FileCallback callback) {
         File downloadFile = new File(dest);
         File parentDir = downloadFile.getParentFile();
         if (!parentDir.exists())
@@ -152,7 +150,7 @@ public class FtpUtil {
                 try {
                     outputStream.close();
                 } catch (IOException e) {
-                   e.printStackTrace();
+                    e.printStackTrace();
                     if (callback != null) {
                         callback.error(e);
                     }

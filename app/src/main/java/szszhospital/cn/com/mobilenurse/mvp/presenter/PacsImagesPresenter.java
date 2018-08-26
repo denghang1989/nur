@@ -1,27 +1,64 @@
 package szszhospital.cn.com.mobilenurse.mvp.presenter;
 
-import android.util.Log;
+import org.apache.commons.net.ftp.FTPFile;
 
 import java.util.List;
 
+import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
 import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
 import szszhospital.cn.com.mobilenurse.base.RxPresenter;
 import szszhospital.cn.com.mobilenurse.mvp.contract.PacsImagesContract;
 import szszhospital.cn.com.mobilenurse.remote.ApiService;
 import szszhospital.cn.com.mobilenurse.remote.RxUtil;
+import szszhospital.cn.com.mobilenurse.remote.response.DcmName;
 import szszhospital.cn.com.mobilenurse.remote.response.PacsImagePath;
+import szszhospital.cn.com.mobilenurse.utils.FtpUtil;
 
 public class PacsImagesPresenter extends RxPresenter<PacsImagesContract.View,PacsImagesContract.Model> implements PacsImagesContract.Presenter {
     private static final String TAG = "PacsImagesPresenter";
+
+    private FtpUtil mFtp;
+
+    public PacsImagesPresenter(FtpUtil ftp) {
+        mFtp = ftp;
+    }
 
     @Override
     public void getPacsImages(String studyId, String type) {
         mView.showProgress();
         ApiService.Instance().getService()
                 .getPacsImageFtpPath(studyId, type)
+                .subscribeOn(Schedulers.io())
                 .compose(RxUtil.httpHandleResponse())
-                .compose(RxUtil.rxSchedulerHelper())
+                .flatMap(new Function<List<PacsImagePath>, ObservableSource<List<PacsImagePath>>>() {
+                    @Override
+                    public ObservableSource<List<PacsImagePath>> apply(List<PacsImagePath> pacsImagePaths) throws Exception {
+                        for (int i = 0; i < pacsImagePaths.size(); i++) {
+                            PacsImagePath obj = pacsImagePaths.get(i);
+                            String ftpPath = obj.IMAGEPATH;
+                            FTPFile[] ftpFiles = mFtp.getFtpClient().listFiles(ftpPath);
+                            for (int j = 0; j < ftpFiles.length; j++) {
+                                String fileName = ftpFiles[j].getName();
+                                DcmName dcmName = new DcmName();
+                                dcmName.IMAGENAME = fileName;
+                                dcmName.IMAGEPATH = ftpPath;
+                                dcmName.save();
+                                if (j == 0) {
+                                    obj.thumbnailPath = ftpPath + fileName;
+                                    obj.name = fileName;
+                                }
+                            }
+                            obj.save();
+                        }
+                        return Observable.just(pacsImagePaths);
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<List<PacsImagePath>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
@@ -31,7 +68,6 @@ public class PacsImagesPresenter extends RxPresenter<PacsImagesContract.View,Pac
                     @Override
                     public void onNext(List<PacsImagePath> pacsImagePaths) {
                         if (pacsImagePaths!=null && pacsImagePaths.size()>0) {
-                            Log.d(TAG, "onNext: "+pacsImagePaths.toString());
                             mView.getRealImagePath(pacsImagePaths);
                         }
                     }
