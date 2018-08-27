@@ -11,6 +11,9 @@ import com.blankj.utilcode.util.NetworkUtils;
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.raizlabs.android.dbflow.sql.language.Select;
+import com.xiuyukeji.pictureplayerview.PicturePlayerView;
+import com.xiuyukeji.pictureplayerview.interfaces.OnStopListener;
+import com.xiuyukeji.pictureplayerview.interfaces.OnUpdateListener;
 
 import java.io.File;
 import java.util.List;
@@ -39,12 +42,13 @@ public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBi
     public static final  String FTP_PATH  = "172.18.0.143";
     public static final  String USER_NAME = "annetftp";
     public static final  String PASSWORD  = "annet";
-    private PacsOrder      mPacsorder;
-    private FtpUtil        mFtp;
-    private PacsFtpAdapter mAdapter;
-    private List<DcmName>  mCurrentDcmNames;
-    private int            mSelectImage;
-    private int            mSlop;
+    private PacsOrder         mPacsorder;
+    private FtpUtil           mFtp;
+    private PacsFtpAdapter    mAdapter;
+    private List<DcmName>     mCurrentDcmNames;
+    private int               mSelectImage;
+    private int               mSlop;
+    private PicturePlayerView mPicturePlayerView;
 
     public static void startPacsImagesActivity(Context context, PacsOrder pacsorder) {
         Intent intent = new Intent(context, PacsImagesActivity.class);
@@ -83,6 +87,7 @@ public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBi
     @Override
     protected void initView() {
         super.initView();
+        mPicturePlayerView = mDataBinding.player;
         mDataBinding.recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         mDataBinding.recyclerView.setAdapter(mAdapter);
     }
@@ -103,6 +108,7 @@ public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBi
                 PacsImagePath item = mAdapter.getItem(position);
                 mCurrentDcmNames = new Select().from(DcmName.class).where(DcmName_Table.IMAGEPATH.eq(item.IMAGEPATH)).queryList();
                 changeMark(position);
+                String[] pathArray = new String[mCurrentDcmNames.size()];
                 for (int i = 0; i < mCurrentDcmNames.size(); i++) {
                     DcmName dcmName = mCurrentDcmNames.get(i);
                     String imagePath = dcmName.IMAGEPATH;
@@ -115,10 +121,12 @@ public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBi
                     } else {
                         App.getAsynHandler().post(() -> FileDownUtil.downFileAndChangedPng(Contants.PACS_PATH + imagePath + imagename, file.getAbsolutePath(), null));
                     }
+                    File pngFile = new File(Contants.PACS_DCM_DOWNLOAD_PATH, imagename.replace(".dcm", ".png"));
+                    pathArray[i] = pngFile.getAbsolutePath();
                 }
+                mPicturePlayerView.setDataSource(pathArray, 10000);
             }
         });
-
 
         mDataBinding.touch.setOnTouchListener(new View.OnTouchListener() {
 
@@ -132,6 +140,7 @@ public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBi
                     case MotionEvent.ACTION_DOWN:
                         mDownX = event.getX();
                         mDownY = event.getY();
+                        mPicturePlayerView.start();
                         break;
                     case MotionEvent.ACTION_MOVE:
                         float moveX = event.getX();
@@ -159,6 +168,20 @@ public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBi
                         break;
                 }
                 return true;
+            }
+        });
+
+        mPicturePlayerView.setOnUpdateListener(new OnUpdateListener() {
+            @Override
+            public void onUpdate(int frameIndex) {
+
+            }
+        });
+
+        mPicturePlayerView.setOnStopListener(new OnStopListener() {
+            @Override
+            public void onStop() {
+
             }
         });
     }
@@ -207,6 +230,7 @@ public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBi
     protected void onDestroy() {
         super.onDestroy();
         mFtp.disconnect();
+        mPicturePlayerView.release();
     }
 
 }
