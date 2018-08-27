@@ -113,7 +113,7 @@ public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBi
                             Glide.with(App.mContext).load(DcmUtil.readFile(file.getAbsolutePath())).into(mDataBinding.container);
                         }
                     } else {
-                        App.getAsynHandler().post(() -> FileDownUtil.downFile(Contants.PACS_PATH + imagePath + imagename, file.getAbsolutePath(), null));
+                        App.getAsynHandler().post(() -> FileDownUtil.downFileAndChangedPng(Contants.PACS_PATH + imagePath + imagename, file.getAbsolutePath(), null));
                     }
                 }
             }

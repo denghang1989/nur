@@ -76,4 +76,5 @@ dependencies {
     implementation files('libs/commons-net-3.3.jar')
     implementation files('libs/dcm4che3.jar')
     implementation files('libs/slf4j-android-1.6.1-RC1.jar')
+    implementation project(':pictureplayerview')
 }

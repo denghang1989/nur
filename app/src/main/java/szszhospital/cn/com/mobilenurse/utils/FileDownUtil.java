@@ -18,7 +18,7 @@ public class FileDownUtil {
      * @param callback
      * @desc : 下载ftp文件
      */
-    public static void downFile(String url, FileCallback callback) {
+    public static void downFileAndChangedPng(String url, FileCallback callback) {
         try {
             String[] split = url.split("/");
             String name = split[split.length - 1];
@@ -64,7 +64,7 @@ public class FileDownUtil {
      * @param callback
      * @desc : 下载dcm文件
      */
-    public static void downFile(String url,String des, FileCallback callback) {
+    public static void downFileAndChangedPng(String url, String des, FileCallback callback) {
         try {
             URL urls = new URL(url);
             HttpURLConnection connection = (HttpURLConnection) urls.openConnection();
@@ -87,9 +87,11 @@ public class FileDownUtil {
                 }
                 // 关闭流
                 CloseUtils.closeIOQuietly(bos,bis);
+                // 转换图片
+                File filePng = DcmUtil.readFile(file.getAbsolutePath());
                 // 6. 回调
                 if (callback!=null) {
-                    callback.success(file);
+                    callback.success(filePng);
                 }
             }
             // 5. 断开连接

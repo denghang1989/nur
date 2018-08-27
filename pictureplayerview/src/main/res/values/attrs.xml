@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="PicturePlayerView">
+        <attr name="picture_loop" format="boolean" />
+        <attr name="picture_opaque" format="boolean" />
+        <attr name="picture_antiAlias" format="boolean" />
+        <attr name="picture_filterBitmap" format="boolean" />
+        <attr name="picture_dither" format="boolean" />
+        <attr name="picture_source">
+            <enum name="file" value="0" />
+            <enum name="assets" value="1" />
+        </attr>
+        <attr name="picture_scaleType">
+            <enum name="fitWidth" value="0" />
+            <enum name="fitHeight" value="1" />
+            <enum name="fitCenter" value="2" />
+            <enum name="fitCrop" value="3" />
+        </attr>
+        <attr name="picture_cacheFrameNumber" format="integer" />
+    </declare-styleable>
+</resources>

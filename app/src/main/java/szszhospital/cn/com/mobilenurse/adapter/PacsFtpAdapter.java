@@ -54,15 +54,10 @@ public class PacsFtpAdapter extends BaseQuickAdapter<PacsImagePath, BaseViewHold
                     Glide.with(App.mContext).load(DcmUtil.readFile(file.getAbsolutePath())).into(imageView);
                 } else {
                     //下载图片
-                    App.getAsynHandler().post(() -> FileDownUtil.downFile(Contants.PACS_PATH + path, file.getAbsolutePath(), new FileCallback() {
+                    App.getAsynHandler().post(() -> FileDownUtil.downFileAndChangedPng(Contants.PACS_PATH + path, file.getAbsolutePath(), new FileCallback() {
                         @Override
                         public void success(File file) {
-                            mActivity.runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    Glide.with(App.mContext).load(DcmUtil.readFile(file.getAbsolutePath())).into(imageView);
-                                }
-                            });
+                            mActivity.runOnUiThread(() -> Glide.with(App.mContext).load(file).into(imageView));
                         }
 
                         @Override
