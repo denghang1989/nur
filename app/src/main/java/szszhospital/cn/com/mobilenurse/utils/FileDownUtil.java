@@ -62,7 +62,7 @@ public class FileDownUtil {
     /**
      * @param url
      * @param callback
-     * @desc : 下载ftp文件
+     * @desc : 下载dcm文件
      */
     public static void downFile(String url,String des, FileCallback callback) {
         try {

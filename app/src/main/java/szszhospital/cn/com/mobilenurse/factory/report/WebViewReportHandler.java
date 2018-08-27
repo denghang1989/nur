@@ -8,6 +8,6 @@ public interface WebViewReportHandler {
 
     void openReport(PacsOrder pacsOrder, WebView view);
 
-    void openImage(PacsOrder pacsOrder);
+    String openImage(PacsOrder pacsOrder);
 
 }

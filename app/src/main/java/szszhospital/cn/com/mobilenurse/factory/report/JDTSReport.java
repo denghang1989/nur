@@ -34,7 +34,7 @@ public class JDTSReport implements WebViewReportHandler {
     }
 
     @Override
-    public void openImage(PacsOrder pacsOrder) {
-
+    public String openImage(PacsOrder pacsOrder) {
+        return "07";
     }
 }
