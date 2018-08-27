@@ -16,11 +16,11 @@ import szszhospital.cn.com.mobilenurse.remote.response.PacsImagePath;
 import szszhospital.cn.com.mobilenurse.utils.Contants;
 import szszhospital.cn.com.mobilenurse.utils.DcmUtil;
 import szszhospital.cn.com.mobilenurse.utils.FileCallback;
+import szszhospital.cn.com.mobilenurse.utils.FileDownUtil;
 import szszhospital.cn.com.mobilenurse.utils.FtpUtil;
 
 public class PacsFtpAdapter extends BaseQuickAdapter<PacsImagePath, BaseViewHolder> {
 
-    private static final String HTTP = "http://172.18.0.143";
     private FtpUtil  mFtpUtil;
     private Activity mActivity;
     private int      mSelected;
@@ -54,31 +54,26 @@ public class PacsFtpAdapter extends BaseQuickAdapter<PacsImagePath, BaseViewHold
                     Glide.with(App.mContext).load(DcmUtil.readFile(file.getAbsolutePath())).into(imageView);
                 } else {
                     //下载图片
-                    App.getAsynHandler().post(new Runnable() {
+                    App.getAsynHandler().post(() -> FileDownUtil.downFile(Contants.PACS_PATH + path, file.getAbsolutePath(), new FileCallback() {
                         @Override
-                        public void run() {
-                            mFtpUtil.downloadFile(path, file.getAbsolutePath(), new FileCallback() {
+                        public void success(File file) {
+                            mActivity.runOnUiThread(new Runnable() {
                                 @Override
-                                public void success(File file) {
-                                    mActivity.runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            Glide.with(App.mContext).load(DcmUtil.readFile(file.getAbsolutePath())).into(imageView);
-                                        }
-                                    });
-                                }
-
-                                @Override
-                                public void error(Exception e) {
-
+                                public void run() {
+                                    Glide.with(App.mContext).load(DcmUtil.readFile(file.getAbsolutePath())).into(imageView);
                                 }
                             });
                         }
-                    });
+
+                        @Override
+                        public void error(Exception e) {
+
+                        }
+                    }));
                 }
 
             } else {
-                Glide.with(App.mContext).load(HTTP + path).into(imageView);
+                Glide.with(App.mContext).load(Contants.PACS_PATH + path).into(imageView);
             }
         }
     }

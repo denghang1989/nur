@@ -29,6 +29,7 @@ import szszhospital.cn.com.mobilenurse.remote.response.PacsImagePath;
 import szszhospital.cn.com.mobilenurse.remote.response.PacsOrder;
 import szszhospital.cn.com.mobilenurse.utils.Contants;
 import szszhospital.cn.com.mobilenurse.utils.DcmUtil;
+import szszhospital.cn.com.mobilenurse.utils.FileDownUtil;
 import szszhospital.cn.com.mobilenurse.utils.FtpUtil;
 
 public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBinding, PacsImagesPresenter> implements PacsImagesContract.View {
@@ -107,12 +108,12 @@ public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBi
                     String imagePath = dcmName.IMAGEPATH;
                     String imagename = dcmName.IMAGENAME;
                     File file = new File(Contants.PACS_DCM_DOWNLOAD_PATH, imagename);
-                    if (file.exists()) {
+                    if (file.exists() && file.length() > 0) {
                         if (i == 0) {
                             Glide.with(App.mContext).load(DcmUtil.readFile(file.getAbsolutePath())).into(mDataBinding.container);
                         }
                     } else {
-                        App.getAsynHandler().post(() -> mFtp.downloadFile(imagePath + imagename, file.getAbsolutePath(), null));
+                        App.getAsynHandler().post(() -> FileDownUtil.downFile(Contants.PACS_PATH + imagePath + imagename, file.getAbsolutePath(), null));
                     }
                 }
             }
@@ -139,7 +140,7 @@ public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBi
                         if (Math.abs(moveX - mDownX) > Math.abs(moveY - mDownY)) {
                             if (mCurrentDcmNames != null && mCurrentDcmNames.size() > 1) {
                                 // --->移动
-                                if ((moveX - mDownX > 0) && (moveX - mDownX > mSlop) && (mSelectImage < mCurrentDcmNames.size())) {
+                                if ((moveX - mDownX > 0) && (moveX - mDownX > mSlop) && (mSelectImage < mCurrentDcmNames.size() - 1)) {
                                     mSelectImage = mSelectImage + 1;
                                     mDownX = mDownX + mSlop;
                                     changedPacsImage();

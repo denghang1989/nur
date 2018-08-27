@@ -44,13 +44,61 @@ public class FileDownUtil {
                 // 关闭流
                 CloseUtils.closeIOQuietly(bos,bis);
                 // 6. 回调
-                callback.success(file);
+                if (callback!=null) {
+                    callback.success(file);
+                }
             }
             // 5. 断开连接
             connection.disconnect();
         } catch (Exception e) {
             e.printStackTrace();
-            callback.error(e);
+            if (callback!=null) {
+                callback.error(e);
+            }
+        }
+    }
+
+
+    /**
+     * @param url
+     * @param callback
+     * @desc : 下载ftp文件
+     */
+    public static void downFile(String url,String des, FileCallback callback) {
+        try {
+            URL urls = new URL(url);
+            HttpURLConnection connection = (HttpURLConnection) urls.openConnection();
+            // 设置请求方式
+            connection.setRequestMethod("GET");
+            // 设置超时时间
+            connection.setConnectTimeout(3000);
+            // 连接
+            connection.connect();
+            // 4. 得到响应状态码的返回值 responseCode
+            int code = connection.getResponseCode();
+            if (code == 200) {
+                BufferedInputStream bis = new BufferedInputStream(connection.getInputStream());
+                File file = new File(des);
+                BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
+                byte[] buff = new byte[1024 * 10];
+                int length = 0;
+                while ((length = bis.read(buff)) > 0) {
+                    bos.write(buff, 0, length);
+                }
+                // 关闭流
+                CloseUtils.closeIOQuietly(bos,bis);
+                // 6. 回调
+                if (callback!=null) {
+                    callback.success(file);
+                }
+            }
+            // 5. 断开连接
+            connection.disconnect();
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (callback!=null) {
+                callback.error(e);
+            }
         }
     }
 }
