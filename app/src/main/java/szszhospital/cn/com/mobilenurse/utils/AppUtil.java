@@ -8,6 +8,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class AppUtil {
+
+    //字节大小，K,M,G
+    public static final long KB = 1024;
+    public static final long MB = KB * 1024;
+    public static final long GB = MB * 1024;
+
     private AppUtil() {
     }
 
@@ -45,4 +51,24 @@ public class AppUtil {
         Matcher matcher = pattern.matcher(str);
         return matcher.matches();
     }
+
+    /**
+     * 文件字节大小显示成M,G和K
+     * @param size
+     * @return
+     */
+    public static String displayFileSize(long size) {
+        if (size >= GB) {
+            return String.format("%.1f GB", (float) size / GB);
+        } else if (size >= MB) {
+            float value = (float) size / MB;
+            return String.format(value > 100 ? "%.0f MB" : "%.1f MB", value);
+        } else if (size >= KB) {
+            float value = (float) size / KB;
+            return String.format(value > 100 ? "%.0f KB" : "%.1f KB", value);
+        } else {
+            return String.format("%d B", size);
+        }
+    }
+
 }

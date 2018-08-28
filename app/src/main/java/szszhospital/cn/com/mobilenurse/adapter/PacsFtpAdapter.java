@@ -43,11 +43,7 @@ public class PacsFtpAdapter extends BaseQuickAdapter<PacsImagePath, BaseViewHold
         ImageView imageView = helper.getView(R.id.pacs_image);
         String path = item.thumbnailPath;
         if (!StringUtils.isTrimEmpty(path)) {
-            if (path.endsWith("dcm")) {
-                handleDcmFile(item, imageView, path);
-            } else {
-                Glide.with(App.mContext).load(Contants.PACS_PATH + path).into(imageView);
-            }
+            handleDcmFile(item, imageView, path);
         }
     }
 

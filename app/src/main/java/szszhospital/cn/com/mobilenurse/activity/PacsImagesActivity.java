@@ -7,7 +7,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.blankj.utilcode.util.NetworkUtils;
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.raizlabs.android.dbflow.sql.language.Select;
@@ -33,17 +32,12 @@ import szszhospital.cn.com.mobilenurse.remote.response.PacsOrder;
 import szszhospital.cn.com.mobilenurse.utils.Contants;
 import szszhospital.cn.com.mobilenurse.utils.DcmUtil;
 import szszhospital.cn.com.mobilenurse.utils.FileDownUtil;
-import szszhospital.cn.com.mobilenurse.utils.FtpUtil;
 
-public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBinding, PacsImagesPresenter> implements PacsImagesContract.View {
+public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBinding, PacsImagesPresenter> implements PacsImagesContract.View, View.OnTouchListener {
 
-    private static final String TAG       = "PacsImagesActivity";
-    private static final String KEY_DATA  = "data";
-    public static final  String FTP_PATH  = "172.18.0.143";
-    public static final  String USER_NAME = "annetftp";
-    public static final  String PASSWORD  = "annet";
+    private static final String TAG      = "PacsImagesActivity";
+    private static final String KEY_DATA = "data";
     private PacsOrder         mPacsorder;
-    private FtpUtil           mFtp;
     private PacsFtpAdapter    mAdapter;
     private List<DcmName>     mCurrentDcmNames;
     private int               mSelectImage;
@@ -63,24 +57,10 @@ public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBi
     @Override
     protected void init() {
         super.init();
-        mFtp = new FtpUtil();
-        FtpConnect();
         mPacsorder = getIntent().getParcelableExtra(KEY_DATA);
         mAdapter = new PacsFtpAdapter(R.layout.item_pacs_ftp, this);
     }
 
-    private void FtpConnect() {
-        if (NetworkUtils.isConnected()) {
-            App.getAsynHandler().post(() -> {
-                try {
-                    mFtp.connect(FTP_PATH, USER_NAME, PASSWORD);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            });
-
-        }
-    }
 
     @Override
     protected void initView() {
@@ -102,56 +82,12 @@ public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBi
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 queryDcmFile(position);
                 setRecyclerViewMark(position);
-                String[] pathArray = new String[mCurrentDcmNames.size()];
-                for (int i = 0; i < mCurrentDcmNames.size(); i++) {
-                    DcmName dcmName = mCurrentDcmNames.get(i);
-                    String imagePath = dcmName.IMAGEPATH;
-                    String imagename = dcmName.IMAGENAME;
-                    File file = new File(Contants.PACS_DCM_DOWNLOAD_PATH, imagename);
-                    if (file.exists() && file.length() > 0) {
-                        if (i == 0) {
-                            Glide.with(App.mContext).load(DcmUtil.readFile(file.getAbsolutePath())).into(mDataBinding.container);
-                            mDataBinding.container.setVisibility(View.VISIBLE);
-                        }
-                    } else {
-                        App.getAsynHandler().post(() -> FileDownUtil.downFileAndChangedPng(Contants.PACS_PATH + imagePath + imagename, file.getAbsolutePath(), null));
-                    }
-                    File pngFile = new File(Contants.PACS_DCM_DOWNLOAD_PATH, imagename.replace(".dcm", ".png"));
-                    pathArray[i] = pngFile.getAbsolutePath();
-                }
-                if (mPicturePlayerView.isPaused()) {
-                    mPicturePlayerView.stop();
-                }
-                mPicturePlayerView.setDataSource(pathArray, 10000);
+                showImageAndDown();
+                initPlayerResource();
             }
         });
 
-        mDataBinding.touch.setOnTouchListener(new View.OnTouchListener() {
-
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                int action = event.getAction();
-                switch (action) {
-                    case MotionEvent.ACTION_DOWN:
-                        if (mPicturePlayerView.isPaused()) {
-                            mPicturePlayerView.resume();
-                        } else {
-                            mPicturePlayerView.start();
-                        }
-                        mDataBinding.container.setVisibility(View.INVISIBLE);
-                        break;
-                    case MotionEvent.ACTION_UP:
-                    case MotionEvent.ACTION_CANCEL:
-                        if (mPicturePlayerView.isPlaying()) {
-                            mPicturePlayerView.pause();
-                            changedPacsImage();
-                        }
-                        mDataBinding.container.setVisibility(View.VISIBLE);
-                        break;
-                }
-                return true;
-            }
-        });
+        mDataBinding.touch.setOnTouchListener(this);
 
         mPicturePlayerView.setOnUpdateListener(new OnUpdateListener() {
             @Override
@@ -169,7 +105,47 @@ public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBi
         });
     }
 
+
+    private void initPlayerResource() {
+        String[] pathArray = new String[mCurrentDcmNames.size()];
+        for (int i = 0; i < mCurrentDcmNames.size(); i++) {
+            DcmName dcmName = mCurrentDcmNames.get(i);
+            String imagename = dcmName.IMAGENAME;
+            File pngFile = new File(Contants.PACS_DCM_DOWNLOAD_PATH, imagename.replace(".dcm", ".png"));
+            pathArray[i] = pngFile.getAbsolutePath();
+        }
+        mPicturePlayerView.stop();
+        mPicturePlayerView.setDataSource(pathArray, 1000 * ((int) (pathArray.length / 12 + 0.5)));
+    }
+
+    private void showImageAndDown() {
+        int count = 0;
+        for (int i = 0; i < mCurrentDcmNames.size(); i++) {
+            DcmName dcmName = mCurrentDcmNames.get(i);
+            String imagePath = dcmName.IMAGEPATH;
+            String imagename = dcmName.IMAGENAME;
+            File file = new File(Contants.PACS_DCM_DOWNLOAD_PATH, imagename);
+            if (file.exists()) {
+                if (i == 0) {
+                    Glide.with(App.mContext).load(DcmUtil.readFile(file.getAbsolutePath())).into(mDataBinding.container);
+                    mDataBinding.container.setVisibility(View.VISIBLE);
+                }
+            } else {
+                count++;
+                showProgress();
+                App.getAsynHandler().post(() -> FileDownUtil.downFileAndChangedPng(Contants.PACS_PATH + imagePath + imagename, file.getAbsolutePath(), null));
+            }
+        }
+        mDataBinding.mark.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                hideProgress();
+            }
+        }, count * 50);
+    }
+
     private void queryDcmFile(int position) {
+        mSelectImage = position;
         PacsImagePath item = mAdapter.getItem(position);
         mCurrentDcmNames = new Select().from(DcmName.class).where(DcmName_Table.IMAGEPATH.eq(item.IMAGEPATH)).queryList();
     }
@@ -211,14 +187,40 @@ public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBi
 
     @Override
     protected PacsImagesPresenter initPresenter() {
-        return new PacsImagesPresenter(mFtp);
+        return new PacsImagesPresenter();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mFtp.disconnect();
         mPicturePlayerView.release();
     }
 
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        int action = event.getAction();
+        if ((mCurrentDcmNames == null)||(mCurrentDcmNames.size() == 1)) {
+            return false;
+        }
+
+        switch (action) {
+            case MotionEvent.ACTION_DOWN:
+                if (mPicturePlayerView.isPaused()) {
+                    mPicturePlayerView.resume();
+                } else {
+                    mPicturePlayerView.start();
+                }
+                mDataBinding.container.setVisibility(View.INVISIBLE);
+                break;
+            case MotionEvent.ACTION_UP:
+            case MotionEvent.ACTION_CANCEL:
+                if (mPicturePlayerView.isPlaying()) {
+                    mPicturePlayerView.pause();
+                    changedPacsImage();
+                }
+                mDataBinding.container.setVisibility(View.VISIBLE);
+                break;
+        }
+        return true;
+    }
 }

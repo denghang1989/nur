@@ -1,5 +1,9 @@
 package szszhospital.cn.com.mobilenurse.mvp.presenter;
 
+import android.util.Log;
+
+import com.blankj.utilcode.util.NetworkUtils;
+
 import org.apache.commons.net.ftp.FTPFile;
 
 import java.util.List;
@@ -11,6 +15,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
+import szszhospital.cn.com.mobilenurse.App;
 import szszhospital.cn.com.mobilenurse.base.RxPresenter;
 import szszhospital.cn.com.mobilenurse.mvp.contract.PacsImagesContract;
 import szszhospital.cn.com.mobilenurse.remote.ApiService;
@@ -19,13 +24,28 @@ import szszhospital.cn.com.mobilenurse.remote.response.DcmName;
 import szszhospital.cn.com.mobilenurse.remote.response.PacsImagePath;
 import szszhospital.cn.com.mobilenurse.utils.FtpUtil;
 
-public class PacsImagesPresenter extends RxPresenter<PacsImagesContract.View,PacsImagesContract.Model> implements PacsImagesContract.Presenter {
-    private static final String TAG = "PacsImagesPresenter";
-
+public class PacsImagesPresenter extends RxPresenter<PacsImagesContract.View, PacsImagesContract.Model> implements PacsImagesContract.Presenter {
+    private static final String TAG       = "PacsImagesPresenter";
+    public static final  String FTP_PATH  = "172.18.0.143";
+    public static final  String USER_NAME = "annetftp";
+    public static final  String PASSWORD  = "annet";
     private FtpUtil mFtp;
 
-    public PacsImagesPresenter(FtpUtil ftp) {
-        mFtp = ftp;
+    public PacsImagesPresenter() {
+        mFtp = new FtpUtil();
+        FtpConnect();
+    }
+
+    private void FtpConnect() {
+        if (NetworkUtils.isConnected()) {
+            App.getAsynHandler().post(() -> {
+                try {
+                    mFtp.connect(FTP_PATH, USER_NAME, PASSWORD);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
+        }
     }
 
     @Override
@@ -38,12 +58,16 @@ public class PacsImagesPresenter extends RxPresenter<PacsImagesContract.View,Pac
                 .flatMap(new Function<List<PacsImagePath>, ObservableSource<List<PacsImagePath>>>() {
                     @Override
                     public ObservableSource<List<PacsImagePath>> apply(List<PacsImagePath> pacsImagePaths) throws Exception {
+                        if (!mFtp.isConnected()) {
+                            mFtp.connect(FTP_PATH, USER_NAME, PASSWORD);
+                        }
                         for (int i = 0; i < pacsImagePaths.size(); i++) {
                             PacsImagePath obj = pacsImagePaths.get(i);
                             String ftpPath = obj.IMAGEPATH;
                             FTPFile[] ftpFiles = mFtp.getFtpClient().listFiles(ftpPath);
                             for (int j = 0; j < ftpFiles.length; j++) {
                                 String fileName = ftpFiles[j].getName();
+                                Log.d(TAG, "apply: " + fileName);
                                 DcmName dcmName = new DcmName();
                                 dcmName.IMAGENAME = fileName;
                                 dcmName.IMAGEPATH = ftpPath;
@@ -67,7 +91,7 @@ public class PacsImagesPresenter extends RxPresenter<PacsImagesContract.View,Pac
 
                     @Override
                     public void onNext(List<PacsImagePath> pacsImagePaths) {
-                        if (pacsImagePaths!=null && pacsImagePaths.size()>0) {
+                        if (pacsImagePaths != null && pacsImagePaths.size() > 0) {
                             mView.getRealImagePath(pacsImagePaths);
                         }
                     }
@@ -85,4 +109,9 @@ public class PacsImagesPresenter extends RxPresenter<PacsImagesContract.View,Pac
                 });
     }
 
+    @Override
+    public void detachView() {
+        super.detachView();
+        mFtp.disconnect();
+    }
 }

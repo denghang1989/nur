@@ -22,18 +22,35 @@ public class PacsResultAdapter extends BaseQuickAdapter<PacsOrder, BaseViewHolde
                 .setText(R.id.loc_order, item.TLocName)
                 .addOnClickListener(R.id.icon)
                 .addOnClickListener(R.id.photo);
+
+        helper.setVisible(R.id.unRegister, false);
+        helper.setVisible(R.id.icon, true);
+        helper.setVisible(R.id.photo, true);
+
         if (!StringUtils.isTrimEmpty(item.Memo)) {
-            if (StringUtils.equals("S^已发布", item.Memo)) {
+            if (item.Memo.contains("S")) {
                 if (StringUtils.isTrimEmpty(item.TPdfPath) || AppUtil.IsUrl(path)) {
                     helper.setVisible(R.id.icon, true);
                 }
+            } else {
+                helper.setVisible(R.id.icon, false);
             }
         } else {
             helper.setVisible(R.id.icon, false);
         }
+
         // 病理
         if (StringUtils.equals(item.TreplocDr, "13")) {
             helper.setVisible(R.id.icon, true);
+        }
+
+        // CT室
+        if (StringUtils.equals(item.TreplocDr, "11")) {
+            if ((item.TStudyNo != null) && (!item.TStudyNo.contains("A"))) {
+                helper.setVisible(R.id.unRegister, true);
+                helper.setVisible(R.id.icon, false);
+                helper.setVisible(R.id.photo, false);
+            }
         }
 
         //心电图屏蔽图像标签

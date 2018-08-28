@@ -21,13 +21,19 @@ public class DcmUtil {
      */
     public static File readFile(String filePath) {
         File changeFile = null;
+        // dcm 文件转换完成
         if (filePath.endsWith(".dcm")) {
-            String desc = filePath.replace(".dcm",".png");
+            String desc = filePath.replace(".dcm", ".png");
             changeFile = new File(desc);
             if (changeFile.isFile() && changeFile.exists()) {
                 return changeFile;
             }
         }
+        // 图像直接返回
+        if (ImageUtils.isImage(filePath)) {
+            return new File(filePath);
+        }
+
         try {
             DicomImageReader dr = new DicomImageReader();
             File file = new File(filePath);
@@ -49,7 +55,7 @@ public class DcmUtil {
             Raster raster = dr.applyWindowCenter(0, (int) win_width, (int) win_center);
             Bitmap bitmap = RasterUtil.gray8ToBitmap(columns, row, raster.getByteData());
             if (filePath.endsWith(".dcm")) {
-                String desc = filePath.replace(".dcm",".png");
+                String desc = filePath.replace(".dcm", ".png");
                 changeFile = new File(desc);
                 boolean save = ImageUtils.save(bitmap, desc, Bitmap.CompressFormat.PNG, true);
                 if (save) {
