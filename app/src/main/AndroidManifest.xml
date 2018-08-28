@@ -12,6 +12,7 @@
     <application
         android:name=".App"
         android:allowBackup="true"
+        android:hardwareAccelerated="true"
         android:icon="@mipmap/icon"
         android:label="@string/app_name"
         android:supportsRtl="true"
@@ -109,14 +110,16 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"/>
 
-        <activity android:name=".activity.PatientListActivity"
-                  android:screenOrientation="portrait"
-                  android:theme="@style/AppTheme.Transparent"/>
+        <activity
+            android:name=".activity.PatientListActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Transparent"/>
 
-        <activity android:name=".activity.PacsImagesActivity"
-                  android:screenOrientation="portrait"
-                  android:process=":pacs"
-                  android:theme="@style/AppTheme.Transparent"/>
+        <activity
+            android:name=".activity.PacsImagesActivity"
+            android:process=":pacs"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Transparent"/>
 
         <receiver
             android:name=".broadcast.QRCodeBroadcastReceiver"

@@ -17,17 +17,14 @@ import szszhospital.cn.com.mobilenurse.utils.Contants;
 import szszhospital.cn.com.mobilenurse.utils.DcmUtil;
 import szszhospital.cn.com.mobilenurse.utils.FileCallback;
 import szszhospital.cn.com.mobilenurse.utils.FileDownUtil;
-import szszhospital.cn.com.mobilenurse.utils.FtpUtil;
 
 public class PacsFtpAdapter extends BaseQuickAdapter<PacsImagePath, BaseViewHolder> {
 
-    private FtpUtil  mFtpUtil;
     private Activity mActivity;
-    private int      mSelected;
+    private int mSelected = -1;
 
-    public PacsFtpAdapter(int layoutResId, FtpUtil ftpUtil, Activity activity) {
+    public PacsFtpAdapter(int layoutResId, Activity activity) {
         super(layoutResId);
-        mFtpUtil = ftpUtil;
         mActivity = activity;
     }
 
@@ -47,29 +44,32 @@ public class PacsFtpAdapter extends BaseQuickAdapter<PacsImagePath, BaseViewHold
         String path = item.thumbnailPath;
         if (!StringUtils.isTrimEmpty(path)) {
             if (path.endsWith("dcm")) {
-                //判断是否存在文件
-                File file = new File(Contants.PACS_DCM_DOWNLOAD_PATH, item.name);
-                if (file.exists()) {
-                    //解析加载图片
-                    Glide.with(App.mContext).load(DcmUtil.readFile(file.getAbsolutePath())).into(imageView);
-                } else {
-                    //下载图片
-                    App.getAsynHandler().post(() -> FileDownUtil.downFileAndChangedPng(Contants.PACS_PATH + path, file.getAbsolutePath(), new FileCallback() {
-                        @Override
-                        public void success(File file) {
-                            mActivity.runOnUiThread(() -> Glide.with(App.mContext).load(file).into(imageView));
-                        }
-
-                        @Override
-                        public void error(Exception e) {
-
-                        }
-                    }));
-                }
-
+                handleDcmFile(item, imageView, path);
             } else {
                 Glide.with(App.mContext).load(Contants.PACS_PATH + path).into(imageView);
             }
+        }
+    }
+
+    private void handleDcmFile(PacsImagePath item, ImageView imageView, String path) {
+        //判断是否存在文件
+        File file = new File(Contants.PACS_DCM_DOWNLOAD_PATH, item.name);
+        if (file.exists()) {
+            //解析加载图片
+            Glide.with(App.mContext).load(DcmUtil.readFile(file.getAbsolutePath())).into(imageView);
+        } else {
+            //下载图片
+            App.getAsynHandler().post(() -> FileDownUtil.downFileAndChangedPng(Contants.PACS_PATH + path, file.getAbsolutePath(), new FileCallback() {
+                @Override
+                public void success(File file) {
+                    mActivity.runOnUiThread(() -> Glide.with(App.mContext).load(file).into(imageView));
+                }
+
+                @Override
+                public void error(Exception e) {
+
+                }
+            }));
         }
     }
 }

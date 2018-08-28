@@ -47,7 +47,6 @@ public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBi
     private PacsFtpAdapter    mAdapter;
     private List<DcmName>     mCurrentDcmNames;
     private int               mSelectImage;
-    private int               mSlop;
     private PicturePlayerView mPicturePlayerView;
 
     public static void startPacsImagesActivity(Context context, PacsOrder pacsorder) {
@@ -63,12 +62,11 @@ public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBi
 
     @Override
     protected void init() {
+        super.init();
         mFtp = new FtpUtil();
         FtpConnect();
-        super.init();
         mPacsorder = getIntent().getParcelableExtra(KEY_DATA);
-        mAdapter = new PacsFtpAdapter(R.layout.item_pacs_ftp, mFtp, this);
-        mSlop = 50;
+        mAdapter = new PacsFtpAdapter(R.layout.item_pacs_ftp, this);
     }
 
     private void FtpConnect() {
@@ -86,7 +84,6 @@ public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBi
 
     @Override
     protected void initView() {
-        super.initView();
         mPicturePlayerView = mDataBinding.player;
         mDataBinding.recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         mDataBinding.recyclerView.setAdapter(mAdapter);
@@ -94,7 +91,6 @@ public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBi
 
     @Override
     protected void initData() {
-        super.initData();
         mPresenter.getPacsImages(mPacsorder.TStudyNo, ReportFactory.getInstance(mPacsorder).openImage(mPacsorder));
     }
 
@@ -104,10 +100,8 @@ public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBi
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                mSelectImage = 0;
-                PacsImagePath item = mAdapter.getItem(position);
-                mCurrentDcmNames = new Select().from(DcmName.class).where(DcmName_Table.IMAGEPATH.eq(item.IMAGEPATH)).queryList();
-                changeMark(position);
+                queryDcmFile(position);
+                setRecyclerViewMark(position);
                 String[] pathArray = new String[mCurrentDcmNames.size()];
                 for (int i = 0; i < mCurrentDcmNames.size(); i++) {
                     DcmName dcmName = mCurrentDcmNames.get(i);
@@ -117,6 +111,7 @@ public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBi
                     if (file.exists() && file.length() > 0) {
                         if (i == 0) {
                             Glide.with(App.mContext).load(DcmUtil.readFile(file.getAbsolutePath())).into(mDataBinding.container);
+                            mDataBinding.container.setVisibility(View.VISIBLE);
                         }
                     } else {
                         App.getAsynHandler().post(() -> FileDownUtil.downFileAndChangedPng(Contants.PACS_PATH + imagePath + imagename, file.getAbsolutePath(), null));
@@ -124,47 +119,34 @@ public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBi
                     File pngFile = new File(Contants.PACS_DCM_DOWNLOAD_PATH, imagename.replace(".dcm", ".png"));
                     pathArray[i] = pngFile.getAbsolutePath();
                 }
+                if (mPicturePlayerView.isPaused()) {
+                    mPicturePlayerView.stop();
+                }
                 mPicturePlayerView.setDataSource(pathArray, 10000);
             }
         });
 
         mDataBinding.touch.setOnTouchListener(new View.OnTouchListener() {
 
-            private float mDownY;
-            private float mDownX;
-
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 int action = event.getAction();
                 switch (action) {
                     case MotionEvent.ACTION_DOWN:
-                        mDownX = event.getX();
-                        mDownY = event.getY();
-                        mPicturePlayerView.start();
-                        break;
-                    case MotionEvent.ACTION_MOVE:
-                        float moveX = event.getX();
-                        float moveY = event.getY();
-                        // x 轴移动
-                        if (Math.abs(moveX - mDownX) > Math.abs(moveY - mDownY)) {
-                            if (mCurrentDcmNames != null && mCurrentDcmNames.size() > 1) {
-                                // --->移动
-                                if ((moveX - mDownX > 0) && (moveX - mDownX > mSlop) && (mSelectImage < mCurrentDcmNames.size() - 1)) {
-                                    mSelectImage = mSelectImage + 1;
-                                    mDownX = mDownX + mSlop;
-                                    changedPacsImage();
-                                }
-                                // <---移动
-                                if ((moveX - mDownX < 0) && (Math.abs(moveX - mDownX) > mSlop) && (mSelectImage > 0)) {
-                                    mSelectImage = mSelectImage - 1;
-                                    mDownX = mDownX + mSlop;
-                                    changedPacsImage();
-                                }
-                            }
+                        if (mPicturePlayerView.isPaused()) {
+                            mPicturePlayerView.resume();
+                        } else {
+                            mPicturePlayerView.start();
                         }
+                        mDataBinding.container.setVisibility(View.INVISIBLE);
                         break;
                     case MotionEvent.ACTION_UP:
                     case MotionEvent.ACTION_CANCEL:
+                        if (mPicturePlayerView.isPlaying()) {
+                            mPicturePlayerView.pause();
+                            changedPacsImage();
+                        }
+                        mDataBinding.container.setVisibility(View.VISIBLE);
                         break;
                 }
                 return true;
@@ -174,16 +156,22 @@ public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBi
         mPicturePlayerView.setOnUpdateListener(new OnUpdateListener() {
             @Override
             public void onUpdate(int frameIndex) {
-
+                mSelectImage = frameIndex;
+                changText(frameIndex);
             }
         });
 
         mPicturePlayerView.setOnStopListener(new OnStopListener() {
             @Override
             public void onStop() {
-
+                changedPacsImage();
             }
         });
+    }
+
+    private void queryDcmFile(int position) {
+        PacsImagePath item = mAdapter.getItem(position);
+        mCurrentDcmNames = new Select().from(DcmName.class).where(DcmName_Table.IMAGEPATH.eq(item.IMAGEPATH)).queryList();
     }
 
     private void changedPacsImage() {
@@ -196,7 +184,7 @@ public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBi
         changText(mSelectImage + 1);
     }
 
-    private void changeMark(int position) {
+    private void setRecyclerViewMark(int position) {
         mAdapter.setSelected(position);
         changText(1);
         mAdapter.notifyDataSetChanged();

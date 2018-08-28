@@ -50,15 +50,11 @@ public class PicturePlayerView extends TextureView implements SurfaceTextureList
     private NoticeHandler mNoticeHandler;
 
     public PicturePlayerView(Context context) {
-        this(context, null);
+        this(context,null);
     }
 
     public PicturePlayerView(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
-    }
-
-    public PicturePlayerView(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
+        super(context, attrs);
         initAttrs(attrs);
         findView();
         initView();
