@@ -14,6 +14,10 @@ public interface PacsImagesContract {
         void hideProgress();
 
         void getRealImagePath(List<PacsImagePath> pacsImagePaths);
+
+        void showNoData();
+
+        void hideNoData();
     }
 
     interface Model extends BaseModel {

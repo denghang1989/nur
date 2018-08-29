@@ -79,7 +79,6 @@ public class PicturePlayerView extends TextureView implements SurfaceTextureList
 
     private void findView() {
         mNoticeHandler = new NoticeHandler();
-
         mRenderer = new PictureRenderer(mIsAntiAlias, mIsFilterBitmap, mIsDither, mScaleType, this);
         mPlayer = new PicturePlayer(getContext(), mSource, mCacheFrameNumber, mRenderer);
     }

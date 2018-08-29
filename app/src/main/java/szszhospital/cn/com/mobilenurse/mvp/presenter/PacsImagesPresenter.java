@@ -93,6 +93,11 @@ public class PacsImagesPresenter extends RxPresenter<PacsImagesContract.View, Pa
                     public void onNext(List<PacsImagePath> pacsImagePaths) {
                         if (pacsImagePaths != null && pacsImagePaths.size() > 0) {
                             mView.getRealImagePath(pacsImagePaths);
+                            mView.hideNoData();
+                        }
+
+                        if (pacsImagePaths != null && pacsImagePaths.size() == 0) {
+                            mView.showNoData();
                         }
                     }
 
@@ -100,6 +105,7 @@ public class PacsImagesPresenter extends RxPresenter<PacsImagesContract.View, Pa
                     public void onError(Throwable e) {
                         e.printStackTrace();
                         mView.hideProgress();
+                        mView.showNoData();
                     }
 
                     @Override

@@ -9,6 +9,7 @@ import android.view.View;
 
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.github.florent37.viewanimator.ViewAnimator;
 import com.raizlabs.android.dbflow.sql.language.Select;
 import com.xiuyukeji.pictureplayerview.PicturePlayerView;
 import com.xiuyukeji.pictureplayerview.interfaces.OnStopListener;
@@ -183,6 +184,23 @@ public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBi
     @Override
     public void getRealImagePath(List<PacsImagePath> pacsImagePaths) {
         mAdapter.setNewData(pacsImagePaths);
+    }
+
+    @Override
+    public void showNoData() {
+        ViewAnimator
+                .animate(mDataBinding.error)
+                .scale(0, 1)
+                .duration(500)
+                .onStart(() -> mDataBinding.error.setVisibility(View.VISIBLE))
+                .onStop(() -> {})
+                .start();
+
+    }
+
+    @Override
+    public void hideNoData() {
+        mDataBinding.error.setVisibility(View.GONE);
     }
 
     @Override

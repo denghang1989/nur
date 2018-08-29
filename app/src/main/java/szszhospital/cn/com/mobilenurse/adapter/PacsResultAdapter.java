@@ -57,6 +57,13 @@ public class PacsResultAdapter extends BaseQuickAdapter<PacsOrder, BaseViewHolde
         if (StringUtils.equals(item.TreplocDr, "15") || StringUtils.equals(item.TreplocDr, "16")) {
             helper.setVisible(R.id.photo, false);
         }
+
+        if (StringUtils.isTrimEmpty(item.TStudyNo)) {
+            helper.setVisible(R.id.icon, false);
+            helper.setVisible(R.id.photo, false);
+            helper.setVisible(R.id.unRegister, true);
+            helper.setText(R.id.unRegister,"无数据");
+        }
     }
 
     public String getPath(PacsOrder item) {
