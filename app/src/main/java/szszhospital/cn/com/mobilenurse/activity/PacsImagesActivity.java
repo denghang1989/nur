@@ -115,7 +115,7 @@ public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBi
             pathArray[i] = pngFile.getAbsolutePath();
         }
         mPicturePlayerView.stop();
-        mPicturePlayerView.setDataSource(pathArray, 1000 * ((int) (pathArray.length / 12 + 0.5)));
+        mPicturePlayerView.setDataSource(pathArray, pathArray.length * 80);
     }
 
     private void showImageAndDown() {
@@ -199,7 +199,7 @@ public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBi
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         int action = event.getAction();
-        if ((mCurrentDcmNames == null)||(mCurrentDcmNames.size() == 1)) {
+        if ((mCurrentDcmNames == null) || (mCurrentDcmNames.size() == 1)) {
             return false;
         }
 
