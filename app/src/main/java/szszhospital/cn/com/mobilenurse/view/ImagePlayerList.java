@@ -1,10 +1,13 @@
 package szszhospital.cn.com.mobilenurse.view;
 
+import android.support.annotation.NonNull;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * 2018/8/30 22
+ * 循环取图，不考虑最后，第一帧画面的问题
  */
 public class ImagePlayerList {
 
@@ -14,12 +17,7 @@ public class ImagePlayerList {
 
     private List<String> mList;
 
-    public ImagePlayerList(List<String> list) {
-        if (list != null) {
-            mList = list;
-        } else {
-            mList = new ArrayList<>();
-        }
+    public ImagePlayerList() {
     }
 
     public List<String> getImageList() {
@@ -27,6 +25,12 @@ public class ImagePlayerList {
             mList = new ArrayList<>();
         }
         return mList;
+    }
+
+    public void setResource(@NonNull List<String> list) {
+        mList = list;
+        //重新初始化数据
+        mPlayingIndex = 0;
     }
 
     public int getPlayingIndex() {
@@ -49,11 +53,11 @@ public class ImagePlayerList {
     }
 
     public boolean hasPrev() {
-        return mList != null && mList.size() != 0 && mPlayingIndex > 0;
+        return mList != null && mList.size() != 0;
     }
 
     public boolean hasNext() {
-        return mList != null && mList.size() != 0 && mList.size() > mPlayingIndex + 1;
+        return mList != null && mList.size() != 0;
     }
 
     public String prev() {
