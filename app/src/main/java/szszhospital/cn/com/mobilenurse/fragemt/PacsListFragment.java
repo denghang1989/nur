@@ -86,7 +86,6 @@ public class PacsListFragment extends BaseDoctorFragment<FragmentOrderBinding, P
                     }
                     break;
                 case R.id.photo:
-                    //PacsImageActivity.startImageActivity(_mActivity, pacsOrder);
                     PacsImagesActivity.startPacsImagesActivity(_mActivity,pacsOrder);
                     break;
             }

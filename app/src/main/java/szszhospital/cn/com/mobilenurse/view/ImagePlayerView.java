@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
+import java.util.List;
+
 import szszhospital.cn.com.mobilenurse.R;
 
 /**
@@ -23,6 +25,7 @@ public class ImagePlayerView extends FrameLayout implements TextureView.SurfaceT
     private ProgressBar          mProgressBar;
     private OnImagePlayerChanged mImagePlayerChanged;
     private int                  mCurrentFrameIndex;
+    private List<String>         mDataFiles;
 
     public ImagePlayerView(Context context) {
         this(context, null);
@@ -72,5 +75,10 @@ public class ImagePlayerView extends FrameLayout implements TextureView.SurfaceT
         if (mImagePlayerChanged != null) {
             mImagePlayerChanged.update(mCurrentFrameIndex);
         }
+    }
+
+    public void setSrcFiles(List<String> list) {
+        mDataFiles = list;
+        mCurrentFrameIndex = 0;
     }
 }
