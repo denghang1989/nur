@@ -36,6 +36,15 @@ public class ImagePlayerView extends FrameLayout implements TextureView.SurfaceT
         initAttrs(context, attrs);
         mRootView = LayoutInflater.from(context).inflate(R.layout.view_player, this, true);
         initView(mRootView);
+        initRender();
+        initPlayer(context);
+    }
+
+    private void initRender() {
+    }
+
+    private void initPlayer(Context context) {
+        Player player = new ImagePlayer(context,mDataFiles);
     }
 
     private void initView(View rootView) {
