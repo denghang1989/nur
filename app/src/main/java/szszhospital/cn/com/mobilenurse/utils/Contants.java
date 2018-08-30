@@ -15,6 +15,7 @@ public class Contants {
     public static final String PHOTO_PATH             = "http://172.18.0.27/dhcemr";   //电子病历图片数据
     public static final String PACS_PATH              = "http://172.18.0.143/annet"; //pacs图像地址
     public static final String PACS_DCM_DOWNLOAD_PATH = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "pacs";
+    public static final String PDF_DOWNLOAD_PATH = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "pdf";
 
     public static List<ModuleTable> getModuleList(String locId, Context context) {
         List<ModuleTable> list = new ArrayList<>();

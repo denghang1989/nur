@@ -1,37 +1,37 @@
 -- Merging decision tree log ---
 manifest
-ADDED from E:\szszhospital\mobilenurse\pictureplayerview\src\main\AndroidManifest.xml:1:1-55
-INJECTED from E:\szszhospital\mobilenurse\pictureplayerview\src\main\AndroidManifest.xml:1:1-55
-INJECTED from E:\szszhospital\mobilenurse\pictureplayerview\src\main\AndroidManifest.xml:1:1-55
-INJECTED from E:\szszhospital\mobilenurse\pictureplayerview\src\main\AndroidManifest.xml:1:1-55
-INJECTED from E:\szszhospital\mobilenurse\pictureplayerview\src\main\AndroidManifest.xml:1:1-55
-INJECTED from E:\szszhospital\mobilenurse\pictureplayerview\src\main\AndroidManifest.xml:1:1-55
-INJECTED from E:\szszhospital\mobilenurse\pictureplayerview\src\main\AndroidManifest.xml:1:1-55
+ADDED from E:\github\nur\pictureplayerview\src\main\AndroidManifest.xml:1:1-55
+INJECTED from E:\github\nur\pictureplayerview\src\main\AndroidManifest.xml:1:1-55
+INJECTED from E:\github\nur\pictureplayerview\src\main\AndroidManifest.xml:1:1-55
+INJECTED from E:\github\nur\pictureplayerview\src\main\AndroidManifest.xml:1:1-55
+INJECTED from E:\github\nur\pictureplayerview\src\main\AndroidManifest.xml:1:1-55
+INJECTED from E:\github\nur\pictureplayerview\src\main\AndroidManifest.xml:1:1-55
+INJECTED from E:\github\nur\pictureplayerview\src\main\AndroidManifest.xml:1:1-55
 	package
-		ADDED from E:\szszhospital\mobilenurse\pictureplayerview\src\main\AndroidManifest.xml:1:11-52
-		INJECTED from E:\szszhospital\mobilenurse\pictureplayerview\src\main\AndroidManifest.xml
-		INJECTED from E:\szszhospital\mobilenurse\pictureplayerview\src\main\AndroidManifest.xml
+		ADDED from E:\github\nur\pictureplayerview\src\main\AndroidManifest.xml:1:11-52
+		INJECTED from E:\github\nur\pictureplayerview\src\main\AndroidManifest.xml
+		INJECTED from E:\github\nur\pictureplayerview\src\main\AndroidManifest.xml
 	android:versionName
-		INJECTED from E:\szszhospital\mobilenurse\pictureplayerview\src\main\AndroidManifest.xml
-		ADDED from E:\szszhospital\mobilenurse\pictureplayerview\src\main\AndroidManifest.xml:1:1-55
-		INJECTED from E:\szszhospital\mobilenurse\pictureplayerview\src\main\AndroidManifest.xml
+		INJECTED from E:\github\nur\pictureplayerview\src\main\AndroidManifest.xml
+		ADDED from E:\github\nur\pictureplayerview\src\main\AndroidManifest.xml:1:1-55
+		INJECTED from E:\github\nur\pictureplayerview\src\main\AndroidManifest.xml
 	xmlns:android
-		ADDED from E:\szszhospital\mobilenurse\pictureplayerview\src\main\AndroidManifest.xml:1:1-55
+		ADDED from E:\github\nur\pictureplayerview\src\main\AndroidManifest.xml:1:1-55
 	android:versionCode
-		INJECTED from E:\szszhospital\mobilenurse\pictureplayerview\src\main\AndroidManifest.xml
-		ADDED from E:\szszhospital\mobilenurse\pictureplayerview\src\main\AndroidManifest.xml:1:1-55
-		INJECTED from E:\szszhospital\mobilenurse\pictureplayerview\src\main\AndroidManifest.xml
+		INJECTED from E:\github\nur\pictureplayerview\src\main\AndroidManifest.xml
+		ADDED from E:\github\nur\pictureplayerview\src\main\AndroidManifest.xml:1:1-55
+		INJECTED from E:\github\nur\pictureplayerview\src\main\AndroidManifest.xml
 uses-sdk
-INJECTED from E:\szszhospital\mobilenurse\pictureplayerview\src\main\AndroidManifest.xml reason: use-sdk injection requested
-INJECTED from E:\szszhospital\mobilenurse\pictureplayerview\src\main\AndroidManifest.xml
-INJECTED from E:\szszhospital\mobilenurse\pictureplayerview\src\main\AndroidManifest.xml
-INJECTED from E:\szszhospital\mobilenurse\pictureplayerview\src\main\AndroidManifest.xml
-INJECTED from E:\szszhospital\mobilenurse\pictureplayerview\src\main\AndroidManifest.xml
+INJECTED from E:\github\nur\pictureplayerview\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from E:\github\nur\pictureplayerview\src\main\AndroidManifest.xml
+INJECTED from E:\github\nur\pictureplayerview\src\main\AndroidManifest.xml
+INJECTED from E:\github\nur\pictureplayerview\src\main\AndroidManifest.xml
+INJECTED from E:\github\nur\pictureplayerview\src\main\AndroidManifest.xml
 	android:targetSdkVersion
-		INJECTED from E:\szszhospital\mobilenurse\pictureplayerview\src\main\AndroidManifest.xml
-		ADDED from E:\szszhospital\mobilenurse\pictureplayerview\src\main\AndroidManifest.xml
-		INJECTED from E:\szszhospital\mobilenurse\pictureplayerview\src\main\AndroidManifest.xml
+		INJECTED from E:\github\nur\pictureplayerview\src\main\AndroidManifest.xml
+		ADDED from E:\github\nur\pictureplayerview\src\main\AndroidManifest.xml
+		INJECTED from E:\github\nur\pictureplayerview\src\main\AndroidManifest.xml
 	android:minSdkVersion
-		INJECTED from E:\szszhospital\mobilenurse\pictureplayerview\src\main\AndroidManifest.xml
-		ADDED from E:\szszhospital\mobilenurse\pictureplayerview\src\main\AndroidManifest.xml
-		INJECTED from E:\szszhospital\mobilenurse\pictureplayerview\src\main\AndroidManifest.xml
+		INJECTED from E:\github\nur\pictureplayerview\src\main\AndroidManifest.xml
+		ADDED from E:\github\nur\pictureplayerview\src\main\AndroidManifest.xml
+		INJECTED from E:\github\nur\pictureplayerview\src\main\AndroidManifest.xml

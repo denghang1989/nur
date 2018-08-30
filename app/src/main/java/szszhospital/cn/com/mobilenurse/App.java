@@ -13,6 +13,8 @@ import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 
+import java.io.File;
+
 import szszhospital.cn.com.mobilenurse.control.LocAccess;
 import szszhospital.cn.com.mobilenurse.remote.ApiService;
 import szszhospital.cn.com.mobilenurse.remote.model.LoginUser;
@@ -67,11 +69,28 @@ public class App extends MultiDexApplication {
         mAsynHandler = new Handler(handlerThread.getLooper());
         //判断一下存储空间 如果超过5G 删除数据
         mAsynHandler.post(() -> {
+            initPacsFile();
+            initPdfFile();
+        });
+    }
+
+    private void initPdfFile() {
+        File pdf = new File(Contants.PDF_DOWNLOAD_PATH);
+        if (!pdf.exists()) {
+            pdf.mkdir();
+        }
+    }
+
+    private void initPacsFile() {
+        File pacs = new File(Contants.PACS_DCM_DOWNLOAD_PATH);
+        if (pacs.exists()) {
             long length = FileUtils.getDirLength(Contants.PACS_DCM_DOWNLOAD_PATH);
             if (length > AppUtil.GB * 5) {
                 FileUtils.deleteAllInDir(Contants.PACS_DCM_DOWNLOAD_PATH);
             }
-        });
+        } else {
+            pacs.mkdir();
+        }
     }
 
     public static Handler getAsynHandler() {

@@ -53,11 +53,6 @@ public class PacsResultAdapter extends BaseQuickAdapter<PacsOrder, BaseViewHolde
             }
         }
 
-        //心电图屏蔽图像标签
-        if (StringUtils.equals(item.TreplocDr, "15") || StringUtils.equals(item.TreplocDr, "16")) {
-            helper.setVisible(R.id.photo, false);
-        }
-
         if (StringUtils.equals("Y", item.TUnRegister)) {
             helper.setVisible(R.id.icon, false);
             helper.setVisible(R.id.photo, false);
@@ -75,7 +70,10 @@ public class PacsResultAdapter extends BaseQuickAdapter<PacsOrder, BaseViewHolde
             helper.setText(R.id.unRegister,"无数据");
         }
 
-
+        //心电图屏蔽图像标签
+        if (StringUtils.equals(item.TreplocDr, "15") || StringUtils.equals(item.TreplocDr, "16")) {
+            helper.setVisible(R.id.photo, false);
+        }
     }
 
     public String getPath(PacsOrder item) {

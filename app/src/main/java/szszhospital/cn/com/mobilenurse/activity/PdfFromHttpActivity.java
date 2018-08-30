@@ -2,6 +2,7 @@ package szszhospital.cn.com.mobilenurse.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.view.View;
 
 import com.blankj.utilcode.util.ToastUtils;
 
@@ -47,10 +48,11 @@ public class PdfFromHttpActivity extends BaseActivity<ActivityPdfBinding> {
     @Override
     protected void initData() {
         super.initData();
+        mDataBinding.loading.setVisibility(View.VISIBLE);
         App.getAsynHandler().post(() -> FileDownUtil.downFileAndChangedPng(mPath, new FileCallback() {
             @Override
             public void success(File file) {
-                mDataBinding.pdfView.fromFile(file).load();
+                mDataBinding.pdfView.fromFile(file).onLoad(page -> mDataBinding.loading.setVisibility(View.GONE)).load();
             }
 
             @Override
