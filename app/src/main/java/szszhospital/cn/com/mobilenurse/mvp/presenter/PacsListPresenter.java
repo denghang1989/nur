@@ -66,7 +66,7 @@ public class PacsListPresenter extends RxPresenter<PacsListContract.View, PacsLi
                             if (mapData.containsKey(key)) {
                                 Long aLong = mapData.get(key);
                                 if (aLong > 1) {
-                                    pacsOrder.TStudyNo="";
+                                    pacsOrder.TUnRegister="Y";
                                 }
                             }
                         }

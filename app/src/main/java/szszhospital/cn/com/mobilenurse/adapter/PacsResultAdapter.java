@@ -58,12 +58,24 @@ public class PacsResultAdapter extends BaseQuickAdapter<PacsOrder, BaseViewHolde
             helper.setVisible(R.id.photo, false);
         }
 
+        if (StringUtils.equals("Y", item.TUnRegister)) {
+            helper.setVisible(R.id.icon, false);
+            helper.setVisible(R.id.photo, false);
+            helper.setVisible(R.id.unRegister, true);
+        } else {
+            helper.setVisible(R.id.icon, true);
+            helper.setVisible(R.id.photo, true);
+            helper.setVisible(R.id.unRegister, false);
+        }
+
         if (StringUtils.isTrimEmpty(item.TStudyNo)) {
             helper.setVisible(R.id.icon, false);
             helper.setVisible(R.id.photo, false);
             helper.setVisible(R.id.unRegister, true);
             helper.setText(R.id.unRegister,"无数据");
         }
+
+
     }
 
     public String getPath(PacsOrder item) {

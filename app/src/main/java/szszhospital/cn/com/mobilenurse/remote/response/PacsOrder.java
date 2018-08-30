@@ -27,6 +27,7 @@ public class PacsOrder implements Parcelable ,Serializable{
      * TRegNo : 3545499
      * TStudyNo : 1631170
      * TreplocDr : 14
+     * TUnRegister
      */
 
     public String Grade;
@@ -57,6 +58,8 @@ public class PacsOrder implements Parcelable ,Serializable{
 
     public String TPdfPath;
     public String TReplocpath;
+
+    public String TUnRegister;
 
 
     public PacsOrder() {
@@ -90,6 +93,7 @@ public class PacsOrder implements Parcelable ,Serializable{
         dest.writeString(this.TreplocDr);
         dest.writeString(this.TPdfPath);
         dest.writeString(this.TReplocpath);
+        dest.writeString(this.TUnRegister);
     }
 
     protected PacsOrder(Parcel in) {
@@ -114,6 +118,7 @@ public class PacsOrder implements Parcelable ,Serializable{
         this.TreplocDr = in.readString();
         this.TPdfPath = in.readString();
         this.TReplocpath = in.readString();
+        this.TUnRegister = in.readString();
     }
 
     public static final Creator<PacsOrder> CREATOR = new Creator<PacsOrder>() {
