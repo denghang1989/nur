@@ -62,7 +62,6 @@ public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBi
         mAdapter = new PacsFtpAdapter(R.layout.item_pacs_ftp, this);
     }
 
-
     @Override
     protected void initView() {
         mPicturePlayerView = mDataBinding.player;
@@ -193,7 +192,8 @@ public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBi
                 .scale(0, 1)
                 .duration(500)
                 .onStart(() -> mDataBinding.error.setVisibility(View.VISIBLE))
-                .onStop(() -> {})
+                .onStop(() -> {
+                })
                 .start();
 
     }
@@ -212,6 +212,7 @@ public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBi
     protected void onDestroy() {
         super.onDestroy();
         mPicturePlayerView.release();
+        App.getAsynHandler().removeCallbacksAndMessages(null);
     }
 
     @Override
