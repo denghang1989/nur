@@ -20,7 +20,13 @@ public interface Player {
 
     void unregisterCallback(Callback callback);
 
-    public interface  Callback {
+    int getCurrentFrameIndex();
+
+    String getCurrentFrame();
+
+    void onDestroyed();
+
+    public interface Callback {
 
         void onSwitchLast(@Nullable int last);
 

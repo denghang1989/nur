@@ -50,6 +50,35 @@ public class ImageRenderer implements Render {
         }
 
         calculateScale(bitmap.getWidth(), bitmap.getHeight());
+
+        Canvas canvas = mTextureView.lockCanvas();
+        if (canvas != null) {
+            canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);// 清空画布
+
+            int left = 0;
+            int top = 0;
+            if (state == WIDTH) {
+                top = calculateTop();
+            } else {
+                left = calculateLeft();
+            }
+            int right = left + mWidth;
+            int bottom = top + mHeight;
+
+            mSrcRect.set(0, 0, bitmap.getWidth(), bitmap.getHeight());
+            mDstRect.set(left, top, right, bottom);
+            canvas.drawBitmap(bitmap, mSrcRect, mDstRect, mPaint);
+
+            mTextureView.unlockCanvasAndPost(canvas);
+        }
+    }
+
+    private int calculateLeft() {
+        return (getWidth() - mWidth) / 2;
+    }
+
+    private int calculateTop() {
+        return (getHeight() - mHeight) / 2;
     }
 
     //这里默认只计算第一张图片的大小，如果接下来的图片大小不一致可能会变形

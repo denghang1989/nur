@@ -77,4 +77,16 @@ public class ImagePlayerList {
         mPlayingIndex = newIndex;
         return mList.get(mPlayingIndex);
     }
+
+    public String seekTo(int index) {
+        int newIndex = index;
+        if (newIndex >= mList.size()) {
+            newIndex = 0;
+        }
+        if (index < 0) {
+            newIndex = mList.size() - 1;
+        }
+        mPlayingIndex = newIndex;
+        return mList.get(mPlayingIndex);
+    }
 }

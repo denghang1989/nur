@@ -10,8 +10,6 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
-import java.util.List;
-
 import szszhospital.cn.com.mobilenurse.R;
 
 /**
@@ -24,8 +22,8 @@ public class ImagePlayerView extends FrameLayout implements TextureView.SurfaceT
     private TextureView          mTextureView;
     private ProgressBar          mProgressBar;
     private OnImagePlayerChanged mImagePlayerChanged;
-    private int                  mCurrentFrameIndex;
-    private List<String>         mDataFiles;
+    private Render               mImageRender;
+    private Player               mPlayer;
 
     public ImagePlayerView(Context context) {
         this(context, null);
@@ -41,10 +39,11 @@ public class ImagePlayerView extends FrameLayout implements TextureView.SurfaceT
     }
 
     private void initRender() {
+        mImageRender = new ImageRenderer(mTextureView, 2);
     }
 
     private void initPlayer(Context context) {
-        Player player = new ImagePlayer(context,mDataFiles);
+        mPlayer = new ImagePlayer(context, mImageRender);
     }
 
     private void initView(View rootView) {
@@ -76,18 +75,31 @@ public class ImagePlayerView extends FrameLayout implements TextureView.SurfaceT
         if (mImagePlayerChanged != null) {
             mImagePlayerChanged.onDestroyed();
         }
+        mPlayer.onDestroyed();
         return true;
     }
 
     @Override
     public void onSurfaceTextureUpdated(SurfaceTexture surface) {
         if (mImagePlayerChanged != null) {
-            mImagePlayerChanged.update(mCurrentFrameIndex);
+            mImagePlayerChanged.update(mPlayer.getCurrentFrameIndex());
         }
     }
 
-    public void setSrcFiles(List<String> list) {
-        mDataFiles = list;
-        mCurrentFrameIndex = 0;
+    public void next() {
+        mPlayer.next();
     }
+
+    public void prev() {
+        mPlayer.preV();
+    }
+
+    public String getCurrentFile() {
+        return mPlayer.getCurrentFrame();
+    }
+
+    public int getCurrentIndex() {
+        return mPlayer.getCurrentFrameIndex();
+    }
+
 }
