@@ -6,6 +6,9 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.Rect;
+import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
 import android.view.TextureView;
 
 import static com.xiuyukeji.pictureplayerview.annotations.FitSource.FIT_CENTER;
@@ -19,6 +22,7 @@ import static com.xiuyukeji.pictureplayerview.annotations.FitSource.FIT_WIDTH;
 public class ImageRenderer implements Render {
 
     private static final int WIDTH = 0, HEIGHT = 1;
+    private static final String TAG = "ImageRenderer";
 
     private TextureView mTextureView;
     private Paint       mPaint;
@@ -29,18 +33,21 @@ public class ImageRenderer implements Render {
     private int         mWidth;
     private int         mHeight;
     private int state = WIDTH;
+    private Handler mHandler;
 
-    public ImageRenderer(TextureView textureView, int scaleType) {
+    public ImageRenderer(TextureView textureView, int scaleType, Handler handler) {
         mTextureView = textureView;
         mScaleType = scaleType;
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
         mSrcRect = new Rect();
         mDstRect = new Rect();
+        mHandler = handler;
     }
 
     @Override
     public void onDraw(int frameIndex, Bitmap bitmap) {
+        Log.d(TAG, "onDraw: " + frameIndex);
         if (frameIndex < 0) {
             return;
         }
@@ -68,7 +75,10 @@ public class ImageRenderer implements Render {
             mSrcRect.set(0, 0, bitmap.getWidth(), bitmap.getHeight());
             mDstRect.set(left, top, right, bottom);
             canvas.drawBitmap(bitmap, mSrcRect, mDstRect, mPaint);
-
+            Message message = mHandler.obtainMessage();
+            message.what = 1;
+            message.arg1 = frameIndex;
+            mHandler.sendMessage(message);
             mTextureView.unlockCanvasAndPost(canvas);
         }
     }

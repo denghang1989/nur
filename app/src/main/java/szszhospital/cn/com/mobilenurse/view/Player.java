@@ -27,11 +27,6 @@ public interface Player {
     void onDestroyed();
 
     public interface Callback {
-
-        void onSwitchLast(@Nullable int last);
-
-        void onSwitchNext(@Nullable int next);
-
         void onComplete(@Nullable int next);
     }
 }

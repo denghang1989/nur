@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
+import java.util.Arrays;
+
 import szszhospital.cn.com.mobilenurse.R;
 
 /**
@@ -22,7 +24,6 @@ public class ImagePlayerView extends FrameLayout implements TextureView.SurfaceT
     private TextureView          mTextureView;
     private ProgressBar          mProgressBar;
     private OnImagePlayerChanged mImagePlayerChanged;
-    private Render               mImageRender;
     private Player               mPlayer;
 
     public ImagePlayerView(Context context) {
@@ -34,16 +35,12 @@ public class ImagePlayerView extends FrameLayout implements TextureView.SurfaceT
         initAttrs(context, attrs);
         mRootView = LayoutInflater.from(context).inflate(R.layout.view_player, this, true);
         initView(mRootView);
-        initRender();
         initPlayer(context);
     }
 
-    private void initRender() {
-        mImageRender = new ImageRenderer(mTextureView, 2);
-    }
 
     private void initPlayer(Context context) {
-        mPlayer = new ImagePlayer(context, mImageRender);
+        mPlayer = new ImagePlayer(context,mTextureView);
     }
 
     private void initView(View rootView) {
@@ -102,4 +99,15 @@ public class ImagePlayerView extends FrameLayout implements TextureView.SurfaceT
         return mPlayer.getCurrentFrameIndex();
     }
 
+    public void clear() {
+        mPlayer.onDestroyed();
+    }
+
+    public void setDataSource(String[] pathArray) {
+        mPlayer.setSource(Arrays.asList(pathArray));
+    }
+
+    public void setOnCompleteListener(Player.Callback callback){
+        mPlayer.registerCallback(callback);
+    }
 }

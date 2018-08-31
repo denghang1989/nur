@@ -3,6 +3,7 @@ package szszhospital.cn.com.mobilenurse.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Parcelable;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.MotionEvent;
 import android.view.View;
@@ -11,9 +12,6 @@ import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.github.florent37.viewanimator.ViewAnimator;
 import com.raizlabs.android.dbflow.sql.language.Select;
-import com.xiuyukeji.pictureplayerview.PicturePlayerView;
-import com.xiuyukeji.pictureplayerview.interfaces.OnStopListener;
-import com.xiuyukeji.pictureplayerview.interfaces.OnUpdateListener;
 
 import java.io.File;
 import java.util.List;
@@ -33,16 +31,21 @@ import szszhospital.cn.com.mobilenurse.remote.response.PacsOrder;
 import szszhospital.cn.com.mobilenurse.utils.Contants;
 import szszhospital.cn.com.mobilenurse.utils.DcmUtil;
 import szszhospital.cn.com.mobilenurse.utils.FileDownUtil;
+import szszhospital.cn.com.mobilenurse.view.ImagePlayerView;
+import szszhospital.cn.com.mobilenurse.view.Player;
 
 public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBinding, PacsImagesPresenter> implements PacsImagesContract.View, View.OnTouchListener {
 
     private static final String TAG      = "PacsImagesActivity";
     private static final String KEY_DATA = "data";
-    private PacsOrder         mPacsorder;
-    private PacsFtpAdapter    mAdapter;
-    private List<DcmName>     mCurrentDcmNames;
-    private int               mSelectImage;
-    private PicturePlayerView mPicturePlayerView;
+    private PacsOrder       mPacsorder;
+    private PacsFtpAdapter  mAdapter;
+    private List<DcmName>   mCurrentDcmNames;
+    private int             mSelectImage;
+    private ImagePlayerView mPicturePlayerView;
+    private float           mDownY;
+    private float           mDownX;
+    private int             mSlop;
 
     public static void startPacsImagesActivity(Context context, PacsOrder pacsorder) {
         Intent intent = new Intent(context, PacsImagesActivity.class);
@@ -60,6 +63,7 @@ public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBi
         super.init();
         mPacsorder = getIntent().getParcelableExtra(KEY_DATA);
         mAdapter = new PacsFtpAdapter(R.layout.item_pacs_ftp, this);
+        mSlop = 30;
     }
 
     @Override
@@ -89,18 +93,11 @@ public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBi
 
         mDataBinding.touch.setOnTouchListener(this);
 
-        mPicturePlayerView.setOnUpdateListener(new OnUpdateListener() {
+        mPicturePlayerView.setOnCompleteListener(new Player.Callback() {
             @Override
-            public void onUpdate(int frameIndex) {
-                mSelectImage = frameIndex;
-                changText(frameIndex);
-            }
-        });
-
-        mPicturePlayerView.setOnStopListener(new OnStopListener() {
-            @Override
-            public void onStop() {
-                changedPacsImage();
+            public void onComplete(@Nullable int next) {
+                changText(next + 1);
+                mSelectImage = next;
             }
         });
     }
@@ -114,8 +111,7 @@ public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBi
             File pngFile = new File(Contants.PACS_DCM_DOWNLOAD_PATH, imagename.replace(".dcm", ".png"));
             pathArray[i] = pngFile.getAbsolutePath();
         }
-        mPicturePlayerView.stop();
-        mPicturePlayerView.setDataSource(pathArray, pathArray.length * 80);
+        mPicturePlayerView.setDataSource(pathArray);
     }
 
     private void showImageAndDown() {
@@ -211,7 +207,7 @@ public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBi
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mPicturePlayerView.release();
+        mPicturePlayerView.clear();
         App.getAsynHandler().removeCallbacksAndMessages(null);
     }
 
@@ -224,20 +220,35 @@ public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBi
 
         switch (action) {
             case MotionEvent.ACTION_DOWN:
-                if (mPicturePlayerView.isPaused()) {
-                    mPicturePlayerView.resume();
-                } else {
-                    mPicturePlayerView.start();
-                }
+                mDownX = event.getX();
+                mDownY = event.getY();
                 mDataBinding.container.setVisibility(View.INVISIBLE);
+                mPicturePlayerView.next();
+                break;
+            case MotionEvent.ACTION_MOVE:
+                float moveX = event.getX();
+                float moveY = event.getY();
+                // x 轴移动
+                if (Math.abs(moveX - mDownX) > Math.abs(moveY - mDownY)) {
+                    if (mCurrentDcmNames != null && mCurrentDcmNames.size() > 1) {
+                        // --->移动
+                        if ((moveX - mDownX > 0) && (Math.abs(moveX - mDownX) > mSlop)) {
+                            mDownX = mDownX + mSlop;
+                            mPicturePlayerView.next();
+                        }
+                        // <---移动
+                        if ((moveX - mDownX < 0) && (Math.abs(moveX - mDownX) > mSlop)) {
+                            mDownX = mDownX - mSlop;
+                            mPicturePlayerView.prev();
+                        }
+                    }
+                }
                 break;
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
-                if (mPicturePlayerView.isPlaying()) {
-                    mPicturePlayerView.pause();
-                    changedPacsImage();
-                }
+                mPicturePlayerView.clear();
                 mDataBinding.container.setVisibility(View.VISIBLE);
+                changedPacsImage();
                 break;
         }
         return true;
