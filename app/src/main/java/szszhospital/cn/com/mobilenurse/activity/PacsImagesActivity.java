@@ -2,9 +2,12 @@ package szszhospital.cn.com.mobilenurse.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -35,7 +38,7 @@ import szszhospital.cn.com.mobilenurse.view.ImagePlayerView;
 import szszhospital.cn.com.mobilenurse.view.Player;
 
 public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBinding, PacsImagesPresenter> implements PacsImagesContract.View, View.OnTouchListener {
-
+    public static final  int    WHAT     = 1;
     private static final String TAG      = "PacsImagesActivity";
     private static final String KEY_DATA = "data";
     private PacsOrder       mPacsorder;
@@ -46,6 +49,19 @@ public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBi
     private float           mDownY;
     private float           mDownX;
     private int             mSlop;
+    private Handler mHandler = new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message msg) {
+            int what = msg.what;
+            switch (what) {
+                case WHAT:
+                    mPicturePlayerView.next();
+                    mHandler.sendEmptyMessageDelayed(WHAT, 50);
+                    break;
+            }
+            return true;
+        }
+    });
 
     public static void startPacsImagesActivity(Context context, PacsOrder pacsorder) {
         Intent intent = new Intent(context, PacsImagesActivity.class);
@@ -86,6 +102,7 @@ public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBi
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 queryDcmFile(position);
                 setRecyclerViewMark(position);
+                clearPrevDownTask();
                 showImageAndDown();
                 initPlayerResource();
             }
@@ -102,6 +119,9 @@ public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBi
         });
     }
 
+    private void clearPrevDownTask() {
+        App.getAsynHandler().removeCallbacksAndMessages(null);
+    }
 
     private void initPlayerResource() {
         String[] pathArray = new String[mCurrentDcmNames.size()];
@@ -115,11 +135,12 @@ public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBi
     }
 
     private void showImageAndDown() {
-        int count = 0;
+        long count = 0;
         for (int i = 0; i < mCurrentDcmNames.size(); i++) {
             DcmName dcmName = mCurrentDcmNames.get(i);
             String imagePath = dcmName.IMAGEPATH;
             String imagename = dcmName.IMAGENAME;
+            long size = dcmName.size;
             File file = new File(Contants.PACS_DCM_DOWNLOAD_PATH, imagename);
             if (file.exists()) {
                 if (i == 0) {
@@ -127,17 +148,18 @@ public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBi
                     mDataBinding.container.setVisibility(View.VISIBLE);
                 }
             } else {
-                count++;
+                count = count + size;
                 showProgress();
                 App.getAsynHandler().post(() -> FileDownUtil.downFileAndChangedPng(Contants.PACS_PATH + imagePath + imagename, file.getAbsolutePath(), null));
             }
         }
+        Log.d(TAG, "showImageAndDown: " + count);
         mDataBinding.mark.postDelayed(new Runnable() {
             @Override
             public void run() {
                 hideProgress();
             }
-        }, count * 50);
+        }, (500 * count) / (1024 * 1024));
     }
 
     private void queryDcmFile(int position) {
@@ -218,18 +240,23 @@ public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBi
             return false;
         }
 
+        if (mDataBinding.progress.getVisibility() == View.VISIBLE) {
+            return false;
+        }
+
         switch (action) {
             case MotionEvent.ACTION_DOWN:
                 mDownX = event.getX();
                 mDownY = event.getY();
                 mDataBinding.container.setVisibility(View.INVISIBLE);
-                mPicturePlayerView.next();
+                mHandler.sendEmptyMessageDelayed(WHAT, 50);
                 break;
             case MotionEvent.ACTION_MOVE:
                 float moveX = event.getX();
                 float moveY = event.getY();
-                // x 轴移动
                 if (Math.abs(moveX - mDownX) > Math.abs(moveY - mDownY)) {
+                    mHandler.removeMessages(WHAT);
+                    // x 轴移动
                     if (mCurrentDcmNames != null && mCurrentDcmNames.size() > 1) {
                         // --->移动
                         if ((moveX - mDownX > 0) && (Math.abs(moveX - mDownX) > mSlop)) {
@@ -249,6 +276,7 @@ public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBi
                 mPicturePlayerView.clear();
                 mDataBinding.container.setVisibility(View.VISIBLE);
                 changedPacsImage();
+                mHandler.removeMessages(WHAT);
                 break;
         }
         return true;

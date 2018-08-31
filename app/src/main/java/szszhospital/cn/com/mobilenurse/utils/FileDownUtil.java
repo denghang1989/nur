@@ -1,7 +1,5 @@
 package szszhospital.cn.com.mobilenurse.utils;
 
-import android.os.Environment;
-
 import com.blankj.utilcode.util.CloseUtils;
 
 import java.io.BufferedInputStream;
@@ -34,7 +32,7 @@ public class FileDownUtil {
             int code = connection.getResponseCode();
             if (code == 200) {
                 BufferedInputStream bis = new BufferedInputStream(connection.getInputStream());
-                File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath(), name);
+                File file = new File(Contants.PDF_DOWNLOAD_PATH, name);
                 BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
                 byte[] buff = new byte[1024 * 10];
                 int length = 0;
@@ -42,9 +40,9 @@ public class FileDownUtil {
                     bos.write(buff, 0, length);
                 }
                 // 关闭流
-                CloseUtils.closeIOQuietly(bos,bis);
+                CloseUtils.closeIOQuietly(bos, bis);
                 // 6. 回调
-                if (callback!=null) {
+                if (callback != null) {
                     callback.success(file);
                 }
             }
@@ -52,7 +50,7 @@ public class FileDownUtil {
             connection.disconnect();
         } catch (Exception e) {
             e.printStackTrace();
-            if (callback!=null) {
+            if (callback != null) {
                 callback.error(e);
             }
         }
@@ -86,11 +84,11 @@ public class FileDownUtil {
                     bos.write(buff, 0, length);
                 }
                 // 关闭流
-                CloseUtils.closeIOQuietly(bos,bis);
+                CloseUtils.closeIOQuietly(bos, bis);
                 // 转换图片
                 File filePng = DcmUtil.readFile(file.getAbsolutePath());
                 // 6. 回调
-                if (callback!=null) {
+                if (callback != null) {
                     callback.success(filePng);
                 }
             }
@@ -98,7 +96,7 @@ public class FileDownUtil {
             connection.disconnect();
         } catch (Exception e) {
             e.printStackTrace();
-            if (callback!=null) {
+            if (callback != null) {
                 callback.error(e);
             }
         }

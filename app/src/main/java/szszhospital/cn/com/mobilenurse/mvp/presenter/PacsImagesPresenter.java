@@ -3,6 +3,7 @@ package szszhospital.cn.com.mobilenurse.mvp.presenter;
 import android.util.Log;
 
 import com.blankj.utilcode.util.NetworkUtils;
+import com.raizlabs.android.dbflow.sql.language.Select;
 
 import org.apache.commons.net.ftp.FTPFile;
 
@@ -22,6 +23,7 @@ import szszhospital.cn.com.mobilenurse.remote.ApiService;
 import szszhospital.cn.com.mobilenurse.remote.RxUtil;
 import szszhospital.cn.com.mobilenurse.remote.response.DcmName;
 import szszhospital.cn.com.mobilenurse.remote.response.PacsImagePath;
+import szszhospital.cn.com.mobilenurse.remote.response.PacsImagePath_Table;
 import szszhospital.cn.com.mobilenurse.utils.FtpUtil;
 
 public class PacsImagesPresenter extends RxPresenter<PacsImagesContract.View, PacsImagesContract.Model> implements PacsImagesContract.Presenter {
@@ -51,6 +53,24 @@ public class PacsImagesPresenter extends RxPresenter<PacsImagesContract.View, Pa
     @Override
     public void getPacsImages(String studyId, String type) {
         mView.showProgress();
+        try {
+            List<PacsImagePath> data = getDataByDb(studyId, type);
+            if (data.size() > 0) {
+                mView.getRealImagePath(data);
+                mView.hideNoData();
+            } else {
+                getDataByNet(studyId, type);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private List<PacsImagePath> getDataByDb(String studyId, String type){
+        return new Select().from(PacsImagePath.class).where(PacsImagePath_Table.STUDYID.eq(studyId)).queryList();
+    }
+
+    private void getDataByNet(String studyId, String type) throws Exception {
         ApiService.Instance().getService()
                 .getPacsImageFtpPath(studyId, type)
                 .subscribeOn(Schedulers.io())
@@ -67,10 +87,12 @@ public class PacsImagesPresenter extends RxPresenter<PacsImagesContract.View, Pa
                             FTPFile[] ftpFiles = mFtp.getFtpClient().listFiles(ftpPath);
                             for (int j = 0; j < ftpFiles.length; j++) {
                                 String fileName = ftpFiles[j].getName();
+                                long size = ftpFiles[j].getSize();
                                 Log.d(TAG, "apply: " + fileName);
                                 DcmName dcmName = new DcmName();
                                 dcmName.IMAGENAME = fileName;
                                 dcmName.IMAGEPATH = ftpPath;
+                                dcmName.size = size;
                                 dcmName.save();
                                 if (j == 0) {
                                     obj.thumbnailPath = ftpPath + fileName;

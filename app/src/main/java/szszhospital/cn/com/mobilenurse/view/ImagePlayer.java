@@ -31,7 +31,7 @@ public class ImagePlayer implements Player {
         @Override
         public boolean handleMessage(Message msg) {
             int what = msg.what;
-            Log.d(TAG, "handleMessage: "+what);
+            Log.d(TAG, "handleMessage: " + what);
             switch (what) {
                 case 1:
                     for (int i = 0; i < mCallbacks.size(); i++) {
@@ -67,15 +67,17 @@ public class ImagePlayer implements Player {
         mAsynHandler.post(new Runnable() {
             @Override
             public void run() {
-                File file = new File(next);
                 int playingIndex = mPlayerList.getPlayingIndex();
-                try {
-                    FutureTarget<Bitmap> submit = Glide.with(mContext).asBitmap().load(file).submit();
-                    Bitmap bitmap = submit.get();
-                    mHandler.post(() -> mRender.onDraw(playingIndex, bitmap));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    mRender.onError(e.getMessage());
+                File file = new File(next);
+                if (file.exists()) {
+                    try {
+                        FutureTarget<Bitmap> submit = Glide.with(mContext).asBitmap().load(file).submit();
+                        Bitmap bitmap = submit.get();
+                        mHandler.post(() -> mRender.onDraw(playingIndex, bitmap));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        mRender.onError(e.getMessage());
+                    }
                 }
             }
         });

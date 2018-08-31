@@ -16,6 +16,9 @@ public class DcmName extends BaseModel {
     @PrimaryKey
     public String IMAGENAME;
 
+    @Column
+    public long size;
+
     @Override
     public String toString() {
         return "DcmName{" +
