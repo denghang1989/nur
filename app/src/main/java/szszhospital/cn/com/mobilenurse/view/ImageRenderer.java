@@ -8,7 +8,6 @@ import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.TextureView;
 
 import static com.xiuyukeji.pictureplayerview.annotations.FitSource.FIT_CENTER;
@@ -47,7 +46,6 @@ public class ImageRenderer implements Render {
 
     @Override
     public void onDraw(int frameIndex, Bitmap bitmap) {
-        Log.d(TAG, "onDraw: " + frameIndex);
         if (frameIndex < 0) {
             return;
         }
