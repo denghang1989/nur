@@ -67,7 +67,7 @@ public class App extends MultiDexApplication {
         HandlerThread handlerThread = new AsynHandlerThread();
         handlerThread.start();
         mAsynHandler = new Handler(handlerThread.getLooper());
-        //判断一下存储空间 如果超过5G 删除数据
+        //判断一下存储空间 如果超过20G 删除数据
         mAsynHandler.post(() -> {
             initPacsFile();
             initPdfFile();
@@ -85,7 +85,7 @@ public class App extends MultiDexApplication {
         File pacs = new File(Contants.PACS_DCM_DOWNLOAD_PATH);
         if (pacs.exists()) {
             long length = FileUtils.getDirLength(Contants.PACS_DCM_DOWNLOAD_PATH);
-            if (length > AppUtil.GB * 5) {
+            if (length > AppUtil.GB * 20) {
                 FileUtils.deleteAllInDir(Contants.PACS_DCM_DOWNLOAD_PATH);
             }
         } else {
