@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.TextureView;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.ProgressBar;
 
 import java.util.Arrays;
 
@@ -22,7 +21,6 @@ public class ImagePlayerView extends FrameLayout implements TextureView.SurfaceT
     private View                 mRootView;
     private int                  mCacheNumber;
     private TextureView          mTextureView;
-    private ProgressBar          mProgressBar;
     private OnImagePlayerChanged mImagePlayerChanged;
     private Player               mPlayer;
 
@@ -46,7 +44,6 @@ public class ImagePlayerView extends FrameLayout implements TextureView.SurfaceT
     private void initView(View rootView) {
         mTextureView = rootView.findViewById(R.id.textureView);
         mTextureView.setSurfaceTextureListener(this);
-        mProgressBar = rootView.findViewById(R.id.loading);
     }
 
     private void initAttrs(Context context, AttributeSet attrs) {
@@ -107,7 +104,7 @@ public class ImagePlayerView extends FrameLayout implements TextureView.SurfaceT
         mPlayer.setSource(Arrays.asList(pathArray));
     }
 
-    public void setOnCompleteListener(Player.Callback callback){
-        mPlayer.registerCallback(callback);
+    public void setOnCompleteListener(RenderCompleted callback){
+        mPlayer.setCompletedListener(callback);
     }
 }

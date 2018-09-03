@@ -5,9 +5,7 @@ import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Parcelable;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -35,7 +33,7 @@ import szszhospital.cn.com.mobilenurse.utils.Contants;
 import szszhospital.cn.com.mobilenurse.utils.DcmUtil;
 import szszhospital.cn.com.mobilenurse.utils.FileDownUtil;
 import szszhospital.cn.com.mobilenurse.view.ImagePlayerView;
-import szszhospital.cn.com.mobilenurse.view.Player;
+import szszhospital.cn.com.mobilenurse.view.RenderCompleted;
 
 public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBinding, PacsImagesPresenter> implements PacsImagesContract.View, View.OnTouchListener {
     public static final  int    WHAT     = 1;
@@ -110,12 +108,13 @@ public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBi
 
         mDataBinding.touch.setOnTouchListener(this);
 
-        mPicturePlayerView.setOnCompleteListener(new Player.Callback() {
+        mPicturePlayerView.setOnCompleteListener(new RenderCompleted() {
             @Override
-            public void onComplete(@Nullable int next) {
-                changText(next + 1);
-                mSelectImage = next;
+            public void onCompleted(int index) {
+                changText(index + 1);
+                mSelectImage = index;
             }
+
         });
     }
 
@@ -153,7 +152,6 @@ public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBi
                 App.getAsynHandler().post(() -> FileDownUtil.downFileAndChangedPng(Contants.PACS_PATH + imagePath + imagename, file.getAbsolutePath(), null));
             }
         }
-        Log.d(TAG, "showImageAndDown: " + count);
         mDataBinding.mark.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -249,7 +247,7 @@ public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBi
                 mDownX = event.getX();
                 mDownY = event.getY();
                 mDataBinding.container.setVisibility(View.INVISIBLE);
-                mHandler.sendEmptyMessageDelayed(WHAT, 50);
+                mHandler.sendEmptyMessageDelayed(WHAT, 100);
                 break;
             case MotionEvent.ACTION_MOVE:
                 float moveX = event.getX();

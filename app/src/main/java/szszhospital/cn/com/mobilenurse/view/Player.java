@@ -1,7 +1,5 @@
 package szszhospital.cn.com.mobilenurse.view;
 
-import android.support.annotation.Nullable;
-
 import java.util.List;
 
 /**
@@ -16,17 +14,12 @@ public interface Player {
 
     void seekTo(int frameIndex);
 
-    void registerCallback(Callback callback);
-
-    void unregisterCallback(Callback callback);
-
     int getCurrentFrameIndex();
 
     String getCurrentFrame();
 
     void onDestroyed();
 
-    public interface Callback {
-        void onComplete(@Nullable int next);
-    }
+    void setCompletedListener(RenderCompleted completed);
+
 }

@@ -58,6 +58,7 @@ public class PacsImagesPresenter extends RxPresenter<PacsImagesContract.View, Pa
             if (data.size() > 0) {
                 mView.getRealImagePath(data);
                 mView.hideNoData();
+                mView.hideProgress();
             } else {
                 getDataByNet(studyId, type);
             }

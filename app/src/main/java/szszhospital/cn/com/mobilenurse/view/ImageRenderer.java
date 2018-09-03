@@ -6,8 +6,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.Rect;
-import android.os.Handler;
-import android.os.Message;
 import android.util.Log;
 import android.view.TextureView;
 
@@ -33,16 +31,16 @@ public class ImageRenderer implements Render {
     private int         mWidth;
     private int         mHeight;
     private int state = WIDTH;
-    private Handler mHandler;
+    private RenderCompleted mCompleted;
 
-    public ImageRenderer(TextureView textureView, int scaleType, Handler handler) {
+    public ImageRenderer(TextureView textureView, int scaleType, RenderCompleted completed) {
         mTextureView = textureView;
         mScaleType = scaleType;
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
         mSrcRect = new Rect();
         mDstRect = new Rect();
-        mHandler = handler;
+        mCompleted = completed;
     }
 
     @Override
@@ -75,10 +73,9 @@ public class ImageRenderer implements Render {
             mSrcRect.set(0, 0, bitmap.getWidth(), bitmap.getHeight());
             mDstRect.set(left, top, right, bottom);
             canvas.drawBitmap(bitmap, mSrcRect, mDstRect, mPaint);
-            Message message = mHandler.obtainMessage();
-            message.what = 1;
-            message.arg1 = frameIndex;
-            mHandler.sendMessage(message);
+            if (mCompleted != null) {
+                mCompleted.onCompleted(frameIndex);
+            }
             mTextureView.unlockCanvasAndPost(canvas);
         }
     }
