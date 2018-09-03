@@ -54,7 +54,7 @@ public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBi
             switch (what) {
                 case WHAT:
                     mPicturePlayerView.next();
-                    mHandler.sendEmptyMessageDelayed(WHAT, 50);
+                    mHandler.sendEmptyMessageDelayed(WHAT, 80);
                     break;
             }
             return true;
@@ -247,7 +247,7 @@ public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBi
                 mDownX = event.getX();
                 mDownY = event.getY();
                 mDataBinding.container.setVisibility(View.INVISIBLE);
-                mHandler.sendEmptyMessageDelayed(WHAT, 100);
+                mHandler.sendEmptyMessageDelayed(WHAT, 80);
                 break;
             case MotionEvent.ACTION_MOVE:
                 float moveX = event.getX();
