@@ -4,8 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
-    android:minWidth="@dimen/row_header_width"
-    android:layout_height="@dimen/cell_height">
+    android:layout_height="@dimen/cell_height"
+    android:minWidth="@dimen/row_header_width">
 
     <TextView
         android:id="@+id/col"

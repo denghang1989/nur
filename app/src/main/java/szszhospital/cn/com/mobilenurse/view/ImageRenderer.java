@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.Rect;
-import android.util.Log;
 import android.view.TextureView;
 
 import static com.xiuyukeji.pictureplayerview.annotations.FitSource.FIT_CENTER;
@@ -20,7 +19,6 @@ import static com.xiuyukeji.pictureplayerview.annotations.FitSource.FIT_WIDTH;
 public class ImageRenderer implements Render {
 
     private static final int WIDTH = 0, HEIGHT = 1;
-    private static final String TAG = "ImageRenderer";
 
     private TextureView mTextureView;
     private Paint       mPaint;
@@ -45,7 +43,6 @@ public class ImageRenderer implements Render {
 
     @Override
     public void onDraw(int frameIndex, Bitmap bitmap) {
-        Log.d(TAG, "onDraw: " + frameIndex);
         if (frameIndex < 0) {
             return;
         }
