@@ -3,6 +3,8 @@ package szszhospital.cn.com.mobilenurse.fragemt;
 import android.support.design.widget.TabLayout;
 import android.view.View;
 
+import com.raizlabs.android.dbflow.sql.language.Select;
+
 import java.util.List;
 
 import szszhospital.cn.com.mobilenurse.App;
@@ -14,6 +16,7 @@ import szszhospital.cn.com.mobilenurse.mvp.contract.LocAccessContract;
 import szszhospital.cn.com.mobilenurse.mvp.presenter.LocAccessPresenter;
 import szszhospital.cn.com.mobilenurse.remote.request.LocAccessRequest;
 import szszhospital.cn.com.mobilenurse.remote.response.LocAccessResponse;
+import szszhospital.cn.com.mobilenurse.remote.response.LocAccessResponse_Table;
 import szszhospital.cn.com.mobilenurse.view.TitleSheetDialogFragment;
 
 public class MainFragment extends BasePresenterFragment<FragmentMainBinding, LocAccessPresenter> implements LocAccessContract.View {
@@ -71,7 +74,14 @@ public class MainFragment extends BasePresenterFragment<FragmentMainBinding, Loc
 
     @Override
     public void setPageAdapter(List<LocAccessResponse> list) {
-        MainFragmentAdapter adapter = new MainFragmentAdapter(getChildFragmentManager(), list);
-        mDataBinding.workList.setAdapter(adapter);
+        List<LocAccessResponse> locAccess = new Select().from(LocAccessResponse.class).where(LocAccessResponse_Table.LocId.eq(App.loginUser.UserLoc)).orderBy(LocAccessResponse_Table.position,true).queryList();
+        if (locAccess.size() == 0) {
+            MainFragmentAdapter adapter = new MainFragmentAdapter(getChildFragmentManager(), list);
+            mDataBinding.workList.setAdapter(adapter);
+        } else if (list.size() == locAccess.size()) {
+            MainFragmentAdapter adapter = new MainFragmentAdapter(getChildFragmentManager(), locAccess);
+            mDataBinding.workList.setAdapter(adapter);
+        }
+
     }
 }

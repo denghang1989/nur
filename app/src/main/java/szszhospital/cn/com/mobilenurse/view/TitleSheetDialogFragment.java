@@ -24,13 +24,14 @@ import szszhospital.cn.com.mobilenurse.remote.response.LocAccessResponse;
 import szszhospital.cn.com.mobilenurse.remote.response.LocAccessResponse_Table;
 import szszhospital.cn.com.mobilenurse.utils.OnRecyclerItemClickListener;
 
-public class TitleSheetDialogFragment extends BaseFullBottomSheetFragment {
+public class TitleSheetDialogFragment extends BaseFullBottomSheetFragment implements DataChangedCallback<List<LocAccessResponse>> {
     private static final String DATA = "data";
-    private RecyclerView      mRecyclerView;
-    private Activity          _mActivity;
-    private String            mUserLoc;
-    private TitleSheetAdapter mAdapter;
-    private ItemTouchHelper   mItemTouchHelper;
+    private RecyclerView           mRecyclerView;
+    private Activity               _mActivity;
+    private String                 mUserLoc;
+    private TitleSheetAdapter      mAdapter;
+    private ItemTouchHelper        mItemTouchHelper;
+    private TitleTouchHelpCallback mHelpCallback;
 
     public static TitleSheetDialogFragment newInstance(int[] points) {
         Bundle args = new Bundle();
@@ -106,7 +107,23 @@ public class TitleSheetDialogFragment extends BaseFullBottomSheetFragment {
         List<LocAccessResponse> locAccess = new Select().from(LocAccessResponse.class).where(LocAccessResponse_Table.LocId.eq(mUserLoc)).queryList();
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.setNewData(locAccess);
-        mItemTouchHelper = new ItemTouchHelper(new TitleTouchHelpCallback(_mActivity, mAdapter));
+        mHelpCallback = new TitleTouchHelpCallback(_mActivity, mAdapter);
+        mHelpCallback.setDataChangedCallback(this);
+        mItemTouchHelper = new ItemTouchHelper(mHelpCallback);
         mItemTouchHelper.attachToRecyclerView(mRecyclerView);
+    }
+
+    @Override
+    public void onMove(List<LocAccessResponse> data) {
+        for (int i = 0; i < data.size(); i++) {
+            LocAccessResponse locAccessResponse = data.get(i);
+            locAccessResponse.position = i;
+            locAccessResponse.save();
+        }
+    }
+
+    @Override
+    public void onSwiped(List<LocAccessResponse> data) {
+
     }
 }

@@ -9,13 +9,16 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import com.github.florent37.viewanimator.ViewAnimator;
 
 import java.util.Collections;
+import java.util.List;
 
 import szszhospital.cn.com.mobilenurse.R;
 import szszhospital.cn.com.mobilenurse.activity.TitleSheetAdapter;
+import szszhospital.cn.com.mobilenurse.remote.response.LocAccessResponse;
 
 public class TitleTouchHelpCallback extends ItemTouchHelper.Callback {
-    private TitleSheetAdapter mAdapter;
-    private Context           mContext;
+    private TitleSheetAdapter                            mAdapter;
+    private Context                                      mContext;
+    private DataChangedCallback<List<LocAccessResponse>> mDataChangedCallback;
     private boolean canDrag  = true;
     private boolean canSwipe = true;
 
@@ -62,12 +65,17 @@ public class TitleTouchHelpCallback extends ItemTouchHelper.Callback {
             }
         }
         mAdapter.notifyItemMoved(fromPosition, toPosition);
+        if (mDataChangedCallback != null) {
+            mDataChangedCallback.onMove(mAdapter.getData());
+        }
         return true;
     }
 
     @Override
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-
+        if (mDataChangedCallback != null) {
+            mDataChangedCallback.onSwiped(mAdapter.getData());
+        }
     }
 
     /**
@@ -108,5 +116,9 @@ public class TitleTouchHelpCallback extends ItemTouchHelper.Callback {
         super.clearView(recyclerView, viewHolder);
         viewHolder.itemView.setBackground(mContext.getDrawable(R.drawable.bg_title_item));
         ViewAnimator.animate(viewHolder.itemView).scale(1.2f, 1f).duration(250).start();
+    }
+
+    public void setDataChangedCallback(DataChangedCallback<List<LocAccessResponse>> dataChangedCallback) {
+        mDataChangedCallback = dataChangedCallback;
     }
 }
