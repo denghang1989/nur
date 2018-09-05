@@ -7,14 +7,14 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 import java.util.List;
 
-import szszhospital.cn.com.mobilenurse.entity.ModuleTable;
 import szszhospital.cn.com.mobilenurse.factory.FragmentFactory;
+import szszhospital.cn.com.mobilenurse.remote.response.LocAccessResponse;
 
 public class MainFragmentAdapter extends FragmentStatePagerAdapter {
 
-    public List<ModuleTable> mList;
+    public List<LocAccessResponse> mList;
 
-    public MainFragmentAdapter(FragmentManager fm, List<ModuleTable> list) {
+    public MainFragmentAdapter(FragmentManager fm, List<LocAccessResponse> list) {
         super(fm);
         mList = list;
     }
@@ -32,6 +32,6 @@ public class MainFragmentAdapter extends FragmentStatePagerAdapter {
     @Nullable
     @Override
     public CharSequence getPageTitle(int position) {
-        return mList == null ? super.getPageTitle(position) : mList.get(position).moduleDes;
+        return mList == null ? super.getPageTitle(position) : mList.get(position).Title;
     }
 }

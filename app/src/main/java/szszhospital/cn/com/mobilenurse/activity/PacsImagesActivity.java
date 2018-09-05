@@ -10,7 +10,6 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.bumptech.glide.Glide;
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.github.florent37.viewanimator.ViewAnimator;
 import com.raizlabs.android.dbflow.sql.language.Select;
 
@@ -95,15 +94,12 @@ public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBi
     @Override
     protected void initEvent() {
         super.initEvent();
-        mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                queryDcmFile(position);
-                setRecyclerViewMark(position);
-                clearPrevDownTask();
-                showImageAndDown();
-                initPlayerResource();
-            }
+        mAdapter.setOnItemClickListener((adapter, view, position) -> {
+            queryDcmFile(position);
+            setRecyclerViewMark(position);
+            clearPrevDownTask();
+            showImageAndDown();
+            initPlayerResource();
         });
 
         mDataBinding.touch.setOnTouchListener(this);

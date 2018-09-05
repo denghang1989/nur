@@ -2,7 +2,6 @@ package szszhospital.cn.com.mobilenurse.fragemt;
 
 import android.support.design.widget.TabLayout;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import szszhospital.cn.com.mobilenurse.App;
@@ -10,12 +9,10 @@ import szszhospital.cn.com.mobilenurse.R;
 import szszhospital.cn.com.mobilenurse.adapter.MainFragmentAdapter;
 import szszhospital.cn.com.mobilenurse.base.BasePresenterFragment;
 import szszhospital.cn.com.mobilenurse.databinding.FragmentMainBinding;
-import szszhospital.cn.com.mobilenurse.entity.ModuleTable;
 import szszhospital.cn.com.mobilenurse.mvp.contract.LocAccessContract;
 import szszhospital.cn.com.mobilenurse.mvp.presenter.LocAccessPresenter;
 import szszhospital.cn.com.mobilenurse.remote.request.LocAccessRequest;
 import szszhospital.cn.com.mobilenurse.remote.response.LocAccessResponse;
-import szszhospital.cn.com.mobilenurse.utils.Contants;
 
 public class MainFragment extends BasePresenterFragment<FragmentMainBinding, LocAccessPresenter> implements LocAccessContract.View {
 
@@ -64,20 +61,7 @@ public class MainFragment extends BasePresenterFragment<FragmentMainBinding, Loc
 
     @Override
     public void setPageAdapter(List<LocAccessResponse> list) {
-        List<ModuleTable> moduleTableList = new ArrayList<>();
-        for (int i = 0; i < list.size(); i++) {
-            LocAccessResponse response = list.get(i);
-            ModuleTable table = new ModuleTable();
-            table.className = response.Model;
-            table.isActivity = true;
-            table.moduleId = i;
-            table.moduleDes = response.Title;
-            moduleTableList.add(table);
-        }
-        if (moduleTableList.size() == 0) {
-            moduleTableList = Contants.getModuleList(mLocId, _mActivity);
-        }
-        MainFragmentAdapter adapter = new MainFragmentAdapter(getChildFragmentManager(), moduleTableList);
+        MainFragmentAdapter adapter = new MainFragmentAdapter(getChildFragmentManager(), list);
         mDataBinding.workList.setAdapter(adapter);
     }
 }

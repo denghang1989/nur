@@ -14,6 +14,9 @@ import org.dcm4che3.data.VR;
 import org.dcm4che3.io.DicomInputStream;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class DcmUtil {
     /**
@@ -72,7 +75,6 @@ public class DcmUtil {
     private static void getTagInfo(Attributes attrs) {
         //修改默认字符集为GB18030
         attrs.setString(Tag.SpecificCharacterSet, VR.CS, "GB18030");//解决中文乱码问题
-        //Log.e("TAG", "输出所有属性信息2:" + attrs);
         String patientName = attrs.getString(Tag.PatientName, "");
         //生日
         String patientBirthDate = attrs.getString(Tag.PatientBirthDate, "");
@@ -90,5 +92,41 @@ public class DcmUtil {
         String SeriesDescription = attrs.getString(Tag.SeriesDescription, "");
         //描述时间
         String studyData = attrs.getString(Tag.StudyDate, "");
+    }
+
+    public static Map<Integer, String> getDcmTagInfo(String filePath) {
+        Map<Integer, String> map = new HashMap<>();
+        File file = new File(filePath);
+        try {
+            if (file.exists() || file.getName().endsWith("dcm")) {
+                DicomInputStream dcmInputStream = new DicomInputStream(file);
+                //属性对象
+                Attributes attrs = dcmInputStream.readDataset(-1, -1);
+                //解决中文乱码问题
+                attrs.setString(Tag.SpecificCharacterSet, VR.CS, "GB18030");
+                //姓名
+                String patientName = attrs.getString(Tag.PatientName, "");
+                //生日
+                String patientBirthDate = attrs.getString(Tag.PatientBirthDate, "");
+                //机构
+                String institution = attrs.getString(Tag.InstitutionName, "");
+                //站点
+                String station = attrs.getString(Tag.StationName, "");
+                //制造商
+                String Manufacturer = attrs.getString(Tag.Manufacturer, "");
+                //制造商模型
+                String ManufacturerModelName = attrs.getString(Tag.ManufacturerModelName, "");
+                //描述--心房
+                String description = attrs.getString(Tag.StudyDescription, "");
+                //描述--具体
+                String SeriesDescription = attrs.getString(Tag.SeriesDescription, "");
+                //描述时间
+                String studyData = attrs.getString(Tag.StudyDate, "");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return map;
     }
 }

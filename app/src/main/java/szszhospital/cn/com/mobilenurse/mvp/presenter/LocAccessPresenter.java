@@ -6,12 +6,17 @@ import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 import szszhospital.cn.com.mobilenurse.base.RxPresenter;
 import szszhospital.cn.com.mobilenurse.mvp.contract.LocAccessContract;
+import szszhospital.cn.com.mobilenurse.mvp.model.LocAccessModel;
 import szszhospital.cn.com.mobilenurse.remote.ApiService;
 import szszhospital.cn.com.mobilenurse.remote.RxUtil;
 import szszhospital.cn.com.mobilenurse.remote.request.LocAccessRequest;
 import szszhospital.cn.com.mobilenurse.remote.response.LocAccessResponse;
 
 public class LocAccessPresenter extends RxPresenter<LocAccessContract.View, LocAccessContract.Model> implements LocAccessContract.Presenter {
+
+    public LocAccessPresenter() {
+        mModel = new LocAccessModel();
+    }
 
     @Override
     public void getLocAccess(LocAccessRequest request) {
@@ -26,6 +31,7 @@ public class LocAccessPresenter extends RxPresenter<LocAccessContract.View, LocA
 
                     @Override
                     public void onNext(List<LocAccessResponse> locAccessResponses) {
+                        mModel.save(locAccessResponses);
                         mView.setPageAdapter(locAccessResponses);
                     }
 

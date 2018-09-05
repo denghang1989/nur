@@ -1,7 +1,7 @@
 package szszhospital.cn.com.mobilenurse.factory;
 
 import szszhospital.cn.com.mobilenurse.base.BaseFragment;
-import szszhospital.cn.com.mobilenurse.entity.ModuleTable;
+import szszhospital.cn.com.mobilenurse.fragemt.AllOrdersFragment;
 import szszhospital.cn.com.mobilenurse.fragemt.DrugBillCheckFragment;
 import szszhospital.cn.com.mobilenurse.fragemt.DrugBillCompletedFragment;
 import szszhospital.cn.com.mobilenurse.fragemt.DrugBillHandoverFragment;
@@ -17,12 +17,13 @@ import szszhospital.cn.com.mobilenurse.fragemt.PacsListFragment;
 import szszhospital.cn.com.mobilenurse.fragemt.SOrdersFragment;
 import szszhospital.cn.com.mobilenurse.fragemt.TestFragment;
 import szszhospital.cn.com.mobilenurse.fragemt.VitalSignsFragment;
+import szszhospital.cn.com.mobilenurse.remote.response.LocAccessResponse;
 
 public class FragmentFactory {
 
-    public static BaseFragment newInstance(ModuleTable moduleTable) {
+    public static BaseFragment newInstance(LocAccessResponse locAccess) {
         BaseFragment fragment = null;
-        switch (moduleTable.className) {
+        switch (locAccess.Model) {
             case "DrugBillUnCompletedFragment": //未配药
                 fragment = DrugBillUnCompletedFragment.newInstance();
                 break;
@@ -67,6 +68,9 @@ public class FragmentFactory {
                 break;
             case "TestFragment": // 运送对：运送检验标本
                 fragment = TestFragment.newInstance();
+                break;
+            case "AllOrdersFragment": //全部医嘱
+                fragment = AllOrdersFragment.newInstance();
                 break;
         }
         return fragment;
