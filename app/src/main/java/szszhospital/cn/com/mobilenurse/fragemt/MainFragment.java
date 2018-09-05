@@ -14,6 +14,7 @@ import szszhospital.cn.com.mobilenurse.mvp.contract.LocAccessContract;
 import szszhospital.cn.com.mobilenurse.mvp.presenter.LocAccessPresenter;
 import szszhospital.cn.com.mobilenurse.remote.request.LocAccessRequest;
 import szszhospital.cn.com.mobilenurse.remote.response.LocAccessResponse;
+import szszhospital.cn.com.mobilenurse.view.TitleSheetDialogFragment;
 
 public class MainFragment extends BasePresenterFragment<FragmentMainBinding, LocAccessPresenter> implements LocAccessContract.View {
 
@@ -53,7 +54,10 @@ public class MainFragment extends BasePresenterFragment<FragmentMainBinding, Loc
         mDataBinding.potion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                int[] positions = new int[2];
+                mDataBinding.potion.getLocationOnScreen(positions);
+                TitleSheetDialogFragment fragment = TitleSheetDialogFragment.newInstance(positions);
+                fragment.show(getChildFragmentManager(), "title");
             }
         });
     }

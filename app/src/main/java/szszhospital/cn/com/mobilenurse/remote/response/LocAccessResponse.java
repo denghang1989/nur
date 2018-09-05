@@ -29,6 +29,8 @@ public class LocAccessResponse extends BaseModel {
     public String Title;
     @Column
     public String LocId;
+    @Column
+    public int    postion;
 
     @Override
     public String toString() {
