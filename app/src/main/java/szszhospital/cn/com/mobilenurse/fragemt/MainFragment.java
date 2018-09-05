@@ -1,6 +1,7 @@
 package szszhospital.cn.com.mobilenurse.fragemt;
 
 import android.support.design.widget.TabLayout;
+import android.view.View;
 
 import java.util.List;
 
@@ -49,7 +50,12 @@ public class MainFragment extends BasePresenterFragment<FragmentMainBinding, Loc
 
     @Override
     protected void initEvent() {
+        mDataBinding.potion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+            }
+        });
     }
 
     @Override
