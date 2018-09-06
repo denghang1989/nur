@@ -39,5 +39,17 @@
         app:layout_constraintLeft_toLeftOf="@+id/pacs_image"
         app:layout_constraintTop_toTopOf="@+id/pacs_image"
         tools:text="1"/>
+    
+    <TextView
+        android:id="@+id/date"
+        tools:text="2018-06-01"
+        android:layout_margin="4dp"
+        android:textColor="@color/green"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/pacs_image"
+        app:layout_constraintLeft_toLeftOf="@+id/pacs_image"
+        app:layout_constraintRight_toRightOf="@+id/pacs_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
 </android.support.constraint.ConstraintLayout>

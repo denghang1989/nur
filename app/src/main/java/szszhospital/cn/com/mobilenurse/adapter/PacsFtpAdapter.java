@@ -2,7 +2,6 @@ package szszhospital.cn.com.mobilenurse.adapter;
 
 import android.app.Activity;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.blankj.utilcode.util.StringUtils;
 import com.bumptech.glide.Glide;
@@ -48,22 +47,22 @@ public class PacsFtpAdapter extends BaseQuickAdapter<PacsImagePath, BaseViewHold
             helper.setVisible(R.id.tag, false);
         }
         ImageView imageView = helper.getView(R.id.pacs_image);
-        TextView textView = helper.getView(R.id.info);
         String path = item.thumbnailPath;
         if (!StringUtils.isTrimEmpty(path)) {
             handleDcmFile(item, imageView, path);
-            ShowText(item, textView, path);
+            ShowText(item, helper, path);
         }
     }
 
-    private void ShowText(PacsImagePath item, TextView textView, String path) {
+    private void ShowText(PacsImagePath item, BaseViewHolder helper, String path) {
         //判断是否存在文件
         File file = new File(Contants.PACS_DCM_DOWNLOAD_PATH, item.name);
         if (file.exists()) {
             //解析图片
             Map<Integer, String> dcmTagInfo = DcmUtil.getDcmTagInfo(file.getAbsolutePath());
             long count = new Select().from(DcmName.class).where(DcmName_Table.IMAGEPATH.eq(item.IMAGEPATH)).queryList().size();
-            textView.setText(mContext.getString(R.string.pdfInfo, String.valueOf(count), dcmTagInfo.get(Tag.StudyDate)));
+            helper.setText(R.id.date,dcmTagInfo.get(Tag.StudyDate)).setText(R.id.info,String.valueOf(count));
+
         }
     }
 
