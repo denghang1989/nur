@@ -19,6 +19,7 @@ import szszhospital.cn.com.mobilenurse.mvp.contract.OrderContract;
 import szszhospital.cn.com.mobilenurse.mvp.presenter.OrderPresenter;
 import szszhospital.cn.com.mobilenurse.remote.request.OrderRequest;
 import szszhospital.cn.com.mobilenurse.remote.response.Order;
+import szszhospital.cn.com.mobilenurse.utils.OrderItemDecoration;
 import szszhospital.cn.com.mobilenurse.view.OrderExtDialogFragment;
 
 /**
@@ -29,7 +30,6 @@ public abstract class BaseOrdersFragment extends BaseDoctorFragment<FragmentOrde
     protected OrderRequest           mOrderRequest;
     protected OrderListAdapter       mAdapter;
     protected OrderExtDialogFragment mDialogFragment;
-    private boolean isTextViewShow = true;
 
     @Override
     public int getLayoutId() {
@@ -63,10 +63,9 @@ public abstract class BaseOrdersFragment extends BaseDoctorFragment<FragmentOrde
     @Override
     protected void initEvent() {
         super.initEvent();
-        mDataBinding.top.setOnClickListener(v -> mDataBinding.orderList.scrollToPosition(0));
         mDataBinding.refreshLayout.setOnRefreshListener(refreshlayout -> initData());
         mAdapter.setOnItemClickListener((adapter, view, position) -> shwoDialog(mAdapter.getItem(position)));
-
+        mDataBinding.orderList.addItemDecoration(new OrderItemDecoration(mAdapter, _mActivity));
         mDataBinding.orderList.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -86,11 +85,9 @@ public abstract class BaseOrdersFragment extends BaseDoctorFragment<FragmentOrde
                 .translationY(span)
                 .duration(250)
                 .start();
-        isTextViewShow = false;
     }
 
     private void showTextView() {
-        isTextViewShow = true;
         ViewAnimator.animate(mDataBinding.top)
                 .translationY(0)
                 .duration(250)
@@ -113,7 +110,7 @@ public abstract class BaseOrdersFragment extends BaseDoctorFragment<FragmentOrde
         if (StringUtils.equals("S", getOrderType())) {
             mAdapter.setNewData(list);
         } else {
-        //临时医嘱
+            //临时医嘱
             mAdapter.setNewData(list);
         }
     }

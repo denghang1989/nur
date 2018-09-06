@@ -22,7 +22,7 @@ public class EMRPresenter extends RxPresenter<EMRContract.View, EMRContract.Mode
                 .subscribe(new Observer<List<EMREposideInfo>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-
+                        addSubscribe(d);
                     }
 
                     @Override

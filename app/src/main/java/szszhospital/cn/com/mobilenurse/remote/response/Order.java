@@ -5,7 +5,7 @@ import android.os.Parcelable;
 
 import java.io.Serializable;
 
-public class Order implements Parcelable,Serializable{
+public class Order implements Parcelable, Serializable {
 
     /**
      * ArcimDesc : 血常规
@@ -74,7 +74,7 @@ public class Order implements Parcelable,Serializable{
     public String QtyPackUOM;
     public String RecipeInfo;
     public String Reflag;
-    public int SeqNo;
+    public String SeqNo;
     public String dstatus;
 
 
@@ -116,7 +116,7 @@ public class Order implements Parcelable,Serializable{
         dest.writeString(this.QtyPackUOM);
         dest.writeString(this.RecipeInfo);
         dest.writeString(this.Reflag);
-        dest.writeInt(this.SeqNo);
+        dest.writeString(this.SeqNo);
         dest.writeString(this.dstatus);
     }
 
@@ -155,7 +155,7 @@ public class Order implements Parcelable,Serializable{
         this.QtyPackUOM = in.readString();
         this.RecipeInfo = in.readString();
         this.Reflag = in.readString();
-        this.SeqNo = in.readInt();
+        this.SeqNo = in.readString();
         this.dstatus = in.readString();
     }
 

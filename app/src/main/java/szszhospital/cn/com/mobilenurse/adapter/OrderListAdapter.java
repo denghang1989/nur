@@ -43,6 +43,9 @@ public class OrderListAdapter extends BaseQuickAdapter<Order, BaseViewHolder> {
         if (!StringUtils.isTrimEmpty(item.OEORIPhQty)) {
             arcimDesc = arcimDesc + "  " + item.OEORIPhQty + item.DoseUnit;
         }
+        if (item.SeqNo.contains(".")) {
+            arcimDesc = "__" + arcimDesc;
+        }
         helper.setText(R.id.order_name, arcimDesc);
     }
 }

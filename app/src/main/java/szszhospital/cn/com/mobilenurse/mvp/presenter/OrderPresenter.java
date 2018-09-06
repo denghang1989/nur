@@ -28,8 +28,17 @@ public class OrderPresenter extends RxPresenter<OrderContract.View, OrderContrac
 
                     @Override
                     public void onNext(List<Order> orders) {
-                        Collections.sort(orders, (o1, o2) -> o2.SeqNo-o1.SeqNo);
-                        mView.showPatientOrderList(orders);
+                        if (orders != null && orders.size() > 0) {
+                            for (int i = 0; i < orders.size(); i++) {
+                                Order order = orders.get(i);
+                                if (order.SeqNo.contains(".")) {
+                                    String number = order.SeqNo.split("\\.")[0];
+                                    order.SeqNo = number;
+                                }
+                            }
+                            Collections.reverse(orders);
+                            mView.showPatientOrderList(orders);
+                        }
                     }
 
                     @Override
