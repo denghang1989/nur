@@ -29,4 +29,7 @@
     <string name="title">提示</string>
     <string name="disagree">取消</string>
     <string name="agree">确定</string>
+
+    <string name="dcmInfo">PatientName:%1$s\nPatientSex:%2$s\nPatientAge:%3$s\nStudyDate:%4$s</string>
+    <string name="pdfInfo">%1$s\n%2$s</string>
 </resources>

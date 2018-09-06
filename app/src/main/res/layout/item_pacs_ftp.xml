@@ -2,6 +2,7 @@
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="120dp"
     android:layout_height="match_parent"
     android:padding="5dp">
@@ -27,5 +28,16 @@
         android:visibility="gone"
         app:layout_constraintRight_toRightOf="@+id/pacs_image"
         app:layout_constraintTop_toTopOf="@+id/pacs_image"/>
+
+    <TextView
+        android:id="@+id/info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        android:textColor="@color/green"
+        android:textSize="14sp"
+        app:layout_constraintLeft_toLeftOf="@+id/pacs_image"
+        app:layout_constraintTop_toTopOf="@+id/pacs_image"
+        tools:text="1"/>
 
 </android.support.constraint.ConstraintLayout>

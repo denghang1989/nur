@@ -13,8 +13,11 @@ import com.bumptech.glide.Glide;
 import com.github.florent37.viewanimator.ViewAnimator;
 import com.raizlabs.android.dbflow.sql.language.Select;
 
+import org.dcm4che3.data.Tag;
+
 import java.io.File;
 import java.util.List;
+import java.util.Map;
 
 import szszhospital.cn.com.mobilenurse.App;
 import szszhospital.cn.com.mobilenurse.R;
@@ -35,9 +38,9 @@ import szszhospital.cn.com.mobilenurse.view.ImagePlayerView;
 import szszhospital.cn.com.mobilenurse.view.RenderCompleted;
 
 public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBinding, PacsImagesPresenter> implements PacsImagesContract.View, View.OnTouchListener {
-    public static final  int    WHAT     = 1;
     private static final String TAG      = "PacsImagesActivity";
     private static final String KEY_DATA = "data";
+    public static final  int    WHAT     = 1;
     private PacsOrder       mPacsorder;
     private PacsFtpAdapter  mAdapter;
     private List<DcmName>   mCurrentDcmNames;
@@ -134,18 +137,20 @@ public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBi
         for (int i = 0; i < mCurrentDcmNames.size(); i++) {
             DcmName dcmName = mCurrentDcmNames.get(i);
             String imagePath = dcmName.IMAGEPATH;
-            String imagename = dcmName.IMAGENAME;
+            String imageName = dcmName.IMAGENAME;
             long size = dcmName.size;
-            File file = new File(Contants.PACS_DCM_DOWNLOAD_PATH, imagename);
+            File file = new File(Contants.PACS_DCM_DOWNLOAD_PATH, imageName);
             if (file.exists()) {
                 if (i == 0) {
                     Glide.with(App.mContext).load(DcmUtil.readFile(file.getAbsolutePath())).into(mDataBinding.container);
+                    Map<Integer, String> dcmTagInfo = DcmUtil.getDcmTagInfo(file.getAbsolutePath());
+                    mDataBinding.dcmInfo.setText(getString(R.string.dcmInfo,dcmTagInfo.get(Tag.PatientName),dcmTagInfo.get(Tag.PatientSex),dcmTagInfo.get(Tag.PatientAge),dcmTagInfo.get(Tag.StudyDate)));
                     mDataBinding.container.setVisibility(View.VISIBLE);
                 }
             } else {
                 count = count + size;
                 showProgress();
-                App.getAsynHandler().post(() -> FileDownUtil.downFileAndChangedPng(Contants.PACS_PATH + imagePath + imagename, file.getAbsolutePath(), null));
+                App.getAsynHandler().post(() -> FileDownUtil.downFileAndChangedPng(Contants.PACS_PATH + imagePath + imageName, file.getAbsolutePath(), null));
             }
         }
         mDataBinding.mark.postDelayed(new Runnable() {

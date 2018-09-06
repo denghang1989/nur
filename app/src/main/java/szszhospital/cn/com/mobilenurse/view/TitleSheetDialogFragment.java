@@ -104,7 +104,7 @@ public class TitleSheetDialogFragment extends BaseFullBottomSheetFragment implem
     }
 
     private void initData() {
-        List<LocAccessResponse> locAccess = new Select().from(LocAccessResponse.class).where(LocAccessResponse_Table.LocId.eq(mUserLoc)).queryList();
+        List<LocAccessResponse> locAccess = new Select().from(LocAccessResponse.class).where(LocAccessResponse_Table.LocId.eq(mUserLoc)).orderBy(LocAccessResponse_Table.position,true).queryList();
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.setNewData(locAccess);
         mHelpCallback = new TitleTouchHelpCallback(_mActivity, mAdapter);

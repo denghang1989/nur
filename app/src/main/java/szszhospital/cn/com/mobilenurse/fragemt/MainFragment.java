@@ -1,7 +1,6 @@
 package szszhospital.cn.com.mobilenurse.fragemt;
 
 import android.support.design.widget.TabLayout;
-import android.view.View;
 
 import com.raizlabs.android.dbflow.sql.language.Select;
 
@@ -21,7 +20,7 @@ import szszhospital.cn.com.mobilenurse.view.TitleSheetDialogFragment;
 
 public class MainFragment extends BasePresenterFragment<FragmentMainBinding, LocAccessPresenter> implements LocAccessContract.View {
 
-    private String           mLocId;
+    private static final String TAG = "MainFragment";
     private LocAccessRequest mRequest;
 
     public static MainFragment newInstance() {
@@ -36,7 +35,6 @@ public class MainFragment extends BasePresenterFragment<FragmentMainBinding, Loc
     @Override
     protected void init() {
         super.init();
-        mLocId = App.loginUser.UserLoc;
         mRequest = new LocAccessRequest();
         mRequest.LocId = App.loginUser.UserLoc;
     }
@@ -54,14 +52,11 @@ public class MainFragment extends BasePresenterFragment<FragmentMainBinding, Loc
 
     @Override
     protected void initEvent() {
-        mDataBinding.potion.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int[] positions = new int[2];
-                mDataBinding.potion.getLocationOnScreen(positions);
-                TitleSheetDialogFragment fragment = TitleSheetDialogFragment.newInstance(positions);
-                fragment.show(getChildFragmentManager(), "title");
-            }
+        mDataBinding.potion.setOnClickListener(v -> {
+            int[] positions = new int[2];
+            mDataBinding.potion.getLocationOnScreen(positions);
+            TitleSheetDialogFragment fragment = TitleSheetDialogFragment.newInstance(positions);
+            fragment.show(getChildFragmentManager(), "title");
         });
     }
 
@@ -69,8 +64,6 @@ public class MainFragment extends BasePresenterFragment<FragmentMainBinding, Loc
     protected LocAccessPresenter initPresenter() {
         return new LocAccessPresenter();
     }
-
-    private static final String TAG = "MainFragment";
 
     @Override
     public void setPageAdapter(List<LocAccessResponse> list) {

@@ -14,7 +14,6 @@ import org.dcm4che3.data.VR;
 import org.dcm4che3.io.DicomInputStream;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -106,6 +105,13 @@ public class DcmUtil {
                 attrs.setString(Tag.SpecificCharacterSet, VR.CS, "GB18030");
                 //姓名
                 String patientName = attrs.getString(Tag.PatientName, "");
+                map.put(Tag.PatientName,patientName);
+                //性别
+                String patientSex = attrs.getString(Tag.PatientSex,"");
+                map.put(Tag.PatientSex,patientSex);
+                //年龄
+                String patientAge = attrs.getString(Tag.PatientAge,"");
+                map.put(Tag.PatientAge,patientAge);
                 //生日
                 String patientBirthDate = attrs.getString(Tag.PatientBirthDate, "");
                 //机构
@@ -121,7 +127,8 @@ public class DcmUtil {
                 //描述--具体
                 String SeriesDescription = attrs.getString(Tag.SeriesDescription, "");
                 //描述时间
-                String studyData = attrs.getString(Tag.StudyDate, "");
+                String studyDate = attrs.getString(Tag.StudyDate, "");
+                map.put(Tag.StudyDate,studyDate);
             }
         } catch (Exception e) {
             e.printStackTrace();
