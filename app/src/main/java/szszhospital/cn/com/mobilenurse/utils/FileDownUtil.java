@@ -16,7 +16,7 @@ public class FileDownUtil {
      * @param callback
      * @desc : 下载ftp文件
      */
-    public static void downFileAndChangedPng(String url, FileCallback callback) {
+    public static void downFile(String url, FileCallback callback) {
         try {
             String[] split = url.split("/");
             String name = split[split.length - 1];

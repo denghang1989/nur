@@ -184,7 +184,7 @@ public class PacsWebViewDetailActivity extends BaseActivity<ActivityPacsDetailBi
             App.getAsynHandler().post(new Runnable() {
                 @Override
                 public void run() {
-                    FileDownUtil.downFileAndChangedPng(url, new FileCallback() {
+                    FileDownUtil.downFile(url, new FileCallback() {
                         @Override
                         public void success(File file) {
                             // save 存储

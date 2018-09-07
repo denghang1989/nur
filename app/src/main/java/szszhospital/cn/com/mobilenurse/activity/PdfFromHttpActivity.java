@@ -49,7 +49,7 @@ public class PdfFromHttpActivity extends BaseActivity<ActivityPdfBinding> {
     protected void initData() {
         super.initData();
         mDataBinding.loading.setVisibility(View.VISIBLE);
-        App.getAsynHandler().post(() -> FileDownUtil.downFileAndChangedPng(mPath, new FileCallback() {
+        App.getAsynHandler().post(() -> FileDownUtil.downFile(mPath, new FileCallback() {
             @Override
             public void success(File file) {
                 mDataBinding.pdfView.fromFile(file).onLoad(page -> mDataBinding.loading.setVisibility(View.GONE)).load();

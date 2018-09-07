@@ -12,7 +12,6 @@ public class MainPresenter extends RxPresenter<MainContract.View, MainContract.M
 
     @Override
     public void getUpdateApp() {
-        mView.showProgress();
         ApiService.Instance().getService().getUpdateAppInfo()
                 .compose(RxUtil.rxSchedulerHelper())
                 .compose(RxUtil.httpHandleResponse())
@@ -30,12 +29,10 @@ public class MainPresenter extends RxPresenter<MainContract.View, MainContract.M
                     @Override
                     public void onError(Throwable e) {
                         e.printStackTrace();
-                        mView.hideProgress();
                     }
 
                     @Override
                     public void onComplete() {
-                        mView.hideProgress();
                     }
                 });
     }

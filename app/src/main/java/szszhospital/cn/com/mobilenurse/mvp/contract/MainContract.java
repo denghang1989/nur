@@ -7,12 +7,7 @@ import szszhospital.cn.com.mobilenurse.remote.response.UpdateApp;
 
 public interface MainContract {
     interface View extends BaseView {
-        void showProgress();
-
-        void hideProgress();
-
         void showDialog(UpdateApp updateApp);
-
     }
 
     interface Model extends BaseModel {

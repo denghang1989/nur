@@ -1,12 +1,14 @@
 package szszhospital.cn.com.mobilenurse.activity;
 
 import android.Manifest;
+import android.content.Intent;
 import android.os.Build;
 import android.support.v7.view.menu.MenuBuilder;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.blankj.utilcode.util.IntentUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
@@ -14,6 +16,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.io.File;
 import java.lang.reflect.Method;
 
 import io.reactivex.disposables.Disposable;
@@ -28,15 +31,19 @@ import szszhospital.cn.com.mobilenurse.mvp.contract.MainContract;
 import szszhospital.cn.com.mobilenurse.mvp.presenter.MainPresenter;
 import szszhospital.cn.com.mobilenurse.remote.response.UpdateApp;
 import szszhospital.cn.com.mobilenurse.utils.AppUtil;
+import szszhospital.cn.com.mobilenurse.utils.FileCallback;
+import szszhospital.cn.com.mobilenurse.utils.FileDownUtil;
+import szszhospital.cn.com.mobilenurse.view.BackPressDialogFragment;
 import szszhospital.cn.com.mobilenurse.view.DialogInterface;
 import szszhospital.cn.com.mobilenurse.view.UpdateDialogFragment;
 
 public class MainActivity extends BasePresentActivity<ActiviyMainBinding, MainPresenter> implements MainContract.View, DialogInterface {
     private static final String TAG = "MainActivity";
-    private MainActivityAdapter  mAdapter;
-    private UpdateDialogFragment mUpdateDialogFragment;
-    private UpdateApp            mUpdateApp;
-    private Disposable           mDisposable;
+    private MainActivityAdapter     mAdapter;
+    private UpdateDialogFragment    mUpdateDialogFragment;
+    private UpdateApp               mUpdateApp;
+    private Disposable              mDisposable;
+    private BackPressDialogFragment mBackPressDialogFragment;
 
     @Override
     protected int getLayoutId() {
@@ -151,16 +158,6 @@ public class MainActivity extends BasePresentActivity<ActiviyMainBinding, MainPr
     }
 
     @Override
-    public void showProgress() {
-
-    }
-
-    @Override
-    public void hideProgress() {
-
-    }
-
-    @Override
     public void showDialog(UpdateApp updateApp) {
         if (updateApp.versionCode > AppUtil.getLocalVersion(this)) {
             mUpdateDialogFragment = (UpdateDialogFragment) getSupportFragmentManager().findFragmentByTag(UpdateDialogFragment.tag);
@@ -177,12 +174,47 @@ public class MainActivity extends BasePresentActivity<ActiviyMainBinding, MainPr
     @Override
     public void onPositive() {
         if (!StringUtils.isTrimEmpty(mUpdateApp.url)) {
+            App.getAsynHandler().post(() -> {
+                FileDownUtil.downFile(mUpdateApp.url, new FileCallback() {
+                    @Override
+                    public void success(File file) {
+                        Intent intent = IntentUtils.getInstallAppIntent(file);
+                        startActivity(intent);
+                    }
 
+                    @Override
+                    public void error(Exception e) {
+
+                    }
+                });
+            });
         }
     }
 
     @Override
     public void onNegative() {
 
+    }
+
+    @Override
+    public void onBackPressedSupport() {
+        mBackPressDialogFragment = (BackPressDialogFragment) getSupportFragmentManager().findFragmentByTag(BackPressDialogFragment.TAG);
+        if (mBackPressDialogFragment != null) {
+            mBackPressDialogFragment.dismiss();
+        }
+
+        mBackPressDialogFragment = BackPressDialogFragment.newInstance();
+        mBackPressDialogFragment.setDialogInterface(new DialogInterface() {
+            @Override
+            public void onPositive() {
+                finish();
+            }
+
+            @Override
+            public void onNegative() {
+
+            }
+        });
+        mBackPressDialogFragment.show(getSupportFragmentManager(), BackPressDialogFragment.TAG);
     }
 }
