@@ -3,6 +3,8 @@ package szszhospital.cn.com.mobilenurse.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Parcelable;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
 import com.raizlabs.android.dbflow.sql.language.SQLite;
@@ -10,25 +12,24 @@ import com.raizlabs.android.dbflow.sql.language.SQLite;
 import java.util.List;
 
 import szszhospital.cn.com.mobilenurse.R;
-import szszhospital.cn.com.mobilenurse.adapter.LisTableAdapter;
+import szszhospital.cn.com.mobilenurse.adapter.LisResultAdapter;
 import szszhospital.cn.com.mobilenurse.base.BasePresentActivity;
-import szszhospital.cn.com.mobilenurse.databinding.ActivityLisDetailBinding;
-import szszhospital.cn.com.mobilenurse.entity.LisTableViewModel;
-import szszhospital.cn.com.mobilenurse.mvp.contract.LisOrderDetailContract;
-import szszhospital.cn.com.mobilenurse.mvp.presenter.LisOrderDetailPresenter;
+import szszhospital.cn.com.mobilenurse.databinding.ActivityLisResultBinding;
+import szszhospital.cn.com.mobilenurse.mvp.contract.LisResultContract;
+import szszhospital.cn.com.mobilenurse.mvp.presenter.LisResultPresenter;
 import szszhospital.cn.com.mobilenurse.remote.response.LisOrder;
 import szszhospital.cn.com.mobilenurse.remote.response.LisOrderDetail;
 import szszhospital.cn.com.mobilenurse.remote.response.LisOrder_Table;
 
-public class LisOrderDetailActivity extends BasePresentActivity<ActivityLisDetailBinding, LisOrderDetailPresenter> implements LisOrderDetailContract.View {
+public class LisResultActivity extends BasePresentActivity<ActivityLisResultBinding, LisResultPresenter> implements LisResultContract.View {
 
     private static final String TAG  = "LisOrderDetailActivity";
     private static final String DATA = "data";
-    private LisOrder        mLisOrder;
-    private LisTableAdapter mTableViewAdapter;
+    private LisOrder         mLisOrder;
+    private LisResultAdapter mAdapter;
 
-    public static void startLisOrderDetailActivity(Context context, LisOrder lisOrder) {
-        Intent intent = new Intent(context, LisOrderDetailActivity.class);
+    public static void startLisResultActivity(Context context, LisOrder lisOrder) {
+        Intent intent = new Intent(context, LisResultActivity.class);
         intent.putExtra(DATA, (Parcelable) lisOrder);
         context.startActivity(intent);
     }
@@ -37,11 +38,19 @@ public class LisOrderDetailActivity extends BasePresentActivity<ActivityLisDetai
     protected void init() {
         super.init();
         mLisOrder = getIntent().getParcelableExtra(DATA);
+        mAdapter = new LisResultAdapter(R.layout.item_lis_result);
+    }
+
+    @Override
+    protected void initView() {
+        mDataBinding.toolbar.setTitle(mLisOrder.OrdItemName);
+        mDataBinding.toolbar.setSubtitle("申请日期:" + mLisOrder.ReqDateTime + "   报告日期:" + mLisOrder.AuthDateTime);
+        mDataBinding.listView.setLayoutManager(new LinearLayoutManager(this));
+        mDataBinding.listView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.HORIZONTAL));
     }
 
     @Override
     protected void initData() {
-        super.initData();
         List<LisOrder> lisOrders = SQLite.select().from(LisOrder.class).where(LisOrder_Table.LabEpisode.eq(mLisOrder.LabEpisode)).queryList();
         if (lisOrders.size() > 0) {
             StringBuilder sb = new StringBuilder();
@@ -66,21 +75,17 @@ public class LisOrderDetailActivity extends BasePresentActivity<ActivityLisDetai
     }
 
     @Override
-    protected void initView() {
-        super.initView();
-        mDataBinding.toolbar.setTitle(mLisOrder.OrdItemName);
-        mDataBinding.toolbar.setSubtitle("申请日期:" + mLisOrder.ReqDateTime + "   报告日期:" + mLisOrder.AuthDateTime);
+    protected void initEvent() {
     }
 
     @Override
-    protected void initEvent() {
-        super.initEvent();
-        mDataBinding.toolbar.setNavigationOnClickListener(v -> finish());
+    protected LisResultPresenter initPresenter() {
+        return new LisResultPresenter();
     }
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_lis_detail;
+        return R.layout.activity_lis_result;
     }
 
     @Override
@@ -95,19 +100,11 @@ public class LisOrderDetailActivity extends BasePresentActivity<ActivityLisDetai
 
     @Override
     public void showLisOrderListDetail(List<LisOrderDetail> list) {
-        LisTableViewModel tableViewModel = new LisTableViewModel(list);
-        mTableViewAdapter = new LisTableAdapter(getApplicationContext(), tableViewModel);
-        mDataBinding.tableView.setAdapter(mTableViewAdapter);
-        mTableViewAdapter.setAllItems(tableViewModel.getSimpleColumnHeaderList(), tableViewModel.getSimpleRowHeaderList(), tableViewModel.getCellList());
+        mAdapter.setNewData(list);
     }
 
     @Override
     public void refresh() {
-
-    }
-
-    @Override
-    protected LisOrderDetailPresenter initPresenter() {
-        return new LisOrderDetailPresenter();
+        initData();
     }
 }

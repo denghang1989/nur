@@ -78,4 +78,5 @@ dependencies {
     implementation files('libs/slf4j-android-1.6.1-RC1.jar')
     implementation project(':pictureplayerview')
     implementation 'com.nightonke:boommenu:2.1.1'
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
 }

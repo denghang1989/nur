@@ -121,6 +121,10 @@
             android:process=":pacs"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"/>
+        <activity
+            android:name=".activity.LisResultActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Transparent"/>
 
         <receiver
             android:name=".broadcast.QRCodeBroadcastReceiver"
