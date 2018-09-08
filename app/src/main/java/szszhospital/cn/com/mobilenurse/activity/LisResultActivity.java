@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Parcelable;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
+import android.view.LayoutInflater;
 import android.view.View;
 
 import com.raizlabs.android.dbflow.sql.language.SQLite;
@@ -47,6 +48,8 @@ public class LisResultActivity extends BasePresentActivity<ActivityLisResultBind
         mDataBinding.toolbar.setSubtitle("申请日期:" + mLisOrder.ReqDateTime + "   报告日期:" + mLisOrder.AuthDateTime);
         mDataBinding.listView.setLayoutManager(new LinearLayoutManager(this));
         mDataBinding.listView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.HORIZONTAL));
+        View headView = LayoutInflater.from(this).inflate(R.layout.item_lis_result,null);
+        mAdapter.addHeaderView(headView);
     }
 
     @Override
