@@ -11,6 +11,11 @@ import android.view.View;
 
 import com.bumptech.glide.Glide;
 import com.github.florent37.viewanimator.ViewAnimator;
+import com.nightonke.boommenu.BoomButtons.ButtonPlaceEnum;
+import com.nightonke.boommenu.BoomButtons.HamButton;
+import com.nightonke.boommenu.BoomButtons.OnBMClickListener;
+import com.nightonke.boommenu.ButtonEnum;
+import com.nightonke.boommenu.Piece.PiecePlaceEnum;
 import com.raizlabs.android.dbflow.sql.language.Select;
 
 import org.dcm4che3.data.Tag;
@@ -37,7 +42,7 @@ import szszhospital.cn.com.mobilenurse.utils.FileDownUtil;
 import szszhospital.cn.com.mobilenurse.view.ImagePlayerView;
 import szszhospital.cn.com.mobilenurse.view.RenderCompleted;
 
-public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBinding, PacsImagesPresenter> implements PacsImagesContract.View, View.OnTouchListener {
+public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBinding, PacsImagesPresenter> implements PacsImagesContract.View, View.OnTouchListener, OnBMClickListener {
     private static final String TAG      = "PacsImagesActivity";
     private static final String KEY_DATA = "data";
     public static final  int    WHAT     = 1;
@@ -49,6 +54,12 @@ public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBi
     private float           mDownY;
     private float           mDownX;
     private int             mSlop;
+    private        int      mSpeed        = 300;
+    private        int      mCurrentIndex = 0;
+    private static String[] normalTextRes = new String[]{
+            "0.5s", "1s", "1.5s", "2s"
+    };
+
     private Handler mHandler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
@@ -56,7 +67,7 @@ public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBi
             switch (what) {
                 case WHAT:
                     mPicturePlayerView.next();
-                    mHandler.sendEmptyMessageDelayed(WHAT, 80);
+                    mHandler.sendEmptyMessageDelayed(WHAT, mSpeed);
                     break;
             }
             return true;
@@ -87,6 +98,20 @@ public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBi
         mPicturePlayerView = mDataBinding.player;
         mDataBinding.recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         mDataBinding.recyclerView.setAdapter(mAdapter);
+        initMenu();
+    }
+
+    private void initMenu() {
+        mDataBinding.menu.setButtonEnum(ButtonEnum.Ham);
+        mDataBinding.menu.setPiecePlaceEnum(PiecePlaceEnum.HAM_4);
+        mDataBinding.menu.setButtonPlaceEnum(ButtonPlaceEnum.HAM_4);
+        for (int i = 0; i < mDataBinding.menu.getPiecePlaceEnum().pieceNumber(); i++) {
+            HamButton.Builder builder = new HamButton.Builder()
+                    .listener(this)
+                    .normalText(normalTextRes[i])
+                    .textSize(16);
+            mDataBinding.menu.addBuilder(builder);
+        }
     }
 
     @Override
@@ -144,7 +169,7 @@ public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBi
                 if (i == 0) {
                     Glide.with(App.mContext).load(DcmUtil.readFile(file.getAbsolutePath())).into(mDataBinding.container);
                     Map<Integer, String> dcmTagInfo = DcmUtil.getDcmTagInfo(file.getAbsolutePath());
-                    mDataBinding.dcmInfo.setText(getString(R.string.dcmInfo,dcmTagInfo.get(Tag.PatientName),dcmTagInfo.get(Tag.PatientSex),dcmTagInfo.get(Tag.PatientAge),dcmTagInfo.get(Tag.StudyDate)));
+                    mDataBinding.dcmInfo.setText(getString(R.string.dcmInfo, dcmTagInfo.get(Tag.PatientName), dcmTagInfo.get(Tag.PatientSex), dcmTagInfo.get(Tag.PatientAge), dcmTagInfo.get(Tag.StudyDate)));
                     mDataBinding.container.setVisibility(View.VISIBLE);
                 }
             } else {
@@ -248,7 +273,7 @@ public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBi
                 mDownX = event.getX();
                 mDownY = event.getY();
                 mDataBinding.container.setVisibility(View.INVISIBLE);
-                mHandler.sendEmptyMessageDelayed(WHAT, 80);
+                mHandler.sendEmptyMessageDelayed(WHAT, mSpeed);
                 break;
             case MotionEvent.ACTION_MOVE:
                 float moveX = event.getX();
@@ -279,5 +304,28 @@ public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBi
                 break;
         }
         return true;
+    }
+
+    @Override
+    public void onBoomButtonClick(int index) {
+        if (mCurrentIndex != index) {
+            switch (index) {
+                case 0:
+                    mSpeed = 500;
+                    break;
+                case 1:
+                    mSpeed = 1000;
+                    break;
+                case 2:
+                    mSpeed = 1500;
+                    break;
+                case 3:
+                    mSpeed = 2000;
+                    break;
+                default:
+                    break;
+            }
+            mCurrentIndex = index;
+        }
     }
 }
