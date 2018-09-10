@@ -18,6 +18,7 @@ import szszhospital.cn.com.mobilenurse.remote.response.EposideInfo;
 import szszhospital.cn.com.mobilenurse.remote.response.FtpConfig;
 import szszhospital.cn.com.mobilenurse.remote.response.HandlerInspectionLog;
 import szszhospital.cn.com.mobilenurse.remote.response.InspectionLogDetail;
+import szszhospital.cn.com.mobilenurse.remote.response.LisChartData;
 import szszhospital.cn.com.mobilenurse.remote.response.LisOrder;
 import szszhospital.cn.com.mobilenurse.remote.response.LisOrderDetail;
 import szszhospital.cn.com.mobilenurse.remote.response.LocAccessResponse;
@@ -159,4 +160,8 @@ public interface Api {
     //获取图片列表
     @GET("web/Quality.Ajax.PacsImagePathAjax.cls")
     Observable<Response<List<PacsImagePath>>> getPacsImageFtpPath(@Query("studyId") String studyId, @Query("type") String type);
- }
+
+    //获取lis历次结果列表
+    @GET("web/Quality.Ajax.LisChartAjax.cls")
+    Observable<Response<List<LisChartData>>> getLisChartData(@Query("ReportDR") String ReportResultDR, @Query("TestCodeDR") String TestCodeDR);
+}

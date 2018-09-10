@@ -1,6 +1,11 @@
 package szszhospital.cn.com.mobilenurse.remote.response;
 
-public class LisOrderDetail {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.io.Serializable;
+
+public class LisOrderDetail implements Serializable,Parcelable{
 
 
     /**
@@ -48,4 +53,74 @@ public class LisOrderDetail {
     public String TestCodeDR;
     public String TestCodeName;
     public String Units;
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.AbFlag);
+        dest.writeString(this.AuthDate);
+        dest.writeString(this.AuthTime);
+        dest.writeString(this.ClinicalSignifyS);
+        dest.writeString(this.ExtraRes);
+        dest.writeString(this.HelpDisInfo);
+        dest.writeString(this.MultipleResistant);
+        dest.writeString(this.PreAbFlag);
+        dest.writeString(this.PreResult);
+        dest.writeString(this.PreResultDR);
+        dest.writeString(this.RefRanges);
+        dest.writeString(this.ReportDR);
+        dest.writeString(this.ReportResultDR);
+        dest.writeString(this.ResClass);
+        dest.writeString(this.ResNoes);
+        dest.writeString(this.Result);
+        dest.writeString(this.ResultFormat);
+        dest.writeString(this.Synonym);
+        dest.writeString(this.TestCodeDR);
+        dest.writeString(this.TestCodeName);
+        dest.writeString(this.Units);
+    }
+
+    public LisOrderDetail() {
+    }
+
+    protected LisOrderDetail(Parcel in) {
+        this.AbFlag = in.readString();
+        this.AuthDate = in.readString();
+        this.AuthTime = in.readString();
+        this.ClinicalSignifyS = in.readString();
+        this.ExtraRes = in.readString();
+        this.HelpDisInfo = in.readString();
+        this.MultipleResistant = in.readString();
+        this.PreAbFlag = in.readString();
+        this.PreResult = in.readString();
+        this.PreResultDR = in.readString();
+        this.RefRanges = in.readString();
+        this.ReportDR = in.readString();
+        this.ReportResultDR = in.readString();
+        this.ResClass = in.readString();
+        this.ResNoes = in.readString();
+        this.Result = in.readString();
+        this.ResultFormat = in.readString();
+        this.Synonym = in.readString();
+        this.TestCodeDR = in.readString();
+        this.TestCodeName = in.readString();
+        this.Units = in.readString();
+    }
+
+    public static final Creator<LisOrderDetail> CREATOR = new Creator<LisOrderDetail>() {
+        @Override
+        public LisOrderDetail createFromParcel(Parcel source) {
+            return new LisOrderDetail(source);
+        }
+
+        @Override
+        public LisOrderDetail[] newArray(int size) {
+            return new LisOrderDetail[size];
+        }
+    };
 }

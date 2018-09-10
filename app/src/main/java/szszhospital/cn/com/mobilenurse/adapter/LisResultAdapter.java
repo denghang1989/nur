@@ -19,5 +19,18 @@ public class LisResultAdapter extends BaseQuickAdapter<LisOrderDetail,BaseViewHo
                 .setText(R.id.hint,item.AbFlag)
                 .setText(R.id.unit,item.Units)
                 .setText(R.id.range,item.RefRanges);
+
+        switch (item.AbFlag) {
+            case "L":
+                helper.setTextColor(R.id.hint,mContext.getResources().getColor(R.color.blue));
+                break;
+            case "A":
+            case "H":
+                helper.setTextColor(R.id.hint,mContext.getResources().getColor(R.color.red));
+                break;
+            default:
+                helper.setTextColor(R.id.hint,mContext.getResources().getColor(R.color.gray));
+                break;
+        }
     }
 }

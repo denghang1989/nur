@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 
 import java.util.List;
@@ -21,6 +22,7 @@ import szszhospital.cn.com.mobilenurse.mvp.presenter.LisResultPresenter;
 import szszhospital.cn.com.mobilenurse.remote.response.LisOrder;
 import szszhospital.cn.com.mobilenurse.remote.response.LisOrderDetail;
 import szszhospital.cn.com.mobilenurse.remote.response.LisOrder_Table;
+import szszhospital.cn.com.mobilenurse.view.LisChartDialogFragment;
 
 public class LisResultActivity extends BasePresentActivity<ActivityLisResultBinding, LisResultPresenter> implements LisResultContract.View {
 
@@ -28,6 +30,7 @@ public class LisResultActivity extends BasePresentActivity<ActivityLisResultBind
     private static final String DATA = "data";
     private LisOrder         mLisOrder;
     private LisResultAdapter mAdapter;
+    private LisChartDialogFragment mDialogFragment;
 
     public static void startLisResultActivity(Context context, LisOrder lisOrder) {
         Intent intent = new Intent(context, LisResultActivity.class);
@@ -47,9 +50,10 @@ public class LisResultActivity extends BasePresentActivity<ActivityLisResultBind
         mDataBinding.toolbar.setTitle(mLisOrder.OrdItemName);
         mDataBinding.toolbar.setSubtitle("申请日期:" + mLisOrder.ReqDateTime + "   报告日期:" + mLisOrder.AuthDateTime);
         mDataBinding.listView.setLayoutManager(new LinearLayoutManager(this));
-        mDataBinding.listView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.HORIZONTAL));
-        View headView = LayoutInflater.from(this).inflate(R.layout.item_lis_result,null);
+        mDataBinding.listView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+        View headView = LayoutInflater.from(this).inflate(R.layout.item_lis_result, null);
         mAdapter.addHeaderView(headView);
+        mDataBinding.listView.setAdapter(mAdapter);
     }
 
     @Override
@@ -79,6 +83,23 @@ public class LisResultActivity extends BasePresentActivity<ActivityLisResultBind
 
     @Override
     protected void initEvent() {
+        mDataBinding.toolbar.setNavigationOnClickListener(v -> finish());
+        mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                LisOrderDetail item = mAdapter.getItem(position);
+                showChatDialog(item);
+            }
+        });
+    }
+
+    protected void showChatDialog(LisOrderDetail order) {
+        mDialogFragment = (LisChartDialogFragment) getSupportFragmentManager().findFragmentByTag(LisChartDialogFragment.TAG);
+        if (mDialogFragment != null) {
+            mDialogFragment.dismiss();
+        }
+        mDialogFragment = LisChartDialogFragment.newInstance(order);
+        mDialogFragment.show(getSupportFragmentManager(), LisChartDialogFragment.TAG);
     }
 
     @Override
