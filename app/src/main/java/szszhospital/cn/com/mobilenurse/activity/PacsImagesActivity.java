@@ -57,7 +57,7 @@ public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBi
     private        int      mSpeed        = 300;
     private        int      mCurrentIndex = 0;
     private static String[] normalTextRes = new String[]{
-            "0.5s", "1s", "1.5s", "2s"
+            "0.1s", "0.2s", "0.3s", "0.4s", "0.5s", "0.6s"
     };
 
     private Handler mHandler = new Handler(new Handler.Callback() {
@@ -103,8 +103,8 @@ public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBi
 
     private void initMenu() {
         mDataBinding.menu.setButtonEnum(ButtonEnum.Ham);
-        mDataBinding.menu.setPiecePlaceEnum(PiecePlaceEnum.HAM_4);
-        mDataBinding.menu.setButtonPlaceEnum(ButtonPlaceEnum.HAM_4);
+        mDataBinding.menu.setPiecePlaceEnum(PiecePlaceEnum.HAM_6);
+        mDataBinding.menu.setButtonPlaceEnum(ButtonPlaceEnum.HAM_6);
         for (int i = 0; i < mDataBinding.menu.getPiecePlaceEnum().pieceNumber(); i++) {
             HamButton.Builder builder = new HamButton.Builder()
                     .listener(this)
@@ -311,16 +311,22 @@ public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBi
         if (mCurrentIndex != index) {
             switch (index) {
                 case 0:
-                    mSpeed = 500;
+                    mSpeed = 100;
                     break;
                 case 1:
-                    mSpeed = 1000;
+                    mSpeed = 200;
                     break;
                 case 2:
-                    mSpeed = 1500;
+                    mSpeed = 300;
                     break;
                 case 3:
-                    mSpeed = 2000;
+                    mSpeed = 400;
+                    break;
+                case 4:
+                    mSpeed = 500;
+                    break;
+                case 5:
+                    mSpeed = 600;
                     break;
                 default:
                     break;
