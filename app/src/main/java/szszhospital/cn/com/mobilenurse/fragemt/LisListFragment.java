@@ -61,7 +61,6 @@ public class LisListFragment extends BaseDoctorFragment<FragmentOrderBinding, Li
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
             LisOrder lisOrder = mAdapter.getItem(position);
             if (StringUtils.equals("3", lisOrder.ResultStatus)) {
-//                LisOrderDetailActivity.startLisOrderDetaiActivity(_mActivity, lisOrder);
                 LisResultActivity.startLisResultActivity(_mActivity, lisOrder);
             } else {
                 ToastUtils.showShort("无报告！");

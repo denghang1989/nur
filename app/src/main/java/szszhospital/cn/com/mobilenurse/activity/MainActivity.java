@@ -123,7 +123,7 @@ public class MainActivity extends BasePresentActivity<ActiviyMainBinding, MainPr
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        //getMenuInflater().inflate(R.menu.app, menu);
+        getMenuInflater().inflate(R.menu.app, menu);
         return super.onCreateOptionsMenu(menu);
     }
 

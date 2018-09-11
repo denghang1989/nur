@@ -8,7 +8,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 
 import java.util.List;
@@ -84,12 +83,9 @@ public class LisResultActivity extends BasePresentActivity<ActivityLisResultBind
     @Override
     protected void initEvent() {
         mDataBinding.toolbar.setNavigationOnClickListener(v -> finish());
-        mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                LisOrderDetail item = mAdapter.getItem(position);
-                showChatDialog(item);
-            }
+        mAdapter.setOnItemClickListener((adapter, view, position) -> {
+            LisOrderDetail item = mAdapter.getItem(position);
+            showChatDialog(item);
         });
     }
 
