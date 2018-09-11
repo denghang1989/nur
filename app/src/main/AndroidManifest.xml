@@ -30,63 +30,74 @@
         </activity>
         <activity
             android:name=".activity.MainActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait"
             />
 
         <activity
             android:name=".activity.QRCodeActivity"
             android:screenOrientation="portrait"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
             android:theme="@style/AppTheme.Transparent"/>
 
         <activity
             android:name=".activity.ScanQRCodeActivity"
             android:screenOrientation="portrait"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
             android:theme="@style/AppTheme.Transparent"
             />
 
         <activity
             android:name=".activity.PrescriptionActivity"
             android:screenOrientation="portrait"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
             android:theme="@style/AppTheme.Transparent"
             />
 
         <activity
             android:name=".activity.DrugCheckActivity"
             android:screenOrientation="portrait"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
             android:theme="@style/AppTheme.Transparent"
             />
 
         <activity
             android:name=".activity.LisOrderDetailActivity"
             android:screenOrientation="portrait"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
             android:theme="@style/AppTheme.Transparent"
             />
 
         <activity
             android:name=".activity.PacsWebViewDetailActivity"
             android:screenOrientation="portrait"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
             android:theme="@style/AppTheme.Transparent"
             />
 
         <activity
             android:name=".activity.InspectionStepActivity"
             android:screenOrientation="portrait"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
             android:theme="@style/AppTheme.Transparent"
             />
 
         <activity
             android:name=".activity.TestStepActivity"
             android:screenOrientation="portrait"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
             android:theme="@style/AppTheme.Transparent"
             />
         <activity
             android:name=".activity.EpisodeListActivity"
             android:screenOrientation="portrait"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
             android:theme="@style/AppTheme.Transparent"
             />
         <activity
             android:name=".activity.PacsImageActivity"
             android:screenOrientation="landscape"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
             android:theme="@style/AppTheme.Transparent"
             />
         <activity
@@ -103,17 +114,19 @@
 
         <activity
             android:name=".activity.DragPhotoActivity"
-            android:screenOrientation="portrait"
+            android:screenOrientation="landscape"
             android:theme="@style/AppTheme.Transparent"/>
 
         <activity
             android:name=".activity.PacsResultActivity"
             android:screenOrientation="portrait"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
             android:theme="@style/AppTheme.Transparent"/>
 
         <activity
             android:name=".activity.PatientListActivity"
             android:screenOrientation="portrait"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
             android:theme="@style/AppTheme.Transparent"/>
 
         <activity
@@ -124,6 +137,7 @@
         <activity
             android:name=".activity.LisResultActivity"
             android:screenOrientation="portrait"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
             android:theme="@style/AppTheme.Transparent"/>
 
         <receiver

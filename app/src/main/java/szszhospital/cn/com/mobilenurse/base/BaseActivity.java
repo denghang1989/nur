@@ -1,5 +1,6 @@
 package szszhospital.cn.com.mobilenurse.base;
 
+import android.content.res.Configuration;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
@@ -40,4 +41,15 @@ public abstract class BaseActivity<T extends ViewDataBinding> extends SwipeBackA
     }
 
     protected abstract int getLayoutId();
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        if(newConfig.orientation== Configuration.ORIENTATION_LANDSCAPE) {
+            // 什么都不用写
+        }
+        else{
+            // 什么都不用写
+        }
+    }
 }

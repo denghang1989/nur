@@ -5,6 +5,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.annimon.stream.Collectors;
+import com.annimon.stream.Stream;
 import com.blankj.utilcode.util.ConvertUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.github.florent37.viewanimator.ViewAnimator;
@@ -30,6 +32,7 @@ public abstract class BaseOrdersFragment extends BaseDoctorFragment<FragmentOrde
     protected OrderRequest           mOrderRequest;
     protected OrderListAdapter       mAdapter;
     protected OrderExtDialogFragment mDialogFragment;
+    protected List<Order>            mOrderList;
 
     @Override
     public int getLayoutId() {
@@ -41,7 +44,7 @@ public abstract class BaseOrdersFragment extends BaseDoctorFragment<FragmentOrde
         super.init();
         mOrderRequest = new OrderRequest();
         mOrderRequest.OrderType = getOrderType();
-        mAdapter = new OrderListAdapter(R.layout.item_order, getOrderType());
+        mAdapter = new OrderListAdapter(R.layout.item_order);
     }
 
     @Override
@@ -106,13 +109,15 @@ public abstract class BaseOrdersFragment extends BaseDoctorFragment<FragmentOrde
 
     @Override
     public void showPatientOrderList(List<Order> list) {
-        //长期医嘱
         if (StringUtils.equals("S", getOrderType())) {
-            mAdapter.setNewData(list);
+            //长期医嘱
+            List<Order> collect = Stream.of(list).filter(order -> !"D".equals(order.OrdStatusCode)).collect(Collectors.toList());
+            mAdapter.setNewData(collect);
         } else {
             //临时医嘱
             mAdapter.setNewData(list);
         }
+        mOrderList = list;
     }
 
     @Override

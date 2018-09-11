@@ -12,15 +12,9 @@ import szszhospital.cn.com.mobilenurse.R;
 import szszhospital.cn.com.mobilenurse.remote.response.Order;
 
 public class OrderListAdapter extends BaseQuickAdapter<Order, BaseViewHolder> {
-    private String mType;
 
     public OrderListAdapter(int layoutResId) {
         super(layoutResId);
-    }
-
-    public OrderListAdapter(int layoutResId, String type) {
-        super(layoutResId);
-        mType = type;
     }
 
     @Override
@@ -47,5 +41,10 @@ public class OrderListAdapter extends BaseQuickAdapter<Order, BaseViewHolder> {
             arcimDesc = "__" + arcimDesc;
         }
         helper.setText(R.id.order_name, arcimDesc);
+        if ("D".equals(item.OrdStatusCode)) {
+            helper.setBackgroundColor(R.id.background, mContext.getResources().getColor(R.color.header_line_color));
+        } else {
+            helper.setBackgroundColor(R.id.background, mContext.getResources().getColor(R.color.transparent));
+        }
     }
 }

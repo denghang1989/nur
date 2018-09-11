@@ -76,6 +76,15 @@ public class Order implements Parcelable, Serializable {
     public String Reflag;
     public String SeqNo;
     public String dstatus;
+    /**
+     * OrdStatusCode : V
+     * OrdStopDate :
+     * OrdStopTime :
+     */
+
+    public String OrdStatusCode;
+    public String OrdStopDate;
+    public String OrdStopTime;
 
 
     @Override
@@ -118,6 +127,9 @@ public class Order implements Parcelable, Serializable {
         dest.writeString(this.Reflag);
         dest.writeString(this.SeqNo);
         dest.writeString(this.dstatus);
+        dest.writeString(this.OrdStatusCode);
+        dest.writeString(this.OrdStopDate);
+        dest.writeString(this.OrdStopTime);
     }
 
     public Order() {
@@ -157,6 +169,9 @@ public class Order implements Parcelable, Serializable {
         this.Reflag = in.readString();
         this.SeqNo = in.readString();
         this.dstatus = in.readString();
+        this.OrdStatusCode = in.readString();
+        this.OrdStopDate = in.readString();
+        this.OrdStopTime = in.readString();
     }
 
     public static final Creator<Order> CREATOR = new Creator<Order>() {
