@@ -1,29 +1,80 @@
 package szszhospital.cn.com.mobilenurse.adapter;
 
+import android.support.annotation.NonNull;
+
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.TimeUtils;
-import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
 import java.text.SimpleDateFormat;
+import java.util.List;
 import java.util.Locale;
 
 import szszhospital.cn.com.mobilenurse.R;
 import szszhospital.cn.com.mobilenurse.remote.response.Order;
 
-public class OrderListAdapter extends BaseQuickAdapter<Order, BaseViewHolder> {
+public class OrderListAdapter extends BaseMultiItemQuickAdapter<Order, BaseViewHolder> {
 
-    public OrderListAdapter(int layoutResId) {
-        super(layoutResId);
+    public OrderListAdapter(List<Order> data) {
+        super(data);
+        addItemType(Order.V_ORDER, R.layout.item_order);
+        addItemType(Order.D_ORDER, R.layout.item_order_d);
     }
 
     @Override
     protected void convert(BaseViewHolder helper, Order item) {
-        long millis = TimeUtils.string2Millis(item.OrdStartDate + " " + item.OrdStartTime, new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.CHINA));
-        String startTimeString = TimeUtils.millis2String(millis, new SimpleDateFormat("MM-dd HH:mm", Locale.CHINA));
+        int itemViewType = helper.getItemViewType();
+        switch (itemViewType) {
+            case Order.V_ORDER:
+                vOrderConvert(helper, item);
+                break;
+            case Order.D_ORDER:
+                dOrderConvert(helper, item);
+                break;
+        }
+    }
+
+    private void dOrderConvert(BaseViewHolder helper, Order item) {
+        String startTimeString = ChangedDateTime(item.OrdStartDate + " " + item.OrdStartTime);
+        String arcimDesc = getArcimDesc(item);
+        String stopTimeString = ChangedDateTime(item.OrdStopDate + " " + item.OrdStopTime);
+
         helper.setText(R.id.StartDateTime, startTimeString)
-                .setText(R.id.stopDateTime, "")
-                .setText(R.id.doctor, item.Doctor);
+                .setText(R.id.doctor, item.Doctor)
+                .setText(R.id.order_name, arcimDesc)
+                .setText(R.id.stopDateTime, "DC-D " + stopTimeString)
+                .setText(R.id.stopDoctor, item.OrdStopDoctor);
+
+//        if ("D".equals(item.OrdStatusCode)) {
+//            helper.setBackgroundColor(R.id.stopDateTime, mContext.getResources().getColor(R.color.header_line_color));
+//        } else {
+//            helper.setBackgroundColor(R.id.stopDateTime, mContext.getResources().getColor(R.color.black));
+//        }
+    }
+
+    private void vOrderConvert(BaseViewHolder helper, Order item) {
+        String startTimeString = ChangedDateTime(item.OrdStartDate + " " + item.OrdStartTime);
+        String arcimDesc = getArcimDesc(item);
+
+        helper.setText(R.id.StartDateTime, startTimeString)
+                .setText(R.id.doctor, item.Doctor)
+                .setText(R.id.order_name, arcimDesc);
+
+//        if ("D".equals(item.OrdStatusCode)) {
+//            helper.setBackgroundColor(R.id.background, mContext.getResources().getColor(R.color.header_line_color));
+//        } else {
+//            helper.setBackgroundColor(R.id.background, mContext.getResources().getColor(R.color.transparent));
+//        }
+    }
+
+    @NonNull
+    private String ChangedDateTime(String dateTime) {
+        long millis = TimeUtils.string2Millis(dateTime, new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.CHINA));
+        return TimeUtils.millis2String(millis, new SimpleDateFormat("MM-dd HH:mm", Locale.CHINA));
+    }
+
+    private String getArcimDesc(Order item) {
         String arcimDesc = item.ArcimDesc;
         if (!StringUtils.isTrimEmpty(item.OrdDepProcNotes)) {
             arcimDesc = arcimDesc + " (" + item.OrdDepProcNotes + ")";
@@ -40,11 +91,6 @@ public class OrderListAdapter extends BaseQuickAdapter<Order, BaseViewHolder> {
         if (item.SeqNo.contains(".")) {
             arcimDesc = "__" + arcimDesc;
         }
-        helper.setText(R.id.order_name, arcimDesc);
-        if ("D".equals(item.OrdStatusCode)) {
-            helper.setBackgroundColor(R.id.background, mContext.getResources().getColor(R.color.header_line_color));
-        } else {
-            helper.setBackgroundColor(R.id.background, mContext.getResources().getColor(R.color.transparent));
-        }
+        return arcimDesc;
     }
 }

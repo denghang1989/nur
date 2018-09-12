@@ -3,9 +3,14 @@ package szszhospital.cn.com.mobilenurse.remote.response;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.chad.library.adapter.base.entity.MultiItemEntity;
+
 import java.io.Serializable;
 
-public class Order implements Parcelable, Serializable {
+public class Order implements Parcelable, Serializable, MultiItemEntity {
+
+    public static final int V_ORDER = 0;
+    public static final int D_ORDER = 1;
 
     /**
      * ArcimDesc : 血常规
@@ -85,7 +90,35 @@ public class Order implements Parcelable, Serializable {
     public String OrdStatusCode;
     public String OrdStopDate;
     public String OrdStopTime;
+    /**
+     * ArcimId : 7129||1
+     * DoseQty : 1
+     * OEORIPhQty : 1
+     * OrdStopDoctor :
+     * PatientID : 113253
+     * SeqNo : 1
+     */
 
+    public String ArcimId;
+    public String OrdStopDoctor;
+
+    @Override
+    public int getItemType() {
+        int result = 0;
+        switch (OrdStatusCode) {
+            case "":
+            case "V":
+                result = 0;
+                break;
+            case "D":
+                result = 1;
+                break;
+            default:
+                result = 0;
+                break;
+        }
+        return result;
+    }
 
     @Override
     public int describeContents() {
@@ -130,6 +163,8 @@ public class Order implements Parcelable, Serializable {
         dest.writeString(this.OrdStatusCode);
         dest.writeString(this.OrdStopDate);
         dest.writeString(this.OrdStopTime);
+        dest.writeString(this.ArcimId);
+        dest.writeString(this.OrdStopDoctor);
     }
 
     public Order() {
@@ -172,6 +207,8 @@ public class Order implements Parcelable, Serializable {
         this.OrdStatusCode = in.readString();
         this.OrdStopDate = in.readString();
         this.OrdStopTime = in.readString();
+        this.ArcimId = in.readString();
+        this.OrdStopDoctor = in.readString();
     }
 
     public static final Creator<Order> CREATOR = new Creator<Order>() {
