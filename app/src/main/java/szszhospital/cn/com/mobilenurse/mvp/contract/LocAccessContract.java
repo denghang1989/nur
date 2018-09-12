@@ -16,6 +16,8 @@ public interface LocAccessContract {
 
     interface Model extends BaseModel {
         void save(List<LocAccessResponse> list);
+
+        List<LocAccessResponse> getLocAccess(String LocId);
     }
 
     interface Presenter extends BasePresenter<View> {
