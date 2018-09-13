@@ -85,7 +85,7 @@ public class LisResultActivity extends BasePresentActivity<ActivityLisResultBind
         mDataBinding.toolbar.setNavigationOnClickListener(v -> finish());
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
             LisOrderDetail item = mAdapter.getItem(position);
-            showChatDialog(item);
+            //showChatDialog(item);
         });
     }
 

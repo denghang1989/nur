@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.NestedScrollView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -84,15 +85,16 @@ public class DragPhotoActivity extends SwipeBackActivity {
 
             @Override
             public Object instantiateItem(ViewGroup container, int position) {
-                SubsamplingScaleImageView dragPhotoView = (SubsamplingScaleImageView) LayoutInflater.from(DragPhotoActivity.this).inflate(R.layout.item_drag_photo, container,false);
+                NestedScrollView nestedScrollview = (NestedScrollView) LayoutInflater.from(DragPhotoActivity.this).inflate(R.layout.item_drag_photo, container,false);
+                SubsamplingScaleImageView dragPhotoView = nestedScrollview.findViewById(R.id.dragPhotoView);
                 Glide.with(DragPhotoActivity.this).asBitmap().load(PHOTO_PATH + mPhotoPaths.get(position)).into(new SimpleTarget<Bitmap>() {
                     @Override
                     public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
                         dragPhotoView.setImage(ImageSource.bitmap(resource));
                     }
                 });
-                container.addView(dragPhotoView);
-                return dragPhotoView;
+                container.addView(nestedScrollview);
+                return nestedScrollview;
             }
 
             @Override

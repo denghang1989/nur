@@ -11,12 +11,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.blankj.utilcode.util.ScreenUtils;
+import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -67,31 +70,29 @@ public class LisChartDialogFragment extends DialogFragment {
         mToolbar = view.findViewById(R.id.toolbar);
         mToolbar.setTitle(mLisOrderDetail.TestCodeName);
         mChart = view.findViewById(R.id.chart);
-        initChart();
+        setChartProperties();
     }
 
-    private void initChart() {
-        // no description text
+    private void setChartProperties() {
+        //设置描述文本不显示
         mChart.getDescription().setEnabled(false);
-
-        // enable touch gestures
+        //设置是否显示表格背景
+        mChart.setDrawGridBackground(true);
+        //设置是否可以触摸
         mChart.setTouchEnabled(true);
-
         mChart.setDragDecelerationFrictionCoef(0.9f);
-
-        // enable scaling and dragging
+        //设置是否可以拖拽
         mChart.setDragEnabled(true);
-        mChart.setScaleEnabled(true);
+        //设置是否可以缩放
+        mChart.setScaleEnabled(false);
         mChart.setDrawGridBackground(false);
         mChart.setHighlightPerDragEnabled(true);
-
-        // set an alternative background color
+        mChart.setPinchZoom(true);
+        //设置背景颜色
         mChart.setBackgroundColor(Color.WHITE);
+        //设置XY轴动画
+        mChart.animateXY(1500,1500, Easing.EasingOption.EaseInSine, Easing.EasingOption.EaseInSine);
         mChart.setViewPortOffsets(0f, 0f, 0f, 0f);
-
-        // get the legend (only possible after setting data)
-        Legend l = mChart.getLegend();
-        l.setEnabled(false);
     }
 
     @Override
@@ -153,20 +154,19 @@ public class LisChartDialogFragment extends DialogFragment {
             }
         });
 
-        //设置最大值，最小值
-        YAxis leftAxis = mChart.getAxisLeft();
-        LisChartData chartData = lisChartData.get(0);
-        String[] strings = chartData.RefRanges.split("-");
-        Float min = Float.valueOf(strings[0]);
-        leftAxis.setAxisMinimum(min - 15);
-        Float max = Float.valueOf(strings[1]);
-        leftAxis.setAxisMaximum(max + 15);
+        //设置取值范围最大值，最小值
+        setRangeLimit(lisChartData);
+
+        //设置X轴
+
+        //设置Y轴
+
+        //设置数据
 
         ArrayList<Entry> yValues = new ArrayList<>();
         for (int i = 0; i < lisChartData.size(); i++) {
             String result = lisChartData.get(i).Result;
             yValues.add(new Entry(i, RegexUtil.getDoubleValue(result)));
-
         }
 
         LineDataSet set;
@@ -203,6 +203,64 @@ public class LisChartDialogFragment extends DialogFragment {
 
             mChart.setData(data);
             mChart.invalidate();
+        }
+    }
+
+    /**
+     * //设置取值范围最大值，最小值
+     * @param lisChartData
+     */
+    private void setRangeLimit(List<LisChartData> lisChartData) {
+        YAxis rightAxis = mChart.getAxisRight();
+        LisChartData chartData = lisChartData.get(0);
+        String[] strings = chartData.RefRanges.split("-");
+        Float min = Float.valueOf(strings[0]);
+        Float max = Float.valueOf(strings[1]);
+
+    }
+
+    private void setChartXAxis(List<LisChartData> lisChartData) {
+        ArrayList<String> list = new ArrayList<>();
+        //自定义设置横坐标
+        IAxisValueFormatter xValueFormatter = new FastBrowserXValueFormatter(list);
+        //X轴
+        XAxis xAxis = mChart.getXAxis();
+        //设置线为虚线
+        //xAxis.enableGridDashedLine(10f, 10f, 0f);
+        //设置字体大小10sp
+        xAxis.setTextSize(10f);
+        //设置X轴字体颜色
+//        xAxis.setTextColor(ColorAndImgUtils.FAST_BW_TEXT_COLOR);
+        //设置从X轴发出横线
+        xAxis.setDrawGridLines(true);
+//        xAxis.setGridColor(ColorAndImgUtils.GRID_COLOR);
+        //设置网格线宽度
+        xAxis.setGridLineWidth(1);
+        //设置显示X轴
+        xAxis.setDrawAxisLine(true);
+        //设置X轴显示的位置
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        //设置自定义X轴值
+        xAxis.setValueFormatter(xValueFormatter);
+        //一个界面显示6个Lable，那么这里要设置11个
+        xAxis.setLabelCount(6);
+        //设置最小间隔，防止当放大时出现重复标签
+        xAxis.setGranularity(1f);
+        //设置为true当一个页面显示条目过多，X轴值隔一个显示一个
+        xAxis.setGranularityEnabled(true);
+        //设置X轴的颜色
+//        xAxis.setAxisLineColor(ColorAndImgUtils.GRID_COLOR);
+        //设置X轴的宽度
+        xAxis.setAxisLineWidth(1f);
+    }
+
+    private class FastBrowserXValueFormatter implements IAxisValueFormatter {
+        public FastBrowserXValueFormatter(ArrayList<String> list) {
+        }
+
+        @Override
+        public String getFormattedValue(float value, AxisBase axis) {
+            return "";
         }
     }
 }
