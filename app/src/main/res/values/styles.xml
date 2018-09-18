@@ -14,6 +14,7 @@
         <item name="windowNoTitle">true</item>
         <item name="actionMenuTextColor">#ffffff</item>
         <item name="android:dropDownListViewStyle">@style/xzfSpinnerStyle</item>
+        <item name="android:textColorSecondary">@android:color/white</item>
     </style>
 
     <style name="xzfSpinnerStyle" parent="android:Widget.ListView.DropDown">

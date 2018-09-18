@@ -107,7 +107,9 @@ public class MainActivity extends BasePresentActivity<ActiviyMainBinding, MainPr
     protected void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
-        mDisposable.dispose();
+        if (!mDisposable.isDisposed()) {
+            mDisposable.dispose();
+        }
     }
 
     public void closeDrawer() {
@@ -152,6 +154,9 @@ public class MainActivity extends BasePresentActivity<ActiviyMainBinding, MainPr
                 EpisodeListActivity.startEpisodeListActivity(this);
                 break;
             case R.id.tools_patient_calendar:
+                break;
+            case R.id.tools_search:
+                SearchActivity.startSearchActivity(this);
                 break;
         }
         return true;
