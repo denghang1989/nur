@@ -22,6 +22,7 @@ import szszhospital.cn.com.mobilenurse.mvp.presenter.LisResultPresenter;
 import szszhospital.cn.com.mobilenurse.remote.response.LisOrder;
 import szszhospital.cn.com.mobilenurse.remote.response.LisOrderDetail;
 import szszhospital.cn.com.mobilenurse.remote.response.LisOrder_Table;
+import szszhospital.cn.com.mobilenurse.view.DrugAllergyFragment;
 import szszhospital.cn.com.mobilenurse.view.LisChartDialogFragment;
 
 public class LisResultActivity extends BasePresentActivity<ActivityLisResultBinding, LisResultPresenter> implements LisResultContract.View {
@@ -31,6 +32,7 @@ public class LisResultActivity extends BasePresentActivity<ActivityLisResultBind
     private LisOrder               mLisOrder;
     private LisResultAdapter       mAdapter;
     private LisChartDialogFragment mDialogFragment;
+    private DrugAllergyFragment    mDrugAllergyFragment;
 
     public static void startLisResultActivity(Context context, LisOrder lisOrder) {
         Intent intent = new Intent(context, LisResultActivity.class);
@@ -86,19 +88,20 @@ public class LisResultActivity extends BasePresentActivity<ActivityLisResultBind
         mDataBinding.toolbar.setNavigationOnClickListener(v -> finish());
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
             LisOrderDetail item = mAdapter.getItem(position);
-            if (item != null && hasPreResult(item)) {
-                String index = item.ResultFormat;
-                switch (index) {
-                    case "N":
+            String index = item.ResultFormat;
+            switch (index) {
+                case "N":
+                    if (hasPreResult(item)) {
                         showChatDialog(item);
-                        break;
-                    case "X":
-                        break;
-                    case "M":
-                        break;
-                    case "S":
-                        break;
-                }
+                    }
+                    break;
+                case "X":
+                    break;
+                case "M":
+                    showDrugAllergyDialog(item);
+                    break;
+                case "S":
+                    break;
             }
         });
     }
@@ -115,6 +118,15 @@ public class LisResultActivity extends BasePresentActivity<ActivityLisResultBind
         }
         mDialogFragment = LisChartDialogFragment.newInstance(order);
         mDialogFragment.show(getSupportFragmentManager(), LisChartDialogFragment.TAG);
+    }
+
+    protected void showDrugAllergyDialog(LisOrderDetail order) {
+        mDrugAllergyFragment = (DrugAllergyFragment) getSupportFragmentManager().findFragmentByTag(DrugAllergyFragment.TAG);
+        if (mDrugAllergyFragment != null) {
+            mDrugAllergyFragment.dismiss();
+        }
+        mDrugAllergyFragment = DrugAllergyFragment.newInstance(order);
+        mDrugAllergyFragment.show(getSupportFragmentManager(), DrugAllergyFragment.TAG);
     }
 
     @Override
@@ -152,6 +164,10 @@ public class LisResultActivity extends BasePresentActivity<ActivityLisResultBind
         super.onDestroy();
         if (mDialogFragment != null) {
             mDialogFragment.dismiss();
+        }
+
+        if (mDrugAllergyFragment != null) {
+            mDrugAllergyFragment.dismiss();
         }
     }
 }

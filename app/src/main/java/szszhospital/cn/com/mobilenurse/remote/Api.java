@@ -11,6 +11,7 @@ import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 import szszhospital.cn.com.mobilenurse.remote.response.AuditDetailResponse;
 import szszhospital.cn.com.mobilenurse.remote.response.DispDetailResponse;
+import szszhospital.cn.com.mobilenurse.remote.response.DrugAllergy;
 import szszhospital.cn.com.mobilenurse.remote.response.DrugBill;
 import szszhospital.cn.com.mobilenurse.remote.response.EMREposideInfo;
 import szszhospital.cn.com.mobilenurse.remote.response.EMRImageInfo;
@@ -165,6 +166,7 @@ public interface Api {
     @GET("web/Quality.Ajax.LisChartAjax.cls")
     Observable<Response<List<LisChartData>>> getLisChartData(@Query("ReportDR") String ReportResultDR, @Query("TestCodeDR") String TestCodeDR);
 
-    //获取药敏结果
-
+    //获取药敏结果   http://172.18.0.3:57772/trakcarelive/trak/web/Quality.Ajax.LisMResultAjax.cls?ReportDRs=24319627
+    @GET("web/Quality.Ajax.LisMResultAjax.cls")
+    Observable<Response<List<DrugAllergy>>> getLisDrugAllergyData(@Query("ReportDRs") String ReportDRs);
 }

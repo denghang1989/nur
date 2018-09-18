@@ -32,7 +32,7 @@ public abstract class BaseDialogFragment extends DialogFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        initView();
+        initView(view);
     }
 
     @Override
@@ -59,7 +59,7 @@ public abstract class BaseDialogFragment extends DialogFragment {
 
     }
 
-    protected void initView() {
+    protected void initView(View view) {
 
     }
 
