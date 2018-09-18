@@ -164,4 +164,7 @@ public interface Api {
     //获取lis历次结果列表
     @GET("web/Quality.Ajax.LisChartAjax.cls")
     Observable<Response<List<LisChartData>>> getLisChartData(@Query("ReportDR") String ReportResultDR, @Query("TestCodeDR") String TestCodeDR);
+
+    //获取药敏结果
+
 }

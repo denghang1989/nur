@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 
+import com.blankj.utilcode.util.StringUtils;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 
 import java.util.List;
@@ -27,8 +28,8 @@ public class LisResultActivity extends BasePresentActivity<ActivityLisResultBind
 
     private static final String TAG  = "LisOrderDetailActivity";
     private static final String DATA = "data";
-    private LisOrder         mLisOrder;
-    private LisResultAdapter mAdapter;
+    private LisOrder               mLisOrder;
+    private LisResultAdapter       mAdapter;
     private LisChartDialogFragment mDialogFragment;
 
     public static void startLisResultActivity(Context context, LisOrder lisOrder) {
@@ -85,9 +86,27 @@ public class LisResultActivity extends BasePresentActivity<ActivityLisResultBind
         mDataBinding.toolbar.setNavigationOnClickListener(v -> finish());
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
             LisOrderDetail item = mAdapter.getItem(position);
-            //showChatDialog(item);
+            if (item != null && hasPreResult(item)) {
+                String index = item.ResultFormat;
+                switch (index) {
+                    case "N":
+                        showChatDialog(item);
+                        break;
+                    case "X":
+                        break;
+                    case "M":
+                        break;
+                    case "S":
+                        break;
+                }
+            }
         });
     }
+
+    private boolean hasPreResult(LisOrderDetail lisOrderDetail) {
+        return StringUtils.isTrimEmpty(lisOrderDetail.PreResult);
+    }
+
 
     protected void showChatDialog(LisOrderDetail order) {
         mDialogFragment = (LisChartDialogFragment) getSupportFragmentManager().findFragmentByTag(LisChartDialogFragment.TAG);
@@ -126,5 +145,13 @@ public class LisResultActivity extends BasePresentActivity<ActivityLisResultBind
     @Override
     public void refresh() {
         initData();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mDialogFragment != null) {
+            mDialogFragment.dismiss();
+        }
     }
 }
