@@ -37,8 +37,8 @@ public class OrderPresenter extends RxPresenter<OrderContract.View, OrderContrac
                                 }
                             }
                             Collections.reverse(orders);
-                            mView.showPatientOrderList(orders);
                         }
+                        mView.showPatientOrderList(orders);
                     }
 
                     @Override

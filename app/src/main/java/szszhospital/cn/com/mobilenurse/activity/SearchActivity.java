@@ -99,7 +99,7 @@ public class SearchActivity extends BasePresentActivity<ActivitySearchBinding, S
     @Override
     protected void initData() {
         if (App.patientInfo != null) {
-            mPresenter.searchByNo(App.patientInfo.PatientNo);
+            mPresenter.searchByNo(String.format("%08d", Integer.parseInt(App.patientInfo.PatientNo))+"");
         }
     }
 

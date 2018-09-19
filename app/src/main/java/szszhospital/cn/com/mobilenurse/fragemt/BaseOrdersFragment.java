@@ -107,10 +107,8 @@ public abstract class BaseOrdersFragment extends BaseDoctorFragment<FragmentOrde
 
     @Override
     public void showPatientOrderList(List<Order> list) {
-        if (list != null && list.size() > 0) {
-            mAdapter.setNewData(list);
-            mOrderList = list;
-        }
+        mAdapter.setNewData(list);
+        mOrderList = list;
     }
 
     @Override
