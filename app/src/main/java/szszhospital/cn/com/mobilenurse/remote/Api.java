@@ -169,4 +169,8 @@ public interface Api {
     //获取药敏结果   http://172.18.0.3:57772/trakcarelive/trak/web/Quality.Ajax.LisMResultAjax.cls?ReportDRs=24319627
     @GET("web/Quality.Ajax.LisMResultAjax.cls")
     Observable<Response<List<DrugAllergy>>> getLisDrugAllergyData(@Query("ReportDRs") String ReportDRs);
+
+    //通过登记号获取就诊列表
+    @GET("web/Quality.Ajax.PatientNoListAjax.cls")
+    Observable<Response<List<PatientInfo>>> getPatientListByNo(@Query("PapmiNo") String PapmiNo);
 }

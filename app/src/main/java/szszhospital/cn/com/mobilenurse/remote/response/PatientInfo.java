@@ -2,10 +2,14 @@ package szszhospital.cn.com.mobilenurse.remote.response;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
+
+import com.blankj.utilcode.util.TimeUtils;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 
-public class PatientInfo implements Parcelable ,Serializable{
+public class PatientInfo implements Parcelable, Serializable, Comparable<PatientInfo> {
 
     /**
      * Age : 27岁
@@ -37,26 +41,31 @@ public class PatientInfo implements Parcelable ,Serializable{
      */
 
     public String PatientNo;
+    /**
+     * MedicareNo : 4888
+     * PatientID : 1
+     * PatientNo : 1
+     * Type : H
+     */
 
+    public String Type;
+    /**
+     * Loc :
+     * MedicareNo : 10007
+     * PatientID : 4
+     * PatientNo : 4
+     */
 
+    public String Loc;
+    /**
+     * Days : 4
+     * MedicareNo : 170501
+     * PatientID : 113253
+     * PatientNo : 138952
+     */
 
+    public String Days;
 
-    @Override
-    public String toString() {
-        return "PatientInfo{" +
-                "Age='" + Age + '\'' +
-                ", Diagnose='" + Diagnose + '\'' +
-                ", DisBed='" + DisBed + '\'' +
-                ", Doctor='" + Doctor + '\'' +
-                ", EpisodeID='" + EpisodeID + '\'' +
-                ", MedicareNo='" + MedicareNo + '\'' +
-                ", PAPMIName='" + PAPMIName + '\'' +
-                ", PaAdmDateTime='" + PaAdmDateTime + '\'' +
-                ", PatientID='" + PatientID + '\'' +
-                ", PayType='" + PayType + '\'' +
-                ", Sex='" + Sex + '\'' +
-                '}';
-    }
 
     @Override
     public int describeContents() {
@@ -77,6 +86,9 @@ public class PatientInfo implements Parcelable ,Serializable{
         dest.writeString(this.PayType);
         dest.writeString(this.Sex);
         dest.writeString(this.PatientNo);
+        dest.writeString(this.Type);
+        dest.writeString(this.Loc);
+        dest.writeString(this.Days);
     }
 
     public PatientInfo() {
@@ -95,6 +107,9 @@ public class PatientInfo implements Parcelable ,Serializable{
         this.PayType = in.readString();
         this.Sex = in.readString();
         this.PatientNo = in.readString();
+        this.Type = in.readString();
+        this.Loc = in.readString();
+        this.Days = in.readString();
     }
 
     public static final Creator<PatientInfo> CREATOR = new Creator<PatientInfo>() {
@@ -108,4 +123,36 @@ public class PatientInfo implements Parcelable ,Serializable{
             return new PatientInfo[size];
         }
     };
+
+    @Override
+    public String toString() {
+        return "PatientInfo{" +
+                "Age='" + Age + '\'' +
+                ", Diagnose='" + Diagnose + '\'' +
+                ", DisBed='" + DisBed + '\'' +
+                ", Doctor='" + Doctor + '\'' +
+                ", EpisodeID='" + EpisodeID + '\'' +
+                ", MedicareNo='" + MedicareNo + '\'' +
+                ", PAPMIName='" + PAPMIName + '\'' +
+                ", PaAdmDateTime='" + PaAdmDateTime + '\'' +
+                ", PatientID='" + PatientID + '\'' +
+                ", PayType='" + PayType + '\'' +
+                ", Sex='" + Sex + '\'' +
+                ", PatientNo='" + PatientNo + '\'' +
+                ", Type='" + Type + '\'' +
+                ", Loc='" + Loc + '\'' +
+                ", Days='" + Days + '\'' +
+                '}';
+    }
+
+    @Override
+    public int compareTo(@NonNull PatientInfo o) {
+        long o1Time = TimeUtils.string2Millis(PaAdmDateTime, new SimpleDateFormat("yyyy-MM-dd HH:mm"));
+        long o2Time = TimeUtils.string2Millis(o.PaAdmDateTime, new SimpleDateFormat("yyyy-MM-dd HH:mm"));
+        if (o1Time > o2Time) {
+            return -1;
+        } else {
+            return 1;
+        }
+    }
 }
