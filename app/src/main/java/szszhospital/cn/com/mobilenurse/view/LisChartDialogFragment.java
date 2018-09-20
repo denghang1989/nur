@@ -11,19 +11,16 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.blankj.utilcode.util.ScreenUtils;
-import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.LimitLine;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import io.reactivex.disposables.Disposable;
@@ -71,6 +68,26 @@ public class LisChartDialogFragment extends DialogFragment {
         mToolbar.setTitle(mLisOrderDetail.TestCodeName);
         mChart = view.findViewById(R.id.chart);
         setChartProperties();
+        setXAxisProperties();
+        setYAxisProperties();
+    }
+
+    private void setYAxisProperties() {
+        YAxis axisLeft = mChart.getAxisLeft();
+        axisLeft.setSpaceBottom(10);
+        axisLeft.setSpaceTop(20);
+        YAxis axisRight = mChart.getAxisRight();
+        axisRight.setEnabled(false);
+    }
+
+    private void setXAxisProperties() {
+        XAxis xAxis = mChart.getXAxis();
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setEnabled(true);
+        xAxis.setDrawGridLines(true);
+        xAxis.setGranularity(1f);
+        xAxis.setAvoidFirstLastClipping(true);
+        xAxis.setLabelRotationAngle(15f);
     }
 
     private void setChartProperties() {
@@ -85,14 +102,10 @@ public class LisChartDialogFragment extends DialogFragment {
         mChart.setDragEnabled(true);
         //设置是否可以缩放
         mChart.setScaleEnabled(false);
-        mChart.setDrawGridBackground(false);
         mChart.setHighlightPerDragEnabled(true);
         mChart.setPinchZoom(true);
         //设置背景颜色
         mChart.setBackgroundColor(Color.WHITE);
-        //设置XY轴动画
-        mChart.animateXY(1500,1500, Easing.EasingOption.EaseInSine, Easing.EasingOption.EaseInSine);
-        mChart.setViewPortOffsets(0f, 0f, 0f, 0f);
     }
 
     @Override
@@ -114,7 +127,8 @@ public class LisChartDialogFragment extends DialogFragment {
                     @Override
                     public void accept(List<LisChartData> lisChartData) throws Exception {
                         if (lisChartData != null && lisChartData.size() > 0) {
-                            initChartData(lisChartData,mChart);
+                            Collections.sort(lisChartData);
+                            initChartData(lisChartData);
                         }
                     }
                 }, new Consumer<Throwable>() {
@@ -139,128 +153,78 @@ public class LisChartDialogFragment extends DialogFragment {
         }
     }
 
-    private void initChartData(List<LisChartData> lisChartData, LineChart chart) {
-        LisChartData maxData = Collections.max(lisChartData, new Comparator<LisChartData>() {
-            @Override
-            public int compare(LisChartData o1, LisChartData o2) {
-                return o2.Result.compareToIgnoreCase(o1.Result);
-            }
-        });
-
-        LisChartData minData = Collections.min(lisChartData, new Comparator<LisChartData>() {
-            @Override
-            public int compare(LisChartData o1, LisChartData o2) {
-                return o2.Result.compareToIgnoreCase(o1.Result);
-            }
-        });
-
+    private void initChartData(List<LisChartData> lisChartData) {
+        String[] strings = lisChartData.get(0).RefRanges.split("-");
+        //提取数字
+        Float minLimit = RegexUtil.getDoubleValue(strings[0]);
+        Float maxLimit = RegexUtil.getDoubleValue(strings[1]);
         //设置取值范围最大值，最小值
-        setRangeLimit(lisChartData);
-
-        //设置X轴
-
-        //设置Y轴
-
-        //设置数据
-
-        ArrayList<Entry> yValues = new ArrayList<>();
+        setRangeLimit(minLimit, maxLimit);
+        //设置折线
+        List<Entry> entryList = new ArrayList<>();
+        List<String> xStrings = new ArrayList<>();
+        float maxResult = maxLimit;
+        float minResult = minLimit;
         for (int i = 0; i < lisChartData.size(); i++) {
-            String result = lisChartData.get(i).Result;
-            yValues.add(new Entry(i, RegexUtil.getDoubleValue(result)));
+            LisChartData data = lisChartData.get(i);
+            float result = RegexUtil.getDoubleValue(data.Result);
+            Entry entry = new Entry(i, result);
+            entryList.add(entry);
+            xStrings.add(data.ReportAuthDateTime);
+            if (result > maxResult) {
+                maxResult = result;
+            } else if (result < minResult) {
+                minResult = result;
+            }
         }
+        // 获取top
+        float top = Math.max(maxLimit, maxResult);
+        // 获取bottom
+        float bottom = Math.min(minLimit, minResult);
+        float space = (maxLimit - minLimit) / 20;
+        bottom = Math.max(bottom - space, 0);
+        YAxis leftAxis = mChart.getAxisLeft();
+        leftAxis.setAxisMaximum(top + space * 3);
+        leftAxis.setAxisMinimum(bottom);
 
-        LineDataSet set;
-        if (mChart.getData() != null && mChart.getData().getDataSetCount() > 0) {
-            set = (LineDataSet) mChart.getData().getDataSetByIndex(0);
-            set.setValues(yValues);
-            mChart.getData().notifyDataChanged();
-            mChart.notifyDataSetChanged();
-        } else {
-            //设置值给图表
-            set = new LineDataSet(yValues, "");
-            //设置图标不显示
-            set.setDrawIcons(false);
-            //设置Y值使用左边Y轴的坐标值
-            set.setAxisDependency(YAxis.AxisDependency.LEFT);
-            //设置折线宽度
-            set.setLineWidth(1f);
-            //设置折现点圆点半径
-            set.setCircleRadius(4f);
+        LineDataSet dataSet = new LineDataSet(entryList, mLisOrderDetail.TestCodeName);
+        dataSet.setLineWidth(2f);
+        dataSet.setCircleRadius(4f);
+        dataSet.setHighLightColor(Color.RED); // 设置点击某个点时，横竖两条线的颜色
+        dataSet.setDrawValues(true); // 是否在点上绘制Value
+        dataSet.setValueTextColor(Color.BLACK);
+        dataSet.setValueTextSize(12f);
+        dataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
 
-            //设置显示十字线，必须显示十字线，否则MarkerView不生效
-            set.setHighlightEnabled(true);
-            //设置是否在数据点中间显示一个孔
-            set.setDrawCircleHole(false);
+        LineData data = new LineData(dataSet);
 
-            //设置填充
-            //设置允许填充
-            set.setDrawFilled(true);
-            set.setFillAlpha(50);
+        XAxis xAxis = mChart.getXAxis();
+        xAxis.setValueFormatter((value, axis) -> xStrings.get((int) value));
 
-            LineData data = new LineData(set);
-            //设置不显示数据点的值
-            data.setDrawValues(false);
+        mChart.setData(data);
+        mChart.invalidate();
 
-            mChart.setData(data);
-            mChart.invalidate();
-        }
     }
 
     /**
-     * //设置取值范围最大值，最小值
-     * @param lisChartData
+     * @param min
+     * @param max
      */
-    private void setRangeLimit(List<LisChartData> lisChartData) {
-        YAxis rightAxis = mChart.getAxisRight();
-        LisChartData chartData = lisChartData.get(0);
-        String[] strings = chartData.RefRanges.split("-");
-        Float min = Float.valueOf(strings[0]);
-        Float max = Float.valueOf(strings[1]);
+    private void setRangeLimit(float min, float max) {
+        LimitLine minLimitLine = new LimitLine(min, "Lower Limit：" + min);
+        minLimitLine.setLineColor(getResources().getColor(R.color.blue));
+        minLimitLine.enableDashedLine(10f, 10f, 0f);
+        minLimitLine.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_BOTTOM);
 
+        LimitLine maxLimitLine = new LimitLine(max, "Upper Limit：" + max);
+        maxLimitLine.setLineColor(getResources().getColor(R.color.red));
+        maxLimitLine.enableDashedLine(10f, 10f, 0f);
+        maxLimitLine.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_TOP);
+
+        YAxis leftAxis = mChart.getAxisLeft();
+        leftAxis.removeAllLimitLines();
+        leftAxis.addLimitLine(minLimitLine);
+        leftAxis.addLimitLine(maxLimitLine);
     }
 
-    private void setChartXAxis(List<LisChartData> lisChartData) {
-        ArrayList<String> list = new ArrayList<>();
-        //自定义设置横坐标
-        IAxisValueFormatter xValueFormatter = new FastBrowserXValueFormatter(list);
-        //X轴
-        XAxis xAxis = mChart.getXAxis();
-        //设置线为虚线
-        //xAxis.enableGridDashedLine(10f, 10f, 0f);
-        //设置字体大小10sp
-        xAxis.setTextSize(10f);
-        //设置X轴字体颜色
-//        xAxis.setTextColor(ColorAndImgUtils.FAST_BW_TEXT_COLOR);
-        //设置从X轴发出横线
-        xAxis.setDrawGridLines(true);
-//        xAxis.setGridColor(ColorAndImgUtils.GRID_COLOR);
-        //设置网格线宽度
-        xAxis.setGridLineWidth(1);
-        //设置显示X轴
-        xAxis.setDrawAxisLine(true);
-        //设置X轴显示的位置
-        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        //设置自定义X轴值
-        xAxis.setValueFormatter(xValueFormatter);
-        //一个界面显示6个Lable，那么这里要设置11个
-        xAxis.setLabelCount(6);
-        //设置最小间隔，防止当放大时出现重复标签
-        xAxis.setGranularity(1f);
-        //设置为true当一个页面显示条目过多，X轴值隔一个显示一个
-        xAxis.setGranularityEnabled(true);
-        //设置X轴的颜色
-//        xAxis.setAxisLineColor(ColorAndImgUtils.GRID_COLOR);
-        //设置X轴的宽度
-        xAxis.setAxisLineWidth(1f);
-    }
-
-    private class FastBrowserXValueFormatter implements IAxisValueFormatter {
-        public FastBrowserXValueFormatter(ArrayList<String> list) {
-        }
-
-        @Override
-        public String getFormattedValue(float value, AxisBase axis) {
-            return "";
-        }
-    }
 }

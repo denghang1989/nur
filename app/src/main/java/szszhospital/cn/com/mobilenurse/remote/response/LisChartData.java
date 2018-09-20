@@ -1,6 +1,13 @@
 package szszhospital.cn.com.mobilenurse.remote.response;
 
-public class LisChartData {
+import android.support.annotation.NonNull;
+
+import com.blankj.utilcode.util.TimeUtils;
+
+import java.text.SimpleDateFormat;
+import java.util.Locale;
+
+public class LisChartData implements Comparable<LisChartData> {
 
 
     /**
@@ -18,4 +25,15 @@ public class LisChartData {
     public String Result;
     public String TestCodeName;
     public String Units;
+
+    @Override
+    public int compareTo(@NonNull LisChartData o) {
+        long o1 = TimeUtils.string2Millis(ReportAuthDateTime, new SimpleDateFormat("yyyyMMdd HH:mm", Locale.CHINA));
+        long o2 = TimeUtils.string2Millis(o.ReportAuthDateTime, new SimpleDateFormat("yyyyMMdd HH:mm", Locale.CHINA));
+        if (o1 - o2 > 0) {
+            return 1;
+        } else {
+            return -1;
+        }
+    }
 }

@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginTop="8dp"
-        android:layout_weight="40"
+        android:layout_weight="35"
         android:gravity="center"
         android:text="检验项目"
         android:textColor="@color/black"
@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginTop="8dp"
-        android:layout_weight="12">
+        android:layout_weight="17">
 
         <TextView
             android:id="@+id/result"
@@ -37,6 +37,10 @@
             android:layout_gravity="center"
             android:layout_marginBottom="8dp"
             android:layout_marginTop="8dp"
+            android:ellipsize="marquee"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:singleLine="true"
             android:text="结果"
             android:textColor="@color/black"
             android:textSize="14sp"

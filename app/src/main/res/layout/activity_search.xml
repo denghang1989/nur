@@ -36,7 +36,7 @@
                 android:layout_toRightOf="@+id/back"
                 android:layout_marginRight="16dp"
                 android:iconifiedByDefault="false"
-                android:queryHint="请输入搜索内容"/>
+                android:queryHint="请输入8位登记号"/>
 
         </RelativeLayout>
 
