@@ -107,9 +107,8 @@ public class LisResultActivity extends BasePresentActivity<ActivityLisResultBind
     }
 
     private boolean hasPreResult(LisOrderDetail lisOrderDetail) {
-        return StringUtils.isTrimEmpty(lisOrderDetail.PreResult);
+        return !StringUtils.isTrimEmpty(lisOrderDetail.PreResult);
     }
-
 
     protected void showChatDialog(LisOrderDetail order) {
         mDialogFragment = (LisChartDialogFragment) getSupportFragmentManager().findFragmentByTag(LisChartDialogFragment.TAG);
