@@ -146,6 +146,10 @@
                   android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
                   android:theme="@style/AppTheme.Transparent"/>
 
+        <activity android:name=".activity.LogBookActivity"
+                  android:screenOrientation="landscape"
+                  android:theme="@style/AppTheme.Transparent"/>
+
         <receiver
             android:name=".broadcast.QRCodeBroadcastReceiver"
             android:enabled="true"

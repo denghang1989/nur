@@ -32,4 +32,6 @@
 
     <string name="dcmInfo">PatientName:%1$s\nPatientSex:%2$s\nPatientAge:%3$s\nStudyDate:%4$s</string>
     <string name="pdfInfo">%1$s\n%2$s</string>
+
+    <string name="patientInfo">床号：%1$s\n姓名：%2$s\n性别：%3$s\n年龄：%4$s</string>
 </resources>

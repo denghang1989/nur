@@ -1,22 +1,16 @@
 package szszhospital.cn.com.mobilenurse.activity;
 
-import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.NestedScrollView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.blankj.utilcode.util.BarUtils;
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.SimpleTarget;
-import com.bumptech.glide.request.transition.Transition;
-import com.davemorrissey.labs.subscaleview.ImageSource;
-import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
+import com.github.chrisbanes.photoview.PhotoView;
 import com.rd.PageIndicatorView;
 import com.rd.animation.type.AnimationType;
 
@@ -85,16 +79,10 @@ public class DragPhotoActivity extends SwipeBackActivity {
 
             @Override
             public Object instantiateItem(ViewGroup container, int position) {
-                NestedScrollView nestedScrollview = (NestedScrollView) LayoutInflater.from(DragPhotoActivity.this).inflate(R.layout.item_drag_photo, container,false);
-                SubsamplingScaleImageView dragPhotoView = nestedScrollview.findViewById(R.id.dragPhotoView);
-                Glide.with(DragPhotoActivity.this).asBitmap().load(PHOTO_PATH + mPhotoPaths.get(position)).into(new SimpleTarget<Bitmap>() {
-                    @Override
-                    public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
-                        dragPhotoView.setImage(ImageSource.bitmap(resource));
-                    }
-                });
-                container.addView(nestedScrollview);
-                return nestedScrollview;
+                PhotoView dragPhotoView = (PhotoView) LayoutInflater.from(DragPhotoActivity.this).inflate(R.layout.item_drag_photo, container,false);
+                Glide.with(DragPhotoActivity.this).asBitmap().load(PHOTO_PATH + mPhotoPaths.get(position)).into(dragPhotoView);
+                container.addView(dragPhotoView);
+                return dragPhotoView;
             }
 
             @Override

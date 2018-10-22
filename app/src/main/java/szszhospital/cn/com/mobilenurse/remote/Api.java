@@ -23,6 +23,8 @@ import szszhospital.cn.com.mobilenurse.remote.response.LisChartData;
 import szszhospital.cn.com.mobilenurse.remote.response.LisOrder;
 import szszhospital.cn.com.mobilenurse.remote.response.LisOrderDetail;
 import szszhospital.cn.com.mobilenurse.remote.response.LocAccessResponse;
+import szszhospital.cn.com.mobilenurse.remote.response.LocInfo;
+import szszhospital.cn.com.mobilenurse.remote.response.LogBook;
 import szszhospital.cn.com.mobilenurse.remote.response.LoginResponse;
 import szszhospital.cn.com.mobilenurse.remote.response.Order;
 import szszhospital.cn.com.mobilenurse.remote.response.OrderExecuteInfo;
@@ -173,4 +175,12 @@ public interface Api {
     //通过登记号获取就诊列表
     @GET("web/Quality.Ajax.PatientNoListAjax.cls")
     Observable<Response<List<PatientInfo>>> getPatientListByNo(@Query("PapmiNo") String PapmiNo);
+
+    //交班本消息列表
+    @GET("web/Quality.Ajax.DocExchaneSummary.cls")
+    Observable<Response<List<LogBook>>> getLogBookList(@QueryMap Map<String,String> request);
+
+    //交班本科室信息
+    @GET()
+    Observable<Response<LocInfo>> getLocInfo(@QueryMap Map<String,String> request);
 }

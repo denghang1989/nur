@@ -21,6 +21,6 @@
     <item
         android:id="@+id/tools_patient_calendar"
         android:icon="@drawable/icon_calendar"
-        android:title="就诊日历"/>
+        android:title="交班本"/>
 
 </menu>

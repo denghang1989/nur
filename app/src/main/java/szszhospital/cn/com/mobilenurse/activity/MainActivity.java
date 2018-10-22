@@ -38,12 +38,12 @@ import szszhospital.cn.com.mobilenurse.view.DialogInterface;
 import szszhospital.cn.com.mobilenurse.view.UpdateDialogFragment;
 
 public class MainActivity extends BasePresentActivity<ActiviyMainBinding, MainPresenter> implements MainContract.View, DialogInterface {
-    private static final String TAG = "MainActivity";
-    private MainActivityAdapter     mAdapter;
-    private UpdateDialogFragment    mUpdateDialogFragment;
-    private UpdateApp               mUpdateApp;
-    private Disposable              mDisposable;
-    private BackPressDialogFragment mBackPressDialogFragment;
+    private static final String                  TAG = "MainActivity";
+    private              MainActivityAdapter     mAdapter;
+    private              UpdateDialogFragment    mUpdateDialogFragment;
+    private              UpdateApp               mUpdateApp;
+    private              Disposable              mDisposable;
+    private              BackPressDialogFragment mBackPressDialogFragment;
 
     @Override
     protected int getLayoutId() {
@@ -154,6 +154,7 @@ public class MainActivity extends BasePresentActivity<ActiviyMainBinding, MainPr
                 SearchActivity.startSearchActivity(this);
                 break;
             case R.id.tools_patient_calendar:
+                LogBookActivity.StartLogBookActivity(this);
                 break;
             case R.id.tools_search:
                 SearchActivity.startSearchActivity(this);
