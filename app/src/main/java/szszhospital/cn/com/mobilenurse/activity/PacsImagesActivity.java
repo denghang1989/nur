@@ -178,12 +178,7 @@ public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBi
                 App.getAsynHandler().post(() -> FileDownUtil.downFileAndChangedPng(Contants.PACS_PATH + imagePath + imageName, file.getAbsolutePath(), null));
             }
         }
-        mDataBinding.mark.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                hideProgress();
-            }
-        }, (500 * count) / (1024 * 1024));
+        mDataBinding.mark.postDelayed(() -> hideProgress(), (500 * count) / (1024 * 1024));
     }
 
     private void queryDcmFile(int position) {
