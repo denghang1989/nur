@@ -10,6 +10,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.CompoundButton;
 
+import com.blankj.utilcode.util.ImageUtils;
 import com.bumptech.glide.Glide;
 import com.github.florent37.viewanimator.ViewAnimator;
 import com.nightonke.boommenu.BoomButtons.ButtonPlaceEnum;
@@ -200,7 +201,11 @@ public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBi
             }
             if (!pngFile.exists()) {
                 showProgress();
-                App.getAsynHandler().post(() -> FileDownUtil.downFilePng(Contants.PACS_PATH + imagePath + imageName, pngFile.getAbsolutePath(), null));
+                if (!ImageUtils.isImage(imageName)) {
+                    App.getAsynHandler().post(() -> FileDownUtil.downFilePng(Contants.PACS_PATH + imagePath + imageName, pngFile.getAbsolutePath(), null));
+                } else {
+                    App.getAsynHandler().post(() -> FileDownUtil.downFileAndChangedPng(Contants.PACS_PATH + imagePath + imageName, file.getAbsolutePath(), null));
+                }
             }
         }
         mDataBinding.mark.postDelayed(() -> hideProgress(), 3000 );

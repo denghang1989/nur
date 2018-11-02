@@ -2,7 +2,8 @@ package szszhospital.cn.com.mobilenurse.fragemt;
 
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
-import android.view.ContextMenu;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 
 import com.blankj.utilcode.util.TimeUtils;
@@ -13,6 +14,7 @@ import java.util.List;
 
 import szszhospital.cn.com.mobilenurse.App;
 import szszhospital.cn.com.mobilenurse.R;
+import szszhospital.cn.com.mobilenurse.activity.LogBookActivity;
 import szszhospital.cn.com.mobilenurse.adapter.LogBookAdapter;
 import szszhospital.cn.com.mobilenurse.base.BasePresenterFragment;
 import szszhospital.cn.com.mobilenurse.databinding.FragmentLogBookBinding;
@@ -37,6 +39,7 @@ public class LogBookFragment extends BasePresenterFragment<FragmentLogBookBindin
     @Override
     protected void init() {
         super.init();
+        setHasOptionsMenu(true);
         mAdapter = new LogBookAdapter(R.layout.item_log_book);
         mRequest = new LogBookRequest();
         mRequest.LocId = App.loginUser.UserLoc;
@@ -50,6 +53,7 @@ public class LogBookFragment extends BasePresenterFragment<FragmentLogBookBindin
         mDataBinding.recyclerView.setLayoutManager(new LinearLayoutManager(_mActivity));
         mDataBinding.recyclerView.addItemDecoration(new DividerItemDecoration(_mActivity,DividerItemDecoration.VERTICAL));
         mDataBinding.recyclerView.setAdapter(mAdapter);
+        ((LogBookActivity)_mActivity).setSupportActionBar(mDataBinding.toolbar);
     }
 
     @Override
@@ -95,7 +99,9 @@ public class LogBookFragment extends BasePresenterFragment<FragmentLogBookBindin
     }
 
     @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.logbook,menu);
     }
+
+
 }
