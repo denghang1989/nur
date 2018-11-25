@@ -28,6 +28,7 @@ import szszhospital.cn.com.mobilenurse.remote.response.DispDetailResponse;
 
 /**
  * 配药核对界面Activity
+ * @author Administrator
  */
 public class DrugCheckActivity extends BasePresentActivity<ActivityCheckDrugBinding, DispDetailListPresenter> implements DispDetailListContract.View {
     private static final String TAG          = "PrescriptionActivity";

@@ -25,6 +25,7 @@ import static szszhospital.cn.com.mobilenurse.utils.Contants.PHOTO_PATH;
 
 /**
  * 2018/7/28 15
+ * @author Administrator
  */
 public class DragPhotoActivity extends SwipeBackActivity {
     private static final String KEY_DATA  = "data";
