@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:divider="@drawable/line_1px"
+    android:showDividers="middle">
+    <!--抗生素名称 KB(mm)	MIC(ug/ml)	结果-->
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="174"
+        android:gravity="center"
+        android:text="抗生素名称"
+        />
+
+    <TextView
+        android:id="@+id/kb"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="87"
+        android:gravity="center"
+        android:text="KB(mm)"
+        />
+
+    <TextView
+        android:id="@+id/mic"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="127"
+        android:gravity="center"
+        android:text="MIC(ug/ml)"
+        />
+
+    <TextView
+        android:id="@+id/result"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="50"
+        android:gravity="center"
+        android:text="结果"
+        />
+
+</LinearLayout>

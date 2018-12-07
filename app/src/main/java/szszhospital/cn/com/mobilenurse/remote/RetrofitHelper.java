@@ -33,7 +33,7 @@ public class RetrofitHelper {
                 .build();
     }
 
-    private static OkHttpClient initOkHttp(final Context context) {
+    public static OkHttpClient initOkHttp(final Context context) {
         if (okHttpClient == null) {
             OkHttpClient.Builder builder = new OkHttpClient.Builder();
             HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
@@ -53,6 +53,10 @@ public class RetrofitHelper {
             builder.retryOnConnectionFailure(true);
             okHttpClient = builder.build();
         }
+        return okHttpClient;
+    }
+
+    public static OkHttpClient getOkHttpClient() {
         return okHttpClient;
     }
 }

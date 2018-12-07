@@ -11,6 +11,7 @@ import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 import szszhospital.cn.com.mobilenurse.remote.response.AuditDetailResponse;
 import szszhospital.cn.com.mobilenurse.remote.response.DispDetailResponse;
+import szszhospital.cn.com.mobilenurse.remote.response.DrugAllergy;
 import szszhospital.cn.com.mobilenurse.remote.response.DrugBill;
 import szszhospital.cn.com.mobilenurse.remote.response.EMREposideInfo;
 import szszhospital.cn.com.mobilenurse.remote.response.EMRImageInfo;
@@ -18,9 +19,12 @@ import szszhospital.cn.com.mobilenurse.remote.response.EposideInfo;
 import szszhospital.cn.com.mobilenurse.remote.response.FtpConfig;
 import szszhospital.cn.com.mobilenurse.remote.response.HandlerInspectionLog;
 import szszhospital.cn.com.mobilenurse.remote.response.InspectionLogDetail;
+import szszhospital.cn.com.mobilenurse.remote.response.LisChartData;
 import szszhospital.cn.com.mobilenurse.remote.response.LisOrder;
 import szszhospital.cn.com.mobilenurse.remote.response.LisOrderDetail;
 import szszhospital.cn.com.mobilenurse.remote.response.LocAccessResponse;
+import szszhospital.cn.com.mobilenurse.remote.response.LocInfo;
+import szszhospital.cn.com.mobilenurse.remote.response.LogBook;
 import szszhospital.cn.com.mobilenurse.remote.response.LoginResponse;
 import szszhospital.cn.com.mobilenurse.remote.response.Order;
 import szszhospital.cn.com.mobilenurse.remote.response.OrderExecuteInfo;
@@ -159,4 +163,24 @@ public interface Api {
     //获取图片列表
     @GET("web/Quality.Ajax.PacsImagePathAjax.cls")
     Observable<Response<List<PacsImagePath>>> getPacsImageFtpPath(@Query("studyId") String studyId, @Query("type") String type);
- }
+
+    //获取lis历次结果列表
+    @GET("web/Quality.Ajax.LisChartAjax.cls")
+    Observable<Response<List<LisChartData>>> getLisChartData(@Query("ReportDR") String ReportResultDR, @Query("TestCodeDR") String TestCodeDR);
+
+    //获取药敏结果   http://172.18.0.3:57772/trakcarelive/trak/web/Quality.Ajax.LisMResultAjax.cls?ReportDRs=24319627
+    @GET("web/Quality.Ajax.LisMResultAjax.cls")
+    Observable<Response<List<DrugAllergy>>> getLisDrugAllergyData(@Query("ReportDRs") String ReportDRs);
+
+    //通过登记号获取就诊列表
+    @GET("web/Quality.Ajax.PatientNoListAjax.cls")
+    Observable<Response<List<PatientInfo>>> getPatientListByNo(@Query("PapmiNo") String PapmiNo);
+
+    //交班本消息列表
+    @GET("web/Quality.Ajax.DocExchaneSummary.cls")
+    Observable<Response<List<LogBook>>> getLogBookList(@QueryMap Map<String,String> request);
+
+    //交班本科室信息
+    @GET()
+    Observable<Response<LocInfo>> getLocInfo(@QueryMap Map<String,String> request);
+}

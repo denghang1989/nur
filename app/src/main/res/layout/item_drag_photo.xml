@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<szszhospital.cn.com.mobilenurse.view.DragPhotoView
+
+<com.github.chrisbanes.photoview.PhotoView
     android:id="@+id/dragPhotoView"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"

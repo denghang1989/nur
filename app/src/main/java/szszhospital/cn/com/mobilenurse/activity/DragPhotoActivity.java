@@ -4,28 +4,30 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.blankj.utilcode.util.BarUtils;
 import com.bumptech.glide.Glide;
+import com.github.chrisbanes.photoview.PhotoView;
 import com.rd.PageIndicatorView;
 import com.rd.animation.type.AnimationType;
 
 import java.util.ArrayList;
 
+import me.yokeyword.fragmentation.SwipeBackLayout;
+import me.yokeyword.fragmentation_swipeback.SwipeBackActivity;
 import szszhospital.cn.com.mobilenurse.R;
-import szszhospital.cn.com.mobilenurse.view.DragPhotoView;
 import szszhospital.cn.com.mobilenurse.view.FixMultiViewPager;
 
 import static szszhospital.cn.com.mobilenurse.utils.Contants.PHOTO_PATH;
 
 /**
  * 2018/7/28 15
+ * @author Administrator
  */
-public class DragPhotoActivity extends AppCompatActivity {
+public class DragPhotoActivity extends SwipeBackActivity {
     private static final String KEY_DATA  = "data";
     private static final String KEY_INDEX = "index";
     private ArrayList<String> mPhotoPaths;
@@ -38,6 +40,7 @@ public class DragPhotoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         BarUtils.setStatusBarAlpha(this,0);
         setContentView(R.layout.activity_drag_photo);
+        getSwipeBackLayout().setEdgeOrientation(SwipeBackLayout.EDGE_LEFT);
         init();
         initView();
         initData();
@@ -77,12 +80,8 @@ public class DragPhotoActivity extends AppCompatActivity {
 
             @Override
             public Object instantiateItem(ViewGroup container, int position) {
-                DragPhotoView dragPhotoView = (DragPhotoView) LayoutInflater.from(DragPhotoActivity.this).inflate(R.layout.item_drag_photo, null);
-                Glide.with(DragPhotoActivity.this).load(PHOTO_PATH + mPhotoPaths.get(position)).into(dragPhotoView);
-                dragPhotoView.setOnExitListener((view, translateX, translateY, w, h) -> {
-                    finish();
-                    overridePendingTransition(R.anim.anim_in,R.anim.anim_out);
-                });
+                PhotoView dragPhotoView = (PhotoView) LayoutInflater.from(DragPhotoActivity.this).inflate(R.layout.item_drag_photo, container,false);
+                Glide.with(DragPhotoActivity.this).asBitmap().load(PHOTO_PATH + mPhotoPaths.get(position)).into(dragPhotoView);
                 container.addView(dragPhotoView);
                 return dragPhotoView;
             }

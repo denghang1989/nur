@@ -8,9 +8,16 @@ import android.os.Parcelable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.CompoundButton;
 
+import com.blankj.utilcode.util.ImageUtils;
 import com.bumptech.glide.Glide;
 import com.github.florent37.viewanimator.ViewAnimator;
+import com.nightonke.boommenu.BoomButtons.ButtonPlaceEnum;
+import com.nightonke.boommenu.BoomButtons.HamButton;
+import com.nightonke.boommenu.BoomButtons.OnBMClickListener;
+import com.nightonke.boommenu.ButtonEnum;
+import com.nightonke.boommenu.Piece.PiecePlaceEnum;
 import com.raizlabs.android.dbflow.sql.language.Select;
 
 import org.dcm4che3.data.Tag;
@@ -37,7 +44,7 @@ import szszhospital.cn.com.mobilenurse.utils.FileDownUtil;
 import szszhospital.cn.com.mobilenurse.view.ImagePlayerView;
 import szszhospital.cn.com.mobilenurse.view.RenderCompleted;
 
-public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBinding, PacsImagesPresenter> implements PacsImagesContract.View, View.OnTouchListener {
+public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBinding, PacsImagesPresenter> implements PacsImagesContract.View, View.OnTouchListener, OnBMClickListener {
     private static final String TAG      = "PacsImagesActivity";
     private static final String KEY_DATA = "data";
     public static final  int    WHAT     = 1;
@@ -49,6 +56,12 @@ public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBi
     private float           mDownY;
     private float           mDownX;
     private int             mSlop;
+    private        int      mSpeed        = 80;
+    private        int      mCurrentIndex = 0;
+    private static String[] normalTextRes = new String[]{
+            "0.05s", "0.1s", "0.15s", "0.2s", "0.25s", "0.3s"
+    };
+
     private Handler mHandler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
@@ -56,7 +69,7 @@ public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBi
             switch (what) {
                 case WHAT:
                     mPicturePlayerView.next();
-                    mHandler.sendEmptyMessageDelayed(WHAT, 80);
+                    mHandler.sendEmptyMessageDelayed(WHAT, mSpeed);
                     break;
             }
             return true;
@@ -87,6 +100,20 @@ public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBi
         mPicturePlayerView = mDataBinding.player;
         mDataBinding.recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         mDataBinding.recyclerView.setAdapter(mAdapter);
+        initMenu();
+    }
+
+    private void initMenu() {
+        mDataBinding.menu.setButtonEnum(ButtonEnum.Ham);
+        mDataBinding.menu.setPiecePlaceEnum(PiecePlaceEnum.HAM_6);
+        mDataBinding.menu.setButtonPlaceEnum(ButtonPlaceEnum.HAM_6);
+        for (int i = 0; i < mDataBinding.menu.getPiecePlaceEnum().pieceNumber(); i++) {
+            HamButton.Builder builder = new HamButton.Builder()
+                    .listener(this)
+                    .normalText(normalTextRes[i])
+                    .textSize(16);
+            mDataBinding.menu.addBuilder(builder);
+        }
     }
 
     @Override
@@ -96,7 +123,6 @@ public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBi
 
     @Override
     protected void initEvent() {
-        super.initEvent();
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
             queryDcmFile(position);
             setRecyclerViewMark(position);
@@ -115,6 +141,32 @@ public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBi
             }
 
         });
+
+        mDataBinding.checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if ((mCurrentDcmNames == null) || (mCurrentDcmNames.size() == 1)) {
+                    return;
+                }
+
+                if (mDataBinding.progress.getVisibility() == View.VISIBLE) {
+                    return;
+                }
+
+                if (isChecked) {
+                    mDataBinding.container.setVisibility(View.INVISIBLE);
+                    mHandler.sendEmptyMessageDelayed(WHAT, mSpeed);
+                } else {
+                    stopPlay();
+                }
+            }
+        });
+    }
+
+    private void stopPlay() {
+        mDataBinding.container.setVisibility(View.VISIBLE);
+        changedPacsImage();
+        mHandler.removeMessages(WHAT);
     }
 
     private void clearPrevDownTask() {
@@ -133,32 +185,30 @@ public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBi
     }
 
     private void showImageAndDown() {
-        long count = 0;
         for (int i = 0; i < mCurrentDcmNames.size(); i++) {
             DcmName dcmName = mCurrentDcmNames.get(i);
             String imagePath = dcmName.IMAGEPATH;
             String imageName = dcmName.IMAGENAME;
-            long size = dcmName.size;
             File file = new File(Contants.PACS_DCM_DOWNLOAD_PATH, imageName);
+            File pngFile = new File(Contants.PACS_DCM_DOWNLOAD_PATH, imageName.replace(".dcm", ".png"));
             if (file.exists()) {
                 if (i == 0) {
                     Glide.with(App.mContext).load(DcmUtil.readFile(file.getAbsolutePath())).into(mDataBinding.container);
                     Map<Integer, String> dcmTagInfo = DcmUtil.getDcmTagInfo(file.getAbsolutePath());
-                    mDataBinding.dcmInfo.setText(getString(R.string.dcmInfo,dcmTagInfo.get(Tag.PatientName),dcmTagInfo.get(Tag.PatientSex),dcmTagInfo.get(Tag.PatientAge),dcmTagInfo.get(Tag.StudyDate)));
+                    mDataBinding.dcmInfo.setText(getString(R.string.dcmInfo, dcmTagInfo.get(Tag.PatientName), dcmTagInfo.get(Tag.PatientSex), dcmTagInfo.get(Tag.PatientAge), dcmTagInfo.get(Tag.StudyDate)));
                     mDataBinding.container.setVisibility(View.VISIBLE);
                 }
-            } else {
-                count = count + size;
+            }
+            if (!pngFile.exists()) {
                 showProgress();
-                App.getAsynHandler().post(() -> FileDownUtil.downFileAndChangedPng(Contants.PACS_PATH + imagePath + imageName, file.getAbsolutePath(), null));
+                if (!ImageUtils.isImage(imageName)) {
+                    App.getAsynHandler().post(() -> FileDownUtil.downFilePng(Contants.PACS_PATH + imagePath + imageName, pngFile.getAbsolutePath(), null));
+                } else {
+                    App.getAsynHandler().post(() -> FileDownUtil.downFileAndChangedPng(Contants.PACS_PATH + imagePath + imageName, file.getAbsolutePath(), null));
+                }
             }
         }
-        mDataBinding.mark.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                hideProgress();
-            }
-        }, (500 * count) / (1024 * 1024));
+        mDataBinding.mark.postDelayed(() -> hideProgress(), 3000 );
     }
 
     private void queryDcmFile(int position) {
@@ -170,9 +220,9 @@ public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBi
     private void changedPacsImage() {
         DcmName dcmName = mCurrentDcmNames.get(mSelectImage);
         String imagename = dcmName.IMAGENAME;
-        File file = new File(Contants.PACS_DCM_DOWNLOAD_PATH, imagename);
-        if (file.exists()) {
-            Glide.with(App.mContext).load(DcmUtil.readFile(file.getAbsolutePath())).into(mDataBinding.container);
+        File pngFile = new File(Contants.PACS_DCM_DOWNLOAD_PATH, imagename.replace(".dcm", ".png"));
+        if (pngFile.exists()) {
+            Glide.with(App.mContext).load(pngFile).into(mDataBinding.container);
         }
         changText(mSelectImage + 1);
     }
@@ -248,7 +298,8 @@ public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBi
                 mDownX = event.getX();
                 mDownY = event.getY();
                 mDataBinding.container.setVisibility(View.INVISIBLE);
-                mHandler.sendEmptyMessageDelayed(WHAT, 80);
+                mDataBinding.checkbox.setChecked(false);
+                mHandler.removeMessages(WHAT);
                 break;
             case MotionEvent.ACTION_MOVE:
                 float moveX = event.getX();
@@ -273,11 +324,38 @@ public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBi
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
                 mPicturePlayerView.clear();
-                mDataBinding.container.setVisibility(View.VISIBLE);
-                changedPacsImage();
-                mHandler.removeMessages(WHAT);
+                stopPlay();
                 break;
         }
         return true;
+    }
+
+    @Override
+    public void onBoomButtonClick(int index) {
+        if (mCurrentIndex != index) {
+            switch (index) {
+                case 0:
+                    mSpeed = 50;
+                    break;
+                case 1:
+                    mSpeed = 100;
+                    break;
+                case 2:
+                    mSpeed = 150;
+                    break;
+                case 3:
+                    mSpeed = 200;
+                    break;
+                case 4:
+                    mSpeed = 250;
+                    break;
+                case 5:
+                    mSpeed = 300;
+                    break;
+                default:
+                    break;
+            }
+            mCurrentIndex = index;
+        }
     }
 }

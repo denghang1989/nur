@@ -6,9 +6,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.blankj.utilcode.util.ConvertUtils;
-import com.blankj.utilcode.util.StringUtils;
 import com.github.florent37.viewanimator.ViewAnimator;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import szszhospital.cn.com.mobilenurse.App;
@@ -30,6 +30,7 @@ public abstract class BaseOrdersFragment extends BaseDoctorFragment<FragmentOrde
     protected OrderRequest           mOrderRequest;
     protected OrderListAdapter       mAdapter;
     protected OrderExtDialogFragment mDialogFragment;
+    protected List<Order>            mOrderList;
 
     @Override
     public int getLayoutId() {
@@ -41,7 +42,7 @@ public abstract class BaseOrdersFragment extends BaseDoctorFragment<FragmentOrde
         super.init();
         mOrderRequest = new OrderRequest();
         mOrderRequest.OrderType = getOrderType();
-        mAdapter = new OrderListAdapter(R.layout.item_order, getOrderType());
+        mAdapter = new OrderListAdapter(getOrderList());
     }
 
     @Override
@@ -106,13 +107,8 @@ public abstract class BaseOrdersFragment extends BaseDoctorFragment<FragmentOrde
 
     @Override
     public void showPatientOrderList(List<Order> list) {
-        //长期医嘱
-        if (StringUtils.equals("S", getOrderType())) {
-            mAdapter.setNewData(list);
-        } else {
-            //临时医嘱
-            mAdapter.setNewData(list);
-        }
+        mAdapter.setNewData(list);
+        mOrderList = list;
     }
 
     @Override
@@ -135,5 +131,9 @@ public abstract class BaseOrdersFragment extends BaseDoctorFragment<FragmentOrde
 
         mDialogFragment = OrderExtDialogFragment.newInstance(order);
         mDialogFragment.show(getChildFragmentManager(), OrderExtDialogFragment.TAG);
+    }
+
+    public List<Order> getOrderList() {
+        return mOrderList == null ? new ArrayList<>() : mOrderList;
     }
 }

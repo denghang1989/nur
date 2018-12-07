@@ -3,7 +3,8 @@ package szszhospital.cn.com.mobilenurse.fragemt;
 import android.graphics.Rect;
 import android.view.View;
 
-import com.blankj.utilcode.util.ToastUtils;
+import com.annimon.stream.Collectors;
+import com.annimon.stream.Stream;
 import com.nightonke.boommenu.Animation.BoomEnum;
 import com.nightonke.boommenu.BoomButtons.ButtonPlaceEnum;
 import com.nightonke.boommenu.BoomButtons.OnBMClickListener;
@@ -11,7 +12,10 @@ import com.nightonke.boommenu.BoomButtons.TextOutsideCircleButton;
 import com.nightonke.boommenu.ButtonEnum;
 import com.nightonke.boommenu.Piece.PiecePlaceEnum;
 
+import java.util.List;
+
 import szszhospital.cn.com.mobilenurse.R;
+import szszhospital.cn.com.mobilenurse.remote.response.Order;
 
 /**
  * 长期医嘱
@@ -62,13 +66,14 @@ public class SOrdersFragment extends BaseOrdersFragment implements OnBMClickList
 
     @Override
     public void onBoomButtonClick(int index) {
-        if (mCurrentIndex != index) {
+        if (mOrderList != null && mOrderList.size() > 0) {
             switch (index) {
                 case 0:
-                    initData();
+                    List<Order> collect = Stream.of(mOrderList).filter(order -> !"D".equals(order.OrdStatusCode)).collect(Collectors.toList());
+                    mAdapter.setNewData(collect);
                     break;
                 case 1:
-                    ToastUtils.showShort("开发规划中");
+                    mAdapter.setNewData(mOrderList);
                     break;
                 default:
                     break;

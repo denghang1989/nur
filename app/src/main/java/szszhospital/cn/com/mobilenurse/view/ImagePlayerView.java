@@ -19,7 +19,6 @@ import szszhospital.cn.com.mobilenurse.R;
 public class ImagePlayerView extends FrameLayout implements TextureView.SurfaceTextureListener {
 
     private View                 mRootView;
-    private int                  mCacheNumber;
     private TextureView          mTextureView;
     private OnImagePlayerChanged mImagePlayerChanged;
     private Player               mPlayer;
@@ -48,7 +47,6 @@ public class ImagePlayerView extends FrameLayout implements TextureView.SurfaceT
 
     private void initAttrs(Context context, AttributeSet attrs) {
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.ImagePlayerView);
-        mCacheNumber = ta.getInt(R.styleable.ImagePlayerView_cacheNumber, 12);
         ta.recycle();
     }
 

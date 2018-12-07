@@ -46,38 +46,40 @@ public class PacsFtpAdapter extends BaseQuickAdapter<PacsImagePath, BaseViewHold
         } else {
             helper.setVisible(R.id.tag, false);
         }
-        ImageView imageView = helper.getView(R.id.pacs_image);
         String path = item.thumbnailPath;
         if (!StringUtils.isTrimEmpty(path)) {
-            handleDcmFile(item, imageView, path);
-            ShowText(item, helper, path);
+            handleDcmFile(item, helper, path);
+            ShowText(item, helper);
         }
     }
 
-    private void ShowText(PacsImagePath item, BaseViewHolder helper, String path) {
+    private void ShowText(PacsImagePath item, BaseViewHolder helper) {
         //判断是否存在文件
         File file = new File(Contants.PACS_DCM_DOWNLOAD_PATH, item.name);
         if (file.exists()) {
             //解析图片
             Map<Integer, String> dcmTagInfo = DcmUtil.getDcmTagInfo(file.getAbsolutePath());
             long count = new Select().from(DcmName.class).where(DcmName_Table.IMAGEPATH.eq(item.IMAGEPATH)).queryList().size();
-            helper.setText(R.id.date,dcmTagInfo.get(Tag.StudyDate)).setText(R.id.info,String.valueOf(count));
-
+            helper.setText(R.id.date,dcmTagInfo.get(Tag.StudyDate))
+                    .setText(R.id.info,String.valueOf(count));
         }
     }
 
-    private void handleDcmFile(PacsImagePath item, ImageView imageView, String path) {
+    private void handleDcmFile(PacsImagePath item, BaseViewHolder helper, String path) {
         //判断是否存在文件
         File file = new File(Contants.PACS_DCM_DOWNLOAD_PATH, item.name);
         if (file.exists()) {
             //解析加载图片
-            Glide.with(App.mContext).load(DcmUtil.readFile(file.getAbsolutePath())).into(imageView);
+            Glide.with(App.mContext).load(DcmUtil.readFile(file.getAbsolutePath())).into((ImageView) helper.getView(R.id.pacs_image));
         } else {
             //下载图片
             App.getAsynHandler().post(() -> FileDownUtil.downFileAndChangedPng(Contants.PACS_PATH + path, file.getAbsolutePath(), new FileCallback() {
                 @Override
                 public void success(File file) {
-                    mActivity.runOnUiThread(() -> Glide.with(App.mContext).load(file).into(imageView));
+                    mActivity.runOnUiThread(() -> {
+                        Glide.with(App.mContext).load(file).into((ImageView) helper.getView(R.id.pacs_image));
+                        ShowText(item,helper);
+                    });
                 }
 
                 @Override

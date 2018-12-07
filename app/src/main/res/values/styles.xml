@@ -14,6 +14,7 @@
         <item name="windowNoTitle">true</item>
         <item name="actionMenuTextColor">#ffffff</item>
         <item name="android:dropDownListViewStyle">@style/xzfSpinnerStyle</item>
+        <item name="android:textColorSecondary">@android:color/white</item>
     </style>
 
     <style name="xzfSpinnerStyle" parent="android:Widget.ListView.DropDown">
@@ -41,7 +42,7 @@
     <!-- 适用于开启滑动返回功能的Activity -->
     <style name="AppTheme.Transparent">
         <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowDisablePreview">true</item>
     </style>
 
     <!-- 适用于欢迎界面避免第一次进来白屏或黑屏 -->
@@ -58,6 +59,10 @@
         <item name="behavior_peekHeight">auto</item>
         <item name="behavior_hideable">true</item>
         <item name="behavior_skipCollapsed">false</item>
+    </style>
+
+    <style name="CustomCheckboxTheme" parent="@android:style/Widget.CompoundButton.CheckBox">
+        <item name="android:button">@drawable/checkbox_style</item>
     </style>
 
 </resources>

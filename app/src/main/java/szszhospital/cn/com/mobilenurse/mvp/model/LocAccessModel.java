@@ -21,4 +21,9 @@ public class LocAccessModel implements LocAccessContract.Model {
             }
         }
     }
+
+    @Override
+    public List<LocAccessResponse> getLocAccess(String LocId) {
+        return new Select().from(LocAccessResponse.class).where(LocAccessResponse_Table.LocId.eq(App.loginUser.UserLoc)).queryList();
+    }
 }

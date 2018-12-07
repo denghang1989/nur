@@ -20,30 +20,36 @@ public class LocAccessPresenter extends RxPresenter<LocAccessContract.View, LocA
 
     @Override
     public void getLocAccess(LocAccessRequest request) {
-        ApiService.Instance().getService().getLocAccess(obj2Map(request))
-                .compose(RxUtil.rxSchedulerHelper())
-                .compose(RxUtil.httpHandleResponse())
-                .subscribe(new Observer<List<LocAccessResponse>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                        addSubscribe(d);
-                    }
+        List<LocAccessResponse> locAccess = mModel.getLocAccess(request.LocId);
+        if (locAccess.size() == 0) {
+            ApiService.Instance().getService().getLocAccess(obj2Map(request))
+                    .compose(RxUtil.rxSchedulerHelper())
+                    .compose(RxUtil.httpHandleResponse())
+                    .subscribe(new Observer<List<LocAccessResponse>>() {
+                        @Override
+                        public void onSubscribe(Disposable d) {
+                            addSubscribe(d);
+                        }
 
-                    @Override
-                    public void onNext(List<LocAccessResponse> locAccessResponses) {
-                        mModel.save(locAccessResponses);
-                        mView.setPageAdapter(locAccessResponses);
-                    }
+                        @Override
+                        public void onNext(List<LocAccessResponse> locAccessResponses) {
+                            mModel.save(locAccessResponses);
+                            mView.setPageAdapter(locAccessResponses);
+                        }
 
-                    @Override
-                    public void onError(Throwable e) {
-                        e.printStackTrace();
-                    }
+                        @Override
+                        public void onError(Throwable e) {
+                            e.printStackTrace();
+                        }
 
-                    @Override
-                    public void onComplete() {
+                        @Override
+                        public void onComplete() {
 
-                    }
-                });
+                        }
+                    });
+        } else {
+            mView.setPageAdapter(locAccess);
+        }
+
     }
 }

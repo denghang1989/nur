@@ -98,6 +98,20 @@ public class LisOrder extends BaseModel implements Parcelable,Serializable{
     public String VisitNumberReportDR;
     @Column
     public String WarnComm;
+    /**
+     * AdmNo : 15467715
+     * HasMC : 0
+     * HasMid : 0
+     * LabEpisode : 8119067
+     * ResultStatus : 3
+     * SortNum : 2018090740586
+     * TSResultAnomaly : 0
+     * Tips : /
+     * VisitNumberReportDR : 2508026
+     */
+
+    public String SortNum;
+    public String Tips;
 
 
     @Override

@@ -38,12 +38,12 @@ import szszhospital.cn.com.mobilenurse.view.DialogInterface;
 import szszhospital.cn.com.mobilenurse.view.UpdateDialogFragment;
 
 public class MainActivity extends BasePresentActivity<ActiviyMainBinding, MainPresenter> implements MainContract.View, DialogInterface {
-    private static final String TAG = "MainActivity";
-    private MainActivityAdapter     mAdapter;
-    private UpdateDialogFragment    mUpdateDialogFragment;
-    private UpdateApp               mUpdateApp;
-    private Disposable              mDisposable;
-    private BackPressDialogFragment mBackPressDialogFragment;
+    private static final String                  TAG = "MainActivity";
+    private              MainActivityAdapter     mAdapter;
+    private              UpdateDialogFragment    mUpdateDialogFragment;
+    private              UpdateApp               mUpdateApp;
+    private              Disposable              mDisposable;
+    private              BackPressDialogFragment mBackPressDialogFragment;
 
     @Override
     protected int getLayoutId() {
@@ -107,7 +107,9 @@ public class MainActivity extends BasePresentActivity<ActiviyMainBinding, MainPr
     protected void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
-        mDisposable.dispose();
+        if (!mDisposable.isDisposed()) {
+            mDisposable.dispose();
+        }
     }
 
     public void closeDrawer() {
@@ -123,7 +125,7 @@ public class MainActivity extends BasePresentActivity<ActiviyMainBinding, MainPr
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        //getMenuInflater().inflate(R.menu.app, menu);
+        getMenuInflater().inflate(R.menu.app, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -149,9 +151,13 @@ public class MainActivity extends BasePresentActivity<ActiviyMainBinding, MainPr
                 ScanQRCodeActivity.startScanQRCodeActivityForResult(this);
                 break;
             case R.id.tools_patient_list:
-                EpisodeListActivity.startEpisodeListActivity(this);
+                SearchActivity.startSearchActivity(this);
                 break;
             case R.id.tools_patient_calendar:
+                LogBookActivity.StartLogBookActivity(this);
+                break;
+            case R.id.tools_search:
+                SearchActivity.startSearchActivity(this);
                 break;
         }
         return true;

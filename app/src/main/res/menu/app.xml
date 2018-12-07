@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/tools_search"
+        android:icon="@drawable/ic_search_black_32dp"
+        android:title="查找"
+        app:showAsAction="always"
+        />
 
     <item
         android:id="@+id/tools_scan"
@@ -13,6 +21,6 @@
     <item
         android:id="@+id/tools_patient_calendar"
         android:icon="@drawable/icon_calendar"
-        android:title="就诊日历"/>
+        android:title="交班本"/>
 
 </menu>

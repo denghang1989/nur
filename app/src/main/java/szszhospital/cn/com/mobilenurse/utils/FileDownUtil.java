@@ -1,15 +1,23 @@
 package szszhospital.cn.com.mobilenurse.utils;
 
+import android.util.Log;
+
 import com.blankj.utilcode.util.CloseUtils;
+import com.zhy.http.okhttp.OkHttpUtils;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import okhttp3.Response;
+
 public class FileDownUtil {
+    private static final String TAG = "FileDownUtil";
 
     /**
      * @param url
@@ -101,4 +109,43 @@ public class FileDownUtil {
             }
         }
     }
+
+    /**
+     * @param url
+     * @param callback
+     * @desc : 下载dcm文件
+     */
+    public static void downFilePng(String url, String des, FileCallback callback) {
+        Log.d(TAG, "downFilePng: " + url);
+        try {
+            Response execute = OkHttpUtils.get().
+                    url(Contants.PACS_PNG).
+                    addParams("ftpPath", url).
+                    build().execute();
+            if (execute.isSuccessful()) {
+                InputStream inputStream = execute.body().byteStream();
+                if (inputStream != null) {
+                    BufferedInputStream bis = new BufferedInputStream(inputStream);
+                    File file = new File(des);
+                    BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
+                    byte[] buff = new byte[1024 * 10];
+                    int length = 0;
+                    while ((length = bis.read(buff)) > 0) {
+                        bos.write(buff, 0, length);
+                    }
+                    // 关闭流
+                    CloseUtils.closeIOQuietly(bos, bis);
+                    // 6. 回调
+                    if (callback != null) {
+                        callback.success(file);
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
 }

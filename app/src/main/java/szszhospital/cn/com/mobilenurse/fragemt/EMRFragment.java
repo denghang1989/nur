@@ -34,7 +34,6 @@ public class EMRFragment extends BaseDoctorFragment<FragmentEmrBinding, EMRPrese
     private EMRAdapter          mAdapter;
     private EMRImageAdapter     mEMRImageAdapter;
     private LinearLayoutManager mEMRLayoutManager;
-    private boolean isShow         = true;
 
     public static EMRFragment newInstance() {
         return new EMRFragment();
@@ -96,14 +95,12 @@ public class EMRFragment extends BaseDoctorFragment<FragmentEmrBinding, EMRPrese
         });
 
         mDataBinding.show.setOnClickListener(v -> {
-            int menuWidth = mDataBinding.listView.getWidth();
-            int emrWidth = mDataBinding.emr.getWidth();
-            int with = menuWidth + emrWidth;
-            float scale = with / (emrWidth * 1.0f);
-            if (isShow) {
-                hideMenu(menuWidth, scale);
+            if (mDataBinding.listView.getVisibility() == View.GONE) {
+                mDataBinding.show.setText("隐藏");
+                mDataBinding.listView.setVisibility(View.VISIBLE);
             } else {
-                showMenu();
+                mDataBinding.show.setText("显示");
+                mDataBinding.listView.setVisibility(View.GONE);
             }
         });
 
@@ -135,38 +132,12 @@ public class EMRFragment extends BaseDoctorFragment<FragmentEmrBinding, EMRPrese
                 .start();
     }
 
-    private void showMenu() {
-        isShow = true;
-        mDataBinding.show.setText("显示");
-        ViewAnimator.animate(mDataBinding.listView)
-                .translationX(0)
-                .duration(300)
-                .andAnimate(mDataBinding.emr)
-                .translationX(0)
-                .scale(1)
-                .duration(300)
-                .start();
-    }
-
-    private void hideMenu(int menuWidth, float scale) {
-        isShow = false;
-        mDataBinding.show.setText("隐藏");
-        ViewAnimator.animate(mDataBinding.listView)
-                .translationX(-menuWidth)
-                .duration(300)
-                .andAnimate(mDataBinding.emr)
-                .translationX(-menuWidth / 2)
-                .scale(scale)
-                .duration(300)
-                .start();
-    }
-
     private void startDragPhotoActivity(int position) {
         Intent intent = new Intent(_mActivity, DragPhotoActivity.class);
         intent.putStringArrayListExtra(KEY_DATA, (ArrayList<String>) mEMRImageAdapter.getData());
         intent.putExtra(KEY_INDEX, position);
         startActivity(intent);
-        _mActivity.overridePendingTransition(R.anim.anim_in,R.anim.anim_out);
+        _mActivity.overridePendingTransition(R.anim.anim_in, R.anim.anim_out);
     }
 
     @Override
