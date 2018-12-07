@@ -1,6 +1,5 @@
 package szszhospital.cn.com.mobilenurse.mvp.presenter;
 
-import java.util.Collections;
 import java.util.List;
 
 import io.reactivex.Observer;
@@ -28,16 +27,6 @@ public class OrderPresenter extends RxPresenter<OrderContract.View, OrderContrac
 
                     @Override
                     public void onNext(List<Order> orders) {
-                        if (orders != null && orders.size() > 0) {
-                            for (int i = 0; i < orders.size(); i++) {
-                                Order order = orders.get(i);
-                                if (order.SeqNo.contains(".")) {
-                                    String number = order.SeqNo.split("\\.")[0];
-                                    order.SeqNo = number;
-                                }
-                            }
-                            Collections.reverse(orders);
-                        }
                         mView.showPatientOrderList(orders);
                     }
 

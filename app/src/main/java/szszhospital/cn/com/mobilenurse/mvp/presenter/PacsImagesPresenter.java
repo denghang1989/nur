@@ -1,7 +1,5 @@
 package szszhospital.cn.com.mobilenurse.mvp.presenter;
 
-import android.util.Log;
-
 import com.blankj.utilcode.util.NetworkUtils;
 import com.raizlabs.android.dbflow.sql.language.Select;
 
@@ -88,12 +86,10 @@ public class PacsImagesPresenter extends RxPresenter<PacsImagesContract.View, Pa
                             FTPFile[] ftpFiles = mFtp.getFtpClient().listFiles(ftpPath);
                             for (int j = 0; j < ftpFiles.length; j++) {
                                 String fileName = ftpFiles[j].getName();
-                                long size = ftpFiles[j].getSize();
-                                Log.d(TAG, "apply: " + fileName);
                                 DcmName dcmName = new DcmName();
                                 dcmName.IMAGENAME = fileName;
                                 dcmName.IMAGEPATH = ftpPath;
-                                dcmName.size = size;
+                                dcmName.size = 500;
                                 dcmName.save();
                                 if (j == 0) {
                                     obj.thumbnailPath = ftpPath + fileName;

@@ -32,6 +32,8 @@ public class OrderListAdapter extends BaseMultiItemQuickAdapter<Order, BaseViewH
             case Order.D_ORDER:
                 dOrderConvert(helper, item);
                 break;
+            default:
+                break;
         }
     }
 
@@ -46,11 +48,6 @@ public class OrderListAdapter extends BaseMultiItemQuickAdapter<Order, BaseViewH
                 .setText(R.id.stopDateTime, "DC-D " + stopTimeString)
                 .setText(R.id.stopDoctor, item.OrdStopDoctor);
 
-//        if ("D".equals(item.OrdStatusCode)) {
-//            helper.setBackgroundColor(R.id.stopDateTime, mContext.getResources().getColor(R.color.header_line_color));
-//        } else {
-//            helper.setBackgroundColor(R.id.stopDateTime, mContext.getResources().getColor(R.color.black));
-//        }
     }
 
     private void vOrderConvert(BaseViewHolder helper, Order item) {
@@ -61,11 +58,6 @@ public class OrderListAdapter extends BaseMultiItemQuickAdapter<Order, BaseViewH
                 .setText(R.id.doctor, item.Doctor)
                 .setText(R.id.order_name, arcimDesc);
 
-//        if ("D".equals(item.OrdStatusCode)) {
-//            helper.setBackgroundColor(R.id.background, mContext.getResources().getColor(R.color.header_line_color));
-//        } else {
-//            helper.setBackgroundColor(R.id.background, mContext.getResources().getColor(R.color.transparent));
-//        }
     }
 
     @NonNull

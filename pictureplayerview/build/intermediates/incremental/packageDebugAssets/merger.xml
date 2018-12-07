@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="main"><source path="E:\github\nur\pictureplayerview\src\main\assets"/><source path="E:\github\nur\pictureplayerview\build\generated\assets\shaders\debug"/></dataSet><dataSet config="debug"><source path="E:\github\nur\pictureplayerview\src\debug\assets"/></dataSet></merger>
+<merger version="3"><dataSet config="main"><source path="E:\Android_workspace\szzyy\pictureplayerview\src\main\assets"/><source path="E:\Android_workspace\szzyy\pictureplayerview\build\generated\assets\shaders\debug"/></dataSet><dataSet config="debug"><source path="E:\Android_workspace\szzyy\pictureplayerview\src\debug\assets"/></dataSet></merger>
