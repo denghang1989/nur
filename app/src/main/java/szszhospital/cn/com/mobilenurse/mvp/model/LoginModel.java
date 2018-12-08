@@ -5,6 +5,9 @@ import szszhospital.cn.com.mobilenurse.mvp.contract.LoginContract;
 import szszhospital.cn.com.mobilenurse.remote.response.FtpConfig;
 import szszhospital.cn.com.mobilenurse.remote.response.LoginResponse;
 
+/**
+ * @author admin
+ */
 public class LoginModel implements LoginContract.Model {
 
     @Override

@@ -1,7 +1,11 @@
 package szszhospital.cn.com.mobilenurse.entity;
 
 
-public class LocTable  {
+/**
+ * @author admin
+ */
+public class LocTable {
+
     public String GroupID;
     public String LocDesc;
     public String LocID;

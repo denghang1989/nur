@@ -6,8 +6,7 @@
         android:id="@+id/tools_search"
         android:icon="@drawable/ic_search_black_32dp"
         android:title="查找"
-        app:showAsAction="always"
-        />
+        app:showAsAction="always"/>
 
     <item
         android:id="@+id/tools_scan"

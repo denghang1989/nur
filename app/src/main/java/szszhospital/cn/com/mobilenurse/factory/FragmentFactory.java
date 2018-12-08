@@ -19,58 +19,79 @@ import szszhospital.cn.com.mobilenurse.fragemt.TestFragment;
 import szszhospital.cn.com.mobilenurse.fragemt.VitalSignsFragment;
 import szszhospital.cn.com.mobilenurse.remote.response.LocAccessResponse;
 
+/**
+ * @author denghang
+ */
 public class FragmentFactory {
 
     public static BaseFragment newInstance(LocAccessResponse locAccess) {
         BaseFragment fragment = null;
         switch (locAccess.Model) {
-            case "DrugBillUnCompletedFragment": //未配药
+            //未配药
+            case "DrugBillUnCompletedFragment":
                 fragment = DrugBillUnCompletedFragment.newInstance();
                 break;
-            case "DrugBillCompletedFragment": // 已配药
+            // 已配药
+            case "DrugBillCompletedFragment":
                 fragment = DrugBillCompletedFragment.newInstance();
                 break;
-            case "DrugBillReceiveFragment": // 接受
+            // 接受
+            case "DrugBillReceiveFragment":
                 fragment = DrugBillReceiveFragment.newInstance();
                 break;
-            case "DrugBillHandoverFragment": // 已交接
+            // 已交接
+            case "DrugBillHandoverFragment":
                 fragment = DrugBillHandoverFragment.newInstance();
                 break;
-            case "DrugBillCheckFragment": // 核对
+            // 核对
+            case "DrugBillCheckFragment":
                 fragment = DrugBillCheckFragment.newInstance();
                 break;
-            case "DrugBillHandoverNurseFragment": // 待接收
+            // 待接收
+            case "DrugBillHandoverNurseFragment":
                 fragment = DrugBillHandoverNurseFragment.newInstance();
                 break;
-            case "EMRFragment": // 电子病历
+            // 电子病历
+            case "EMRFragment":
                 fragment = EMRFragment.newInstance();
                 break;
-            case "LisListFragment": // Lis检验报告
+            // Lis检验报告
+            case "LisListFragment":
                 fragment = LisListFragment.newInstance();
                 break;
-            case "NOrdersFragment": // 临时医嘱
+            // 临时医嘱
+            case "NOrdersFragment":
                 fragment = NOrdersFragment.newInstance();
                 break;
-            case "PacsListFragment": // PACS检查报告
+            // PACS检查报告
+            case "PacsListFragment":
                 fragment = PacsListFragment.newInstance();
                 break;
-            case "SOrdersFragment": // 长期医嘱
+            // 长期医嘱
+            case "SOrdersFragment":
                 fragment = SOrdersFragment.newInstance();
                 break;
-            case "HerbalOrderFragment":// 草药
+            // 草药
+            case "HerbalOrderFragment":
                 fragment = HerbalOrderFragment.newInstance();
                 break;
-            case "VitalSignsFragment": //生命体征
+            //生命体征
+            case "VitalSignsFragment":
                 fragment = VitalSignsFragment.newInstance();
                 break;
-            case "InspectionFragment": //运送对：运送病人去检查
+            //运送对：运送病人去检查
+            case "InspectionFragment":
                 fragment = InspectionFragment.newInstance();
                 break;
-            case "TestFragment": // 运送对：运送检验标本
+            // 运送对：运送检验标本
+            case "TestFragment":
                 fragment = TestFragment.newInstance();
                 break;
-            case "AllOrdersFragment": //全部医嘱
+            //全部医嘱
+            case "AllOrdersFragment":
                 fragment = AllOrdersFragment.newInstance();
+                break;
+            default:
                 break;
         }
         return fragment;

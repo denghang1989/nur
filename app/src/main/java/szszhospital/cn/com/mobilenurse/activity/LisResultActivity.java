@@ -25,6 +25,9 @@ import szszhospital.cn.com.mobilenurse.remote.response.LisOrder_Table;
 import szszhospital.cn.com.mobilenurse.view.DrugAllergyFragment;
 import szszhospital.cn.com.mobilenurse.view.LisChartDialogFragment;
 
+/**
+ * @author admin
+ */
 public class LisResultActivity extends BasePresentActivity<ActivityLisResultBinding, LisResultPresenter> implements LisResultContract.View {
 
     private static final String TAG  = "LisOrderDetailActivity";
@@ -101,6 +104,8 @@ public class LisResultActivity extends BasePresentActivity<ActivityLisResultBind
                     showDrugAllergyDialog(item);
                     break;
                 case "S":
+                    break;
+                default:
                     break;
             }
         });

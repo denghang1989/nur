@@ -37,13 +37,16 @@ import szszhospital.cn.com.mobilenurse.view.BackPressDialogFragment;
 import szszhospital.cn.com.mobilenurse.view.DialogInterface;
 import szszhospital.cn.com.mobilenurse.view.UpdateDialogFragment;
 
+/**
+ * @author admin
+ */
 public class MainActivity extends BasePresentActivity<ActiviyMainBinding, MainPresenter> implements MainContract.View, DialogInterface {
-    private static final String                  TAG = "MainActivity";
-    private              MainActivityAdapter     mAdapter;
-    private              UpdateDialogFragment    mUpdateDialogFragment;
-    private              UpdateApp               mUpdateApp;
-    private              Disposable              mDisposable;
-    private              BackPressDialogFragment mBackPressDialogFragment;
+    private static final String TAG = "MainActivity";
+    private MainActivityAdapter     mAdapter;
+    private UpdateDialogFragment    mUpdateDialogFragment;
+    private UpdateApp               mUpdateApp;
+    private Disposable              mDisposable;
+    private BackPressDialogFragment mBackPressDialogFragment;
 
     @Override
     protected int getLayoutId() {
@@ -159,6 +162,8 @@ public class MainActivity extends BasePresentActivity<ActiviyMainBinding, MainPr
             case R.id.tools_search:
                 SearchActivity.startSearchActivity(this);
                 break;
+            default:
+                break;
         }
         return true;
     }
@@ -223,4 +228,5 @@ public class MainActivity extends BasePresentActivity<ActiviyMainBinding, MainPr
         });
         mBackPressDialogFragment.show(getSupportFragmentManager(), BackPressDialogFragment.TAG);
     }
+
 }

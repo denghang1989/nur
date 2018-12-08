@@ -25,6 +25,9 @@ import szszhospital.cn.com.mobilenurse.mvp.presenter.LoginPresenter;
 import szszhospital.cn.com.mobilenurse.remote.request.LoginRequest;
 import szszhospital.cn.com.mobilenurse.remote.request.SchDateTimeRequest;
 
+/**
+ * @author admin
+ */
 public class LoginActivity extends BasePresentActivity<ActivityLoginBinding, LoginPresenter> implements LoginContract.View {
     private static final String TAG = "LoginActivity";
     private LoginSpinnerAdapter mAdapter;
