@@ -3,8 +3,13 @@ package szszhospital.cn.com.mobilenurse.mvp.presenter;
 import com.annimon.stream.Collectors;
 import com.annimon.stream.Stream;
 import com.blankj.utilcode.util.StringUtils;
+import com.blankj.utilcode.util.TimeUtils;
 
+import java.text.SimpleDateFormat;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
@@ -30,7 +35,15 @@ public class HerbalOrderPresenter extends RxPresenter<HerbalOrderContract.View, 
 
                     @Override
                     public void onNext(List<Order> orders) {
-                        List<Order> orderList = Stream.of(orders).filter(value -> !((StringUtils.equals(value.OrdStatus, "撤销") || StringUtils.equals(value.OrdStatus, "作废")))).collect(Collectors.toList());
+                        List<Order> orderList = Stream.of(orders).filter(value -> !((StringUtils.equals(value.OrdStatus, "撤销") || StringUtils.equals(value.OrdStatus, "作废")))).sorted(new Comparator<Order>() {
+                            @Override
+                            public int compare(Order o1, Order o2) {
+                                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.CHINA);
+                                Date o1Time = TimeUtils.string2Date(o1.OrdStartDate + " " + o1.OrdStartTime, format);
+                                Date o2Time = TimeUtils.string2Date(o2.OrdStartDate + " " + o2.OrdStartTime, format);
+                                return o1Time.compareTo(o2Time);
+                            }
+                        }).collect(Collectors.toList());
                         mView.showOrderList(orderList);
                     }
 

@@ -75,18 +75,20 @@ public class PacsListFragment extends BaseDoctorFragment<FragmentOrderBinding, P
                         return;
                     }
                     //http //病理报告
-                    if (AppUtil.IsUrl(mAdapter.getPath(pacsOrder)) || StringUtils.equals(pacsOrder.TreplocDr, "13") ) {
+                    if (AppUtil.IsUrl(mAdapter.getPath(pacsOrder)) || StringUtils.equals(pacsOrder.TreplocDr, "13")) {
                         PacsWebViewDetailActivity.startPacsDetailActivity(_mActivity, pacsOrder);
                         return;
                     }
                     //超声影像科报告,走接口调用数据
-                    if (StringUtils.equals(pacsOrder.TreplocDr, "14")||StringUtils.equals(pacsOrder.TreplocDr, "11")||StringUtils.equals(pacsOrder.TreplocDr, "9")) {
+                    if (StringUtils.equals(pacsOrder.TreplocDr, "14") || StringUtils.equals(pacsOrder.TreplocDr, "11") || StringUtils.equals(pacsOrder.TreplocDr, "9")) {
                         PacsResultActivity.startPacsResultActivity(_mActivity, pacsOrder);
                         return;
                     }
                     break;
                 case R.id.photo:
-                    PacsImagesActivity.startPacsImagesActivity(_mActivity,pacsOrder);
+                    PacsImagesActivity.startPacsImagesActivity(_mActivity, pacsOrder);
+                    break;
+                default:
                     break;
             }
         });
