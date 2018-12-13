@@ -1,8 +1,13 @@
 package szszhospital.cn.com.mobilenurse.mvp.presenter;
 
 import com.blankj.utilcode.util.StringUtils;
+import com.blankj.utilcode.util.TimeUtils;
 
+import java.text.SimpleDateFormat;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
@@ -41,6 +46,19 @@ public class LisOrderPresenter extends RxPresenter<LisOrderContract.View, LisOrd
 
                     @Override
                     public void onSuccess(List<LisOrder> orders) {
+                        Collections.sort(orders, new Comparator<LisOrder>() {
+                            @Override
+                            public int compare(LisOrder o1, LisOrder o2) {
+                                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+                                long o1Long = TimeUtils.string2Millis(o1.AuthDateTime, simpleDateFormat);
+                                long o2Long = TimeUtils.string2Millis(o2.AuthDateTime, simpleDateFormat);
+                                if (o2Long - o1Long >= 0) {
+                                    return -1;
+                                } else {
+                                    return 1;
+                                }
+                            }
+                        });
                         mView.showLisOrderList(orders);
                         mModel.save(orders);
                         mView.hideProgress();

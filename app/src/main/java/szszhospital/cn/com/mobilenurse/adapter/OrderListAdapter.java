@@ -77,8 +77,11 @@ public class OrderListAdapter extends BaseMultiItemQuickAdapter<Order, BaseViewH
         if (!StringUtils.isTrimEmpty(item.PHFreq)) {
             arcimDesc = arcimDesc + "   " + item.PHFreq;
         }
-        if (!StringUtils.isTrimEmpty(item.OEORIPhQty)) {
-            arcimDesc = arcimDesc + "  " + item.OEORIPhQty + item.DoseUnit;
+        if (!StringUtils.isTrimEmpty(item.DoseQty)) {
+            arcimDesc = arcimDesc + "  " + item.DoseQty + item.DoseUnit;
+        }
+        if (!StringUtils.isTrimEmpty(item.Priority)) {
+            arcimDesc = arcimDesc + "  " + item.Priority;
         }
         if (item.SeqNo.contains(".")) {
             arcimDesc = "__" + arcimDesc;
