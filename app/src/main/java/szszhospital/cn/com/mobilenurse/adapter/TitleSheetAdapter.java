@@ -1,4 +1,4 @@
-package szszhospital.cn.com.mobilenurse.activity;
+package szszhospital.cn.com.mobilenurse.adapter;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;

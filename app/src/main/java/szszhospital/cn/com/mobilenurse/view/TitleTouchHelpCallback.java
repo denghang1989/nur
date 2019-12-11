@@ -12,7 +12,7 @@ import java.util.Collections;
 import java.util.List;
 
 import szszhospital.cn.com.mobilenurse.R;
-import szszhospital.cn.com.mobilenurse.activity.TitleSheetAdapter;
+import szszhospital.cn.com.mobilenurse.adapter.TitleSheetAdapter;
 import szszhospital.cn.com.mobilenurse.remote.response.LocAccessResponse;
 
 public class TitleTouchHelpCallback extends ItemTouchHelper.Callback {

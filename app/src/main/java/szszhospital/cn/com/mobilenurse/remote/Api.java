@@ -6,10 +6,13 @@ import java.util.Map;
 
 import io.reactivex.Observable;
 import retrofit2.Response;
+import retrofit2.http.Field;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 import szszhospital.cn.com.mobilenurse.remote.response.AuditDetailResponse;
+import szszhospital.cn.com.mobilenurse.remote.response.BaseResponse;
 import szszhospital.cn.com.mobilenurse.remote.response.DispDetailResponse;
 import szszhospital.cn.com.mobilenurse.remote.response.DrugAllergy;
 import szszhospital.cn.com.mobilenurse.remote.response.DrugBill;
@@ -46,11 +49,17 @@ import szszhospital.cn.com.mobilenurse.remote.response.VitalSignsPath;
  * 2016/11/2 11
  */
 public interface Api {
-    String BASE_LOGIN_URL = "http://172.18.0.10/trakcarelive/trak/";
+    String BASE_LOGIN_URL = "http://192.168.199.49/dthealth/web/";
 
     //3.账号密码登录
-    @GET("web/Quality.Ajax.AndroidHttpResponse.cls")
-    Observable<Response<LoginResponse>> login(@QueryMap Map<String, String> option);
+    @POST("web/Quality.Ajax.LoginAjax.cls")
+    Observable<Response<BaseResponse<LoginResponse>>> login(@Field("userName") String userName, @Field("password") String password);
+
+
+    //获取全部的登入科室
+    @POST("web/Quality.Ajax.LoginLocAjax.cls")
+    Observable<Response<BaseResponse<List<LocInfo>>>> getLoginLoc(@Query("userId") String userId);
+
 
     //每次登陆清除
     @GET("web/Quality.Ajax.AndroidHttpResponse.cls")
@@ -180,7 +189,4 @@ public interface Api {
     @GET("web/Quality.Ajax.DocExchaneSummary.cls")
     Observable<Response<List<LogBook>>> getLogBookList(@QueryMap Map<String,String> request);
 
-    //交班本科室信息
-    @GET()
-    Observable<Response<LocInfo>> getLocInfo(@QueryMap Map<String,String> request);
 }

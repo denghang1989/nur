@@ -5,19 +5,12 @@ import com.blankj.utilcode.util.ToastUtils;
 
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
-import retrofit2.Response;
-import szszhospital.cn.com.mobilenurse.App;
 import szszhospital.cn.com.mobilenurse.base.RxPresenter;
-import szszhospital.cn.com.mobilenurse.databinding.User;
 import szszhospital.cn.com.mobilenurse.mvp.contract.LoginContract;
 import szszhospital.cn.com.mobilenurse.mvp.model.LoginModel;
 import szszhospital.cn.com.mobilenurse.remote.ApiService;
 import szszhospital.cn.com.mobilenurse.remote.RxUtil;
-import szszhospital.cn.com.mobilenurse.remote.request.LoginRequest;
-import szszhospital.cn.com.mobilenurse.remote.request.SchDateTimeRequest;
-import szszhospital.cn.com.mobilenurse.remote.response.FtpConfig;
 import szszhospital.cn.com.mobilenurse.remote.response.LoginResponse;
-import szszhospital.cn.com.mobilenurse.remote.response.SchDateTimeResponse;
 
 public class LoginPresenter extends RxPresenter<LoginContract.View, LoginContract.Model> implements LoginContract.Presenter {
 
@@ -28,12 +21,12 @@ public class LoginPresenter extends RxPresenter<LoginContract.View, LoginContrac
     }
 
     @Override
-    public void login(final LoginRequest request, final User user) {
+    public void login(String userName, String password) {
         mView.showProgress();
         ApiService.Instance().getService().
-                login(obj2Map(request)).
-                compose(RxUtil.<Response<LoginResponse>>rxSchedulerHelper()).
-                compose(RxUtil.<LoginResponse>httpHandleResponse()).
+                login(userName, password).
+                compose(RxUtil.httpHandle()).
+                compose(RxUtil.rxSchedulerHelper()).
                 subscribe(new Observer<LoginResponse>() {
                     @Override
                     public void onSubscribe(Disposable d) {
@@ -42,15 +35,9 @@ public class LoginPresenter extends RxPresenter<LoginContract.View, LoginContrac
 
                     @Override
                     public void onNext(LoginResponse loginResponse) {
-                        if (loginResponse.Locs.size() <= 0) {
-                            ToastUtils.showShort("账号或者密码错误");
-                        } else {
-                            mView.setSpinnerData(loginResponse.Locs);
-                            mModel.save(loginResponse);
-                            user.setLogin(true);
-                            SPUtils.getInstance().put("user_name", user.getName());
-                        }
-
+                        mModel.save(loginResponse);
+                        SPUtils.getInstance().put("user_name", loginResponse.getName());
+                        mView.goToMainActivity();
                     }
 
                     @Override
@@ -62,71 +49,6 @@ public class LoginPresenter extends RxPresenter<LoginContract.View, LoginContrac
                     @Override
                     public void onComplete() {
                         mView.hideProgress();
-                    }
-                });
-
-    }
-
-    @Override
-    public void clearCacheDateTime(SchDateTimeRequest request) {
-        mView.showProgress();
-        ApiService.Instance().getService().clearCacheLogin(obj2Map(request))
-                .compose(RxUtil.<Response<SchDateTimeResponse>>rxSchedulerHelper())
-                .compose(RxUtil.<SchDateTimeResponse>httpHandleResponse()).subscribe(new Observer<SchDateTimeResponse>() {
-            @Override
-            public void onSubscribe(Disposable d) {
-                addSubscribe(d);
-            }
-
-            @Override
-            public void onNext(SchDateTimeResponse response) {
-                ToastUtils.showShort("登入成功");
-                String[] itmst = response.stdatetime.split(",");
-                String[] itmet = response.enddatetime.split(",");
-                App.loginUser.SchStDate = itmst[0];
-                App.loginUser.StTime = itmst[1];
-                App.loginUser.SchEnDate = itmet[0];
-                App.loginUser.EnTime = itmet[1];
-                mView.goToMainActivity();
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                e.printStackTrace();
-                mView.hideProgress();
-            }
-
-            @Override
-            public void onComplete() {
-                mView.hideProgress();
-            }
-        });
-    }
-
-    @Override
-    public void ftpConfig() {
-        ApiService.Instance().getService().getFtpConfig()
-                .compose(RxUtil.rxSchedulerHelper())
-                .compose(RxUtil.httpHandleResponse())
-                .subscribe(new Observer<FtpConfig>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                        addSubscribe(d);
-                    }
-
-                    @Override
-                    public void onNext(FtpConfig ftpConfig) {
-                        mModel.saveFtpConfig(ftpConfig);
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onComplete() {
-
                     }
                 });
     }

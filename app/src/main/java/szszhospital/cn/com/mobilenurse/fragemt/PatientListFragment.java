@@ -3,7 +3,11 @@ package szszhospital.cn.com.mobilenurse.fragemt;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 
+import com.blankj.utilcode.util.StringUtils;
+
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
@@ -14,6 +18,7 @@ import szszhospital.cn.com.mobilenurse.adapter.IPatientListAdapter;
 import szszhospital.cn.com.mobilenurse.base.BasePresenterFragment;
 import szszhospital.cn.com.mobilenurse.databinding.FragmentPatientListBinding;
 import szszhospital.cn.com.mobilenurse.event.SelectPatientEvent;
+import szszhospital.cn.com.mobilenurse.event.SwitchLocEvent;
 import szszhospital.cn.com.mobilenurse.mvp.contract.PatientListContract;
 import szszhospital.cn.com.mobilenurse.mvp.presenter.PatientListPresenter;
 import szszhospital.cn.com.mobilenurse.remote.request.PatientListRequest;
@@ -101,6 +106,14 @@ public class PatientListFragment extends BasePresenterFragment<FragmentPatientLi
             }
             mSelectPatient = position;
         });
+
         mDataBinding.refreshLayout.setOnRefreshListener(refreshlayout -> initData());
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void selectedPatient(SwitchLocEvent event) {
+        if (StringUtils.isTrimEmpty(event.locId)) {
+            initData();
+        }
     }
 }

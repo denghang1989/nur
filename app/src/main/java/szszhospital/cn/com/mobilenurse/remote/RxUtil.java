@@ -1,8 +1,6 @@
 package szszhospital.cn.com.mobilenurse.remote;
 
 
-import android.util.Log;
-
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -15,6 +13,7 @@ import io.reactivex.functions.Function;
 import io.reactivex.internal.operators.observable.ObservableError;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Response;
+import szszhospital.cn.com.mobilenurse.remote.response.BaseResponse;
 
 public class RxUtil {
     private static final String TAG = "RxUtil";
@@ -58,15 +57,50 @@ public class RxUtil {
                     @Override
                     public ObservableSource<T> apply(Response<T> tResponse) throws Exception {
                         if (tResponse.code() == 200) {
-                            String cookie = tResponse.headers().get("Set-Cookie");
-                            Log.d(TAG, "apply: " + cookie);
-                            RetrofitHelper.cookie = cookie;
                             return createObservable(tResponse.body());
                         } else {
                             return ObservableError.error(new ApiException(tResponse.message()));
                         }
                     }
                 });
+            }
+        };
+    }
+
+
+    /**
+     * @param <T>
+     * @return http 返回结果的处理
+     */
+    public static <T> ObservableTransformer<BaseResponse<T>, T> httpHandleResult() {
+        return new ObservableTransformer<BaseResponse<T>, T>() {
+
+            @Override
+            public ObservableSource<T> apply(Observable<BaseResponse<T>> upstream) {
+                return upstream.flatMap(new Function<BaseResponse<T>, ObservableSource<T>>() {
+                    @Override
+                    public ObservableSource<T> apply(BaseResponse<T> result) throws Exception {
+                        if (result.getCode() == 0) {
+                            return createObservable(result.getData());
+                        } else {
+                            return Observable.error(new ApiException(result.getMsg()));
+                        }
+                    }
+                });
+            }
+        };
+    }
+
+    /**
+     * @param <T>
+     * @return http 结果的处理
+     */
+    public static <T> ObservableTransformer<Response<BaseResponse<T>>, T> httpHandle() {
+        return new ObservableTransformer<Response<BaseResponse<T>>, T>() {
+
+            @Override
+            public ObservableSource<T> apply(Observable<Response<BaseResponse<T>>> response) {
+                return response.compose(httpHandleResponse()).compose(httpHandleResult());
             }
         };
     }

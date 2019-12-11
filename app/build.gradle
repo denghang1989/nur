@@ -3,18 +3,15 @@ apply plugin: 'com.android.application'
 def dbflow_version = "4.2.4"
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion 26
     defaultConfig {
         applicationId "szszhospital.cn.com.mobilenurse"
         minSdkVersion 21
-        targetSdkVersion 27
+        targetSdkVersion 21
         versionCode 6
         versionName "1.0.06"
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        ndk {
-            abiFilters "armeabi-v7a"
-        }
     }
     buildTypes {
         release {
@@ -35,13 +32,14 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.android.support:appcompat-v7:27.1.0'
+    implementation 'com.android.support:design:27.1.0'
+    implementation 'com.android.support:recyclerview-v7:27.1.0'
+    implementation 'com.android.support:multidex:1.0.3'
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    implementation 'com.android.support:design:27.1.1'
-    implementation 'com.android.support:recyclerview-v7:27.1.1'
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
     implementation 'com.google.code.gson:gson:2.8.4'
@@ -62,7 +60,6 @@ dependencies {
     implementation 'com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0'
     implementation 'cn.bingoogolapple:bga-qrcode-zxing:1.2.5'
     implementation 'com.annimon:stream:1.2.0'
-    implementation 'com.android.support:multidex:1.0.3'
     implementation 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.5@aar'
     implementation 'com.annimon:stream:1.2.0'
     implementation 'com.afollestad.material-dialogs:core:0.9.6.0'

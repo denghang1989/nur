@@ -35,18 +35,19 @@ import szszhospital.cn.com.mobilenurse.utils.FileCallback;
 import szszhospital.cn.com.mobilenurse.utils.FileDownUtil;
 import szszhospital.cn.com.mobilenurse.view.BackPressDialogFragment;
 import szszhospital.cn.com.mobilenurse.view.DialogInterface;
+import szszhospital.cn.com.mobilenurse.view.SwitchLocDialogFragment;
 import szszhospital.cn.com.mobilenurse.view.UpdateDialogFragment;
 
 /**
  * @author admin
  */
 public class MainActivity extends BasePresentActivity<ActiviyMainBinding, MainPresenter> implements MainContract.View, DialogInterface {
-    private static final String TAG = "MainActivity";
-    private MainActivityAdapter     mAdapter;
-    private UpdateDialogFragment    mUpdateDialogFragment;
-    private UpdateApp               mUpdateApp;
-    private Disposable              mDisposable;
-    private BackPressDialogFragment mBackPressDialogFragment;
+    private static final String                  TAG = "MainActivity";
+    private              MainActivityAdapter     mAdapter;
+    private              UpdateApp               mUpdateApp;
+    private              UpdateDialogFragment    mUpdateDialogFragment;
+    private              BackPressDialogFragment mBackPressDialogFragment;
+    private              SwitchLocDialogFragment mSwitchLocDialogFragment;
 
     @Override
     protected int getLayoutId() {
@@ -75,7 +76,7 @@ public class MainActivity extends BasePresentActivity<ActiviyMainBinding, MainPr
 
     private void requestPermissions() {
         final RxPermissions rxPermissions = new RxPermissions(this);
-        mDisposable = rxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE,
+        Disposable subscribe = rxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE,
                 Manifest.permission.READ_EXTERNAL_STORAGE
                 , Manifest.permission.CAMERA)
                 .subscribe(granted -> {
@@ -102,17 +103,9 @@ public class MainActivity extends BasePresentActivity<ActiviyMainBinding, MainPr
     }
 
     @Override
-    protected MainPresenter initPresenter() {
-        return new MainPresenter();
-    }
-
-    @Override
     protected void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
-        if (!mDisposable.isDisposed()) {
-            mDisposable.dispose();
-        }
     }
 
     public void closeDrawer() {
@@ -153,14 +146,17 @@ public class MainActivity extends BasePresentActivity<ActiviyMainBinding, MainPr
             case R.id.tools_scan:
                 ScanQRCodeActivity.startScanQRCodeActivityForResult(this);
                 break;
+            case R.id.tools_search:
+                SearchActivity.startSearchActivity(this);
+                break;
             case R.id.tools_patient_list:
                 SearchActivity.startSearchActivity(this);
                 break;
             case R.id.tools_patient_calendar:
                 LogBookActivity.StartLogBookActivity(this);
                 break;
-            case R.id.tools_search:
-                SearchActivity.startSearchActivity(this);
+            case R.id.tools_toggle_locId:
+                showSwitchLocDialog();
                 break;
             default:
                 break;
@@ -227,6 +223,15 @@ public class MainActivity extends BasePresentActivity<ActiviyMainBinding, MainPr
             }
         });
         mBackPressDialogFragment.show(getSupportFragmentManager(), BackPressDialogFragment.TAG);
+    }
+
+    private void showSwitchLocDialog() {
+        mSwitchLocDialogFragment = (SwitchLocDialogFragment) getSupportFragmentManager().findFragmentByTag(SwitchLocDialogFragment.TAG);
+        if (mSwitchLocDialogFragment != null) {
+            mSwitchLocDialogFragment.dismiss();
+        }
+        mSwitchLocDialogFragment = SwitchLocDialogFragment.newInstance();
+        mSwitchLocDialogFragment.show(getSupportFragmentManager(),SwitchLocDialogFragment.TAG);
     }
 
 }

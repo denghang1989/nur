@@ -19,7 +19,7 @@ import java.util.List;
 
 import szszhospital.cn.com.mobilenurse.App;
 import szszhospital.cn.com.mobilenurse.R;
-import szszhospital.cn.com.mobilenurse.activity.TitleSheetAdapter;
+import szszhospital.cn.com.mobilenurse.adapter.TitleSheetAdapter;
 import szszhospital.cn.com.mobilenurse.remote.response.LocAccessResponse;
 import szszhospital.cn.com.mobilenurse.remote.response.LocAccessResponse_Table;
 import szszhospital.cn.com.mobilenurse.utils.OnRecyclerItemClickListener;

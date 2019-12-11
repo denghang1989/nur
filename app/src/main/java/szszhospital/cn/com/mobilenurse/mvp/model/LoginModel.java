@@ -12,8 +12,9 @@ public class LoginModel implements LoginContract.Model {
 
     @Override
     public void save(LoginResponse loginResponse) {
-        App.loginUser.UserDR = loginResponse.UserID;
-        App.loginUser.UserName = loginResponse.UserName;
+        App.loginUser.UserDR = loginResponse.getId();
+        App.loginUser.UserName = loginResponse.getName();
+        App.loginUser.UserLoc = loginResponse.getLocId();
     }
 
     @Override

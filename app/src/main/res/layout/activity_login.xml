@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
 
-    <data>
-        <variable
-            name="user"
-            type="szszhospital.cn.com.mobilenurse.databinding.User"/>
-    </data>
-
     <android.support.constraint.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -32,7 +26,6 @@
                 android:hint="@string/account"
                 android:inputType="textVisiblePassword"
                 android:maxLines="1"
-                android:text="@={user.name}"
                 android:textColorHint="#333"/>
         </android.support.design.widget.TextInputLayout>
 
@@ -53,22 +46,8 @@
                 android:hint="@string/password"
                 android:inputType="textPassword"
                 android:maxLines="1"
-                android:text="@={user.password}"
                 android:textColorHint="#333"/>
         </android.support.design.widget.TextInputLayout>
-
-        <android.support.v7.widget.AppCompatSpinner
-            android:id="@+id/loc"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginLeft="23dp"
-            android:layout_marginRight="23dp"
-            android:background="@drawable/loc_bg"
-            android:spinnerMode="dialog"
-            android:text="@string/loc"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/password"/>
 
         <Button
             android:id="@+id/login"
@@ -84,7 +63,7 @@
             android:textSize="18sp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/loc"/>
+            app:layout_constraintTop_toBottomOf="@+id/password"/>
 
         <TextView
             android:layout_width="wrap_content"

@@ -9,6 +9,14 @@
         app:showAsAction="always"/>
 
     <item
+
+        android:id="@+id/tools_toggle_locId"
+        android:title="切换科室"
+        app:showAsAction="always"
+        android:icon="@drawable/icon_loc"
+        />
+
+    <item
         android:id="@+id/tools_scan"
         android:icon="@drawable/icon_scan"
         android:title="扫一扫"/>
