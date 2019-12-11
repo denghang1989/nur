@@ -60,7 +60,6 @@ public class MainActivity extends BasePresentActivity<ActiviyMainBinding, MainPr
         mDataBinding.viewPager.setAdapter(mAdapter);
         mDataBinding.toolbar.setTitle(App.loginUser.UserName + "，您好！");
         loadRootFragment(R.id.patientList, PatientListFragment.newInstance());
-        App.access.toolbarHandler(mDataBinding.drawerLayout);
         setSupportActionBar(mDataBinding.toolbar);
     }
 
@@ -92,7 +91,7 @@ public class MainActivity extends BasePresentActivity<ActiviyMainBinding, MainPr
     protected void initEvent() {
         super.initEvent();
         mDataBinding.toolbar.setNavigationOnClickListener(v -> {
-            App.access.openDrawer(mDataBinding.drawerLayout);
+            mDataBinding.drawerLayout.openDrawer(Gravity.START);
         });
     }
 

@@ -6,7 +6,6 @@ import java.util.Map;
 
 import io.reactivex.Observable;
 import retrofit2.Response;
-import retrofit2.http.Field;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
@@ -53,7 +52,7 @@ public interface Api {
 
     //3.账号密码登录
     @POST("web/Quality.Ajax.LoginAjax.cls")
-    Observable<Response<BaseResponse<LoginResponse>>> login(@Field("userName") String userName, @Field("password") String password);
+    Observable<Response<BaseResponse<LoginResponse>>> login(@Query("userName") String userName, @Query("password") String password);
 
 
     //获取全部的登入科室

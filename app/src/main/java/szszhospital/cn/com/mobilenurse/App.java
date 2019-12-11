@@ -15,7 +15,6 @@ import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 
 import java.io.File;
 
-import szszhospital.cn.com.mobilenurse.control.LocAccess;
 import szszhospital.cn.com.mobilenurse.remote.ApiService;
 import szszhospital.cn.com.mobilenurse.remote.model.LoginUser;
 import szszhospital.cn.com.mobilenurse.remote.response.PatientInfo;
@@ -40,13 +39,7 @@ public class App extends MultiDexApplication {
 
     public static LoginUser loginUser = new LoginUser();
 
-    public static LocAccess access;
-
     private static Handler mAsynHandler;
-
-    public static void setAccess(LocAccess access) {
-        App.access = access;
-    }
 
     public static PatientInfo patientInfo;
 

@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.blankj.utilcode.util.ScreenUtils;
-import com.blankj.utilcode.util.SizeUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import org.greenrobot.eventbus.EventBus;
@@ -49,7 +48,7 @@ public class SwitchLocDialogFragment extends DialogFragment implements LoginLocA
         super.onViewCreated(view, savedInstanceState);
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.HORIZONTAL));
+        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL));
         mAdapter = new LoginLocAdapter(R.layout.item_login_spinner);
         recyclerView.setAdapter(mAdapter);
     }
@@ -58,7 +57,7 @@ public class SwitchLocDialogFragment extends DialogFragment implements LoginLocA
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mAdapter.setOnItemClickListener(this);
-        ApiService.Instance().getService().getLoginLoc(App.loginUser.UserID)
+        ApiService.Instance().getService().getLoginLoc(App.loginUser.UserDR)
                 .compose(RxUtil.httpHandle())
                 .compose(RxUtil.rxSchedulerHelper())
                 .subscribe(new Observer<List<LocInfo>>() {
@@ -87,12 +86,14 @@ public class SwitchLocDialogFragment extends DialogFragment implements LoginLocA
     @Override
     public void onResume() {
         super.onResume();
-        getDialog().getWindow().setLayout(ScreenUtils.getScreenWidth(), SizeUtils.dp2px(300));
+        getDialog().getWindow().setLayout(ScreenUtils.getScreenWidth(), ScreenUtils.getScreenHeight() * 2 / 3);
     }
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
         LocInfo item = (LocInfo) adapter.getItem(position);
         EventBus.getDefault().post(new SwitchLocEvent(item.locId));
+        App.loginUser.UserLoc = item.locId;
+        dismiss();
     }
 }

@@ -66,6 +66,7 @@ public class PatientListFragment extends BasePresenterFragment<FragmentPatientLi
         mAdapter = new IPatientListAdapter(R.layout.item_patient_list);
         mRequest = new PatientListRequest();
         mPatientViewHolder = new PatientViewHolder(_mActivity, R.layout.item_patient_head);
+        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -82,6 +83,12 @@ public class PatientListFragment extends BasePresenterFragment<FragmentPatientLi
     @Override
     protected PatientListPresenter initPresenter() {
         return new PatientListPresenter();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -112,7 +119,7 @@ public class PatientListFragment extends BasePresenterFragment<FragmentPatientLi
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void selectedPatient(SwitchLocEvent event) {
-        if (StringUtils.isTrimEmpty(event.locId)) {
+        if (!StringUtils.isTrimEmpty(event.locId)) {
             initData();
         }
     }

@@ -40,7 +40,7 @@ public class LoginActivity extends BasePresentActivity<ActivityLoginBinding, Log
     public void onClick(View view) {
         String userName = mDataBinding.userName.getText().toString().trim();
         String password = mDataBinding.userPassword.getText().toString().trim();
-        if (checkForm(userName,password)) {
+        if (!checkForm(userName,password)) {
             mPresenter.login(userName,password);
         } else {
             ToastUtils.showShort("请输入账号和密码!");

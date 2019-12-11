@@ -36,7 +36,7 @@ public class LoginPresenter extends RxPresenter<LoginContract.View, LoginContrac
                     @Override
                     public void onNext(LoginResponse loginResponse) {
                         mModel.save(loginResponse);
-                        SPUtils.getInstance().put("user_name", loginResponse.getName());
+                        SPUtils.getInstance().put("user_name", loginResponse.getCode());
                         mView.goToMainActivity();
                     }
 
