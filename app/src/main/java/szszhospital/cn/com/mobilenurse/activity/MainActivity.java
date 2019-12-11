@@ -146,13 +146,8 @@ public class MainActivity extends BasePresentActivity<ActiviyMainBinding, MainPr
                 ScanQRCodeActivity.startScanQRCodeActivityForResult(this);
                 break;
             case R.id.tools_search:
-                SearchActivity.startSearchActivity(this);
-                break;
             case R.id.tools_patient_list:
                 SearchActivity.startSearchActivity(this);
-                break;
-            case R.id.tools_patient_calendar:
-                LogBookActivity.StartLogBookActivity(this);
                 break;
             case R.id.tools_toggle_locId:
                 showSwitchLocDialog();

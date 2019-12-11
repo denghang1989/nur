@@ -18,6 +18,9 @@ import szszhospital.cn.com.mobilenurse.remote.response.LocAccessResponse;
 import szszhospital.cn.com.mobilenurse.remote.response.LocAccessResponse_Table;
 import szszhospital.cn.com.mobilenurse.view.TitleSheetDialogFragment;
 
+/**
+ * 主界面
+ */
 public class MainFragment extends BasePresenterFragment<FragmentMainBinding, LocAccessPresenter> implements LocAccessContract.View {
 
     private static final String TAG = "MainFragment";

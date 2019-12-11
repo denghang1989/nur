@@ -25,6 +25,9 @@ import szszhospital.cn.com.mobilenurse.remote.request.PatientListRequest;
 import szszhospital.cn.com.mobilenurse.remote.response.PatientInfo;
 import szszhospital.cn.com.mobilenurse.viewholder.PatientViewHolder;
 
+/**
+ * 病人列表
+ */
 public class PatientListFragment extends BasePresenterFragment<FragmentPatientListBinding, PatientListPresenter> implements PatientListContract.View {
 
     private static final String TAG = "PatientListFragment";

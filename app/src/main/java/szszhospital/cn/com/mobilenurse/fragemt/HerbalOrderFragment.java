@@ -14,6 +14,10 @@ import szszhospital.cn.com.mobilenurse.mvp.contract.HerbalOrderContract;
 import szszhospital.cn.com.mobilenurse.mvp.presenter.HerbalOrderPresenter;
 import szszhospital.cn.com.mobilenurse.remote.response.Order;
 
+
+/**
+ * 草药界面
+ */
 public class HerbalOrderFragment extends BaseDoctorFragment<FragmentOrderBinding, HerbalOrderPresenter> implements HerbalOrderContract.View {
 
     private HerbalOrderAdapter mAdapter;

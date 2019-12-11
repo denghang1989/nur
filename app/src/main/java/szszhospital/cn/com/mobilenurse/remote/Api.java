@@ -10,37 +10,22 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
-import szszhospital.cn.com.mobilenurse.remote.response.AuditDetailResponse;
 import szszhospital.cn.com.mobilenurse.remote.response.BaseResponse;
-import szszhospital.cn.com.mobilenurse.remote.response.DispDetailResponse;
 import szszhospital.cn.com.mobilenurse.remote.response.DrugAllergy;
-import szszhospital.cn.com.mobilenurse.remote.response.DrugBill;
 import szszhospital.cn.com.mobilenurse.remote.response.EMREposideInfo;
 import szszhospital.cn.com.mobilenurse.remote.response.EMRImageInfo;
-import szszhospital.cn.com.mobilenurse.remote.response.EposideInfo;
-import szszhospital.cn.com.mobilenurse.remote.response.FtpConfig;
-import szszhospital.cn.com.mobilenurse.remote.response.HandlerInspectionLog;
-import szszhospital.cn.com.mobilenurse.remote.response.InspectionLogDetail;
 import szszhospital.cn.com.mobilenurse.remote.response.LisChartData;
 import szszhospital.cn.com.mobilenurse.remote.response.LisOrder;
 import szszhospital.cn.com.mobilenurse.remote.response.LisOrderDetail;
 import szszhospital.cn.com.mobilenurse.remote.response.LocAccessResponse;
 import szszhospital.cn.com.mobilenurse.remote.response.LocInfo;
-import szszhospital.cn.com.mobilenurse.remote.response.LogBook;
 import szszhospital.cn.com.mobilenurse.remote.response.LoginResponse;
 import szszhospital.cn.com.mobilenurse.remote.response.Order;
 import szszhospital.cn.com.mobilenurse.remote.response.OrderExecuteInfo;
 import szszhospital.cn.com.mobilenurse.remote.response.PacsImagePath;
 import szszhospital.cn.com.mobilenurse.remote.response.PacsOrder;
-import szszhospital.cn.com.mobilenurse.remote.response.PacsOrderSubscribe;
 import szszhospital.cn.com.mobilenurse.remote.response.PacsResult;
-import szszhospital.cn.com.mobilenurse.remote.response.PascClinicSetting;
 import szszhospital.cn.com.mobilenurse.remote.response.PatientInfo;
-import szszhospital.cn.com.mobilenurse.remote.response.RobotDrugResponse;
-import szszhospital.cn.com.mobilenurse.remote.response.SaveAuditStatusResponse;
-import szszhospital.cn.com.mobilenurse.remote.response.SchDateTimeResponse;
-import szszhospital.cn.com.mobilenurse.remote.response.Test;
-import szszhospital.cn.com.mobilenurse.remote.response.TestStep;
 import szszhospital.cn.com.mobilenurse.remote.response.UpdateApp;
 import szszhospital.cn.com.mobilenurse.remote.response.VitalSignsPath;
 
@@ -54,39 +39,14 @@ public interface Api {
     @POST("web/Quality.Ajax.LoginAjax.cls")
     Observable<Response<BaseResponse<LoginResponse>>> login(@Query("userName") String userName, @Query("password") String password);
 
-
     //获取全部的登入科室
     @POST("web/Quality.Ajax.LoginLocAjax.cls")
     Observable<Response<BaseResponse<List<LocInfo>>>> getLoginLoc(@Query("userId") String userId);
 
 
-    //每次登陆清除
-    @GET("web/Quality.Ajax.AndroidHttpResponse.cls")
-    Observable<Response<SchDateTimeResponse>> clearCacheLogin(@QueryMap Map<String, String> option);
-
-    //获取整个发药单信息
-    @GET("web/Quality.Ajax.DispListAjax.cls")
-    Observable<Response<List<DrugBill>>> getDrugBillList(@QueryMap Map<String, String> option);
-
-    //获取发药单明细列表
-    @GET("web/Quality.Ajax.DispDetailListAjax.cls")
-    Observable<Response<List<DispDetailResponse>>> getDispDetailList(@QueryMap Map<String, String> option);
-
-    //单个药品配药
-    @GET("web/Quality.Ajax.AndroidHttpResponse.cls")
-    Observable<Response<List<AuditDetailResponse>>> updateDrugState(@QueryMap Map<String, String> option);
-
-    //更新发药单状态
-    @GET("web/Quality.Ajax.AndroidHttpResponse.cls")
-    Observable<Response<List<SaveAuditStatusResponse>>> saveAuditStatus(@QueryMap Map<String, String> option);
-
     //获取登入科室模块
     @GET("web/Quality.Ajax.AndroidAccessAjax.cls")
     Observable<Response<List<LocAccessResponse>>> getLocAccess(@QueryMap Map<String, String> option);
-
-    //摆药机的药品明细
-    @GET("web/Quality.Ajax.AndroidHttpResponse.cls")
-    Observable<Response<RobotDrugResponse>> updateRobotDrugState(@QueryMap Map<String, String> option);
 
     //获取病人列表
     @GET("web/Quality.Ajax.PatientListAjax.cls")
@@ -112,26 +72,6 @@ public interface Api {
     @GET("web/Quality.Ajax.PacsOrderAjax.cls")
     Observable<Response<List<PacsOrder>>> getPatientPacsOrder(@Query("EposideId") String EpisodeID, @Query("userCode") String userCode);
 
-    //获取病人检查病理申请单信息
-    @GET("web/Quality.Ajax.InspectionAjax.cls")
-    Observable<Response<List<PacsOrderSubscribe>>> getPatientPacsSubscribe(@QueryMap Map<String, String> option);
-
-    //获取病人检查病理申请单明细
-    @GET("web/Quality.Ajax.InspectionLogAjax.cls")
-    Observable<Response<List<InspectionLogDetail>>> getInspectionLogDetail(@QueryMap Map<String, String> option);
-
-    //更新病人检查病理申请单的状态
-    @GET("web/Quality.Ajax.InspectionLogAjax.cls")
-    Observable<Response<HandlerInspectionLog>> saveOrUpdateLog(@QueryMap Map<String, String> option);
-
-    //获取检验号对应的检验信息
-    @GET("web/Quality.Ajax.TestAjax.cls")
-    Observable<Response<List<Test>>> getLabNoInfo(@Query("LisNo") String libNo, @Query("UserID") String useId);
-
-    //获取检验号运送的详细信息
-    @GET("web/Quality.Ajax.TestLogDetailAjax.cls")
-    Observable<Response<List<TestStep>>> getLabNoLogDetail(@Query("EpisodeID") String EpisodeID, @Query("LisNo") String libNo);
-
     //检查apk 更新
     @GET("web/Quality.Ajax.UpdateAppAjax.cls")
     Observable<Response<UpdateApp>> getUpdateAppInfo();
@@ -139,14 +79,6 @@ public interface Api {
     //医嘱执行记录
     @GET("web/Quality.Ajax.OrderExecuteAjax.cls")
     Observable<Response<List<OrderExecuteInfo>>> getOrderExecuteList(@Query("OrderId") String orderId);
-
-    //获取检查url
-    @GET("web/Quality.Ajax.ClinicSettingAjax.cls")
-    Observable<Response<PascClinicSetting>> getClinicSetting(@Query("LocDr") String LocDr);
-
-    //获取ftpConfig
-    @GET("web/Quality.Ajax.FtpConfigAjax.cls")
-    Observable<Response<FtpConfig>> getFtpConfig();
 
     //获取病人图片的列表
     @GET("web/Quality.Ajax.EMREposideListAjax.cls")
@@ -164,10 +96,6 @@ public interface Api {
     @GET("web/Quality.Ajax.PacsResultAjax.cls")
     Observable<Response<PacsResult>> getPacsResultByOrderId(@Query("OEItemRowID") String OEItemRowID);
 
-    //获取就诊列表
-    @GET("web/EMRservice.Ajax.hisData.cls")
-    Observable<Response<EposideInfo>> getEposideInfoList(@Query("EpisodeID") String EpisodeID, @Query("PatientID") String PatientID);
-
     //获取图片列表
     @GET("web/Quality.Ajax.PacsImagePathAjax.cls")
     Observable<Response<List<PacsImagePath>>> getPacsImageFtpPath(@Query("studyId") String studyId, @Query("type") String type);
@@ -184,8 +112,5 @@ public interface Api {
     @GET("web/Quality.Ajax.PatientNoListAjax.cls")
     Observable<Response<List<PatientInfo>>> getPatientListByNo(@Query("PapmiNo") String PapmiNo);
 
-    //交班本消息列表
-    @GET("web/Quality.Ajax.DocExchaneSummary.cls")
-    Observable<Response<List<LogBook>>> getLogBookList(@QueryMap Map<String,String> request);
 
 }
