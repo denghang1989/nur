@@ -1,4 +1,4 @@
-package szszhospital.cn.com.mobilenurse.view;
+package szszhospital.cn.com.mobilenurse.dialog;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -15,13 +15,13 @@ import com.blankj.utilcode.util.SizeUtils;
 import szszhospital.cn.com.mobilenurse.R;
 
 public class UpdateDialogFragment extends DialogFragment {
-    public static final  String tag     = "UpdateDialogFragment";
-    private static final String CONTENT = "content";
-    private DialogInterface mDialogInterface;
-    private TextView        mTitle;
-    private TextView        mContent;
-    private Button          mCancel;
-    private Button          mOk;
+    public static final  String          tag     = "UpdateDialogFragment";
+    private static final String          CONTENT = "content";
+    private              DialogInterface mDialogInterface;
+    private              TextView        mTitle;
+    private              TextView        mContent;
+    private              Button          mCancel;
+    private              Button          mOk;
 
     public void setDialogInterface(DialogInterface dialogInterface) {
         mDialogInterface = dialogInterface;

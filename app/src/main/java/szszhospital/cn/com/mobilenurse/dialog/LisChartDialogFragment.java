@@ -1,4 +1,4 @@
-package szszhospital.cn.com.mobilenurse.view;
+package szszhospital.cn.com.mobilenurse.dialog;
 
 import android.graphics.Color;
 import android.os.Bundle;

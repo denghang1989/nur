@@ -16,7 +16,7 @@ import szszhospital.cn.com.mobilenurse.mvp.presenter.LocAccessPresenter;
 import szszhospital.cn.com.mobilenurse.remote.request.LocAccessRequest;
 import szszhospital.cn.com.mobilenurse.remote.response.LocAccessResponse;
 import szszhospital.cn.com.mobilenurse.remote.response.LocAccessResponse_Table;
-import szszhospital.cn.com.mobilenurse.view.TitleSheetDialogFragment;
+import szszhospital.cn.com.mobilenurse.dialog.TitleSheetDialogFragment;
 
 /**
  * 主界面

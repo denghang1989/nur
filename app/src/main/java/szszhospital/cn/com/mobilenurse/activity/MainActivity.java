@@ -33,10 +33,10 @@ import szszhospital.cn.com.mobilenurse.remote.response.UpdateApp;
 import szszhospital.cn.com.mobilenurse.utils.AppUtil;
 import szszhospital.cn.com.mobilenurse.utils.FileCallback;
 import szszhospital.cn.com.mobilenurse.utils.FileDownUtil;
-import szszhospital.cn.com.mobilenurse.view.BackPressDialogFragment;
-import szszhospital.cn.com.mobilenurse.view.DialogInterface;
-import szszhospital.cn.com.mobilenurse.view.SwitchLocDialogFragment;
-import szszhospital.cn.com.mobilenurse.view.UpdateDialogFragment;
+import szszhospital.cn.com.mobilenurse.dialog.BackPressDialogFragment;
+import szszhospital.cn.com.mobilenurse.dialog.DialogInterface;
+import szszhospital.cn.com.mobilenurse.dialog.SwitchLocDialogFragment;
+import szszhospital.cn.com.mobilenurse.dialog.UpdateDialogFragment;
 
 /**
  * @author admin

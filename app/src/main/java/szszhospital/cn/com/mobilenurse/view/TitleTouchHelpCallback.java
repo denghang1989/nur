@@ -13,14 +13,15 @@ import java.util.List;
 
 import szszhospital.cn.com.mobilenurse.R;
 import szszhospital.cn.com.mobilenurse.adapter.TitleSheetAdapter;
+import szszhospital.cn.com.mobilenurse.dialog.DataChangedCallback;
 import szszhospital.cn.com.mobilenurse.remote.response.LocAccessResponse;
 
 public class TitleTouchHelpCallback extends ItemTouchHelper.Callback {
     private TitleSheetAdapter                            mAdapter;
     private Context                                      mContext;
     private DataChangedCallback<List<LocAccessResponse>> mDataChangedCallback;
-    private boolean canDrag  = true;
-    private boolean canSwipe = true;
+    private boolean                                      canDrag  = true;
+    private boolean                                      canSwipe = true;
 
     public TitleTouchHelpCallback(Context context, TitleSheetAdapter adapter) {
         mContext = context;

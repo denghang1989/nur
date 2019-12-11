@@ -1,4 +1,4 @@
-package szszhospital.cn.com.mobilenurse.view;
+package szszhospital.cn.com.mobilenurse.dialog;
 
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;

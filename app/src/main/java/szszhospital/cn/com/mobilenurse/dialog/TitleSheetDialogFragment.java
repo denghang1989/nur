@@ -1,4 +1,4 @@
-package szszhospital.cn.com.mobilenurse.view;
+package szszhospital.cn.com.mobilenurse.dialog;
 
 import android.app.Activity;
 import android.content.Context;
@@ -23,15 +23,17 @@ import szszhospital.cn.com.mobilenurse.adapter.TitleSheetAdapter;
 import szszhospital.cn.com.mobilenurse.remote.response.LocAccessResponse;
 import szszhospital.cn.com.mobilenurse.remote.response.LocAccessResponse_Table;
 import szszhospital.cn.com.mobilenurse.utils.OnRecyclerItemClickListener;
+import szszhospital.cn.com.mobilenurse.view.BaseFullBottomSheetFragment;
+import szszhospital.cn.com.mobilenurse.view.TitleTouchHelpCallback;
 
 public class TitleSheetDialogFragment extends BaseFullBottomSheetFragment implements DataChangedCallback<List<LocAccessResponse>> {
-    private static final String DATA = "data";
-    private RecyclerView           mRecyclerView;
-    private Activity               _mActivity;
-    private String                 mUserLoc;
-    private TitleSheetAdapter      mAdapter;
-    private ItemTouchHelper        mItemTouchHelper;
-    private TitleTouchHelpCallback mHelpCallback;
+    private static final String                 DATA = "data";
+    private              RecyclerView           mRecyclerView;
+    private              Activity               _mActivity;
+    private              String                 mUserLoc;
+    private              TitleSheetAdapter      mAdapter;
+    private              ItemTouchHelper        mItemTouchHelper;
+    private              TitleTouchHelpCallback mHelpCallback;
 
     public static TitleSheetDialogFragment newInstance(int[] points) {
         Bundle args = new Bundle();

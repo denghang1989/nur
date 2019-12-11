@@ -22,8 +22,8 @@ import szszhospital.cn.com.mobilenurse.mvp.presenter.LisResultPresenter;
 import szszhospital.cn.com.mobilenurse.remote.response.LisOrder;
 import szszhospital.cn.com.mobilenurse.remote.response.LisOrderDetail;
 import szszhospital.cn.com.mobilenurse.remote.response.LisOrder_Table;
-import szszhospital.cn.com.mobilenurse.view.DrugAllergyFragment;
-import szszhospital.cn.com.mobilenurse.view.LisChartDialogFragment;
+import szszhospital.cn.com.mobilenurse.dialog.DrugAllergyFragment;
+import szszhospital.cn.com.mobilenurse.dialog.LisChartDialogFragment;
 
 /**
  * @author admin
