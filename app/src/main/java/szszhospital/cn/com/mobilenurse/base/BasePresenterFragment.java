@@ -3,6 +3,9 @@ package szszhospital.cn.com.mobilenurse.base;
 import android.databinding.ViewDataBinding;
 import android.support.annotation.CallSuper;
 
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+
 public abstract class BasePresenterFragment<T extends ViewDataBinding, P extends BasePresenter> extends BaseFragment<T> implements BaseView {
 
     protected P mPresenter;
@@ -25,6 +28,17 @@ public abstract class BasePresenterFragment<T extends ViewDataBinding, P extends
     }
 
     protected P initPresenter() {
-        return null;
+        Object newInstance = null;
+        Type type = this.getClass().getGenericSuperclass();
+        if (type instanceof ParameterizedType) {
+            Type[] types = ((ParameterizedType) type).getActualTypeArguments();
+            Class clazz = (Class) types[1];
+            try {
+                newInstance = clazz.newInstance();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return (P) newInstance;
     }
 }

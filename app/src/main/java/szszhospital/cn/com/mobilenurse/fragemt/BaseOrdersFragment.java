@@ -65,7 +65,7 @@ public abstract class BaseOrdersFragment extends BaseDoctorFragment<FragmentOrde
     protected void initEvent() {
         super.initEvent();
         mDataBinding.refreshLayout.setOnRefreshListener(refreshlayout -> initData());
-        mAdapter.setOnItemClickListener((adapter, view, position) -> shwoDialog(mAdapter.getItem(position)));
+        mAdapter.setOnItemClickListener((adapter, view, position) -> showDialog(mAdapter.getItem(position)));
         mDataBinding.orderList.addItemDecoration(new OrderItemDecoration(mAdapter, _mActivity));
         mDataBinding.orderList.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -123,7 +123,7 @@ public abstract class BaseOrdersFragment extends BaseDoctorFragment<FragmentOrde
 
     protected abstract String getOrderType();
 
-    protected void shwoDialog(Order order) {
+    protected void showDialog(Order order) {
         mDialogFragment = (OrderExtDialogFragment) getChildFragmentManager().findFragmentByTag(OrderExtDialogFragment.TAG);
         if (mDialogFragment != null) {
             mDialogFragment.dismiss();

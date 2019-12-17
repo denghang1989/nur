@@ -97,8 +97,4 @@ public class LisListFragment extends BaseDoctorFragment<FragmentOrderBinding, Li
         mDataBinding.refreshLayout.finishRefresh();
     }
 
-    @Override
-    protected LisOrderPresenter initPresenter() {
-        return new LisOrderPresenter();
-    }
 }

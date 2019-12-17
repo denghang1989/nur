@@ -71,7 +71,6 @@ public class PacsListPresenter extends RxPresenter<PacsListContract.View, PacsLi
                             }
                         }
 
-                        // Log.d(TAG, "onNext: " + maps.toString());
                         mView.showPacsOrderList(pacsOrders);
                         mView.refresh();
                     }

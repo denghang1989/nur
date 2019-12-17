@@ -40,11 +40,6 @@ public class PacsListFragment extends BaseDoctorFragment<FragmentOrderBinding, P
     }
 
     @Override
-    protected PacsListPresenter initPresenter() {
-        return new PacsListPresenter();
-    }
-
-    @Override
     protected void init() {
         super.init();
         mAdapter = new PacsResultAdapter(R.layout.item_pacs_order);

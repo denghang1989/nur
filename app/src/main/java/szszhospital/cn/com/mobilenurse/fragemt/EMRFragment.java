@@ -75,11 +75,6 @@ public class EMRFragment extends BaseDoctorFragment<FragmentEmrBinding, EMRPrese
     }
 
     @Override
-    protected EMRPresenter initPresenter() {
-        return new EMRPresenter();
-    }
-
-    @Override
     protected void initEvent() {
         super.initEvent();
         mAdapter.setOnItemClickListener((adapter, view, position) -> {

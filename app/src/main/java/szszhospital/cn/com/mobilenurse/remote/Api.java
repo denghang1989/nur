@@ -43,7 +43,6 @@ public interface Api {
     @POST("web/Quality.Ajax.LoginLocAjax.cls")
     Observable<Response<BaseResponse<List<LocInfo>>>> getLoginLoc(@Query("userId") String userId);
 
-
     //获取登入科室模块
     @GET("web/Quality.Ajax.AndroidAccessAjax.cls")
     Observable<Response<List<LocAccessResponse>>> getLocAccess(@QueryMap Map<String, String> option);

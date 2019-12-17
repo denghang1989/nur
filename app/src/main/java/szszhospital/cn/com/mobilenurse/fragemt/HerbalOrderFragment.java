@@ -62,11 +62,6 @@ public class HerbalOrderFragment extends BaseDoctorFragment<FragmentOrderBinding
     }
 
     @Override
-    protected HerbalOrderPresenter initPresenter() {
-        return new HerbalOrderPresenter();
-    }
-
-    @Override
     public void showProgress() {
         mDataBinding.progress.setVisibility(View.VISIBLE);
     }
