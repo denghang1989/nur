@@ -2,7 +2,6 @@ package szszhospital.cn.com.mobilenurse.remote.response;
 
 public class PacsOrderItem {
 
-
     /**
      * DateTime : 2018-03-05
      * OrdItemId : 2463562||6
@@ -10,6 +9,8 @@ public class PacsOrderItem {
      * ReplocDr : 65
      * ReportLocName : CSK-超声科
      * StudyNo : 180305704
+     * ReportType : url
+     * OrderName : 胎儿生物物理评分(单项检查)
      */
 
     private String DateTime;
@@ -18,15 +19,7 @@ public class PacsOrderItem {
     private int    ReplocDr;
     private String ReportLocName;
     private int    StudyNo;
-    /**
-     * OrderName : 胎儿生物物理评分(单项检查)
-     */
-
     private String OrderName;
-    /**
-     * ReportType : url
-     */
-
     private String ReportType;
 
     public String getDateTime() {

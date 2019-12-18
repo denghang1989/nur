@@ -1,5 +1,8 @@
 package szszhospital.cn.com.mobilenurse.fragemt;
 
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -8,15 +11,22 @@ import java.util.List;
 
 import szszhospital.cn.com.mobilenurse.App;
 import szszhospital.cn.com.mobilenurse.R;
+import szszhospital.cn.com.mobilenurse.activity.CommonWebViewActivity;
+import szszhospital.cn.com.mobilenurse.activity.PdfFromHttpActivity;
 import szszhospital.cn.com.mobilenurse.adapter.PacsOrderItemAdapter;
 import szszhospital.cn.com.mobilenurse.databinding.FragmentOrderBinding;
 import szszhospital.cn.com.mobilenurse.mvp.contract.PacsOrderItemContract;
 import szszhospital.cn.com.mobilenurse.mvp.presenter.PacsOrderItemPresenter;
 import szszhospital.cn.com.mobilenurse.remote.response.PacsOrderItem;
 
-public class PacsOrderItemFragment extends BaseDoctorFragment<FragmentOrderBinding, PacsOrderItemPresenter> implements PacsOrderItemContract.View, PacsOrderItemAdapter.OnItemChildClickListener {
+public class PacsOrderItemFragment extends BaseDoctorFragment<FragmentOrderBinding, PacsOrderItemPresenter> implements PacsOrderItemContract.View, BaseQuickAdapter.OnItemChildClickListener {
+    private static final String TAG = "PacsOrderItemFragment";
 
     private PacsOrderItemAdapter mAdapter;
+
+    public static PacsOrderItemFragment newInstance() {
+        return new PacsOrderItemFragment();
+    }
 
     @Override
     protected void init() {
@@ -27,6 +37,16 @@ public class PacsOrderItemFragment extends BaseDoctorFragment<FragmentOrderBindi
     @Override
     public int getLayoutId() {
         return R.layout.fragment_order;
+    }
+
+    @Override
+    protected void initView() {
+        super.initView();
+        LinearLayoutManager layout = new LinearLayoutManager(_mActivity);
+        mDataBinding.orderList.setLayoutManager(layout);
+        mDataBinding.orderList.addItemDecoration(new DividerItemDecoration(_mActivity, DividerItemDecoration.VERTICAL));
+        mDataBinding.orderList.setAdapter(mAdapter);
+        mDataBinding.refreshLayout.setEnableLoadmore(false);
     }
 
     @Override
@@ -68,6 +88,7 @@ public class PacsOrderItemFragment extends BaseDoctorFragment<FragmentOrderBindi
     @Override
     public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
         PacsOrderItem item = mAdapter.getItem(position);
+        Log.d(TAG, "onItemChildClick: " + position);
         int id = view.getId();
         switch (id) {
             case R.id.icon:
@@ -82,20 +103,22 @@ public class PacsOrderItemFragment extends BaseDoctorFragment<FragmentOrderBindi
     }
 
     private void handlePacsImage(BaseQuickAdapter adapter, PacsOrderItem item) {
+
+    }
+
+    private void handlePacsReport(BaseQuickAdapter adapter, PacsOrderItem item) {
         switch (item.getReportType()) {
             case "url":
+                CommonWebViewActivity.startCommonWebViewActivity(_mActivity, item.getPdfPath());
                 break;
             case "pdf":
+                PdfFromHttpActivity.startPdfActivity(_mActivity,item.getPdfPath());
                 break;
             case "img":
                 break;
             default:
                 break;
         }
-    }
-
-    private void handlePacsReport(BaseQuickAdapter adapter, PacsOrderItem item) {
-
     }
 
 }
