@@ -2,7 +2,6 @@ package szszhospital.cn.com.mobilenurse.mvp.model;
 
 import szszhospital.cn.com.mobilenurse.App;
 import szszhospital.cn.com.mobilenurse.mvp.contract.LoginContract;
-import szszhospital.cn.com.mobilenurse.remote.response.FtpConfig;
 import szszhospital.cn.com.mobilenurse.remote.response.LoginResponse;
 
 /**
@@ -15,9 +14,5 @@ public class LoginModel implements LoginContract.Model {
         App.loginUser.UserDR = loginResponse.getId();
         App.loginUser.UserName = loginResponse.getName();
         App.loginUser.UserLoc = loginResponse.getLocId();
-    }
-
-    @Override
-    public void saveFtpConfig(FtpConfig ftpConfig) {
     }
 }

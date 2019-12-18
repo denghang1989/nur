@@ -23,7 +23,6 @@ import szszhospital.cn.com.mobilenurse.adapter.TitleSheetAdapter;
 import szszhospital.cn.com.mobilenurse.remote.response.LocAccessResponse;
 import szszhospital.cn.com.mobilenurse.remote.response.LocAccessResponse_Table;
 import szszhospital.cn.com.mobilenurse.utils.OnRecyclerItemClickListener;
-import szszhospital.cn.com.mobilenurse.view.BaseFullBottomSheetFragment;
 import szszhospital.cn.com.mobilenurse.view.TitleTouchHelpCallback;
 
 public class TitleSheetDialogFragment extends BaseFullBottomSheetFragment implements DataChangedCallback<List<LocAccessResponse>> {

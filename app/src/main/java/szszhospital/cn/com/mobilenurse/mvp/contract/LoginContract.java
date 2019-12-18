@@ -3,7 +3,6 @@ package szszhospital.cn.com.mobilenurse.mvp.contract;
 import szszhospital.cn.com.mobilenurse.base.BaseModel;
 import szszhospital.cn.com.mobilenurse.base.BasePresenter;
 import szszhospital.cn.com.mobilenurse.base.BaseView;
-import szszhospital.cn.com.mobilenurse.remote.response.FtpConfig;
 import szszhospital.cn.com.mobilenurse.remote.response.LoginResponse;
 
 public interface LoginContract {
@@ -17,8 +16,6 @@ public interface LoginContract {
 
     interface Model extends BaseModel {
         void save(LoginResponse loginResponse);
-
-        void saveFtpConfig(FtpConfig ftpConfig);
     }
 
     interface Presenter extends BasePresenter<View> {

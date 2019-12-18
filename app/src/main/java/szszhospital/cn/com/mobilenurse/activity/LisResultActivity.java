@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import com.blankj.utilcode.util.StringUtils;
-import com.raizlabs.android.dbflow.sql.language.SQLite;
 
 import java.util.List;
 
@@ -17,25 +16,24 @@ import szszhospital.cn.com.mobilenurse.R;
 import szszhospital.cn.com.mobilenurse.adapter.LisResultAdapter;
 import szszhospital.cn.com.mobilenurse.base.BasePresentActivity;
 import szszhospital.cn.com.mobilenurse.databinding.ActivityLisResultBinding;
+import szszhospital.cn.com.mobilenurse.dialog.DrugAllergyFragment;
+import szszhospital.cn.com.mobilenurse.dialog.LisChartDialogFragment;
 import szszhospital.cn.com.mobilenurse.mvp.contract.LisResultContract;
 import szszhospital.cn.com.mobilenurse.mvp.presenter.LisResultPresenter;
 import szszhospital.cn.com.mobilenurse.remote.response.LisOrder;
 import szszhospital.cn.com.mobilenurse.remote.response.LisOrderDetail;
-import szszhospital.cn.com.mobilenurse.remote.response.LisOrder_Table;
-import szszhospital.cn.com.mobilenurse.dialog.DrugAllergyFragment;
-import szszhospital.cn.com.mobilenurse.dialog.LisChartDialogFragment;
 
 /**
  * @author admin
  */
 public class LisResultActivity extends BasePresentActivity<ActivityLisResultBinding, LisResultPresenter> implements LisResultContract.View {
 
-    private static final String TAG  = "LisOrderDetailActivity";
-    private static final String DATA = "data";
-    private LisOrder               mLisOrder;
-    private LisResultAdapter       mAdapter;
-    private LisChartDialogFragment mDialogFragment;
-    private DrugAllergyFragment    mDrugAllergyFragment;
+    private static final String                 TAG  = "LisResultActivity";
+    private static final String                 DATA = "data";
+    private              LisOrder               mLisOrder;
+    private              LisResultAdapter       mAdapter;
+    private              LisChartDialogFragment mDialogFragment;
+    private              DrugAllergyFragment    mDrugAllergyFragment;
 
     public static void startLisResultActivity(Context context, LisOrder lisOrder) {
         Intent intent = new Intent(context, LisResultActivity.class);
@@ -63,27 +61,7 @@ public class LisResultActivity extends BasePresentActivity<ActivityLisResultBind
 
     @Override
     protected void initData() {
-        List<LisOrder> lisOrders = SQLite.select().from(LisOrder.class).where(LisOrder_Table.LabEpisode.eq(mLisOrder.LabEpisode)).queryList();
-        if (lisOrders.size() > 0) {
-            StringBuilder sb = new StringBuilder();
-            StringBuilder titls = new StringBuilder();
-            for (int i = 0; i < lisOrders.size(); i++) {
-                String visitNumberReportDR = lisOrders.get(i).VisitNumberReportDR;
-                String OrdItemName = lisOrders.get(i).OrdItemName;
-                if (i != lisOrders.size() - 1) {
-                    sb.append(visitNumberReportDR).append("^");
-                    titls.append(OrdItemName).append("+");
-                } else {
-                    sb.append(visitNumberReportDR);
-                    titls.append(OrdItemName);
-                }
-            }
-            String params = sb.toString();
-            mPresenter.getLisOrderListDetail(params);
-            mDataBinding.toolbar.setTitle(titls.toString());
-        } else {
-            mPresenter.getLisOrderListDetail(mLisOrder.VisitNumberReportDR);
-        }
+        mPresenter.getLisOrderListDetail(mLisOrder.VisitNumberReportDR);
     }
 
     @Override
