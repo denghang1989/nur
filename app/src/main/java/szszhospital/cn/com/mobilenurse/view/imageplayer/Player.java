@@ -20,6 +20,9 @@ public interface Player {
 
     void onDestroyed();
 
-    void setCompletedListener(RenderCompleted completed);
+    void setRenderListener(RenderListener renderListener);
 
+    void play(String path);
+
+    void stop();
 }

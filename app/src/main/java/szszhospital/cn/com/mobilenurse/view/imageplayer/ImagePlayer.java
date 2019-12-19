@@ -2,8 +2,6 @@ package szszhospital.cn.com.mobilenurse.view.imageplayer;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.os.Handler;
-import android.os.HandlerThread;
 import android.view.TextureView;
 
 import com.bumptech.glide.Glide;
@@ -16,60 +14,43 @@ import java.util.List;
  * 复制bitmap的播放；
  * bitmap 缓存使用glide 来管理
  */
-public class ImagePlayer implements Player, RenderCompleted {
-    private Context           mContext;
-    private Render            mRender;
-    private ImagePlayerList   mPlayerList;
-    private Handler           mAsynHandler;
-    private AsynHandlerThread mHandlerThread;
-    private Handler mHandler = new Handler();
-    private RenderCompleted mCompleted;
+public class ImagePlayer implements Player {
+    private Context         mContext;
+    private ImageRenderer   mRender;
+    private ImagePlayerList mPlayerList;
 
     public ImagePlayer(Context context, TextureView textureView) {
         mContext = context;
         mPlayerList = new ImagePlayerList();
-        mRender = new ImageRenderer(textureView, 3, this);
-        mHandlerThread = new AsynHandlerThread("ImagePlayer");
-        mHandlerThread.start();
-        mAsynHandler = new Handler(mHandlerThread.getLooper());
+        mRender = new ImageRenderer(textureView);
     }
 
     @Override
     public void next() {
-        if (mPlayerList.hasNext()) {
-            String next = mPlayerList.next();
-            play(next);
-        }
+        String next = mPlayerList.next();
+        play(next);
     }
 
-    private void play(String next) {
-        mAsynHandler.removeCallbacksAndMessages(null);
-        mHandler.removeCallbacksAndMessages(null);
-        mAsynHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                int playingIndex = mPlayerList.getPlayingIndex();
-                File file = new File(next);
-                if (file.exists()) {
-                    try {
-                        FutureTarget<Bitmap> submit = Glide.with(mContext).asBitmap().load(file).submit();
-                        Bitmap bitmap = submit.get();
-                        mHandler.post(() -> mRender.onDraw(playingIndex, bitmap));
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        mRender.onError(e.getMessage());
-                    }
-                }
+    @Override
+    public void play(String path) {
+        int playingIndex = mPlayerList.getPlayingIndex();
+        File file = new File(path);
+        if (file.exists()) {
+            try {
+                FutureTarget<Bitmap> submit = Glide.with(mContext).asBitmap().load(file).submit();
+                Bitmap bitmap = submit.get();
+                mRender.onDraw(playingIndex, bitmap);
+            } catch (Exception e) {
+                e.printStackTrace();
+                mRender.onError(e.getMessage());
             }
-        });
+        }
     }
 
     @Override
     public void preV() {
-        if (mPlayerList.hasPrev()) {
-            String prev = mPlayerList.prev();
-            play(prev);
-        }
+        String prev = mPlayerList.prev();
+        play(prev);
     }
 
     @Override
@@ -79,10 +60,8 @@ public class ImagePlayer implements Player, RenderCompleted {
 
     @Override
     public void seekTo(int frameIndex) {
-        if (mPlayerList.getSourceCount() > 0) {
-            String seek = mPlayerList.seekTo(frameIndex);
-            play(seek);
-        }
+        String seek = mPlayerList.seekTo(frameIndex);
+        play(seek);
     }
 
     @Override
@@ -97,25 +76,16 @@ public class ImagePlayer implements Player, RenderCompleted {
 
     @Override
     public void onDestroyed() {
-        mAsynHandler.removeCallbacksAndMessages(null);
-        mHandler.removeCallbacksAndMessages(null);
+        mRender.onClear();
     }
 
     @Override
-    public void setCompletedListener(RenderCompleted completed) {
-        mCompleted = completed;
+    public void setRenderListener(RenderListener renderListener) {
+        mRender.setOnRenderListener(renderListener);
     }
 
     @Override
-    public void onCompleted(int index) {
-        if (mCompleted != null) {
-            mCompleted.onCompleted(index);
-        }
-    }
-
-    public class AsynHandlerThread extends HandlerThread {
-        public AsynHandlerThread(String name) {
-            super(name);
-        }
+    public void stop() {
+        mRender.onClear();
     }
 }

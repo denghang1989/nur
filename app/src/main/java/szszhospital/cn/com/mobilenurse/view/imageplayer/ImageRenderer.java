@@ -20,25 +20,30 @@ public class ImageRenderer implements Render {
 
     private static final int WIDTH = 0, HEIGHT = 1;
 
-    private TextureView mTextureView;
-    private Paint       mPaint;
-    private Rect        mSrcRect;
-    private Rect        mDstRect;
-    private int         mScaleType;
-    private float       mScale;
-    private int         mWidth;
-    private int         mHeight;
-    private int state = WIDTH;
-    private RenderCompleted mCompleted;
+    private TextureView    mTextureView;
+    private Paint          mPaint;
+    private Rect           mSrcRect = new Rect();
+    private Rect           mDstRect = new Rect();
+    private int            mScaleType;
+    private float          mScale;
+    private int            mWidth;
+    private int            mHeight;
+    private int            state = WIDTH;
+    private RenderListener mRenderListener;
 
-    public ImageRenderer(TextureView textureView, int scaleType, RenderCompleted completed) {
+    public ImageRenderer(TextureView textureView) {
+        this(textureView,3);
+    }
+
+    public ImageRenderer(TextureView textureView, int scaleType) {
         mTextureView = textureView;
         mScaleType = scaleType;
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
-        mSrcRect = new Rect();
-        mDstRect = new Rect();
-        mCompleted = completed;
+    }
+
+    public void setOnRenderListener(RenderListener renderListener) {
+        mRenderListener = renderListener;
     }
 
     @Override
@@ -56,7 +61,9 @@ public class ImageRenderer implements Render {
         Canvas canvas = mTextureView.lockCanvas();
         if (canvas != null) {
             canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);// 清空画布
-
+            if (mRenderListener != null) {
+                mRenderListener.onStartRender(frameIndex);
+            }
             int left = 0;
             int top = 0;
             if (state == WIDTH) {
@@ -70,8 +77,8 @@ public class ImageRenderer implements Render {
             mSrcRect.set(0, 0, bitmap.getWidth(), bitmap.getHeight());
             mDstRect.set(left, top, right, bottom);
             canvas.drawBitmap(bitmap, mSrcRect, mDstRect, mPaint);
-            if (mCompleted != null) {
-                mCompleted.onCompleted(frameIndex);
+            if (mRenderListener != null) {
+                mRenderListener.onFinishRender(frameIndex);
             }
             mTextureView.unlockCanvasAndPost(canvas);
         }
@@ -143,7 +150,7 @@ public class ImageRenderer implements Render {
         return mTextureView.getWidth();
     }
 
-    public void clearDraw() {
+    public void onClear() {
         if (getHeight() == 0 || getWidth() == 0) {
             return;
         }

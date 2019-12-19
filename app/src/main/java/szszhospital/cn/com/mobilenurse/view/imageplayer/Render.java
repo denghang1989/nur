@@ -6,4 +6,7 @@ public interface Render {
     void onDraw(int frameIndex, Bitmap bitmap);
 
     void onError(String message);
+
+    void onClear();
+
 }

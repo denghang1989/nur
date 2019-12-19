@@ -42,7 +42,7 @@ import szszhospital.cn.com.mobilenurse.utils.Contants;
 import szszhospital.cn.com.mobilenurse.utils.DcmUtil;
 import szszhospital.cn.com.mobilenurse.utils.FileDownUtil;
 import szszhospital.cn.com.mobilenurse.view.imageplayer.ImagePlayerView;
-import szszhospital.cn.com.mobilenurse.view.imageplayer.RenderCompleted;
+import szszhospital.cn.com.mobilenurse.view.imageplayer.RenderListener;
 
 public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBinding, PacsImagesPresenter> implements PacsImagesContract.View, View.OnTouchListener, OnBMClickListener {
     private static final String TAG      = "PacsImagesActivity";
@@ -133,9 +133,14 @@ public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBi
 
         mDataBinding.touch.setOnTouchListener(this);
 
-        mPicturePlayerView.setOnCompleteListener(new RenderCompleted() {
+        mPicturePlayerView.setOnRenderListener(new RenderListener() {
             @Override
-            public void onCompleted(int index) {
+            public void onStartRender(int index) {
+
+            }
+
+            @Override
+            public void onFinishRender(int index) {
                 changText(index + 1);
                 mSelectImage = index;
             }

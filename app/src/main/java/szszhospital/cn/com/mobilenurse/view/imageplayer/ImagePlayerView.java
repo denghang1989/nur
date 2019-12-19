@@ -1,13 +1,10 @@
 package szszhospital.cn.com.mobilenurse.view.imageplayer;
 
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.graphics.SurfaceTexture;
 import android.util.AttributeSet;
-import android.view.LayoutInflater;
 import android.view.TextureView;
 import android.view.View;
-import android.widget.FrameLayout;
 
 import java.util.Arrays;
 
@@ -16,9 +13,8 @@ import szszhospital.cn.com.mobilenurse.R;
 /**
  * 负责bitmap的播放展示,画面不存在播放，是通过手势来一帧一帧渲染
  */
-public class ImagePlayerView extends FrameLayout implements TextureView.SurfaceTextureListener {
+public class ImagePlayerView extends TextureView implements TextureView.SurfaceTextureListener {
 
-    private View                 mRootView;
     private TextureView          mTextureView;
     private OnImagePlayerChanged mImagePlayerChanged;
     private Player               mPlayer;
@@ -29,25 +25,16 @@ public class ImagePlayerView extends FrameLayout implements TextureView.SurfaceT
 
     public ImagePlayerView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        initAttrs(context, attrs);
-        mRootView = LayoutInflater.from(context).inflate(R.layout.view_player, this, true);
-        initView(mRootView);
         initPlayer(context);
     }
 
-
     private void initPlayer(Context context) {
-        mPlayer = new ImagePlayer(context,mTextureView);
+        mPlayer = new ImagePlayer(context,this);
     }
 
     private void initView(View rootView) {
         mTextureView = rootView.findViewById(R.id.textureView);
         mTextureView.setSurfaceTextureListener(this);
-    }
-
-    private void initAttrs(Context context, AttributeSet attrs) {
-        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.ImagePlayerView);
-        ta.recycle();
     }
 
     @Override
@@ -102,7 +89,7 @@ public class ImagePlayerView extends FrameLayout implements TextureView.SurfaceT
         mPlayer.setSource(Arrays.asList(pathArray));
     }
 
-    public void setOnCompleteListener(RenderCompleted callback){
-        mPlayer.setCompletedListener(callback);
+    public void setOnRenderListener(RenderListener callback){
+        mPlayer.setRenderListener(callback);
     }
 }
