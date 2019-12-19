@@ -1,4 +1,4 @@
-package szszhospital.cn.com.mobilenurse.view;
+package szszhospital.cn.com.mobilenurse.view.imageplayer;
 
 import java.util.List;
 

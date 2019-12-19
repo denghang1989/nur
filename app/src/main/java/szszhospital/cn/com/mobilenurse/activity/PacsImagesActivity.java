@@ -41,8 +41,8 @@ import szszhospital.cn.com.mobilenurse.remote.response.PacsOrder;
 import szszhospital.cn.com.mobilenurse.utils.Contants;
 import szszhospital.cn.com.mobilenurse.utils.DcmUtil;
 import szszhospital.cn.com.mobilenurse.utils.FileDownUtil;
-import szszhospital.cn.com.mobilenurse.view.ImagePlayerView;
-import szszhospital.cn.com.mobilenurse.view.RenderCompleted;
+import szszhospital.cn.com.mobilenurse.view.imageplayer.ImagePlayerView;
+import szszhospital.cn.com.mobilenurse.view.imageplayer.RenderCompleted;
 
 public class PacsImagesActivity extends BasePresentActivity<ActivityPacsImagesBinding, PacsImagesPresenter> implements PacsImagesContract.View, View.OnTouchListener, OnBMClickListener {
     private static final String TAG      = "PacsImagesActivity";

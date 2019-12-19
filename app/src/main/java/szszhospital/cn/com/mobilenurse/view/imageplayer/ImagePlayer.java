@@ -1,4 +1,4 @@
-package szszhospital.cn.com.mobilenurse.view;
+package szszhospital.cn.com.mobilenurse.view.imageplayer;
 
 import android.content.Context;
 import android.graphics.Bitmap;

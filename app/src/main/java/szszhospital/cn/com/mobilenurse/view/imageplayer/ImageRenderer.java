@@ -1,4 +1,4 @@
-package szszhospital.cn.com.mobilenurse.view;
+package szszhospital.cn.com.mobilenurse.view.imageplayer;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -8,10 +8,10 @@ import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.view.TextureView;
 
-import static com.xiuyukeji.pictureplayerview.annotations.FitSource.FIT_CENTER;
-import static com.xiuyukeji.pictureplayerview.annotations.FitSource.FIT_CROP;
-import static com.xiuyukeji.pictureplayerview.annotations.FitSource.FIT_HEIGHT;
-import static com.xiuyukeji.pictureplayerview.annotations.FitSource.FIT_WIDTH;
+import static szszhospital.cn.com.mobilenurse.annotations.FitSource.FIT_CENTER;
+import static szszhospital.cn.com.mobilenurse.annotations.FitSource.FIT_CROP;
+import static szszhospital.cn.com.mobilenurse.annotations.FitSource.FIT_HEIGHT;
+import static szszhospital.cn.com.mobilenurse.annotations.FitSource.FIT_WIDTH;
 
 /**
  * 复制 bitmap的渲染

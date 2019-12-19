@@ -20,7 +20,7 @@ import szszhospital.cn.com.mobilenurse.mvp.presenter.OrderPresenter;
 import szszhospital.cn.com.mobilenurse.remote.request.OrderRequest;
 import szszhospital.cn.com.mobilenurse.remote.response.Order;
 import szszhospital.cn.com.mobilenurse.utils.OrderItemDecoration;
-import szszhospital.cn.com.mobilenurse.view.OrderExtDialogFragment;
+import szszhospital.cn.com.mobilenurse.dialog.OrderExtDialogFragment;
 
 /**
  * 临时医嘱
