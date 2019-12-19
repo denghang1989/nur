@@ -1,14 +1,6 @@
 package szszhospital.cn.com.mobilenurse.remote.response;
 
-import com.raizlabs.android.dbflow.annotation.Column;
-import com.raizlabs.android.dbflow.annotation.PrimaryKey;
-import com.raizlabs.android.dbflow.annotation.Table;
-import com.raizlabs.android.dbflow.structure.BaseModel;
-
-import szszhospital.cn.com.mobilenurse.entity.AppDatabase;
-
-@Table(database = AppDatabase.class)
-public class LocAccessResponse extends BaseModel {
+public class LocAccess {
 
     /**
      * Active : Y
@@ -17,24 +9,16 @@ public class LocAccessResponse extends BaseModel {
      * RowId : 1
      * Title : 未配药
      */
-    @Column
+    public String ID;
     public String Active;
-    @Column
     public String Model;
-    @Column
     public String ModelDesc;
-    @PrimaryKey
     public String RowId;
-    @Column
     public String Title;
-    @Column
-    public String LocId;
-    @Column(defaultValue = "0")
-    public int    position;
 
     @Override
     public String toString() {
-        return "LocAccessResponse{" +
+        return "LocAccess{" +
                 "Active='" + Active + '\'' +
                 ", Model='" + Model + '\'' +
                 ", ModelDesc=" + ModelDesc +
@@ -42,4 +26,5 @@ public class LocAccessResponse extends BaseModel {
                 ", Title='" + Title + '\'' +
                 '}';
     }
+
 }

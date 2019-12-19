@@ -14,14 +14,14 @@ import java.util.List;
 import szszhospital.cn.com.mobilenurse.R;
 import szszhospital.cn.com.mobilenurse.adapter.TitleSheetAdapter;
 import szszhospital.cn.com.mobilenurse.dialog.DataChangedCallback;
-import szszhospital.cn.com.mobilenurse.remote.response.LocAccessResponse;
+import szszhospital.cn.com.mobilenurse.remote.response.LocAccess;
 
 public class TitleTouchHelpCallback extends ItemTouchHelper.Callback {
-    private TitleSheetAdapter                            mAdapter;
-    private Context                                      mContext;
-    private DataChangedCallback<List<LocAccessResponse>> mDataChangedCallback;
-    private boolean                                      canDrag  = true;
-    private boolean                                      canSwipe = true;
+    private TitleSheetAdapter                    mAdapter;
+    private Context                              mContext;
+    private DataChangedCallback<List<LocAccess>> mDataChangedCallback;
+    private boolean                              canDrag  = true;
+    private boolean                              canSwipe = true;
 
     public TitleTouchHelpCallback(Context context, TitleSheetAdapter adapter) {
         mContext = context;
@@ -119,7 +119,7 @@ public class TitleTouchHelpCallback extends ItemTouchHelper.Callback {
         ViewAnimator.animate(viewHolder.itemView).scale(1.2f, 1f).duration(250).start();
     }
 
-    public void setDataChangedCallback(DataChangedCallback<List<LocAccessResponse>> dataChangedCallback) {
+    public void setDataChangedCallback(DataChangedCallback<List<LocAccess>> dataChangedCallback) {
         mDataChangedCallback = dataChangedCallback;
     }
 }

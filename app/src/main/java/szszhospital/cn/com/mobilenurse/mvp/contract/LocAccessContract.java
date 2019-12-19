@@ -5,23 +5,22 @@ import java.util.List;
 import szszhospital.cn.com.mobilenurse.base.BaseModel;
 import szszhospital.cn.com.mobilenurse.base.BasePresenter;
 import szszhospital.cn.com.mobilenurse.base.BaseView;
-import szszhospital.cn.com.mobilenurse.remote.request.LocAccessRequest;
-import szszhospital.cn.com.mobilenurse.remote.response.LocAccessResponse;
+import szszhospital.cn.com.mobilenurse.remote.response.LocAccess;
 
 public interface LocAccessContract {
 
     interface View extends BaseView {
-        void setPageAdapter(List<LocAccessResponse> list);
+        void setPageAdapter(List<LocAccess> list);
     }
 
     interface Model extends BaseModel {
-        void save(List<LocAccessResponse> list);
+        void save(List<LocAccess> list);
 
-        List<LocAccessResponse> getLocAccess(String LocId);
+        List<LocAccess> getLocAccess(String LocId);
     }
 
     interface Presenter extends BasePresenter<View> {
-        void getLocAccess(LocAccessRequest request);
+        void getLocAccess(String LocId);
     }
 
 }

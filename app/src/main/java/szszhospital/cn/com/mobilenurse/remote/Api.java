@@ -17,7 +17,7 @@ import szszhospital.cn.com.mobilenurse.remote.response.EMRImageInfo;
 import szszhospital.cn.com.mobilenurse.remote.response.LisChartData;
 import szszhospital.cn.com.mobilenurse.remote.response.LisOrder;
 import szszhospital.cn.com.mobilenurse.remote.response.LisOrderDetail;
-import szszhospital.cn.com.mobilenurse.remote.response.LocAccessResponse;
+import szszhospital.cn.com.mobilenurse.remote.response.LocAccess;
 import szszhospital.cn.com.mobilenurse.remote.response.LocInfo;
 import szszhospital.cn.com.mobilenurse.remote.response.LoginResponse;
 import szszhospital.cn.com.mobilenurse.remote.response.Order;
@@ -45,7 +45,7 @@ public interface Api {
 
     //获取登入科室模块
     @GET("web/Quality.Ajax.AndroidAccessAjax.cls")
-    Observable<Response<List<LocAccessResponse>>> getLocAccess(@QueryMap Map<String, String> option);
+    Observable<Response<List<LocAccess>>> getLocAccess(@Query("LocId") String userId);
 
     //获取病人列表
     @GET("web/Quality.Ajax.PatientListAjax.cls")

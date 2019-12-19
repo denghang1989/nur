@@ -8,13 +8,13 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import java.util.List;
 
 import szszhospital.cn.com.mobilenurse.factory.FragmentFactory;
-import szszhospital.cn.com.mobilenurse.remote.response.LocAccessResponse;
+import szszhospital.cn.com.mobilenurse.remote.response.LocAccess;
 
 public class MainFragmentAdapter extends FragmentStatePagerAdapter {
 
-    public List<LocAccessResponse> mList;
+    public List<LocAccess> mList;
 
-    public MainFragmentAdapter(FragmentManager fm, List<LocAccessResponse> list) {
+    public MainFragmentAdapter(FragmentManager fm, List<LocAccess> list) {
         super(fm);
         mList = list;
     }

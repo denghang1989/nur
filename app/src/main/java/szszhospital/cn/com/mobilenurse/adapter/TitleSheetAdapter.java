@@ -4,15 +4,15 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
 import szszhospital.cn.com.mobilenurse.R;
-import szszhospital.cn.com.mobilenurse.remote.response.LocAccessResponse;
+import szszhospital.cn.com.mobilenurse.remote.response.LocAccess;
 
-public class TitleSheetAdapter extends BaseQuickAdapter<LocAccessResponse,BaseViewHolder> {
+public class TitleSheetAdapter extends BaseQuickAdapter<LocAccess,BaseViewHolder> {
     public TitleSheetAdapter(int layoutResId) {
         super(layoutResId);
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, LocAccessResponse item) {
+    protected void convert(BaseViewHolder helper, LocAccess item) {
         helper.setText(R.id.title,item.Title);
     }
 }

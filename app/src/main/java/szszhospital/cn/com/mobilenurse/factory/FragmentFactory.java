@@ -8,14 +8,14 @@ import szszhospital.cn.com.mobilenurse.fragemt.NOrdersFragment;
 import szszhospital.cn.com.mobilenurse.fragemt.PacsOrderItemFragment;
 import szszhospital.cn.com.mobilenurse.fragemt.SOrdersFragment;
 import szszhospital.cn.com.mobilenurse.fragemt.VitalSignsFragment;
-import szszhospital.cn.com.mobilenurse.remote.response.LocAccessResponse;
+import szszhospital.cn.com.mobilenurse.remote.response.LocAccess;
 
 /**
  * @author denghang
  */
 public class FragmentFactory {
 
-    public static BaseFragment newInstance(LocAccessResponse locAccess) {
+    public static BaseFragment newInstance(LocAccess locAccess) {
         BaseFragment fragment = null;
         switch (locAccess.Model) {
             // 电子病历
