@@ -5,4 +5,6 @@ public interface RenderListener {
     void onStartRender(int index);
 
     void onFinishRender(int index);
+
+    void onRenderError(String msg);
 }

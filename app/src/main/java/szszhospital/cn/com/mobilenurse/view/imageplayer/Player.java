@@ -22,7 +22,7 @@ public interface Player {
 
     void setRenderListener(RenderListener renderListener);
 
-    void play(String path);
+    void play();
 
     void stop();
 }

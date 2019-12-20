@@ -28,11 +28,11 @@ public class ImageRenderer implements Render {
     private float          mScale;
     private int            mWidth;
     private int            mHeight;
-    private int            state = WIDTH;
+    private int            state    = WIDTH;
     private RenderListener mRenderListener;
 
     public ImageRenderer(TextureView textureView) {
-        this(textureView,3);
+        this(textureView, 3);
     }
 
     public ImageRenderer(TextureView textureView, int scaleType) {
@@ -56,31 +56,36 @@ public class ImageRenderer implements Render {
             return;
         }
 
-        calculateScale(bitmap.getWidth(), bitmap.getHeight());
+        try {
+            calculateScale(bitmap.getWidth(), bitmap.getHeight());
+            Canvas canvas = mTextureView.lockCanvas();
+            if (canvas != null) {
+                canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);// 清空画布
+                if (mRenderListener != null) {
+                    mRenderListener.onStartRender(frameIndex);
+                }
+                int left = 0;
+                int top = 0;
+                if (state == WIDTH) {
+                    top = calculateTop();
+                } else {
+                    left = calculateLeft();
+                }
+                int right = left + mWidth;
+                int bottom = top + mHeight;
 
-        Canvas canvas = mTextureView.lockCanvas();
-        if (canvas != null) {
-            canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);// 清空画布
+                mSrcRect.set(0, 0, bitmap.getWidth(), bitmap.getHeight());
+                mDstRect.set(left, top, right, bottom);
+                canvas.drawBitmap(bitmap, mSrcRect, mDstRect, mPaint);
+                if (mRenderListener != null) {
+                    mRenderListener.onFinishRender(frameIndex);
+                }
+                mTextureView.unlockCanvasAndPost(canvas);
+            }
+        } catch (Exception e) {
             if (mRenderListener != null) {
-                mRenderListener.onStartRender(frameIndex);
+                mRenderListener.onRenderError(e.getMessage());
             }
-            int left = 0;
-            int top = 0;
-            if (state == WIDTH) {
-                top = calculateTop();
-            } else {
-                left = calculateLeft();
-            }
-            int right = left + mWidth;
-            int bottom = top + mHeight;
-
-            mSrcRect.set(0, 0, bitmap.getWidth(), bitmap.getHeight());
-            mDstRect.set(left, top, right, bottom);
-            canvas.drawBitmap(bitmap, mSrcRect, mDstRect, mPaint);
-            if (mRenderListener != null) {
-                mRenderListener.onFinishRender(frameIndex);
-            }
-            mTextureView.unlockCanvasAndPost(canvas);
         }
     }
 
@@ -135,11 +140,6 @@ public class ImageRenderer implements Render {
         mWidth = (int) (width * mScale);
         mHeight = getHeight();
         state = HEIGHT;
-    }
-
-    @Override
-    public void onError(String message) {
-
     }
 
     private int getHeight() {

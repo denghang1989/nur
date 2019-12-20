@@ -11,7 +11,7 @@ import java.io.File;
 import java.util.List;
 
 /**
- * 复制bitmap的播放；
+ * bitmap的播放；
  * bitmap 缓存使用glide 来管理
  */
 public class ImagePlayer implements Player {
@@ -27,30 +27,38 @@ public class ImagePlayer implements Player {
 
     @Override
     public void next() {
-        String next = mPlayerList.next();
-        play(next);
+        mPlayerList.next();
+        play();
     }
 
     @Override
-    public void play(String path) {
-        int playingIndex = mPlayerList.getPlayingIndex();
-        File file = new File(path);
-        if (file.exists()) {
-            try {
-                FutureTarget<Bitmap> submit = Glide.with(mContext).asBitmap().load(file).submit();
-                Bitmap bitmap = submit.get();
-                mRender.onDraw(playingIndex, bitmap);
-            } catch (Exception e) {
-                e.printStackTrace();
-                mRender.onError(e.getMessage());
+    public void play() {
+        clearMessage();
+        SchedulerUtil.getAsynHandler().post(() -> {
+            int playingIndex = mPlayerList.getPlayingIndex();
+            File file = new File(mPlayerList.getCurrentSource());
+            if (file.exists()) {
+                try {
+                    FutureTarget<Bitmap> submit = Glide.with(mContext).asBitmap().load(file).submit();
+                    Bitmap bitmap = submit.get();
+                    SchedulerUtil.getMainHandler().post(() -> mRender.onDraw(playingIndex, bitmap));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
-        }
+        });
+
+    }
+
+    private void clearMessage() {
+        SchedulerUtil.getMainHandler().removeCallbacksAndMessages(null);
+        SchedulerUtil.getAsynHandler().removeCallbacksAndMessages(null);
     }
 
     @Override
     public void preV() {
-        String prev = mPlayerList.prev();
-        play(prev);
+        mPlayerList.prev();
+        play();
     }
 
     @Override
@@ -60,8 +68,8 @@ public class ImagePlayer implements Player {
 
     @Override
     public void seekTo(int frameIndex) {
-        String seek = mPlayerList.seekTo(frameIndex);
-        play(seek);
+        mPlayerList.seekTo(frameIndex);
+        play();
     }
 
     @Override
@@ -76,6 +84,7 @@ public class ImagePlayer implements Player {
 
     @Override
     public void onDestroyed() {
+        clearMessage();
         mRender.onClear();
     }
 
@@ -86,6 +95,6 @@ public class ImagePlayer implements Player {
 
     @Override
     public void stop() {
-        mRender.onClear();
+        clearMessage();
     }
 }
