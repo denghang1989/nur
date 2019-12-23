@@ -20,16 +20,16 @@ public class ImageRenderer implements Render {
 
     private static final int WIDTH = 0, HEIGHT = 1;
 
-    private TextureView    mTextureView;
-    private Paint          mPaint;
-    private Rect           mSrcRect = new Rect();
-    private Rect           mDstRect = new Rect();
-    private int            mScaleType;
-    private float          mScale;
-    private int            mWidth;
-    private int            mHeight;
-    private int            state    = WIDTH;
-    private RenderListener mRenderListener;
+    private TextureView      mTextureView;
+    private Paint            mPaint;
+    private Rect             mSrcRect = new Rect();
+    private Rect             mDstRect = new Rect();
+    private int              mScaleType;
+    private float            mScale;
+    private int              mWidth;
+    private int              mHeight;
+    private int              state    = WIDTH;
+    private OnRenderListener mOnRenderListener;
 
     public ImageRenderer(TextureView textureView) {
         this(textureView, 3);
@@ -42,8 +42,8 @@ public class ImageRenderer implements Render {
         mPaint.setAntiAlias(true);
     }
 
-    public void setOnRenderListener(RenderListener renderListener) {
-        mRenderListener = renderListener;
+    public void setOnRenderListener(OnRenderListener onRenderListener) {
+        mOnRenderListener = onRenderListener;
     }
 
     @Override
@@ -61,8 +61,8 @@ public class ImageRenderer implements Render {
             Canvas canvas = mTextureView.lockCanvas();
             if (canvas != null) {
                 canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);// 清空画布
-                if (mRenderListener != null) {
-                    mRenderListener.onStartRender(frameIndex);
+                if (mOnRenderListener != null) {
+                    mOnRenderListener.onStartRender(frameIndex);
                 }
                 int left = 0;
                 int top = 0;
@@ -77,14 +77,14 @@ public class ImageRenderer implements Render {
                 mSrcRect.set(0, 0, bitmap.getWidth(), bitmap.getHeight());
                 mDstRect.set(left, top, right, bottom);
                 canvas.drawBitmap(bitmap, mSrcRect, mDstRect, mPaint);
-                if (mRenderListener != null) {
-                    mRenderListener.onFinishRender(frameIndex);
+                if (mOnRenderListener != null) {
+                    mOnRenderListener.onFinishRender(frameIndex);
                 }
                 mTextureView.unlockCanvasAndPost(canvas);
             }
         } catch (Exception e) {
-            if (mRenderListener != null) {
-                mRenderListener.onRenderError(e.getMessage());
+            if (mOnRenderListener != null) {
+                mOnRenderListener.onRenderError(e.getMessage());
             }
         }
     }

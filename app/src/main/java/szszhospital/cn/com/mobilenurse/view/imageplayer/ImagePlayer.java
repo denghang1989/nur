@@ -47,7 +47,6 @@ public class ImagePlayer implements Player {
                 }
             }
         });
-
     }
 
     private void clearMessage() {
@@ -56,7 +55,7 @@ public class ImagePlayer implements Player {
     }
 
     @Override
-    public void preV() {
+    public void prev() {
         mPlayerList.prev();
         play();
     }
@@ -89,8 +88,8 @@ public class ImagePlayer implements Player {
     }
 
     @Override
-    public void setRenderListener(RenderListener renderListener) {
-        mRender.setOnRenderListener(renderListener);
+    public void setRenderListener(OnRenderListener onRenderListener) {
+        mRender.setOnRenderListener(onRenderListener);
     }
 
     @Override

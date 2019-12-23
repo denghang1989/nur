@@ -21,7 +21,6 @@ import szszhospital.cn.com.mobilenurse.event.SelectPatientEvent;
 import szszhospital.cn.com.mobilenurse.event.SwitchLocEvent;
 import szszhospital.cn.com.mobilenurse.mvp.contract.PatientListContract;
 import szszhospital.cn.com.mobilenurse.mvp.presenter.PatientListPresenter;
-import szszhospital.cn.com.mobilenurse.remote.request.PatientListRequest;
 import szszhospital.cn.com.mobilenurse.remote.response.PatientInfo;
 import szszhospital.cn.com.mobilenurse.viewholder.PatientViewHolder;
 
@@ -32,7 +31,6 @@ public class PatientListFragment extends BasePresenterFragment<FragmentPatientLi
 
     private static final String TAG = "PatientListFragment";
     private IPatientListAdapter mAdapter;
-    private PatientListRequest  mRequest;
     private PatientViewHolder   mPatientViewHolder;
     private int mSelectPatient = -1;
 
@@ -67,7 +65,6 @@ public class PatientListFragment extends BasePresenterFragment<FragmentPatientLi
     protected void init() {
         super.init();
         mAdapter = new IPatientListAdapter(R.layout.item_patient_list);
-        mRequest = new PatientListRequest();
         mPatientViewHolder = new PatientViewHolder(_mActivity, R.layout.item_patient_head);
         EventBus.getDefault().register(this);
     }
@@ -97,9 +94,7 @@ public class PatientListFragment extends BasePresenterFragment<FragmentPatientLi
     @Override
     protected void initData() {
         super.initData();
-        mRequest.LocID = App.loginUser.UserLoc;
-        mRequest.UserId = App.loginUser.UserDR;
-        mPresenter.getPatientList(mRequest);
+        mPresenter.getPatientList(App.loginUser.UserDR,App.loginUser.UserLoc);
     }
 
     @Override

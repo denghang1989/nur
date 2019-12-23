@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="szszhospital.cn.com.mobilenurse"
-          xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="szszhospital.cn.com.mobilenurse">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-permission android:name="android.permission.VIBRATE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
 
     <application
@@ -19,82 +19,73 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity
             android:name=".activity.LoginActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
-            android:screenOrientation="portrait">
+            android:screenOrientation="fullSensor">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".activity.MainActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
-            android:screenOrientation="portrait"
-            />
+            android:screenOrientation="fullSensor" />
 
         <activity
             android:name=".activity.ScanQRCodeActivity"
-            android:screenOrientation="portrait"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
-            android:theme="@style/AppTheme.Transparent"
-            />
+            android:screenOrientation="fullSensor"
+            android:theme="@style/AppTheme.Transparent" />
 
         <activity
-            android:name=".activity.PdfActivity"
-            android:process=":pdf"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.Transparent"
-            />
-        <activity
             android:name=".activity.PdfFromHttpActivity"
-            android:process=":pdf"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.Transparent"/>
+            android:screenOrientation="fullSensor"
+            android:theme="@style/AppTheme.Transparent" />
 
         <activity
             android:name=".activity.DragPhotoActivity"
-            android:screenOrientation="landscape"
-            android:theme="@style/AppTheme.Transparent"/>
-
-        <activity
-            android:name=".activity.PacsImagesActivity"
-            android:process=":pacs"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.Transparent"/>
+            android:screenOrientation="fullSensor"
+            android:theme="@style/AppTheme.Transparent" />
 
         <activity
             android:name=".activity.LisResultActivity"
-            android:screenOrientation="portrait"
-            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
-            android:theme="@style/AppTheme.Transparent"/>
+            android:screenOrientation="fullSensor"
+            android:theme="@style/AppTheme.Transparent" />
 
-        <activity android:name=".activity.SearchActivity"
-                  android:screenOrientation="portrait"
-                  android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
-                  android:theme="@style/AppTheme.Transparent"/>
+        <activity
+            android:name=".activity.SearchActivity"
+            android:screenOrientation="fullSensor"
+            android:theme="@style/AppTheme.Transparent" />
 
-        <activity android:name=".activity.CommonWebViewActivity"
-            android:screenOrientation="portrait"
-            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
-            android:theme="@style/AppTheme.Transparent"/>
+        <activity
+            android:name=".activity.CommonWebViewActivity"
+            android:screenOrientation="fullSensor"
+            android:theme="@style/AppTheme.Transparent" />
+
+        <activity
+            android:name=".activity.BrowsePacsImageActivity"
+            android:screenOrientation="fullSensor"
+            android:theme="@style/AppTheme.Transparent" />
 
         <receiver
             android:name=".broadcast.QRCodeBroadcastReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
-                <action android:name="android.intent.action.BARCODEDATA"/>
+                <action android:name="android.intent.action.BARCODEDATA" />
             </intent-filter>
         </receiver>
 
         <receiver android:name=".broadcast.WifiReceiver">
             <intent-filter>
-                <action android:name="android.net.wifi.RSSI_CHANGED"/>
-                <action android:name="android.net.wifi.STATE_CHANGE"/>
-                <action android:name="android.net.wifi.WIFI_STATE_CHANGED"/>
+                <action android:name="android.net.wifi.RSSI_CHANGED" />
+                <action android:name="android.net.wifi.STATE_CHANGE" />
+                <action android:name="android.net.wifi.WIFI_STATE_CHANGED" />
             </intent-filter>
         </receiver>
 

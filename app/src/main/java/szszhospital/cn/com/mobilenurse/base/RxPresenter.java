@@ -1,11 +1,8 @@
 package szszhospital.cn.com.mobilenurse.base;
 
 
-import java.util.Map;
-
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
-import szszhospital.cn.com.mobilenurse.utils.GsonUtil;
 
 /**
  * 2016/10/24 18
@@ -38,11 +35,5 @@ public class RxPresenter<T extends BaseView, E extends BaseModel> implements Bas
     public void detachView() {
         unSubscriber();
         mView = null;
-    }
-
-    public Map<String, String> obj2Map(Object obj) {
-        String gsonString = GsonUtil.GsonString(obj);
-        Map<String, String> map = GsonUtil.GsonToMaps(gsonString);
-        return map;
     }
 }

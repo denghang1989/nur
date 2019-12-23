@@ -15,9 +15,9 @@ public class PacsOrderItemAdapter extends BaseQuickAdapter<PacsOrderItem, BaseVi
     @Override
     protected void convert(BaseViewHolder helper, PacsOrderItem item) {
         helper.addOnClickListener(R.id.icon).addOnClickListener(R.id.photo);
-        helper.setText(R.id.dateTime,item.getDateTime())
-                .setText(R.id.name_order,item.getOrderName())
-                .setText(R.id.loc_order,item.getReportLocName());
+        helper.setText(R.id.dateTime,item.DateTime)
+                .setText(R.id.name_order,item.OrderName)
+                .setText(R.id.loc_order,item.ReportLocName);
     }
 
 

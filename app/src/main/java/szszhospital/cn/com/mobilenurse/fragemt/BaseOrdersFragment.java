@@ -15,19 +15,17 @@ import szszhospital.cn.com.mobilenurse.App;
 import szszhospital.cn.com.mobilenurse.R;
 import szszhospital.cn.com.mobilenurse.adapter.OrderListAdapter;
 import szszhospital.cn.com.mobilenurse.databinding.FragmentOrderBinding;
+import szszhospital.cn.com.mobilenurse.dialog.OrderExtDialogFragment;
 import szszhospital.cn.com.mobilenurse.mvp.contract.OrderContract;
 import szszhospital.cn.com.mobilenurse.mvp.presenter.OrderPresenter;
-import szszhospital.cn.com.mobilenurse.remote.request.OrderRequest;
 import szszhospital.cn.com.mobilenurse.remote.response.Order;
 import szszhospital.cn.com.mobilenurse.utils.OrderItemDecoration;
-import szszhospital.cn.com.mobilenurse.dialog.OrderExtDialogFragment;
 
 /**
  * 临时医嘱
  */
 public abstract class BaseOrdersFragment extends BaseDoctorFragment<FragmentOrderBinding, OrderPresenter> implements OrderContract.View {
     private static final String TAG = "BaseOrdersFragment";
-    protected OrderRequest           mOrderRequest;
     protected OrderListAdapter       mAdapter;
     protected OrderExtDialogFragment mDialogFragment;
     protected List<Order>            mOrderList;
@@ -40,8 +38,6 @@ public abstract class BaseOrdersFragment extends BaseDoctorFragment<FragmentOrde
     @Override
     protected void init() {
         super.init();
-        mOrderRequest = new OrderRequest();
-        mOrderRequest.OrderType = getOrderType();
         mAdapter = new OrderListAdapter(getOrderList());
     }
 
@@ -56,8 +52,7 @@ public abstract class BaseOrdersFragment extends BaseDoctorFragment<FragmentOrde
     @Override
     protected void initData() {
         if (App.patientInfo != null) {
-            mOrderRequest.EposideId = App.patientInfo.EpisodeID;
-            mPresenter.getPatientOrderList(mOrderRequest);
+            mPresenter.getPatientOrderList(getOrderType(),App.patientInfo.EpisodeID);
         }
     }
 

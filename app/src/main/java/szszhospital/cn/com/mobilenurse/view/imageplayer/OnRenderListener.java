@@ -1,6 +1,6 @@
 package szszhospital.cn.com.mobilenurse.view.imageplayer;
 
-public interface RenderListener {
+public interface OnRenderListener {
 
     void onStartRender(int index);
 

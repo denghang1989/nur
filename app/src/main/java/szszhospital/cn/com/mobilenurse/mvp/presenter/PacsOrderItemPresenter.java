@@ -29,8 +29,8 @@ public class PacsOrderItemPresenter extends RxPresenter<PacsOrderItemContract.Vi
                 .flatMap((Function<List<PacsOrderItem>, ObservableSource<PacsOrderItem>>) Observable::fromIterable)
                 .toSortedList((o1, o2) -> {
                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-                    Date o1Long = TimeUtils.string2Date(o1.getDateTime(), simpleDateFormat);
-                    Date o2Long = TimeUtils.string2Date(o2.getDateTime(), simpleDateFormat);
+                    Date o1Long = TimeUtils.string2Date(o1.DateTime, simpleDateFormat);
+                    Date o2Long = TimeUtils.string2Date(o2.DateTime, simpleDateFormat);
                     return o2Long.compareTo(o1Long);
                 }).toObservable()
                 .subscribe(new Observer<List<PacsOrderItem>>() {

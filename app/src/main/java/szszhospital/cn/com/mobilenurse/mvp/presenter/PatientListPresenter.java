@@ -11,14 +11,13 @@ import szszhospital.cn.com.mobilenurse.base.RxPresenter;
 import szszhospital.cn.com.mobilenurse.mvp.contract.PatientListContract;
 import szszhospital.cn.com.mobilenurse.remote.ApiService;
 import szszhospital.cn.com.mobilenurse.remote.RxUtil;
-import szszhospital.cn.com.mobilenurse.remote.request.PatientListRequest;
 import szszhospital.cn.com.mobilenurse.remote.response.PatientInfo;
 
 public class PatientListPresenter extends RxPresenter<PatientListContract.View, PatientListContract.Model> implements PatientListContract.Presenter {
 
     @Override
-    public void getPatientList(PatientListRequest request) {
-        ApiService.Instance().getService().getPatientListByLocId(obj2Map(request))
+    public void getPatientList(String userId, String LocID) {
+        ApiService.Instance().getService().getPatientListByLocId(userId, LocID)
                 .compose(RxUtil.rxSchedulerHelper())
                 .compose(RxUtil.httpHandleResponse())
                 .subscribe(new Observer<List<PatientInfo>>() {

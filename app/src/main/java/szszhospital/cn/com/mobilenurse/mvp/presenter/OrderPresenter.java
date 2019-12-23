@@ -8,15 +8,14 @@ import szszhospital.cn.com.mobilenurse.base.RxPresenter;
 import szszhospital.cn.com.mobilenurse.mvp.contract.OrderContract;
 import szszhospital.cn.com.mobilenurse.remote.ApiService;
 import szszhospital.cn.com.mobilenurse.remote.RxUtil;
-import szszhospital.cn.com.mobilenurse.remote.request.OrderRequest;
 import szszhospital.cn.com.mobilenurse.remote.response.Order;
 
 public class OrderPresenter extends RxPresenter<OrderContract.View, OrderContract.Model> implements OrderContract.Presenter {
 
     @Override
-    public void getPatientOrderList(OrderRequest request) {
+    public void getPatientOrderList(String OrderType, String EposideId) {
         mView.showProgress();
-        ApiService.Instance().getService().getPatientOrderList(obj2Map(request))
+        ApiService.Instance().getService().getPatientOrderList(OrderType, EposideId)
                 .compose(RxUtil.httpHandleResponse())
                 .compose(RxUtil.rxSchedulerHelper())
                 .subscribe(new Observer<List<Order>>() {

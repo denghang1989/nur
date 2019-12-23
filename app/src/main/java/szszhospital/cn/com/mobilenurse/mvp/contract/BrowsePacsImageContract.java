@@ -5,15 +5,17 @@ import java.util.List;
 import szszhospital.cn.com.mobilenurse.base.BaseModel;
 import szszhospital.cn.com.mobilenurse.base.BasePresenter;
 import szszhospital.cn.com.mobilenurse.base.BaseView;
-import szszhospital.cn.com.mobilenurse.remote.response.PatientInfo;
+import szszhospital.cn.com.mobilenurse.remote.response.PacsImagePath;
 
-public interface PatientListContract {
+public interface BrowsePacsImageContract {
 
     interface View extends BaseView {
 
-        void showPatientList(List<PatientInfo> list);
+        void showProgress();
 
-        void refresh();
+        void hideProgress();
+
+        void savePacsImagePath(List<PacsImagePath> pacsImagePaths);
     }
 
     interface Model extends BaseModel {
@@ -21,7 +23,7 @@ public interface PatientListContract {
     }
 
     interface Presenter extends BasePresenter<View> {
-        void getPatientList(String userId, String LocID);
+        void getPacsImagePath(String studyId, String locId, String ordItemId);
     }
 
 }

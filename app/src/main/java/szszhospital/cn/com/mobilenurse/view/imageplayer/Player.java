@@ -8,7 +8,7 @@ import java.util.List;
 public interface Player {
     void next();
 
-    void preV();
+    void prev();
 
     void setSource(List<String> sources);
 
@@ -20,7 +20,7 @@ public interface Player {
 
     void onDestroyed();
 
-    void setRenderListener(RenderListener renderListener);
+    void setRenderListener(OnRenderListener onRenderListener);
 
     void play();
 

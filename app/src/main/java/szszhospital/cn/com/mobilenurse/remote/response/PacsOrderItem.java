@@ -1,6 +1,9 @@
 package szszhospital.cn.com.mobilenurse.remote.response;
 
-public class PacsOrderItem {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class PacsOrderItem implements Parcelable {
 
     /**
      * DateTime : 2018-03-05
@@ -13,76 +16,56 @@ public class PacsOrderItem {
      * OrderName : 胎儿生物物理评分(单项检查)
      */
 
-    private String DateTime;
-    private String OrdItemId;
-    private String PdfPath;
-    private int    ReplocDr;
-    private String ReportLocName;
-    private int    StudyNo;
-    private String OrderName;
-    private String ReportType;
+    public String DateTime;
+    public String OrdItemId;
+    public String PdfPath;
+    public String ReplocDr;
+    public String ReportLocName;
+    public String StudyNo;
+    public String OrderName;
+    public String ReportType;
 
-    public String getDateTime() {
-        return DateTime;
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
-    public void setDateTime(String DateTime) {
-        this.DateTime = DateTime;
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.DateTime);
+        dest.writeString(this.OrdItemId);
+        dest.writeString(this.PdfPath);
+        dest.writeString(this.ReplocDr);
+        dest.writeString(this.ReportLocName);
+        dest.writeString(this.StudyNo);
+        dest.writeString(this.OrderName);
+        dest.writeString(this.ReportType);
     }
 
-    public String getOrdItemId() {
-        return OrdItemId;
+    public PacsOrderItem() {
     }
 
-    public void setOrdItemId(String OrdItemId) {
-        this.OrdItemId = OrdItemId;
+    protected PacsOrderItem(Parcel in) {
+        this.DateTime = in.readString();
+        this.OrdItemId = in.readString();
+        this.PdfPath = in.readString();
+        this.ReplocDr = in.readString();
+        this.ReportLocName = in.readString();
+        this.StudyNo = in.readString();
+        this.OrderName = in.readString();
+        this.ReportType = in.readString();
     }
 
-    public String getPdfPath() {
-        return PdfPath;
-    }
+    public static final Creator<PacsOrderItem> CREATOR = new Creator<PacsOrderItem>() {
+        @Override
+        public PacsOrderItem createFromParcel(Parcel source) {
+            return new PacsOrderItem(source);
+        }
 
-    public void setPdfPath(String PdfPath) {
-        this.PdfPath = PdfPath;
-    }
-
-    public int getReplocDr() {
-        return ReplocDr;
-    }
-
-    public void setReplocDr(int ReplocDr) {
-        this.ReplocDr = ReplocDr;
-    }
-
-    public String getReportLocName() {
-        return ReportLocName;
-    }
-
-    public void setReportLocName(String ReportLocName) {
-        this.ReportLocName = ReportLocName;
-    }
-
-    public int getStudyNo() {
-        return StudyNo;
-    }
-
-    public void setStudyNo(int StudyNo) {
-        this.StudyNo = StudyNo;
-    }
-
-    public String getOrderName() {
-        return OrderName;
-    }
-
-    public void setOrderName(String OrderName) {
-        this.OrderName = OrderName;
-    }
-
-    public String getReportType() {
-        return ReportType;
-    }
-
-    public void setReportType(String ReportType) {
-        this.ReportType = ReportType;
-    }
+        @Override
+        public PacsOrderItem[] newArray(int size) {
+            return new PacsOrderItem[size];
+        }
+    };
 }

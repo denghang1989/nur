@@ -5,7 +5,6 @@ import java.util.List;
 import szszhospital.cn.com.mobilenurse.base.BaseModel;
 import szszhospital.cn.com.mobilenurse.base.BasePresenter;
 import szszhospital.cn.com.mobilenurse.base.BaseView;
-import szszhospital.cn.com.mobilenurse.remote.request.OrderRequest;
 import szszhospital.cn.com.mobilenurse.remote.response.Order;
 
 public interface OrderContract {
@@ -24,6 +23,6 @@ public interface OrderContract {
     }
 
     interface Presenter extends BasePresenter<View> {
-        void getPatientOrderList(OrderRequest request);
+        void getPatientOrderList(String OrderType, String EposideId);
     }
 }

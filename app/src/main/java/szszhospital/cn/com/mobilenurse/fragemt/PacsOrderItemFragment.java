@@ -11,6 +11,7 @@ import java.util.List;
 
 import szszhospital.cn.com.mobilenurse.App;
 import szszhospital.cn.com.mobilenurse.R;
+import szszhospital.cn.com.mobilenurse.activity.BrowsePacsImageActivity;
 import szszhospital.cn.com.mobilenurse.activity.CommonWebViewActivity;
 import szszhospital.cn.com.mobilenurse.activity.PdfFromHttpActivity;
 import szszhospital.cn.com.mobilenurse.adapter.PacsOrderItemAdapter;
@@ -103,16 +104,16 @@ public class PacsOrderItemFragment extends BaseDoctorFragment<FragmentOrderBindi
     }
 
     private void handlePacsImage(BaseQuickAdapter adapter, PacsOrderItem item) {
-
+        BrowsePacsImageActivity.startBrowsePacsImageActivity(_mActivity,item);
     }
 
     private void handlePacsReport(BaseQuickAdapter adapter, PacsOrderItem item) {
-        switch (item.getReportType()) {
+        switch (item.ReportType) {
             case "url":
-                CommonWebViewActivity.startCommonWebViewActivity(_mActivity, item.getPdfPath());
+                CommonWebViewActivity.startCommonWebViewActivity(_mActivity, item.PdfPath);
                 break;
             case "pdf":
-                PdfFromHttpActivity.startPdfActivity(_mActivity,item.getPdfPath());
+                PdfFromHttpActivity.startPdfActivity(_mActivity,item.PdfPath);
                 break;
             case "img":
                 break;

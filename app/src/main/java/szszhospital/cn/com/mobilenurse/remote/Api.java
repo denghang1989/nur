@@ -2,14 +2,12 @@ package szszhospital.cn.com.mobilenurse.remote;
 
 
 import java.util.List;
-import java.util.Map;
 
 import io.reactivex.Observable;
 import retrofit2.Response;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
-import retrofit2.http.QueryMap;
 import szszhospital.cn.com.mobilenurse.remote.response.BaseResponse;
 import szszhospital.cn.com.mobilenurse.remote.response.DrugAllergy;
 import szszhospital.cn.com.mobilenurse.remote.response.EMREposideInfo;
@@ -49,11 +47,11 @@ public interface Api {
 
     //获取病人列表
     @GET("web/Quality.Ajax.PatientListAjax.cls")
-    Observable<Response<List<PatientInfo>>> getPatientListByLocId(@QueryMap Map<String, String> option);
+    Observable<Response<List<PatientInfo>>> getPatientListByLocId(@Query("UserId") String userId, @Query("LocID") String LocID);
 
     //获取医嘱信息
     @GET("web/Quality.Ajax.OrderAjax.cls")
-    Observable<Response<List<Order>>> getPatientOrderList(@QueryMap Map<String, String> option);
+    Observable<Response<List<Order>>> getPatientOrderList(@Query("OrderType") String OrderType, @Query("EposideId") String EposideId);
 
     //获取list医嘱信息
     @GET("web/Quality.Ajax.LisOrderAjax.cls")
