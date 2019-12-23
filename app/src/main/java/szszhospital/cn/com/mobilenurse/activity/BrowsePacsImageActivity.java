@@ -16,6 +16,7 @@ import java.util.List;
 import szszhospital.cn.com.mobilenurse.R;
 import szszhospital.cn.com.mobilenurse.base.BasePresentActivity;
 import szszhospital.cn.com.mobilenurse.databinding.ActivityBrowsePacsBinding;
+import szszhospital.cn.com.mobilenurse.dialog.ImagePathDialogFragment;
 import szszhospital.cn.com.mobilenurse.mvp.contract.BrowsePacsImageContract;
 import szszhospital.cn.com.mobilenurse.mvp.presenter.BrowsePacsImagePresenter;
 import szszhospital.cn.com.mobilenurse.remote.response.PacsImagePath;
@@ -31,6 +32,7 @@ public class BrowsePacsImageActivity extends BasePresentActivity<ActivityBrowseP
     private static final String        DATA = "data";
     private              PacsOrderItem mPacsOrderItem;
     private              ImagePlayer   mImagePlayer;
+    private ImagePathDialogFragment mImagePathDialogFragment;
 
     public static void startBrowsePacsImageActivity(Context context, PacsOrderItem pacsOrderItem) {
         Intent intent = new Intent(context, BrowsePacsImageActivity.class);
@@ -146,10 +148,19 @@ public class BrowsePacsImageActivity extends BasePresentActivity<ActivityBrowseP
                 }
                 break;
             case R.id.menu:
+                openDialogFragment();
                 break;
             default:
                 break;
         }
+    }
+
+    private void openDialogFragment() {
+        mImagePathDialogFragment = (ImagePathDialogFragment) getSupportFragmentManager().findFragmentByTag(ImagePathDialogFragment.Key);
+        if (mImagePathDialogFragment == null) {
+            mImagePathDialogFragment = ImagePathDialogFragment.getInstance();
+        }
+        mImagePathDialogFragment.show(getSupportFragmentManager(),ImagePathDialogFragment.Key);
     }
 
     @Override
