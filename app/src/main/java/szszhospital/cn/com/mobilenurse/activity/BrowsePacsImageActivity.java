@@ -56,12 +56,12 @@ public class BrowsePacsImageActivity extends BasePresentActivity<ActivityBrowseP
 
     @Override
     protected void initEvent() {
-        super.initEvent();
         mDataBinding.checkbox.setOnCheckedChangeListener(this);
         mDataBinding.back.setOnClickListener(this);
         mDataBinding.pre.setOnClickListener(this);
         mDataBinding.next.setOnClickListener(this);
         mDataBinding.seekBar.setOnSeekBarChangeListener(this);
+        mDataBinding.menu.setOnClickListener(this);
     }
 
     @Override
@@ -145,6 +145,8 @@ public class BrowsePacsImageActivity extends BasePresentActivity<ActivityBrowseP
                     mImagePlayer.prev();
                 }
                 break;
+            case R.id.menu:
+                break;
             default:
                 break;
         }
@@ -155,6 +157,7 @@ public class BrowsePacsImageActivity extends BasePresentActivity<ActivityBrowseP
         if ((fromUser) && (mImagePlayer != null)) {
             mImagePlayer.seekTo(progress);
         }
+        mDataBinding.playNumber.setText(String.valueOf(progress));
     }
 
     @Override

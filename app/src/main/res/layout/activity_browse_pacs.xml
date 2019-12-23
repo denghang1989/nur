@@ -28,7 +28,6 @@
                 android:layout_marginLeft="32dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginRight="32dp"
-                android:max="100"
                 android:maxHeight="4dp"
                 android:minHeight="4dp"
                 android:progressDrawable="@drawable/bg_adjust_seek_bar"
@@ -90,6 +89,16 @@
                 app:layout_constraintBottom_toBottomOf="@id/checkbox"
                 app:layout_constraintStart_toEndOf="@id/checkbox"
                 app:layout_constraintTop_toTopOf="@id/checkbox" />
+
+            <ImageView
+                android:id="@+id/menu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="48dp"
+                android:src="@drawable/ic_menu_black_32dp"
+                app:layout_constraintBottom_toBottomOf="@id/next"
+                app:layout_constraintStart_toEndOf="@id/next"
+                app:layout_constraintTop_toTopOf="@id/next" />
 
         </android.support.constraint.ConstraintLayout>
 
