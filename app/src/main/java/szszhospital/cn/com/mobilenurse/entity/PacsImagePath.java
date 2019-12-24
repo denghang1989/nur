@@ -1,11 +1,9 @@
-package szszhospital.cn.com.mobilenurse.remote.response;
+package szszhospital.cn.com.mobilenurse.entity;
 
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
 import com.raizlabs.android.dbflow.structure.BaseModel;
-
-import szszhospital.cn.com.mobilenurse.entity.AppDatabase;
 
 @Table(database = AppDatabase.class)
 public class PacsImagePath extends BaseModel {

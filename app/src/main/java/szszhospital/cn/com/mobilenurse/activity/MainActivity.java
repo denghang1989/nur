@@ -8,6 +8,7 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.IntentUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.tbruyelle.rxpermissions2.RxPermissions;
@@ -25,18 +26,17 @@ import szszhospital.cn.com.mobilenurse.R;
 import szszhospital.cn.com.mobilenurse.adapter.MainActivityAdapter;
 import szszhospital.cn.com.mobilenurse.base.BasePresentActivity;
 import szszhospital.cn.com.mobilenurse.databinding.ActiviyMainBinding;
+import szszhospital.cn.com.mobilenurse.dialog.BackPressDialogFragment;
+import szszhospital.cn.com.mobilenurse.dialog.DialogInterface;
+import szszhospital.cn.com.mobilenurse.dialog.SwitchLocDialogFragment;
+import szszhospital.cn.com.mobilenurse.dialog.UpdateDialogFragment;
 import szszhospital.cn.com.mobilenurse.event.SelectPatientEvent;
 import szszhospital.cn.com.mobilenurse.fragemt.PatientListFragment;
 import szszhospital.cn.com.mobilenurse.mvp.contract.MainContract;
 import szszhospital.cn.com.mobilenurse.mvp.presenter.MainPresenter;
 import szszhospital.cn.com.mobilenurse.remote.response.UpdateApp;
-import szszhospital.cn.com.mobilenurse.utils.AppUtil;
 import szszhospital.cn.com.mobilenurse.utils.FileCallback;
 import szszhospital.cn.com.mobilenurse.utils.FileDownUtil;
-import szszhospital.cn.com.mobilenurse.dialog.BackPressDialogFragment;
-import szszhospital.cn.com.mobilenurse.dialog.DialogInterface;
-import szszhospital.cn.com.mobilenurse.dialog.SwitchLocDialogFragment;
-import szszhospital.cn.com.mobilenurse.dialog.UpdateDialogFragment;
 
 /**
  * @author admin
@@ -160,7 +160,7 @@ public class MainActivity extends BasePresentActivity<ActiviyMainBinding, MainPr
 
     @Override
     public void showDialog(UpdateApp updateApp) {
-        if (updateApp.versionCode > AppUtil.getLocalVersion(this)) {
+        if (updateApp.versionCode > AppUtils.getAppVersionCode()) {
             mUpdateDialogFragment = (UpdateDialogFragment) getSupportFragmentManager().findFragmentByTag(UpdateDialogFragment.tag);
             if (mUpdateDialogFragment != null) {
                 mUpdateDialogFragment.dismiss();

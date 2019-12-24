@@ -1,8 +1,8 @@
 package szszhospital.cn.com.mobilenurse.view.imageplayer;
 
-import szszhospital.cn.com.mobilenurse.utils.AsynHandlerThread;
+import android.os.HandlerThread;
 
-public class ImagePlayerThread extends AsynHandlerThread {
+public class ImagePlayerThread extends HandlerThread {
 
     public ImagePlayerThread() {
         this("ImagePlayer");

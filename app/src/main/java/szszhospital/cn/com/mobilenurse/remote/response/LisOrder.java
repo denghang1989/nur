@@ -3,17 +3,9 @@ package szszhospital.cn.com.mobilenurse.remote.response;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.raizlabs.android.dbflow.annotation.Column;
-import com.raizlabs.android.dbflow.annotation.PrimaryKey;
-import com.raizlabs.android.dbflow.annotation.Table;
-import com.raizlabs.android.dbflow.structure.BaseModel;
-
 import java.io.Serializable;
 
-import szszhospital.cn.com.mobilenurse.entity.AppDatabase;
-
-@Table(database = AppDatabase.class)
-public class LisOrder extends BaseModel implements Parcelable,Serializable{
+public class LisOrder implements Parcelable,Serializable{
 
 
     /**
@@ -45,58 +37,57 @@ public class LisOrder extends BaseModel implements Parcelable,Serializable{
      * WarnComm :
      */
 
-    @Column
+
     public String AdmDate;
-    @Column
+
     public String AdmLoc;
-    @Column
+
     public String AdmNo;
-    @Column
+
     public String AdmType;
-    @Column
+
     public String AuthDateTime;
-    @Column
+
     public String HasMC;
-    @Column
+
     public String HasMid;
-    @Column
+
     public String LabEpisode;
-    @Column
+
     public String LabTestSetRow;
-    @Column
+
     public String MajorConclusion;
-    @PrimaryKey
-    @Column
+
     public String OEOrdItemID;
-    @Column
+
     public String OrdItemName;
-    @Column
+
     public String OrdSpecimen;
-    @Column
+
     public String PreReport;
-    @Column
+
     public String PrintFlag;
-    @Column
+
     public String ReadFlag;
-    @Column
+
     public String RecDateTime;
-    @Column
+
     public String ReceiveNotes;
-    @Column
+
     public String ReqDateTime;
-    @Column
+
     public String ResultStatus;
-    @Column
+
     public String SpecDateTime;
-    @Column
+
     public String StatusDesc;
-    @Column
+
     public String TSMemo;
-    @Column
+
     public String TSResultAnomaly;
-    @Column
+
     public String VisitNumberReportDR;
-    @Column
+
     public String WarnComm;
     /**
      * AdmNo : 15467715

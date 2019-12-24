@@ -19,7 +19,6 @@ import szszhospital.cn.com.mobilenurse.remote.ApiService;
 import szszhospital.cn.com.mobilenurse.remote.model.LoginUser;
 import szszhospital.cn.com.mobilenurse.remote.response.PatientInfo;
 import szszhospital.cn.com.mobilenurse.utils.AppUtil;
-import szszhospital.cn.com.mobilenurse.utils.AsynHandlerThread;
 import szszhospital.cn.com.mobilenurse.utils.Contants;
 
 public class App extends MultiDexApplication {
@@ -48,7 +47,6 @@ public class App extends MultiDexApplication {
     }
 
     public static Context mContext;
-
 
     @Override
     public void onCreate() {
@@ -88,6 +86,18 @@ public class App extends MultiDexApplication {
 
     public static Handler getAsynHandler() {
         return mAsynHandler;
+    }
+
+
+    public static class AsynHandlerThread extends HandlerThread {
+
+        public AsynHandlerThread(){
+            this("AsynHandlerThread");
+        }
+
+        public AsynHandlerThread(String name) {
+            super(name);
+        }
     }
 
 }

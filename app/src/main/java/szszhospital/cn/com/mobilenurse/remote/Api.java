@@ -20,7 +20,7 @@ import szszhospital.cn.com.mobilenurse.remote.response.LocInfo;
 import szszhospital.cn.com.mobilenurse.remote.response.LoginResponse;
 import szszhospital.cn.com.mobilenurse.remote.response.Order;
 import szszhospital.cn.com.mobilenurse.remote.response.OrderExecuteInfo;
-import szszhospital.cn.com.mobilenurse.remote.response.PacsImagePath;
+import szszhospital.cn.com.mobilenurse.entity.PacsImagePath;
 import szszhospital.cn.com.mobilenurse.remote.response.PacsOrder;
 import szszhospital.cn.com.mobilenurse.remote.response.PacsOrderItem;
 import szszhospital.cn.com.mobilenurse.remote.response.PatientInfo;

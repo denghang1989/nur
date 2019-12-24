@@ -11,7 +11,6 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Function;
 import szszhospital.cn.com.mobilenurse.base.RxPresenter;
 import szszhospital.cn.com.mobilenurse.mvp.contract.LisOrderContract;
-import szszhospital.cn.com.mobilenurse.mvp.model.LisOrderModel;
 import szszhospital.cn.com.mobilenurse.remote.ApiService;
 import szszhospital.cn.com.mobilenurse.remote.RxUtil;
 import szszhospital.cn.com.mobilenurse.remote.response.LisOrder;
@@ -21,7 +20,6 @@ public class LisOrderPresenter extends RxPresenter<LisOrderContract.View, LisOrd
     private static final String TAG = "LisOrderPresenter";
 
     public LisOrderPresenter() {
-        mModel = new LisOrderModel();
     }
 
     @Override
@@ -42,7 +40,6 @@ public class LisOrderPresenter extends RxPresenter<LisOrderContract.View, LisOrd
                     @Override
                     public void onSuccess(List<LisOrder> orders) {
                         mView.showLisOrderList(orders);
-                        mModel.save(orders);
                         mView.hideProgress();
                         mView.refresh();
                     }

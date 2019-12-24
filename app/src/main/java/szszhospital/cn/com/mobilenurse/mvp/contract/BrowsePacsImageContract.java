@@ -5,7 +5,7 @@ import java.util.List;
 import szszhospital.cn.com.mobilenurse.base.BaseModel;
 import szszhospital.cn.com.mobilenurse.base.BasePresenter;
 import szszhospital.cn.com.mobilenurse.base.BaseView;
-import szszhospital.cn.com.mobilenurse.remote.response.PacsImagePath;
+import szszhospital.cn.com.mobilenurse.entity.PacsImagePath;
 
 public interface BrowsePacsImageContract {
 

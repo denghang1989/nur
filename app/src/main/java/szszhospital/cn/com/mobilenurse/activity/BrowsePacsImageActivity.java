@@ -19,7 +19,7 @@ import szszhospital.cn.com.mobilenurse.databinding.ActivityBrowsePacsBinding;
 import szszhospital.cn.com.mobilenurse.dialog.ImagePathDialogFragment;
 import szszhospital.cn.com.mobilenurse.mvp.contract.BrowsePacsImageContract;
 import szszhospital.cn.com.mobilenurse.mvp.presenter.BrowsePacsImagePresenter;
-import szszhospital.cn.com.mobilenurse.remote.response.PacsImagePath;
+import szszhospital.cn.com.mobilenurse.entity.PacsImagePath;
 import szszhospital.cn.com.mobilenurse.remote.response.PacsOrderItem;
 import szszhospital.cn.com.mobilenurse.view.imageplayer.ImagePlayer;
 import szszhospital.cn.com.mobilenurse.view.imageplayer.OnRenderListener;
@@ -29,10 +29,10 @@ public class BrowsePacsImageActivity extends BasePresentActivity<ActivityBrowseP
         OnRenderListener, CheckBox.OnCheckedChangeListener,
         View.OnClickListener, SeekBar.OnSeekBarChangeListener {
 
-    private static final String        DATA = "data";
-    private              PacsOrderItem mPacsOrderItem;
-    private              ImagePlayer   mImagePlayer;
-    private ImagePathDialogFragment mImagePathDialogFragment;
+    private static final String                  DATA = "data";
+    private              PacsOrderItem           mPacsOrderItem;
+    private              ImagePlayer             mImagePlayer;
+    private              ImagePathDialogFragment mImagePathDialogFragment;
 
     public static void startBrowsePacsImageActivity(Context context, PacsOrderItem pacsOrderItem) {
         Intent intent = new Intent(context, BrowsePacsImageActivity.class);
@@ -157,10 +157,11 @@ public class BrowsePacsImageActivity extends BasePresentActivity<ActivityBrowseP
 
     private void openDialogFragment() {
         mImagePathDialogFragment = (ImagePathDialogFragment) getSupportFragmentManager().findFragmentByTag(ImagePathDialogFragment.Key);
-        if (mImagePathDialogFragment == null) {
-            mImagePathDialogFragment = ImagePathDialogFragment.getInstance();
+        if (mImagePathDialogFragment != null) {
+            mImagePathDialogFragment.dismiss();
         }
-        mImagePathDialogFragment.show(getSupportFragmentManager(),ImagePathDialogFragment.Key);
+        mImagePathDialogFragment = ImagePathDialogFragment.getInstance();
+        mImagePathDialogFragment.show(getSupportFragmentManager(), ImagePathDialogFragment.Key);
     }
 
     @Override
