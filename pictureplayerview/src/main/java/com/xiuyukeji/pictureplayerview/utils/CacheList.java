@@ -1,6 +1,6 @@
 package com.xiuyukeji.pictureplayerview.utils;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 /**
  * 缓存数组，线程安全

@@ -3,7 +3,6 @@ package szszhospital.cn.com.mobilenurse;
 import android.content.Context;
 import android.os.Handler;
 import android.os.HandlerThread;
-import android.support.multidex.MultiDexApplication;
 
 import com.blankj.utilcode.util.FileUtils;
 import com.blankj.utilcode.util.Utils;
@@ -15,6 +14,7 @@ import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 
 import java.io.File;
 
+import androidx.multidex.MultiDexApplication;
 import szszhospital.cn.com.mobilenurse.remote.ApiService;
 import szszhospital.cn.com.mobilenurse.remote.model.LoginUser;
 import szszhospital.cn.com.mobilenurse.remote.response.PatientInfo;

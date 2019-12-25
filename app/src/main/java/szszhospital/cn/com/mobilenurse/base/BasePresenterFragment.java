@@ -1,7 +1,7 @@
 package szszhospital.cn.com.mobilenurse.base;
 
-import android.databinding.ViewDataBinding;
-import android.support.annotation.CallSuper;
+import androidx.databinding.ViewDataBinding;
+import androidx.annotation.CallSuper;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;

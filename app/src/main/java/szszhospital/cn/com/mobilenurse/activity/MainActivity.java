@@ -3,7 +3,7 @@ package szszhospital.cn.com.mobilenurse.activity;
 import android.Manifest;
 import android.content.Intent;
 import android.os.Build;
-import android.support.v7.view.menu.MenuBuilder;
+import androidx.appcompat.view.menu.MenuBuilder;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;

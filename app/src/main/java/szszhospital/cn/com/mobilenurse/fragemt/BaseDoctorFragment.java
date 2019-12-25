@@ -1,6 +1,6 @@
 package szszhospital.cn.com.mobilenurse.fragemt;
 
-import android.databinding.ViewDataBinding;
+import androidx.databinding.ViewDataBinding;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;

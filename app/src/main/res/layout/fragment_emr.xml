@@ -12,14 +12,14 @@
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/listView"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="3"
                 android:background="@color/lightGray"/>
 
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/emr"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"

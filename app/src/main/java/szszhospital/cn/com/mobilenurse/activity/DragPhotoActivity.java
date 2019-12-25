@@ -1,9 +1,6 @@
 package szszhospital.cn.com.mobilenurse.activity;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +13,9 @@ import com.rd.animation.type.AnimationType;
 
 import java.util.ArrayList;
 
+import androidx.annotation.Nullable;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 import me.yokeyword.fragmentation.SwipeBackLayout;
 import me.yokeyword.fragmentation_swipeback.SwipeBackActivity;
 import szszhospital.cn.com.mobilenurse.R;

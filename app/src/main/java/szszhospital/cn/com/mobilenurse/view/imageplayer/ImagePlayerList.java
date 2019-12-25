@@ -1,6 +1,6 @@
 package szszhospital.cn.com.mobilenurse.view.imageplayer;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import java.util.ArrayList;
 import java.util.List;

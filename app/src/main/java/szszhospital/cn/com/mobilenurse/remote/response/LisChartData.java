@@ -1,6 +1,6 @@
 package szszhospital.cn.com.mobilenurse.remote.response;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.blankj.utilcode.util.TimeUtils;
 

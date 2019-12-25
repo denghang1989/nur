@@ -4,8 +4,8 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.SystemClock;
-import android.support.annotation.IntRange;
-import android.support.annotation.NonNull;
+import androidx.annotation.IntRange;
+import androidx.annotation.NonNull;
 
 import com.xiuyukeji.pictureplayerview.annotations.PictureSource;
 import com.xiuyukeji.pictureplayerview.utils.CacheList;

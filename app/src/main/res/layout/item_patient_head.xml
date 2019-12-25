@@ -5,7 +5,7 @@
              android:layout_width="match_parent"
              android:layout_height="wrap_content">
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:background="@color/green">
@@ -96,6 +96,6 @@
             app:layout_constraintStart_toEndOf="@+id/patientId"
             app:layout_constraintTop_toTopOf="@+id/patientId"
             tools:text="费用类型：医保"/>
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

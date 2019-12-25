@@ -1,6 +1,6 @@
 package szszhospital.cn.com.mobilenurse.adapter;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.TimeUtils;
