@@ -31,7 +31,7 @@ import szszhospital.cn.com.mobilenurse.remote.response.VitalSignsPath;
  * 2016/11/2 11
  */
 public interface Api {
-    String BASE_LOGIN_URL = "http://192.168.199.49/dthealth/web/";
+    String BASE_LOGIN_URL = "http://192.168.199.24/dthealth/web/";
 
     //3.账号密码登录
     @POST("web/Quality.Ajax.LoginAjax.cls")
@@ -109,5 +109,7 @@ public interface Api {
     @GET("web/Quality.Ajax.PatientNoListAjax.cls")
     Observable<Response<List<PatientInfo>>> getPatientListByNo(@Query("PapmiNo") String PapmiNo);
 
-
+    //获取系统参数
+    @GET("web/Quality.Ajax.AndroidSysOptionAjax.cls")
+    Observable<Response<BaseResponse<String>>> getAndroidSysOptionValue(@Query("Name") String name);
 }

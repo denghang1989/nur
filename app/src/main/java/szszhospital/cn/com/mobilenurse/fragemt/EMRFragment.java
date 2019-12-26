@@ -23,17 +23,20 @@ import szszhospital.cn.com.mobilenurse.mvp.presenter.EMRPresenter;
 import szszhospital.cn.com.mobilenurse.remote.response.EMREposideInfo;
 import szszhospital.cn.com.mobilenurse.remote.response.EMRImageInfo;
 
+import static szszhospital.cn.com.mobilenurse.utils.Contants.EMR_KEY_PATH;
+
 /**
  * 电子病历
  */
 public class EMRFragment extends BaseDoctorFragment<FragmentEmrBinding, EMRPresenter> implements EMRContract.View {
 
-    private static final String TAG       = "EMRFragment";
-    private static final String KEY_DATA  = "data";
-    private static final String KEY_INDEX = "index";
-    private EMRAdapter          mAdapter;
-    private EMRImageAdapter     mEMRImageAdapter;
-    private LinearLayoutManager mEMRLayoutManager;
+    private static final String              TAG       = "EMRFragment";
+    private static final String              KEY_DATA  = "data";
+    private static final String              KEY_INDEX = "index";
+
+    private              EMRAdapter          mAdapter;
+    private              EMRImageAdapter     mEMRImageAdapter;
+    private              LinearLayoutManager mEMRLayoutManager;
 
     public static EMRFragment newInstance() {
         return new EMRFragment();
@@ -69,6 +72,7 @@ public class EMRFragment extends BaseDoctorFragment<FragmentEmrBinding, EMRPrese
     @Override
     protected void initData() {
         super.initData();
+        mPresenter.getEMRImagePath(EMR_KEY_PATH);
         if (App.patientInfo != null) {
             mPresenter.getEMREposideList(App.patientInfo.EpisodeID);
         }

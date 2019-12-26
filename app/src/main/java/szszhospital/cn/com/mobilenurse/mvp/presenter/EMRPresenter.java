@@ -1,5 +1,7 @@
 package szszhospital.cn.com.mobilenurse.mvp.presenter;
 
+import com.blankj.utilcode.util.SPUtils;
+
 import java.util.List;
 
 import io.reactivex.Observer;
@@ -8,6 +10,7 @@ import szszhospital.cn.com.mobilenurse.base.RxPresenter;
 import szszhospital.cn.com.mobilenurse.mvp.contract.EMRContract;
 import szszhospital.cn.com.mobilenurse.remote.ApiService;
 import szszhospital.cn.com.mobilenurse.remote.RxUtil;
+import szszhospital.cn.com.mobilenurse.remote.response.BaseResponse;
 import szszhospital.cn.com.mobilenurse.remote.response.EMREposideInfo;
 import szszhospital.cn.com.mobilenurse.remote.response.EMRImageInfo;
 
@@ -69,6 +72,35 @@ public class EMRPresenter extends RxPresenter<EMRContract.View, EMRContract.Mode
                     @Override
                     public void onComplete() {
                         mView.hideProgress();
+                    }
+                });
+    }
+
+    @Override
+    public void getEMRImagePath(String name) {
+        ApiService.Instance().getService().getAndroidSysOptionValue(name)
+                .compose(RxUtil.rxSchedulerHelper())
+                .compose(RxUtil.httpHandleResponse())
+                .subscribe(new Observer<BaseResponse<String>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        addSubscribe(d);
+                    }
+
+                    @Override
+                    public void onNext(BaseResponse<String> stringBaseResponse) {
+                        String data = stringBaseResponse.data;
+                        SPUtils.getInstance().put(name,data);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onComplete() {
+
                     }
                 });
     }

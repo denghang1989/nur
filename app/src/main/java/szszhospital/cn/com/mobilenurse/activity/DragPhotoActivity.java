@@ -4,8 +4,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.blankj.utilcode.util.BarUtils;
+import com.blankj.utilcode.util.SPUtils;
+import com.blankj.utilcode.util.StringUtils;
 import com.bumptech.glide.Glide;
 import com.github.chrisbanes.photoview.PhotoView;
 import com.rd.PageIndicatorView;
@@ -21,24 +24,27 @@ import me.yokeyword.fragmentation_swipeback.SwipeBackActivity;
 import szszhospital.cn.com.mobilenurse.R;
 import szszhospital.cn.com.mobilenurse.view.FixMultiViewPager;
 
+import static szszhospital.cn.com.mobilenurse.utils.Contants.EMR_KEY_PATH;
 import static szszhospital.cn.com.mobilenurse.utils.Contants.PHOTO_PATH;
 
 /**
  * 2018/7/28 15
+ *
  * @author Administrator
  */
 public class DragPhotoActivity extends SwipeBackActivity {
-    private static final String KEY_DATA  = "data";
-    private static final String KEY_INDEX = "index";
-    private ArrayList<String> mPhotoPaths;
-    private int               mIndex;
-    private FixMultiViewPager mViewPager;
-    private PageIndicatorView mPageIndicatorView;
+    private static final String            KEY_DATA  = "data";
+    private static final String            KEY_INDEX = "index";
+    private              ArrayList<String> mPhotoPaths;
+    private              int               mIndex;
+    private              FixMultiViewPager mViewPager;
+    private              PageIndicatorView mPageIndicatorView;
+    private              ImageView         mBack;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        BarUtils.setStatusBarAlpha(this,0);
+        BarUtils.setStatusBarAlpha(this, 0);
         setContentView(R.layout.activity_drag_photo);
         getSwipeBackLayout().setEdgeOrientation(SwipeBackLayout.EDGE_LEFT);
         init();
@@ -64,11 +70,19 @@ public class DragPhotoActivity extends SwipeBackActivity {
 
             }
         });
+
+        mBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     private void initView() {
         mViewPager = findViewById(R.id.viewPager);
         mPageIndicatorView = findViewById(R.id.pageIndicatorView);
+        mBack = findViewById(R.id.back);
         mPageIndicatorView.setCount(mPhotoPaths.size());
         mPageIndicatorView.setSelection(mIndex);
         mPageIndicatorView.setAnimationType(AnimationType.THIN_WORM);
@@ -80,8 +94,10 @@ public class DragPhotoActivity extends SwipeBackActivity {
 
             @Override
             public Object instantiateItem(ViewGroup container, int position) {
-                PhotoView dragPhotoView = (PhotoView) LayoutInflater.from(DragPhotoActivity.this).inflate(R.layout.item_drag_photo, container,false);
-                Glide.with(DragPhotoActivity.this).asBitmap().load(PHOTO_PATH + mPhotoPaths.get(position)).into(dragPhotoView);
+                PhotoView dragPhotoView = (PhotoView) LayoutInflater.from(DragPhotoActivity.this).inflate(R.layout.item_drag_photo, container, false);
+                String imagePath = SPUtils.getInstance().getString(EMR_KEY_PATH);
+                String realPath = StringUtils.isEmpty(imagePath) ? PHOTO_PATH : imagePath;
+                Glide.with(DragPhotoActivity.this).load(realPath + mPhotoPaths.get(position)).into(dragPhotoView);
                 container.addView(dragPhotoView);
                 return dragPhotoView;
             }

@@ -31,5 +31,7 @@ public interface EMRContract {
         void getEMREposideList(String  eposideId);
 
         void getEMRImageInfoList(String eposideId, String InternalID);
+
+        void getEMRImagePath(String name);
     }
 }
