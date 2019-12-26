@@ -6,6 +6,7 @@ import szszhospital.cn.com.mobilenurse.fragemt.HerbalOrderFragment;
 import szszhospital.cn.com.mobilenurse.fragemt.LisListFragment;
 import szszhospital.cn.com.mobilenurse.fragemt.NOrdersFragment;
 import szszhospital.cn.com.mobilenurse.fragemt.PacsOrderItemFragment;
+import szszhospital.cn.com.mobilenurse.fragemt.PathologyOrderFragment;
 import szszhospital.cn.com.mobilenurse.fragemt.SOrdersFragment;
 import szszhospital.cn.com.mobilenurse.fragemt.VitalSignsFragment;
 import szszhospital.cn.com.mobilenurse.remote.response.LocAccess;
@@ -46,6 +47,9 @@ public class FragmentFactory {
             case "VitalSignsFragment":
                 fragment = VitalSignsFragment.newInstance();
                 break;
+            //病理检查：
+            case "PathologyOrderFragment":
+                fragment = PathologyOrderFragment.newInstance();
             default:
                 break;
         }

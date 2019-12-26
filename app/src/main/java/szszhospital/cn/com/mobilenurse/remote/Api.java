@@ -73,6 +73,10 @@ public interface Api {
     @GET("web/Quality.Ajax.PacsOrderAjax.cls")
     Observable<Response<List<PacsOrderItem>>> getEposidePacsOrder(@Query("EposideId") String EpisodeID);
 
+    //获取病历医嘱
+    @GET("web/Quality.Ajax.PathologyOrderAjax.cls")
+    Observable<Response<List<PacsOrderItem>>> getPathologyOrder(@Query("EposideId") String EpisodeID);
+
     //检查apk 更新
     @GET("web/Quality.Ajax.UpdateAppAjax.cls")
     Observable<Response<UpdateApp>> getUpdateAppInfo();
