@@ -13,8 +13,8 @@ import szszhospital.cn.com.mobilenurse.App;
 import szszhospital.cn.com.mobilenurse.R;
 import szszhospital.cn.com.mobilenurse.activity.BrowsePacsImageActivity;
 import szszhospital.cn.com.mobilenurse.activity.CommonWebViewActivity;
-import szszhospital.cn.com.mobilenurse.activity.PdfFromHttpActivity;
-import szszhospital.cn.com.mobilenurse.adapter.PacsOrderItemAdapter;
+import szszhospital.cn.com.mobilenurse.activity.PdfReportActivity;
+import szszhospital.cn.com.mobilenurse.adapter.PathologyOrderAdapter;
 import szszhospital.cn.com.mobilenurse.databinding.FragmentOrderBinding;
 import szszhospital.cn.com.mobilenurse.mvp.contract.PathologyOrderContract;
 import szszhospital.cn.com.mobilenurse.mvp.presenter.PathologyOrderPresenter;
@@ -23,7 +23,7 @@ import szszhospital.cn.com.mobilenurse.remote.response.PacsOrderItem;
 public class PathologyOrderFragment extends BaseDoctorFragment<FragmentOrderBinding, PathologyOrderPresenter> implements PathologyOrderContract.View, BaseQuickAdapter.OnItemChildClickListener {
     private static final String TAG = "PacsOrderItemFragment";
 
-    private PacsOrderItemAdapter mAdapter;
+    private PathologyOrderAdapter mAdapter;
 
     public static PathologyOrderFragment newInstance() {
         return new PathologyOrderFragment();
@@ -32,7 +32,7 @@ public class PathologyOrderFragment extends BaseDoctorFragment<FragmentOrderBind
     @Override
     protected void init() {
         super.init();
-        mAdapter = new PacsOrderItemAdapter(R.layout.item_pacs_order_item);
+        mAdapter = new PathologyOrderAdapter(R.layout.item_pacs_order_item);
     }
 
     @Override
@@ -113,7 +113,7 @@ public class PathologyOrderFragment extends BaseDoctorFragment<FragmentOrderBind
                 CommonWebViewActivity.startCommonWebViewActivity(_mActivity, item.PdfPath);
                 break;
             case "pdf":
-                PdfFromHttpActivity.startPdfActivity(_mActivity,item.PdfPath);
+                PdfReportActivity.startPdfReportActivity(_mActivity,item.PdfPath,item.PISFTPPath);
                 break;
             case "img":
                 break;

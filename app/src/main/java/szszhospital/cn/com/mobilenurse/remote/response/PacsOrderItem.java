@@ -13,6 +13,7 @@ public class PacsOrderItem implements Parcelable {
      * ReportLocName : CSK-超声科
      * StudyNo : 180305704
      * ReportType : url
+     * "PISFTPPath": "ftp^192.168.199.63^21^PIS^BAFY@2015^5"
      * OrderName : 胎儿生物物理评分(单项检查)
      */
 
@@ -24,6 +25,7 @@ public class PacsOrderItem implements Parcelable {
     public String StudyNo;
     public String OrderName;
     public String ReportType;
+    public String PISFTPPath;
 
 
     @Override
@@ -41,6 +43,7 @@ public class PacsOrderItem implements Parcelable {
         dest.writeString(this.StudyNo);
         dest.writeString(this.OrderName);
         dest.writeString(this.ReportType);
+        dest.writeString(this.PISFTPPath);
     }
 
     public PacsOrderItem() {
@@ -55,6 +58,7 @@ public class PacsOrderItem implements Parcelable {
         this.StudyNo = in.readString();
         this.OrderName = in.readString();
         this.ReportType = in.readString();
+        this.PISFTPPath = in.readString();
     }
 
     public static final Creator<PacsOrderItem> CREATOR = new Creator<PacsOrderItem>() {
