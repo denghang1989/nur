@@ -25,7 +25,7 @@ public class PacsOrderItem implements Parcelable {
     public String StudyNo;
     public String OrderName;
     public String ReportType;
-    public String PISFTPPath;
+    public String FTPPath;
 
 
     @Override
@@ -43,7 +43,7 @@ public class PacsOrderItem implements Parcelable {
         dest.writeString(this.StudyNo);
         dest.writeString(this.OrderName);
         dest.writeString(this.ReportType);
-        dest.writeString(this.PISFTPPath);
+        dest.writeString(this.FTPPath);
     }
 
     public PacsOrderItem() {
@@ -58,7 +58,7 @@ public class PacsOrderItem implements Parcelable {
         this.StudyNo = in.readString();
         this.OrderName = in.readString();
         this.ReportType = in.readString();
-        this.PISFTPPath = in.readString();
+        this.FTPPath = in.readString();
     }
 
     public static final Creator<PacsOrderItem> CREATOR = new Creator<PacsOrderItem>() {

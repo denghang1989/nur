@@ -113,7 +113,7 @@ public class PathologyOrderFragment extends BaseDoctorFragment<FragmentOrderBind
                 CommonWebViewActivity.startCommonWebViewActivity(_mActivity, item.PdfPath);
                 break;
             case "pdf":
-                PdfReportActivity.startPdfReportActivity(_mActivity,item.PdfPath,item.PISFTPPath);
+                PdfReportActivity.startPdfReportActivity(_mActivity,item.PdfPath,item.FTPPath);
                 break;
             case "img":
                 break;
