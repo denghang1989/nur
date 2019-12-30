@@ -43,6 +43,8 @@ public class PdfReportActivity extends BaseActivity<ActivityPdfReportBinding> {
         if (mFtpPath.startsWith("ftp")) {
             FtpReportFragment ftpReportFragment = FtpReportFragment.newInstance(mFilePath, mFtpPath);
             loadRootFragment(R.id.container, ftpReportFragment);
+        } else if (mFilePath.startsWith("http")) {
+
         }
     }
 

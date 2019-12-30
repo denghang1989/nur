@@ -1,12 +1,6 @@
 package szszhospital.cn.com.mobilenurse.dialog;
 
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.DialogFragment;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +12,12 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 import szszhospital.cn.com.mobilenurse.App;
@@ -92,8 +92,10 @@ public class SwitchLocDialogFragment extends DialogFragment implements LoginLocA
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
         LocInfo item = (LocInfo) adapter.getItem(position);
-        EventBus.getDefault().post(new SwitchLocEvent(item.locId));
-        App.loginUser.UserLoc = item.locId;
-        dismiss();
+        if (item != null) {
+            App.loginUser.UserLoc = item.locId;
+            EventBus.getDefault().post(new SwitchLocEvent(item.locId));
+            dismiss();
+        }
     }
 }
