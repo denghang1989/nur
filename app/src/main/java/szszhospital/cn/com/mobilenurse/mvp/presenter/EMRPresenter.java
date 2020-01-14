@@ -4,32 +4,37 @@ import com.blankj.utilcode.util.SPUtils;
 
 import java.util.List;
 
+import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Function;
 import szszhospital.cn.com.mobilenurse.base.RxPresenter;
 import szszhospital.cn.com.mobilenurse.mvp.contract.EMRContract;
 import szszhospital.cn.com.mobilenurse.remote.ApiService;
 import szszhospital.cn.com.mobilenurse.remote.RxUtil;
 import szszhospital.cn.com.mobilenurse.remote.response.BaseResponse;
-import szszhospital.cn.com.mobilenurse.remote.response.EMREposideInfo;
-import szszhospital.cn.com.mobilenurse.remote.response.EMRImageInfo;
+import szszhospital.cn.com.mobilenurse.remote.response.EMRNavigation;
 
 public class EMRPresenter extends RxPresenter<EMRContract.View, EMRContract.Model> implements EMRContract.Presenter {
 
     @Override
-    public void getEMREposideList(String eposideId) {
+    public void getEMREposideList(String locId) {
         mView.showProgress();
-        ApiService.Instance().getService().getEMREposideList(eposideId)
+        ApiService.Instance().getService().getEMRNavigation(locId)
                 .compose(RxUtil.httpHandleResponse())
                 .compose(RxUtil.rxSchedulerHelper())
-                .subscribe(new Observer<List<EMREposideInfo>>() {
+                .flatMap((Function<List<EMRNavigation>, ObservableSource<EMRNavigation>>) emrNavigations -> Observable.fromIterable(emrNavigations))
+                .toSortedList((o1, o2) -> o1.ItemSeq - o2.ItemSeq)
+                .toObservable()
+                .subscribe(new Observer<List<EMRNavigation>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                         addSubscribe(d);
                     }
 
                     @Override
-                    public void onNext(List<EMREposideInfo> emrEposideLists) {
+                    public void onNext(List<EMRNavigation> emrEposideLists) {
                         mView.showMenuList(emrEposideLists);
                     }
 
@@ -52,14 +57,14 @@ public class EMRPresenter extends RxPresenter<EMRContract.View, EMRContract.Mode
         ApiService.Instance().getService().getEMRImageList(eposideId, InternalID)
                 .compose(RxUtil.rxSchedulerHelper())
                 .compose(RxUtil.httpHandleResponse())
-                .subscribe(new Observer<List<EMRImageInfo>>() {
+                .subscribe(new Observer<List<String>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
 
                     }
 
                     @Override
-                    public void onNext(List<EMRImageInfo> emrImageInfos) {
+                    public void onNext(List<String> emrImageInfos) {
                         mView.showEMRList(emrImageInfos);
                     }
 
@@ -90,7 +95,7 @@ public class EMRPresenter extends RxPresenter<EMRContract.View, EMRContract.Mode
                     @Override
                     public void onNext(BaseResponse<String> stringBaseResponse) {
                         String data = stringBaseResponse.data;
-                        SPUtils.getInstance().put(name,data);
+                        SPUtils.getInstance().put(name, data);
                     }
 
                     @Override

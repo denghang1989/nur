@@ -15,13 +15,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import szszhospital.cn.com.mobilenurse.App;
 import szszhospital.cn.com.mobilenurse.R;
 import szszhospital.cn.com.mobilenurse.activity.DragPhotoActivity;
-import szszhospital.cn.com.mobilenurse.adapter.EMRAdapter;
 import szszhospital.cn.com.mobilenurse.adapter.EMRImageAdapter;
+import szszhospital.cn.com.mobilenurse.adapter.EMRNavigationAdapter;
 import szszhospital.cn.com.mobilenurse.databinding.FragmentEmrBinding;
 import szszhospital.cn.com.mobilenurse.mvp.contract.EMRContract;
 import szszhospital.cn.com.mobilenurse.mvp.presenter.EMRPresenter;
-import szszhospital.cn.com.mobilenurse.remote.response.EMREposideInfo;
-import szszhospital.cn.com.mobilenurse.remote.response.EMRImageInfo;
+import szszhospital.cn.com.mobilenurse.remote.response.EMRNavigation;
 
 import static szszhospital.cn.com.mobilenurse.utils.Contants.EMR_KEY_PATH;
 
@@ -30,13 +29,13 @@ import static szszhospital.cn.com.mobilenurse.utils.Contants.EMR_KEY_PATH;
  */
 public class EMRFragment extends BaseDoctorFragment<FragmentEmrBinding, EMRPresenter> implements EMRContract.View {
 
-    private static final String              TAG       = "EMRFragment";
-    private static final String              KEY_DATA  = "data";
-    private static final String              KEY_INDEX = "index";
+    private static final String TAG       = "EMRFragment";
+    private static final String KEY_DATA  = "data";
+    private static final String KEY_INDEX = "index";
 
-    private              EMRAdapter          mAdapter;
-    private              EMRImageAdapter     mEMRImageAdapter;
-    private              LinearLayoutManager mEMRLayoutManager;
+    private EMRNavigationAdapter mAdapter;
+    private EMRImageAdapter      mEMRImageAdapter;
+    private LinearLayoutManager  mEMRLayoutManager;
 
     public static EMRFragment newInstance() {
         return new EMRFragment();
@@ -45,7 +44,7 @@ public class EMRFragment extends BaseDoctorFragment<FragmentEmrBinding, EMRPrese
     @Override
     protected void init() {
         super.init();
-        mAdapter = new EMRAdapter(R.layout.item_emr_record);
+        mAdapter = new EMRNavigationAdapter(R.layout.item_emr_record);
         mEMRImageAdapter = new EMRImageAdapter(R.layout.item_emr_image);
     }
 
@@ -74,7 +73,7 @@ public class EMRFragment extends BaseDoctorFragment<FragmentEmrBinding, EMRPrese
         super.initData();
         mPresenter.getEMRImagePath(EMR_KEY_PATH);
         if (App.patientInfo != null) {
-            mPresenter.getEMREposideList(App.patientInfo.EpisodeID);
+            mPresenter.getEMREposideList(App.loginUser.UserLoc);
         }
     }
 
@@ -84,8 +83,8 @@ public class EMRFragment extends BaseDoctorFragment<FragmentEmrBinding, EMRPrese
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
             mAdapter.setSelectPosition(position);
             mAdapter.notifyDataSetChanged();
-            EMREposideInfo item = mAdapter.getItem(position);
-            mPresenter.getEMRImageInfoList(App.patientInfo.EpisodeID, item.InternalID);
+            EMRNavigation item = mAdapter.getItem(position);
+            mPresenter.getEMRImageInfoList(App.patientInfo.EpisodeID, item.EMRTemplateCategoryID);
             mEMRLayoutManager.scrollToPosition(0);
         });
 
@@ -155,11 +154,11 @@ public class EMRFragment extends BaseDoctorFragment<FragmentEmrBinding, EMRPrese
     }
 
     @Override
-    public void showMenuList(List<EMREposideInfo> list) {
+    public void showMenuList(List<EMRNavigation> list) {
         if (list.size() > 0) {
             mAdapter.setSelectPosition(0);
-            EMREposideInfo item = list.get(0);
-            mPresenter.getEMRImageInfoList(App.patientInfo.EpisodeID, item.InternalID);
+            EMRNavigation item = list.get(0);
+            mPresenter.getEMRImageInfoList(App.patientInfo.EpisodeID, item.EMRTemplateCategoryID);
         } else {
             mAdapter.setSelectPosition(-1);
             mEMRImageAdapter.clear();
@@ -173,11 +172,8 @@ public class EMRFragment extends BaseDoctorFragment<FragmentEmrBinding, EMRPrese
     }
 
     @Override
-    public void showEMRList(List<EMRImageInfo> list) {
-        if (list != null && list.size() > 0) {
-            List<String> urLs = list.get(0).ImagePathURLs;
-            mEMRImageAdapter.setNewData(urLs);
-        }
+    public void showEMRList(List<String> list) {
+        mEMRImageAdapter.setNewData(list);
     }
 
 

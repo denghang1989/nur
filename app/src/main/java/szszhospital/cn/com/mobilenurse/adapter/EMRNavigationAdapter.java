@@ -4,9 +4,9 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
 import szszhospital.cn.com.mobilenurse.R;
-import szszhospital.cn.com.mobilenurse.remote.response.EMREposideInfo;
+import szszhospital.cn.com.mobilenurse.remote.response.EMRNavigation;
 
-public class EMRAdapter extends BaseQuickAdapter<EMREposideInfo, BaseViewHolder> {
+public class EMRNavigationAdapter extends BaseQuickAdapter<EMRNavigation, BaseViewHolder> {
 
     private int selectPosition;
 
@@ -14,13 +14,13 @@ public class EMRAdapter extends BaseQuickAdapter<EMREposideInfo, BaseViewHolder>
         this.selectPosition = selectPosition;
     }
 
-    public EMRAdapter(int layoutResId) {
+    public EMRNavigationAdapter(int layoutResId) {
         super(layoutResId);
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, EMREposideInfo item) {
-        helper.setText(R.id.record, item.CategoryName == null ? "" : item.CategoryName);
+    protected void convert(BaseViewHolder helper, EMRNavigation item) {
+        helper.setText(R.id.record, item.ItemTitle == null ? "" : item.ItemTitle);
         int position = helper.getAdapterPosition();
         if (position == selectPosition) {
             helper.setVisible(R.id.icon_flag, true);

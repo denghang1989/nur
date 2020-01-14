@@ -5,8 +5,7 @@ import java.util.List;
 import szszhospital.cn.com.mobilenurse.base.BaseModel;
 import szszhospital.cn.com.mobilenurse.base.BasePresenter;
 import szszhospital.cn.com.mobilenurse.base.BaseView;
-import szszhospital.cn.com.mobilenurse.remote.response.EMREposideInfo;
-import szszhospital.cn.com.mobilenurse.remote.response.EMRImageInfo;
+import szszhospital.cn.com.mobilenurse.remote.response.EMRNavigation;
 
 public interface EMRContract {
 
@@ -15,11 +14,11 @@ public interface EMRContract {
 
         void hideProgress();
 
-        void showMenuList(List<EMREposideInfo> list);
+        void showMenuList(List<EMRNavigation> list);
 
         void refresh();
 
-        void showEMRList(List<EMRImageInfo> list);
+        void showEMRList(List<String> list);
 
     }
 

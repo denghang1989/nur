@@ -8,10 +8,10 @@ import retrofit2.Response;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
+import szszhospital.cn.com.mobilenurse.entity.PacsImagePath;
 import szszhospital.cn.com.mobilenurse.remote.response.BaseResponse;
 import szszhospital.cn.com.mobilenurse.remote.response.DrugAllergy;
-import szszhospital.cn.com.mobilenurse.remote.response.EMREposideInfo;
-import szszhospital.cn.com.mobilenurse.remote.response.EMRImageInfo;
+import szszhospital.cn.com.mobilenurse.remote.response.EMRNavigation;
 import szszhospital.cn.com.mobilenurse.remote.response.LisChartData;
 import szszhospital.cn.com.mobilenurse.remote.response.LisOrder;
 import szszhospital.cn.com.mobilenurse.remote.response.LisOrderDetail;
@@ -20,7 +20,6 @@ import szszhospital.cn.com.mobilenurse.remote.response.LocInfo;
 import szszhospital.cn.com.mobilenurse.remote.response.LoginResponse;
 import szszhospital.cn.com.mobilenurse.remote.response.Order;
 import szszhospital.cn.com.mobilenurse.remote.response.OrderExecuteInfo;
-import szszhospital.cn.com.mobilenurse.entity.PacsImagePath;
 import szszhospital.cn.com.mobilenurse.remote.response.PacsOrder;
 import szszhospital.cn.com.mobilenurse.remote.response.PacsOrderItem;
 import szszhospital.cn.com.mobilenurse.remote.response.PatientInfo;
@@ -86,12 +85,12 @@ public interface Api {
     Observable<Response<List<OrderExecuteInfo>>> getOrderExecuteList(@Query("OrderId") String orderId);
 
     //获取病人图片的列表
-    @GET("web/Quality.Ajax.EMREposideListAjax.cls")
-    Observable<Response<List<EMREposideInfo>>> getEMREposideList(@Query("EpisodeID") String EpisodeID);
+    @GET("web/Quality.Ajax.EMRNavigationAjax.cls")
+    Observable<Response<List<EMRNavigation>>> getEMRNavigation(@Query("LocId") String LocId);
 
     //获取图片的ftp地址  Quality.Ajax.EMRImageListAjax
-    @GET("web/Quality.Ajax.EMRImageListAjax.cls")
-    Observable<Response<List<EMRImageInfo>>> getEMRImageList(@Query("EpisodeID") String EpisodeID, @Query("InternalID") String InternalID);
+    @GET("web/Quality.Ajax.EMRRecordAjax.cls")
+    Observable<Response<List<String>>> getEMRImageList(@Query("EpisodeID") String EpisodeID, @Query("CategoryId") String CategoryId);
 
     //获取护理病历的地址
     @GET("web/Quality.Ajax.VitalSignsAjax.cls")
