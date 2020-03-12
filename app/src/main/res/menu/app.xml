@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/tools_search"
+        android:icon="@drawable/ic_search_black_32dp"
+        android:title="查找"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/tools_toggle_locId"
+        android:title="切换科室"
+        app:showAsAction="always"
+        android:icon="@drawable/icon_loc"
+        />
+
+    <item
+        android:id="@+id/tools_scan"
+        android:icon="@drawable/icon_scan"
+        android:title="扫一扫"/>
+
+    <item
+        android:id="@+id/tools_patient_list"
+        android:icon="@drawable/icon_patient_list"
+        android:title="就诊记录"/>
+
+</menu>

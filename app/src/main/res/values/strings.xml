@@ -1,0 +1,37 @@
+<resources>
+    <string name="app_name">移动查房</string>
+    <string name="account">账号</string>
+    <string name="password">密码</string>
+    <string name="loc">请选择登入科室</string>
+    <string name="login">登入</string>
+    <string name="hospital_name">深圳市宝安纯中医治疗医院</string>
+    <string name="patient_detail">患者信息</string>
+    <string name="drug_detail">药品信息</string>
+    <string name="select_loc">选择科室</string>
+    <string name="drug_bill_qr_code">发药单二维码</string>
+    <string name="dispensing">配药</string>
+    <string name="qr_code">扫描二维码</string>
+
+    <string-array name="drug_list">
+        <item>未配药|DrugBillUnCompletedFragment</item>
+        <item>已配药|DrugBillCompletedFragment</item>
+        <item>已核对|DrugBillCheckFragment</item>
+        <item>已交接|DrugBillHandoverFragment</item>
+    </string-array>
+
+    <string-array name="nurse_list">
+        <item>未接收|DrugBillHandoverNurseFragment</item>
+        <item>发药|DrugBillReceiveFragment</item>
+        <item>检查|InspectionFragment</item>
+    </string-array>
+
+    <string name="inspection_other">就诊科室：%1$s  床号：%2$s </string>
+    <string name="title">提示</string>
+    <string name="disagree">取消</string>
+    <string name="agree">确定</string>
+
+    <string name="dcmInfo">PatientName:%1$s\nPatientSex:%2$s\nPatientAge:%3$s\nStudyDate:%4$s</string>
+    <string name="pdfInfo">%1$s\n%2$s</string>
+
+    <string name="patientInfo">床号：%1$s\n姓名：%2$s\n性别：%3$s\n年龄：%4$s</string>
+</resources>

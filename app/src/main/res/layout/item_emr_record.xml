@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/patient"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?android:attr/selectableItemBackground">
+
+    <View
+        android:id="@+id/icon_flag"
+        android:layout_width="2dp"
+        android:layout_height="match_parent"
+        android:background="@color/red"
+        android:visibility="invisible"/>
+
+    <TextView
+        android:id="@+id/record"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:maxLines="1"
+        android:paddingBottom="15dp"
+        android:paddingTop="15dp"
+        android:text="@string/loc"/>
+
+</LinearLayout>

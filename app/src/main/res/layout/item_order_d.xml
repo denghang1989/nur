@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/background"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?android:attr/selectableItemBackground">
+
+    <TextView
+        android:id="@+id/StartDateTime"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/black"
+        app:layout_constraintHorizontal_weight="2"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/order_name"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="06-25 11:30"/>
+
+    <TextView
+        android:id="@+id/order_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center_vertical"
+        android:textColor="@color/black"
+        app:layout_constraintHorizontal_weight="8"
+        app:layout_constraintLeft_toRightOf="@+id/StartDateTime"
+        app:layout_constraintRight_toLeftOf="@+id/doctor"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="II级护理"/>
+
+    <TextView
+        android:id="@+id/doctor"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="4dp"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/black"
+        android:gravity="center"
+        android:textSize="12sp"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintLeft_toRightOf="@+id/order_name"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="张三三三"/>
+
+
+    <TextView
+        android:id="@+id/stopDateTime"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="4dp"
+        android:gravity="end"
+        android:paddingRight="14dp"
+        android:textColor="@color/red"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="@+id/order_name"
+        app:layout_constraintRight_toRightOf="@+id/order_name"
+        app:layout_constraintTop_toBottomOf="@+id/order_name"
+        tools:text="II级护理"/>
+
+    <TextView
+        android:id="@+id/stopDoctor"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="4dp"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="@+id/doctor"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/order_name"
+        tools:text="张三三三"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
