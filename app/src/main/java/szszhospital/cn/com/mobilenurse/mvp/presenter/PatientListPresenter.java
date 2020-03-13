@@ -1,12 +1,14 @@
 package szszhospital.cn.com.mobilenurse.mvp.presenter;
 
-import com.annimon.stream.Collectors;
-import com.annimon.stream.Stream;
 
+import java.util.Comparator;
 import java.util.List;
 
+import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Function;
 import szszhospital.cn.com.mobilenurse.base.RxPresenter;
 import szszhospital.cn.com.mobilenurse.mvp.contract.PatientListContract;
 import szszhospital.cn.com.mobilenurse.remote.ApiService;
@@ -20,6 +22,16 @@ public class PatientListPresenter extends RxPresenter<PatientListContract.View, 
         ApiService.Instance().getService().getPatientListByLocId(userId, LocID)
                 .compose(RxUtil.rxSchedulerHelper())
                 .compose(RxUtil.httpHandleResponse())
+                .flatMap((Function<List<PatientInfo>, ObservableSource<PatientInfo>>) Observable::fromIterable)
+                .map(patientInfo -> {
+                    if (patientInfo.DisBed == null) {
+                        patientInfo.DisBed = "无";
+                    }
+                    return patientInfo;
+                })
+                .sorted((o1, o2) -> o1.DisBed.compareTo(o2.DisBed))
+                .toList()
+                .toObservable()
                 .subscribe(new Observer<List<PatientInfo>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
@@ -28,13 +40,7 @@ public class PatientListPresenter extends RxPresenter<PatientListContract.View, 
 
                     @Override
                     public void onNext(List<PatientInfo> patientInfos) {
-                        List<PatientInfo> list = Stream.of(patientInfos).map(patientInfo -> {
-                            if (patientInfo.DisBed == null) {
-                                patientInfo.DisBed = "无";
-                            }
-                            return patientInfo;
-                        }).sortBy(patientInfo -> patientInfo.DisBed).collect(Collectors.toList());
-                        mView.showPatientList(list);
+                        mView.showPatientList(patientInfos);
                     }
 
                     @Override

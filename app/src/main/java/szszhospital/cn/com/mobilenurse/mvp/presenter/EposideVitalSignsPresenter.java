@@ -48,6 +48,7 @@ public class EposideVitalSignsPresenter extends RxPresenter<EposideVitalSignsCon
                     @Override
                     public void onError(Throwable e) {
                         mView.hideProgress();
+                        mView.showEmptyData();
                     }
 
                     @Override

@@ -3,8 +3,6 @@ package szszhospital.cn.com.mobilenurse.fragemt;
 import android.graphics.Rect;
 import android.view.View;
 
-import com.annimon.stream.Collectors;
-import com.annimon.stream.Stream;
 import com.nightonke.boommenu.Animation.BoomEnum;
 import com.nightonke.boommenu.BoomButtons.ButtonPlaceEnum;
 import com.nightonke.boommenu.BoomButtons.OnBMClickListener;
@@ -13,7 +11,11 @@ import com.nightonke.boommenu.ButtonEnum;
 import com.nightonke.boommenu.Piece.PiecePlaceEnum;
 
 import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
+import io.reactivex.Observable;
+import io.reactivex.functions.Consumer;
 import szszhospital.cn.com.mobilenurse.R;
 import szszhospital.cn.com.mobilenurse.remote.response.Order;
 
@@ -69,8 +71,8 @@ public class SOrdersFragment extends BaseOrdersFragment implements OnBMClickList
         if (mOrderList != null && mOrderList.size() > 0) {
             switch (index) {
                 case 0:
-                    List<Order> collect = Stream.of(mOrderList).filter(order -> !"D".equals(order.OrdStatusCode)).collect(Collectors.toList());
-                    mAdapter.setNewData(collect);
+                    List<Order> orders = mOrderList.stream().filter(order -> !"D".equals(order.OrdStatusCode)).collect(Collectors.toList());
+                    mAdapter.setNewData(orders);
                     break;
                 case 1:
                     mAdapter.setNewData(mOrderList);

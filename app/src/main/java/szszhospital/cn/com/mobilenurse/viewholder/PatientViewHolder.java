@@ -16,7 +16,6 @@ public class PatientViewHolder extends BaseViewHolder<PatientInfo> {
     @Override
     protected void refreshViewByData() {
         setVisible(R.id.icon, true);
-
         setText(R.id.name, "姓名：" + mData.PAPMIName)
                 .setText(R.id.bed, mData.DisBed)
                 .setText(R.id.patientId, "登记号：" + mData.PatientNo)
