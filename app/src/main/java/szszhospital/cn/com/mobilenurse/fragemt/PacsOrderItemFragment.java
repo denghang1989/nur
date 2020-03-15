@@ -13,6 +13,7 @@ import szszhospital.cn.com.mobilenurse.App;
 import szszhospital.cn.com.mobilenurse.R;
 import szszhospital.cn.com.mobilenurse.activity.BrowsePacsImageActivity;
 import szszhospital.cn.com.mobilenurse.activity.CommonWebViewActivity;
+import szszhospital.cn.com.mobilenurse.activity.PdfFromHttpActivity;
 import szszhospital.cn.com.mobilenurse.activity.PdfReportActivity;
 import szszhospital.cn.com.mobilenurse.adapter.PacsOrderItemAdapter;
 import szszhospital.cn.com.mobilenurse.databinding.FragmentOrderBinding;
@@ -43,10 +44,7 @@ public class PacsOrderItemFragment extends BaseDoctorFragment<FragmentOrderBindi
     @Override
     protected void initView() {
         super.initView();
-        LinearLayoutManager layout = new LinearLayoutManager(_mActivity);
-        mDataBinding.orderList.setLayoutManager(layout);
-        mDataBinding.orderList.addItemDecoration(new DividerItemDecoration(_mActivity, DividerItemDecoration.VERTICAL));
-        mDataBinding.orderList.setAdapter(mAdapter);
+        initRecyclerView(mDataBinding.orderList, mAdapter);
         mDataBinding.refreshLayout.setEnableLoadmore(false);
     }
 
@@ -104,7 +102,7 @@ public class PacsOrderItemFragment extends BaseDoctorFragment<FragmentOrderBindi
     }
 
     private void handlePacsImage(BaseQuickAdapter adapter, PacsOrderItem item) {
-        BrowsePacsImageActivity.startBrowsePacsImageActivity(_mActivity,item);
+        BrowsePacsImageActivity.startBrowsePacsImageActivity(_mActivity, item);
     }
 
     private void handlePacsReport(BaseQuickAdapter adapter, PacsOrderItem item) {
@@ -113,9 +111,10 @@ public class PacsOrderItemFragment extends BaseDoctorFragment<FragmentOrderBindi
                 CommonWebViewActivity.startCommonWebViewActivity(_mActivity, item.PdfPath);
                 break;
             case "pdf":
-                PdfReportActivity.startPdfReportActivity(_mActivity,item.PdfPath,item.FTPPath);
+                PdfReportActivity.startPdfReportActivity(_mActivity, item.PdfPath, item.FTPPath);
                 break;
-            case "img":
+            case "http":
+                PdfFromHttpActivity.startPdfActivity(_mActivity, item.PdfPath);
                 break;
             default:
                 break;

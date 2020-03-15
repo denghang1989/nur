@@ -3,9 +3,11 @@ package szszhospital.cn.com.mobilenurse.fragemt;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.View;
 
 import com.blankj.utilcode.util.ConvertUtils;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.github.florent37.viewanimator.ViewAnimator;
 
 import java.util.ArrayList;
@@ -25,10 +27,10 @@ import szszhospital.cn.com.mobilenurse.utils.OrderItemDecoration;
  * 临时医嘱
  */
 public abstract class BaseOrdersFragment extends BaseDoctorFragment<FragmentOrderBinding, OrderPresenter> implements OrderContract.View {
-    private static final String TAG = "BaseOrdersFragment";
-    protected OrderListAdapter       mAdapter;
-    protected OrderExtDialogFragment mDialogFragment;
-    protected List<Order>            mOrderList;
+    private static final String                 TAG = "BaseOrdersFragment";
+    protected            OrderListAdapter       mAdapter;
+    protected            OrderExtDialogFragment mDialogFragment;
+    protected            List<Order>            mOrderList;
 
     @Override
     public int getLayoutId() {
@@ -43,16 +45,14 @@ public abstract class BaseOrdersFragment extends BaseDoctorFragment<FragmentOrde
 
     @Override
     protected void initView() {
-        mDataBinding.orderList.setLayoutManager(new LinearLayoutManager(_mActivity));
-        mDataBinding.orderList.addItemDecoration(new DividerItemDecoration(_mActivity, DividerItemDecoration.VERTICAL));
-        mDataBinding.orderList.setAdapter(mAdapter);
+        initRecyclerView(mDataBinding.orderList, mAdapter);
         mDataBinding.refreshLayout.setEnableLoadmore(false);
     }
 
     @Override
     protected void initData() {
         if (App.patientInfo != null) {
-            mPresenter.getPatientOrderList(getOrderType(),App.patientInfo.EpisodeID);
+            mPresenter.getPatientOrderList(getOrderType(), App.patientInfo.EpisodeID);
         }
     }
 

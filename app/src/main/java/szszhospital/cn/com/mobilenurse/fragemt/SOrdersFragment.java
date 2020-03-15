@@ -11,11 +11,8 @@ import com.nightonke.boommenu.ButtonEnum;
 import com.nightonke.boommenu.Piece.PiecePlaceEnum;
 
 import java.util.List;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-import io.reactivex.Observable;
-import io.reactivex.functions.Consumer;
 import szszhospital.cn.com.mobilenurse.R;
 import szszhospital.cn.com.mobilenurse.remote.response.Order;
 
@@ -31,8 +28,6 @@ public class SOrdersFragment extends BaseOrdersFragment implements OnBMClickList
     private static String[] normalTextRes  = new String[]{
             "当前医嘱", "全部医嘱"
     };
-
-    private int mCurrentIndex = 0;
 
     public static SOrdersFragment newInstance() {
         return new SOrdersFragment();
@@ -80,7 +75,6 @@ public class SOrdersFragment extends BaseOrdersFragment implements OnBMClickList
                 default:
                     break;
             }
-            mCurrentIndex = index;
         }
     }
 }

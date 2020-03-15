@@ -43,9 +43,7 @@ public class EposideVitalSignsFragment extends BasePresenterFragment<FragmentOrd
     @Override
     protected void initView() {
         super.initView();
-        mDataBinding.orderList.setLayoutManager(new LinearLayoutManager(_mActivity));
-        mDataBinding.orderList.addItemDecoration(new DividerItemDecoration(_mActivity, DividerItemDecoration.VERTICAL));
-        mDataBinding.orderList.setAdapter(mAdapter);
+        initRecyclerView(mDataBinding.orderList, mAdapter);
         mDataBinding.refreshLayout.setEnableLoadmore(false);
     }
 

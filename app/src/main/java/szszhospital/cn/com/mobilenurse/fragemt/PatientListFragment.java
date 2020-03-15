@@ -1,7 +1,5 @@
 package szszhospital.cn.com.mobilenurse.fragemt;
 
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.blankj.utilcode.util.StringUtils;
 
@@ -73,9 +71,7 @@ public class PatientListFragment extends BasePresenterFragment<FragmentPatientLi
     protected void initView() {
         super.initView();
         mDataBinding.refreshLayout.requestDisallowInterceptTouchEvent(true);
-        mDataBinding.patientList.setLayoutManager(new LinearLayoutManager(_mActivity));
-        mDataBinding.patientList.addItemDecoration(new DividerItemDecoration(_mActivity, DividerItemDecoration.VERTICAL));
-        mDataBinding.patientList.setAdapter(mAdapter);
+        initRecyclerView(mDataBinding.patientList, mAdapter);
         mAdapter.addHeaderView(mPatientViewHolder.getConvertView());
         mDataBinding.refreshLayout.setEnableLoadmore(false);
     }

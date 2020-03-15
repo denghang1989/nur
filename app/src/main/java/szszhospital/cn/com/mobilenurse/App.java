@@ -34,6 +34,7 @@ public class App extends MultiDexApplication {
             //指定为经典Footer，默认是 BallPulseFooter
             return new ClassicsFooter(context).setSpinnerStyle(SpinnerStyle.Translate);
         });
+
     }
 
     public static LoginUser loginUser = new LoginUser();

@@ -58,14 +58,11 @@ public class EMRFragment extends BaseDoctorFragment<FragmentEmrBinding, EMRPrese
     private void initEMR() {
         mEMRLayoutManager = new LinearLayoutManager(_mActivity);
         mDataBinding.emr.setLayoutManager(mEMRLayoutManager);
-        mDataBinding.listView.addItemDecoration(new DividerItemDecoration(_mActivity, DividerItemDecoration.VERTICAL));
         mDataBinding.emr.setAdapter(mEMRImageAdapter);
     }
 
     private void initMenu() {
-        mDataBinding.listView.setLayoutManager(new LinearLayoutManager(_mActivity));
-        mDataBinding.listView.addItemDecoration(new DividerItemDecoration(_mActivity, DividerItemDecoration.VERTICAL));
-        mDataBinding.listView.setAdapter(mAdapter);
+        initRecyclerView(mDataBinding.listView, mAdapter);
     }
 
     @Override

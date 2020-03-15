@@ -2,6 +2,7 @@ package szszhospital.cn.com.mobilenurse.fragemt;
 
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
+
 import android.view.View;
 
 import com.blankj.utilcode.util.StringUtils;
@@ -45,10 +46,7 @@ public class LisListFragment extends BaseDoctorFragment<FragmentOrderBinding, Li
     @Override
     protected void initView() {
         super.initView();
-        LinearLayoutManager layout = new LinearLayoutManager(_mActivity);
-        mDataBinding.orderList.setLayoutManager(layout);
-        mDataBinding.orderList.addItemDecoration(new DividerItemDecoration(_mActivity, DividerItemDecoration.VERTICAL));
-        mDataBinding.orderList.setAdapter(mAdapter);
+        initRecyclerView(mDataBinding.orderList, mAdapter);
         mDataBinding.refreshLayout.setEnableLoadmore(false);
         mDataBinding.orderList.addItemDecoration(new LisListDividerItemDecoration(mAdapter, _mActivity));
     }

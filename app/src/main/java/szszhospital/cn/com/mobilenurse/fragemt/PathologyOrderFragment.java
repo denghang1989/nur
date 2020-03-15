@@ -47,10 +47,7 @@ public class PathologyOrderFragment extends BaseDoctorFragment<FragmentOrderBind
     @Override
     protected void initView() {
         super.initView();
-        LinearLayoutManager layout = new LinearLayoutManager(_mActivity);
-        mDataBinding.orderList.setLayoutManager(layout);
-        mDataBinding.orderList.addItemDecoration(new DividerItemDecoration(_mActivity, DividerItemDecoration.VERTICAL));
-        mDataBinding.orderList.setAdapter(mAdapter);
+        initRecyclerView(mDataBinding.orderList,mAdapter);
         mDataBinding.refreshLayout.setEnableLoadmore(false);
     }
 
