@@ -18,7 +18,7 @@ import szszhospital.cn.com.mobilenurse.remote.ApiService;
 import szszhospital.cn.com.mobilenurse.remote.RxUtil;
 import szszhospital.cn.com.mobilenurse.remote.response.PacsOrderItem;
 
-public class PacsOrderItemPresenter extends RxPresenter<PacsOrderItemContract.View, PacsOrderItemContract.Model> implements PacsOrderItemContract.Presenter {
+public class PacsOrderItemPresenter extends RxPresenter<PacsOrderItemContract.View, PacsOrderItemContract.Model,List<PacsOrderItem>> implements PacsOrderItemContract.Presenter {
 
     @Override
     public void getPacsOrderList(String EpisodeID) {
@@ -33,31 +33,14 @@ public class PacsOrderItemPresenter extends RxPresenter<PacsOrderItemContract.Vi
                     Date o2Long = TimeUtils.string2Date(o2.DateTime, simpleDateFormat);
                     return o2Long.compareTo(o1Long);
                 }).toObservable()
-                .subscribe(new Observer<List<PacsOrderItem>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onNext(List<PacsOrderItem> pacsOrders) {
-                        mView.showPacsOrderList(pacsOrders);
-                        mView.refresh();
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        e.printStackTrace();
-                        mView.hideProgress();
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        mView.hideProgress();
-                    }
-                });
+                .subscribe(this);
 
 
     }
 
+    @Override
+    public void onNext(List<PacsOrderItem> pacsOrderItems) {
+        mView.showPacsOrderList(pacsOrderItems);
+        mView.refresh();
+    }
 }

@@ -11,7 +11,7 @@ import szszhospital.cn.com.mobilenurse.remote.ApiService;
 import szszhospital.cn.com.mobilenurse.remote.RxUtil;
 import szszhospital.cn.com.mobilenurse.remote.response.PatientInfo;
 
-public class SearchPresenter extends RxPresenter<SearchContract.View, SearchContract.Model> implements SearchContract.Presenter {
+public class SearchPresenter extends RxPresenter<SearchContract.View, SearchContract.Model, List<PatientInfo>> implements SearchContract.Presenter {
     private static final String TAG = "SearchPresenter";
 
     @Override
@@ -20,31 +20,16 @@ public class SearchPresenter extends RxPresenter<SearchContract.View, SearchCont
         ApiService.Instance().getService().getPatientListByNo(number)
                 .compose(RxUtil.rxSchedulerHelper())
                 .compose(RxUtil.httpHandleResponse())
-                .subscribe(new Observer<List<PatientInfo>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                        addSubscribe(d);
-                    }
+                .subscribe(this);
+    }
 
-                    @Override
-                    public void onNext(List<PatientInfo> patientInfos) {
-                        if ((patientInfos != null) && (patientInfos.size() > 0)) {
-                            Collections.sort(patientInfos);
-                            mView.showData(patientInfos);
-                        } else {
+    @Override
+    public void onNext(List<PatientInfo> patientInfos) {
+        if ((patientInfos != null) && (patientInfos.size() > 0)) {
+            Collections.sort(patientInfos);
+            mView.showData(patientInfos);
+        } else {
 
-                        }
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        mView.hideProgress();
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        mView.hideProgress();
-                    }
-                });
+        }
     }
 }

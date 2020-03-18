@@ -10,7 +10,7 @@ import szszhospital.cn.com.mobilenurse.remote.ApiService;
 import szszhospital.cn.com.mobilenurse.remote.RxUtil;
 import szszhospital.cn.com.mobilenurse.remote.response.LisOrderDetail;
 
-public class LisResultPresenter extends RxPresenter<LisResultContract.View, LisResultContract.Model> implements LisResultContract.Presenter {
+public class LisResultPresenter extends RxPresenter<LisResultContract.View, LisResultContract.Model,List<LisOrderDetail>> implements LisResultContract.Presenter {
 
     @Override
     public void getLisOrderListDetail(String ReportDRs) {
@@ -18,27 +18,12 @@ public class LisResultPresenter extends RxPresenter<LisResultContract.View, LisR
         ApiService.Instance().getService().getLisOrderDetail(ReportDRs)
                 .compose(RxUtil.rxSchedulerHelper())
                 .compose(RxUtil.httpHandleResponse())
-                .subscribe(new Observer<List<LisOrderDetail>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                        addSubscribe(d);
-                    }
+                .subscribe(this);
+    }
 
-                    @Override
-                    public void onNext(List<LisOrderDetail> lisOrderDetails) {
-                        mView.showLisOrderListDetail(lisOrderDetails);
-                        mView.hideProgress();
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        mView.hideProgress();
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        mView.hideProgress();
-                    }
-                });
+    @Override
+    public void onNext(List<LisOrderDetail> lisOrderDetails) {
+        mView.showLisOrderListDetail(lisOrderDetails);
+        mView.hideProgress();
     }
 }

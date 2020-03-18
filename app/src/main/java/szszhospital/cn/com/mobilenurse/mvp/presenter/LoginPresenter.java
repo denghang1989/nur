@@ -11,7 +11,7 @@ import szszhospital.cn.com.mobilenurse.remote.ApiService;
 import szszhospital.cn.com.mobilenurse.remote.RxUtil;
 import szszhospital.cn.com.mobilenurse.remote.response.LoginResponse;
 
-public class LoginPresenter extends RxPresenter<LoginContract.View, LoginContract.Model> implements LoginContract.Presenter {
+public class LoginPresenter extends RxPresenter<LoginContract.View, LoginContract.Model, LoginResponse> implements LoginContract.Presenter {
 
     private static final String TAG = "LoginPresenter";
 
@@ -21,35 +21,17 @@ public class LoginPresenter extends RxPresenter<LoginContract.View, LoginContrac
 
     @Override
     public void login(String userName, String password) {
-        mView.showProgress();
         ApiService.Instance().getService().
                 login(userName, password).
                 compose(RxUtil.httpHandle()).
                 compose(RxUtil.rxSchedulerHelper()).
-                subscribe(new Observer<LoginResponse>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                        addSubscribe(d);
-                    }
-
-                    @Override
-                    public void onNext(LoginResponse loginResponse) {
-                        mModel.save(loginResponse);
-                        SPUtils.getInstance().put("user_name", loginResponse.getCode());
-                        mView.goToMainActivity();
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        mView.hideProgress();
-                        mView.showError();
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        mView.hideProgress();
-                    }
-                });
+                subscribe(this);
     }
 
+    @Override
+    public void onNext(LoginResponse loginResponse) {
+        mModel.save(loginResponse);
+        SPUtils.getInstance().put("user_name", loginResponse.getCode());
+        mView.goToMainActivity();
+    }
 }

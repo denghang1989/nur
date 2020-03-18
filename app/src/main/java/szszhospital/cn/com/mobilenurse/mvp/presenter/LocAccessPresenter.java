@@ -10,7 +10,7 @@ import szszhospital.cn.com.mobilenurse.remote.ApiService;
 import szszhospital.cn.com.mobilenurse.remote.RxUtil;
 import szszhospital.cn.com.mobilenurse.remote.response.LocAccess;
 
-public class LocAccessPresenter extends RxPresenter<LocAccessContract.View, LocAccessContract.Model> implements LocAccessContract.Presenter {
+public class LocAccessPresenter extends RxPresenter<LocAccessContract.View, LocAccessContract.Model,List<LocAccess>> implements LocAccessContract.Presenter {
 
     @Override
     public void getLocAccess(String LocId) {
@@ -18,28 +18,12 @@ public class LocAccessPresenter extends RxPresenter<LocAccessContract.View, LocA
         ApiService.Instance().getService().getLocAccess(LocId)
                 .compose(RxUtil.rxSchedulerHelper())
                 .compose(RxUtil.httpHandleResponse())
-                .subscribe(new Observer<List<LocAccess>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                        addSubscribe(d);
-                    }
+                .subscribe(this);
 
-                    @Override
-                    public void onNext(List<LocAccess> locAccessResponses) {
-                        mView.setPageAdapter(locAccessResponses);
-                    }
+    }
 
-                    @Override
-                    public void onError(Throwable e) {
-                        e.printStackTrace();
-                        mView.hideProgress();
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        mView.hideProgress();
-                    }
-                });
-
+    @Override
+    public void onNext(List<LocAccess> locAccesses) {
+        mView.setPageAdapter(locAccesses);
     }
 }

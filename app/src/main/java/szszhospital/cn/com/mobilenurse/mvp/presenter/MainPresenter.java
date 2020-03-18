@@ -8,7 +8,7 @@ import szszhospital.cn.com.mobilenurse.remote.ApiService;
 import szszhospital.cn.com.mobilenurse.remote.RxUtil;
 import szszhospital.cn.com.mobilenurse.remote.response.UpdateApp;
 
-public class MainPresenter extends RxPresenter<MainContract.View, MainContract.Model> implements MainContract.Presenter {
+public class MainPresenter extends RxPresenter<MainContract.View, MainContract.Model,UpdateApp> implements MainContract.Presenter {
 
     @Override
     public void getUpdateApp() {
@@ -16,27 +16,11 @@ public class MainPresenter extends RxPresenter<MainContract.View, MainContract.M
         ApiService.Instance().getService().getUpdateAppInfo()
                 .compose(RxUtil.rxSchedulerHelper())
                 .compose(RxUtil.httpHandleResponse())
-                .subscribe(new Observer<UpdateApp>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                        addSubscribe(d);
-                    }
+                .subscribe(this);
+    }
 
-                    @Override
-                    public void onNext(UpdateApp updateApp) {
-                        mView.showDialog(updateApp);
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        e.printStackTrace();
-                        mView.hideProgress();
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        mView.hideProgress();
-                    }
-                });
+    @Override
+    public void onNext(UpdateApp updateApp) {
+        mView.showDialog(updateApp);
     }
 }

@@ -23,7 +23,7 @@ import szszhospital.cn.com.mobilenurse.remote.response.Order;
 /**
  * @author Administrator
  */
-public class HerbalOrderPresenter extends RxPresenter<HerbalOrderContract.View, HerbalOrderContract.Model> implements HerbalOrderContract.Presenter {
+public class HerbalOrderPresenter extends RxPresenter<HerbalOrderContract.View, HerbalOrderContract.Model,List<Order>> implements HerbalOrderContract.Presenter {
 
     @Override
     public void getZOrderList(String OrderType, String EpisodeID) {
@@ -44,32 +44,21 @@ public class HerbalOrderPresenter extends RxPresenter<HerbalOrderContract.View, 
                     }
                 })
                 .toObservable()
-                .subscribe(new Observer<List<Order>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                        addSubscribe(d);
-                    }
+                .subscribe(this);
+    }
 
-                    @Override
-                    public void onNext(List<Order> orders) {
-                        if ((orders != null) && (orders.size() > 0)) {
-                            mView.showOrderList(orders);
-                        } else {
-                            mView.showEmptyData();
-                        }
-                    }
+    @Override
+    public void onNext(List<Order> orders) {
+        if ((orders != null) && (orders.size() > 0)) {
+            mView.showOrderList(orders);
+        } else {
+            mView.showEmptyData();
+        }
+    }
 
-                    @Override
-                    public void onError(Throwable e) {
-                        mView.hideProgress();
-                        e.printStackTrace();
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        mView.hideProgress();
-                        mView.refresh();
-                    }
-                });
+    @Override
+    public void onComplete() {
+        super.onComplete();
+        mView.refresh();
     }
 }

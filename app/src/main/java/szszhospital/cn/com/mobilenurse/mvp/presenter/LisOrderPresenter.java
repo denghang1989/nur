@@ -15,7 +15,7 @@ import szszhospital.cn.com.mobilenurse.remote.ApiService;
 import szszhospital.cn.com.mobilenurse.remote.RxUtil;
 import szszhospital.cn.com.mobilenurse.remote.response.LisOrder;
 
-public class LisOrderPresenter extends RxPresenter<LisOrderContract.View, LisOrderContract.Model> implements LisOrderContract.Presenter {
+public class LisOrderPresenter extends RxPresenter<LisOrderContract.View, LisOrderContract.Model, List<LisOrder>> implements LisOrderContract.Presenter {
 
     private static final String TAG = "LisOrderPresenter";
 
@@ -30,25 +30,20 @@ public class LisOrderPresenter extends RxPresenter<LisOrderContract.View, LisOrd
                 .compose(RxUtil.rxSchedulerHelper())
                 .flatMap((Function<List<LisOrder>, ObservableSource<LisOrder>>) lisOrders -> Observable.fromIterable(lisOrders))
                 .filter(lisOrder -> StringUtils.equals(lisOrder.ResultStatus, "3"))
-                .toList()
-                .subscribe(new SingleObserver<List<LisOrder>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                        addSubscribe(d);
-                    }
+                .toList().toObservable()
+                .subscribe(this);
+    }
 
-                    @Override
-                    public void onSuccess(List<LisOrder> orders) {
-                        mView.showLisOrderList(orders);
-                        mView.hideProgress();
-                        mView.refresh();
-                    }
+    @Override
+    public void onNext(List<LisOrder> orders) {
+        mView.showLisOrderList(orders);
+        mView.hideProgress();
+        mView.refresh();
+    }
 
-                    @Override
-                    public void onError(Throwable e) {
-                        mView.hideProgress();
-                        mView.refresh();
-                    }
-                });
+    @Override
+    public void onComplete() {
+        super.onComplete();
+        mView.refresh();
     }
 }

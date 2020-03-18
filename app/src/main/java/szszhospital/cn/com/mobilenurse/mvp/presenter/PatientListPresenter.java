@@ -15,7 +15,7 @@ import szszhospital.cn.com.mobilenurse.remote.ApiService;
 import szszhospital.cn.com.mobilenurse.remote.RxUtil;
 import szszhospital.cn.com.mobilenurse.remote.response.PatientInfo;
 
-public class PatientListPresenter extends RxPresenter<PatientListContract.View, PatientListContract.Model> implements PatientListContract.Presenter {
+public class PatientListPresenter extends RxPresenter<PatientListContract.View, PatientListContract.Model,List<PatientInfo>> implements PatientListContract.Presenter {
 
     @Override
     public void getPatientList(String userId, String LocID) {
@@ -32,26 +32,11 @@ public class PatientListPresenter extends RxPresenter<PatientListContract.View, 
                 .sorted((o1, o2) -> o1.DisBed.compareTo(o2.DisBed))
                 .toList()
                 .toObservable()
-                .subscribe(new Observer<List<PatientInfo>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                        addSubscribe(d);
-                    }
+                .subscribe(this);
+    }
 
-                    @Override
-                    public void onNext(List<PatientInfo> patientInfos) {
-                        mView.showPatientList(patientInfos);
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        mView.refresh();
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        mView.refresh();
-                    }
-                });
+    @Override
+    public void onNext(List<PatientInfo> patientInfos) {
+        mView.showPatientList(patientInfos);
     }
 }

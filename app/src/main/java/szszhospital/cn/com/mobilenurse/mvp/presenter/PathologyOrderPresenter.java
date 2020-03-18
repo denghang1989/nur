@@ -18,7 +18,7 @@ import szszhospital.cn.com.mobilenurse.remote.ApiService;
 import szszhospital.cn.com.mobilenurse.remote.RxUtil;
 import szszhospital.cn.com.mobilenurse.remote.response.PacsOrderItem;
 
-public class PathologyOrderPresenter extends RxPresenter<PathologyOrderContract.View, PathologyOrderContract.Model> implements PathologyOrderContract.Presenter {
+public class PathologyOrderPresenter extends RxPresenter<PathologyOrderContract.View, PathologyOrderContract.Model,List<PacsOrderItem>> implements PathologyOrderContract.Presenter {
 
     @Override
     public void getPathologyOrderList(String EpisodeID) {
@@ -33,35 +33,18 @@ public class PathologyOrderPresenter extends RxPresenter<PathologyOrderContract.
                     Date o2Long = TimeUtils.string2Date(o2.DateTime, simpleDateFormat);
                     return o2Long.compareTo(o1Long);
                 }).toObservable()
-                .subscribe(new Observer<List<PacsOrderItem>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onNext(List<PacsOrderItem> pacsOrders) {
-                        if (pacsOrders.size() > 0) {
-                            mView.showPacsOrderList(pacsOrders);
-                        } else {
-                            mView.showEmptyData();
-                        }
-                        mView.refresh();
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        e.printStackTrace();
-                        mView.hideProgress();
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        mView.hideProgress();
-                    }
-                });
+                .subscribe(this);
 
 
     }
 
+    @Override
+    public void onNext(List<PacsOrderItem> pacsOrders) {
+        if (pacsOrders.size() > 0) {
+            mView.showPacsOrderList(pacsOrders);
+        } else {
+            mView.showEmptyData();
+        }
+        mView.refresh();
+    }
 }

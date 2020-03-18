@@ -16,7 +16,7 @@ import szszhospital.cn.com.mobilenurse.remote.RxUtil;
 import szszhospital.cn.com.mobilenurse.remote.response.BaseResponse;
 import szszhospital.cn.com.mobilenurse.remote.response.EMRNavigation;
 
-public class EMRPresenter extends RxPresenter<EMRContract.View, EMRContract.Model> implements EMRContract.Presenter {
+public class EMRPresenter extends RxPresenter<EMRContract.View, EMRContract.Model,List<EMRNavigation>> implements EMRContract.Presenter {
 
     @Override
     public void getEMREposideList(String locId) {
@@ -27,28 +27,7 @@ public class EMRPresenter extends RxPresenter<EMRContract.View, EMRContract.Mode
                 .flatMap((Function<List<EMRNavigation>, ObservableSource<EMRNavigation>>) emrNavigations -> Observable.fromIterable(emrNavigations))
                 .toSortedList((o1, o2) -> o1.ItemSeq - o2.ItemSeq)
                 .toObservable()
-                .subscribe(new Observer<List<EMRNavigation>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                        addSubscribe(d);
-                    }
-
-                    @Override
-                    public void onNext(List<EMRNavigation> emrEposideLists) {
-                        mView.showMenuList(emrEposideLists);
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        e.printStackTrace();
-                        mView.hideProgress();
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        mView.hideProgress();
-                    }
-                });
+                .subscribe(this);
     }
 
     @Override
@@ -60,7 +39,7 @@ public class EMRPresenter extends RxPresenter<EMRContract.View, EMRContract.Mode
                 .subscribe(new Observer<List<String>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-
+                        addSubscribe(d);
                     }
 
                     @Override
@@ -110,4 +89,8 @@ public class EMRPresenter extends RxPresenter<EMRContract.View, EMRContract.Mode
                 });
     }
 
+    @Override
+    public void onNext(List<EMRNavigation> emrEposideLists) {
+        mView.showMenuList(emrEposideLists);
+    }
 }
