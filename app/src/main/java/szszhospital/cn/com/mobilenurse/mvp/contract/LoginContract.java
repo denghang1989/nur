@@ -8,9 +8,9 @@ import szszhospital.cn.com.mobilenurse.remote.response.LoginResponse;
 public interface LoginContract {
     interface View extends BaseView {
 
-        void showError();
+        void showError(Throwable e);
 
-        void goToMainActivity();
+        void handleLoginResult(LoginResponse loginResponse);
     }
 
     interface Model extends BaseModel {

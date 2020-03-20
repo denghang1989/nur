@@ -8,12 +8,15 @@ import com.blankj.utilcode.util.KeyboardUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.StringUtils;
 
+import java.net.SocketTimeoutException;
+
 import es.dmoral.toasty.Toasty;
 import szszhospital.cn.com.mobilenurse.R;
 import szszhospital.cn.com.mobilenurse.base.BasePresentActivity;
 import szszhospital.cn.com.mobilenurse.databinding.ActivityLoginBinding;
 import szszhospital.cn.com.mobilenurse.mvp.contract.LoginContract;
 import szszhospital.cn.com.mobilenurse.mvp.presenter.LoginPresenter;
+import szszhospital.cn.com.mobilenurse.remote.response.LoginResponse;
 
 /**
  * @author admin
@@ -68,15 +71,22 @@ public class LoginActivity extends BasePresentActivity<ActivityLoginBinding, Log
     }
 
     @Override
-    public void showError() {
-        Toasty.error(this, "账号或密码错误", Toast.LENGTH_SHORT, true).show();
+    public void showError(Throwable e) {
+        if (e instanceof SocketTimeoutException) {
+            Toasty.error(this, "网络连接错误！", Toast.LENGTH_LONG, true).show();
+        }
     }
 
     @Override
-    public void goToMainActivity() {
-        Toasty.success(this, "登入成功!", Toast.LENGTH_SHORT, true).show();
-        ActivityUtils.startActivity(MainActivity.class);
-        finish();
+    public void handleLoginResult(LoginResponse loginResponse) {
+        int code = loginResponse.getCode();
+        if (code == 0) {
+            Toasty.success(this, "登入成功!", Toast.LENGTH_SHORT, true).show();
+            ActivityUtils.startActivity(MainActivity.class);
+            finish();
+        } else {
+            Toasty.error(this, "账号或密码错误", Toast.LENGTH_SHORT, true).show();
+        }
     }
 
 }

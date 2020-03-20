@@ -34,8 +34,6 @@ public class PacsOrderItemPresenter extends RxPresenter<PacsOrderItemContract.Vi
                     return o2Long.compareTo(o1Long);
                 }).toObservable()
                 .subscribe(this);
-
-
     }
 
     @Override
