@@ -6,7 +6,6 @@ import java.util.List;
 import io.reactivex.Observable;
 import retrofit2.Response;
 import retrofit2.http.GET;
-import retrofit2.http.POST;
 import retrofit2.http.Query;
 import szszhospital.cn.com.mobilenurse.entity.PacsImagePath;
 import szszhospital.cn.com.mobilenurse.remote.response.BaseResponse;
@@ -18,9 +17,9 @@ import szszhospital.cn.com.mobilenurse.remote.response.LisOrderDetail;
 import szszhospital.cn.com.mobilenurse.remote.response.LocAccess;
 import szszhospital.cn.com.mobilenurse.remote.response.LocInfo;
 import szszhospital.cn.com.mobilenurse.remote.response.LoginResponse;
+import szszhospital.cn.com.mobilenurse.remote.response.Logon;
 import szszhospital.cn.com.mobilenurse.remote.response.Order;
 import szszhospital.cn.com.mobilenurse.remote.response.OrderExecuteInfo;
-import szszhospital.cn.com.mobilenurse.remote.response.PacsOrder;
 import szszhospital.cn.com.mobilenurse.remote.response.PacsOrderItem;
 import szszhospital.cn.com.mobilenurse.remote.response.PatientInfo;
 import szszhospital.cn.com.mobilenurse.remote.response.UpdateApp;
@@ -31,14 +30,18 @@ import szszhospital.cn.com.mobilenurse.remote.response.VitalSignsPath;
  * 2016/11/2 11
  */
 public interface Api {
-    String BASE_LOGIN_URL = "http://10.0.0.1/dthealth/web/";   //   http://10.0.0.5/dthealth/web/
+    String BASE_LOGIN_URL = "http://192.168.199.134/dthealth/";   //   http://10.0.0.5/dthealth/web/
 
     //3.账号密码登录
-    @POST("web/Quality.Ajax.LoginAjax.cls")
+    @GET("web/Quality.Ajax.LoginAjax.cls")
     Observable<Response<BaseResponse<LoginResponse>>> login(@Query("userName") String userName, @Query("password") String password);
 
+    //3.账号密码登录
+    @GET("web/Quality.Ajax.LogonAjax")
+    Observable<Response<Logon>> logon();
+
     //获取全部的登入科室
-    @POST("web/Quality.Ajax.LoginLocAjax.cls")
+    @GET("web/Quality.Ajax.LoginLocAjax.cls")
     Observable<Response<BaseResponse<List<LocInfo>>>> getLoginLoc(@Query("userId") String userId);
 
     //获取登入科室模块
@@ -67,13 +70,9 @@ public interface Api {
 
     //获取pacs医嘱
     @GET("web/Quality.Ajax.PacsOrderAjax.cls")
-    Observable<Response<List<PacsOrder>>> getPatientPacsOrder(@Query("EposideId") String EpisodeID, @Query("userCode") String userCode);
-
-    //获取pacs医嘱
-    @GET("web/Quality.Ajax.PacsOrderAjax.cls")
     Observable<Response<List<PacsOrderItem>>> getEposidePacsOrder(@Query("EposideId") String EpisodeID);
 
-    //获取病历医嘱
+    //获取病理医嘱
     @GET("web/Quality.Ajax.PathologyOrderAjax.cls")
     Observable<Response<List<PacsOrderItem>>> getPathologyOrder(@Query("EposideId") String EpisodeID);
 

@@ -1,9 +1,6 @@
 package szszhospital.cn.com.mobilenurse.dialog;
 
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +9,15 @@ import android.widget.Button;
 import com.blankj.utilcode.util.ScreenUtils;
 import com.blankj.utilcode.util.SizeUtils;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 import szszhospital.cn.com.mobilenurse.R;
+import szszhospital.cn.com.mobilenurse.remote.ApiService;
+import szszhospital.cn.com.mobilenurse.remote.RxUtil;
+import szszhospital.cn.com.mobilenurse.remote.response.Logon;
 
 public class BackPressDialogFragment extends DialogFragment {
 
@@ -21,6 +26,7 @@ public class BackPressDialogFragment extends DialogFragment {
     private Button          mCancel;
     private Button          mOk;
     private DialogInterface mDialogInterface;
+    private Disposable mDisposable;
 
     public static BackPressDialogFragment newInstance() {
         return new BackPressDialogFragment();
@@ -44,7 +50,21 @@ public class BackPressDialogFragment extends DialogFragment {
             @Override
             public void onClick(View v) {
                 if (mDialogInterface != null) {
-                    mDialogInterface.onNegative();
+                    mDisposable = ApiService.Instance().getService().logon().
+                            compose(RxUtil.httpHandleResponse()).
+                            compose(RxUtil.rxSchedulerHelper()).
+                            subscribe(new Consumer<Logon>() {
+                                @Override
+                                public void accept(Logon logon) throws Exception {
+                                    mDialogInterface.onNegative();
+                                }
+                            }, new Consumer<Throwable>() {
+                                @Override
+                                public void accept(Throwable throwable) throws Exception {
+                                    mDialogInterface.onNegative();
+                                }
+                            });
+
                 }
                 dismiss();
             }
@@ -65,5 +85,13 @@ public class BackPressDialogFragment extends DialogFragment {
     public void onResume() {
         super.onResume();
         getDialog().getWindow().setLayout(ScreenUtils.getScreenWidth(), SizeUtils.dp2px(300));
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (mDisposable != null) {
+            mDisposable.dispose();
+        }
     }
 }

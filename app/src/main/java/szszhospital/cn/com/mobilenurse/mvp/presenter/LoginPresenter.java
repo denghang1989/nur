@@ -1,12 +1,7 @@
 package szszhospital.cn.com.mobilenurse.mvp.presenter;
 
-import android.widget.Toast;
-
-import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.SPUtils;
 
-import es.dmoral.toasty.Toasty;
-import szszhospital.cn.com.mobilenurse.activity.MainActivity;
 import szszhospital.cn.com.mobilenurse.base.RxPresenter;
 import szszhospital.cn.com.mobilenurse.mvp.contract.LoginContract;
 import szszhospital.cn.com.mobilenurse.mvp.model.LoginModel;
@@ -33,11 +28,8 @@ public class LoginPresenter extends RxPresenter<LoginContract.View, LoginContrac
 
     @Override
     public void onNext(LoginResponse loginResponse) {
-        int code = loginResponse.getCode();
-        if (code == 0) {
-            mModel.save(loginResponse);
-            SPUtils.getInstance().put("user_name", loginResponse.getCode());
-        }
+        mModel.save(loginResponse);
+        SPUtils.getInstance().put("user_name", loginResponse.getCode());
         mView.handleLoginResult(loginResponse);
     }
 

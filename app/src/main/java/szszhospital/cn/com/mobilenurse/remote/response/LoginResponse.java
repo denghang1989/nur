@@ -9,16 +9,16 @@ public class LoginResponse {
      * name : 李春阳
      */
 
-    private int code;
+    private String code;
     private String id;
     private String locId;
     private String name;
 
-    public int getCode() {
+    public String getCode() {
         return code;
     }
 
-    public void setCode(int code) {
+    public void setCode(String code) {
         this.code = code;
     }
 

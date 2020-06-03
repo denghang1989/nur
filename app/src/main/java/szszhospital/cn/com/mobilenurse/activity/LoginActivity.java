@@ -74,19 +74,16 @@ public class LoginActivity extends BasePresentActivity<ActivityLoginBinding, Log
     public void showError(Throwable e) {
         if (e instanceof SocketTimeoutException) {
             Toasty.error(this, "网络连接错误！", Toast.LENGTH_LONG, true).show();
+        }else {
+            Toasty.error(this, "账号或密码错误", Toast.LENGTH_SHORT, true).show();
         }
     }
 
     @Override
     public void handleLoginResult(LoginResponse loginResponse) {
-        int code = loginResponse.getCode();
-        if (code == 0) {
-            Toasty.success(this, "登入成功!", Toast.LENGTH_SHORT, true).show();
-            ActivityUtils.startActivity(MainActivity.class);
-            finish();
-        } else {
-            Toasty.error(this, "账号或密码错误", Toast.LENGTH_SHORT, true).show();
-        }
+        Toasty.success(this, "登入成功!", Toast.LENGTH_SHORT, true).show();
+        ActivityUtils.startActivity(MainActivity.class);
+        finish();
     }
 
 }

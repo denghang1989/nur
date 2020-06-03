@@ -2,13 +2,6 @@ package szszhospital.cn.com.mobilenurse.remote.response;
 
 public class LocAccess {
 
-    /**
-     * Active : Y
-     * Model : DrugBillUnCompletedFragment
-     * ModelDesc : null
-     * RowId : 1
-     * Title : 未配药
-     */
     public String ID;
     public String Active;
     public String Model;
