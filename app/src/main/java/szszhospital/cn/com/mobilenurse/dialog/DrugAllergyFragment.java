@@ -1,14 +1,14 @@
 package szszhospital.cn.com.mobilenurse.dialog;
 
 import android.os.Bundle;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.appcompat.widget.Toolbar;
 import android.view.View;
 
 import java.util.List;
 
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import szszhospital.cn.com.mobilenurse.R;
@@ -34,7 +34,7 @@ public class DrugAllergyFragment extends BaseDialogFragment {
 
     public static DrugAllergyFragment newInstance(LisOrderDetail lisdetail) {
         Bundle args = new Bundle();
-        args.putParcelable(DATA, lisdetail);
+        args.putSerializable(DATA, lisdetail);
         DrugAllergyFragment fragment = new DrugAllergyFragment();
         fragment.setArguments(args);
         return fragment;
@@ -42,7 +42,7 @@ public class DrugAllergyFragment extends BaseDialogFragment {
 
     @Override
     protected void init() {
-        mLisOrderDetail = getArguments().getParcelable(DATA);
+        mLisOrderDetail = (LisOrderDetail) getArguments().getSerializable(DATA);
         mAdapter = new DrugAllergyAdapter(R.layout.item_drug_allergy);
     }
 

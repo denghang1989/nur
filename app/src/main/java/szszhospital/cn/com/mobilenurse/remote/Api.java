@@ -30,7 +30,7 @@ import szszhospital.cn.com.mobilenurse.remote.response.VitalSignsPath;
  * 2016/11/2 11
  */
 public interface Api {
-    String BASE_LOGIN_URL = " http://10.0.6.5/dthealth/";   //   http://10.0.0.5/dthealth/web/
+    String BASE_LOGIN_URL = " http://192.168.199.5/dthealth/";   //   http://10.0.0.5/dthealth/web/
 
     //3.账号密码登录
     @GET("web/Quality.Ajax.LoginAjax.cls")

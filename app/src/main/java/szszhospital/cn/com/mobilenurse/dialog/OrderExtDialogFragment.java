@@ -2,15 +2,6 @@ package szszhospital.cn.com.mobilenurse.dialog;
 
 import android.app.Dialog;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.DialogFragment;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.appcompat.widget.Toolbar;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +14,13 @@ import com.blankj.utilcode.util.TimeUtils;
 import java.util.Collections;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.DialogFragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 import szszhospital.cn.com.mobilenurse.R;
@@ -43,7 +41,7 @@ public class OrderExtDialogFragment extends DialogFragment {
 
     public static OrderExtDialogFragment newInstance(Order order) {
         Bundle args = new Bundle();
-        args.putParcelable(DATA, order);
+        args.putSerializable(DATA, order);
         OrderExtDialogFragment fragment = new OrderExtDialogFragment();
         fragment.setArguments(args);
         return fragment;
@@ -52,7 +50,7 @@ public class OrderExtDialogFragment extends DialogFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mOrder = getArguments().getParcelable(DATA);
+        mOrder = (Order) getArguments().getSerializable(DATA);
         mAdapter = new OrderExtAdapter(R.layout.item_order_ext);
     }
 

@@ -1,15 +1,13 @@
 package szszhospital.cn.com.mobilenurse.remote.response;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-import androidx.annotation.NonNull;
-
 import com.blankj.utilcode.util.TimeUtils;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 
-public class PatientInfo implements Parcelable, Serializable, Comparable<PatientInfo> {
+import androidx.annotation.NonNull;
+
+public class PatientInfo implements  Serializable, Comparable<PatientInfo> {
 
     /**
      * Age : 27岁
@@ -66,84 +64,6 @@ public class PatientInfo implements Parcelable, Serializable, Comparable<Patient
 
     public String Days;
 
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.Age);
-        dest.writeString(this.Diagnose);
-        dest.writeString(this.DisBed);
-        dest.writeString(this.Doctor);
-        dest.writeString(this.EpisodeID);
-        dest.writeString(this.MedicareNo);
-        dest.writeString(this.PAPMIName);
-        dest.writeString(this.PaAdmDateTime);
-        dest.writeString(this.PatientID);
-        dest.writeString(this.PayType);
-        dest.writeString(this.Sex);
-        dest.writeString(this.PatientNo);
-        dest.writeString(this.Type);
-        dest.writeString(this.Loc);
-        dest.writeString(this.Days);
-    }
-
-    public PatientInfo() {
-    }
-
-    protected PatientInfo(Parcel in) {
-        this.Age = in.readString();
-        this.Diagnose = in.readString();
-        this.DisBed = in.readString();
-        this.Doctor = in.readString();
-        this.EpisodeID = in.readString();
-        this.MedicareNo = in.readString();
-        this.PAPMIName = in.readString();
-        this.PaAdmDateTime = in.readString();
-        this.PatientID = in.readString();
-        this.PayType = in.readString();
-        this.Sex = in.readString();
-        this.PatientNo = in.readString();
-        this.Type = in.readString();
-        this.Loc = in.readString();
-        this.Days = in.readString();
-    }
-
-    public static final Creator<PatientInfo> CREATOR = new Creator<PatientInfo>() {
-        @Override
-        public PatientInfo createFromParcel(Parcel source) {
-            return new PatientInfo(source);
-        }
-
-        @Override
-        public PatientInfo[] newArray(int size) {
-            return new PatientInfo[size];
-        }
-    };
-
-    @Override
-    public String toString() {
-        return "PatientInfo{" +
-                "Age='" + Age + '\'' +
-                ", Diagnose='" + Diagnose + '\'' +
-                ", DisBed='" + DisBed + '\'' +
-                ", Doctor='" + Doctor + '\'' +
-                ", EpisodeID='" + EpisodeID + '\'' +
-                ", MedicareNo='" + MedicareNo + '\'' +
-                ", PAPMIName='" + PAPMIName + '\'' +
-                ", PaAdmDateTime='" + PaAdmDateTime + '\'' +
-                ", PatientID='" + PatientID + '\'' +
-                ", PayType='" + PayType + '\'' +
-                ", Sex='" + Sex + '\'' +
-                ", PatientNo='" + PatientNo + '\'' +
-                ", Type='" + Type + '\'' +
-                ", Loc='" + Loc + '\'' +
-                ", Days='" + Days + '\'' +
-                '}';
-    }
 
     @Override
     public int compareTo(@NonNull PatientInfo o) {

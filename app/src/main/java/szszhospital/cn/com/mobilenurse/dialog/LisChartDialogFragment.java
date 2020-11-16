@@ -2,10 +2,6 @@ package szszhospital.cn.com.mobilenurse.dialog;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.DialogFragment;
-import androidx.appcompat.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +19,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.DialogFragment;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import szszhospital.cn.com.mobilenurse.R;
@@ -42,7 +42,7 @@ public class LisChartDialogFragment extends DialogFragment {
 
     public static LisChartDialogFragment newInstance(LisOrderDetail lisOrderDetail) {
         Bundle args = new Bundle();
-        args.putParcelable(DATA, lisOrderDetail);
+        args.putSerializable(DATA, lisOrderDetail);
         LisChartDialogFragment fragment = new LisChartDialogFragment();
         fragment.setArguments(args);
         return fragment;
@@ -51,7 +51,7 @@ public class LisChartDialogFragment extends DialogFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mLisOrderDetail = getArguments().getParcelable(DATA);
+        mLisOrderDetail = (LisOrderDetail) getArguments().getSerializable(DATA);
     }
 
     @Nullable

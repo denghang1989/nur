@@ -2,7 +2,6 @@ package szszhospital.cn.com.mobilenurse.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -37,14 +36,14 @@ public class LisResultActivity extends BasePresentActivity<ActivityLisResultBind
 
     public static void startLisResultActivity(Context context, LisOrder lisOrder) {
         Intent intent = new Intent(context, LisResultActivity.class);
-        intent.putExtra(DATA, (Parcelable) lisOrder);
+        intent.putExtra(DATA, lisOrder);
         context.startActivity(intent);
     }
 
     @Override
     protected void init() {
         super.init();
-        mLisOrder = getIntent().getParcelableExtra(DATA);
+        mLisOrder = (LisOrder) getIntent().getSerializableExtra(DATA);
         mAdapter = new LisResultAdapter(R.layout.item_lis_result);
     }
 
