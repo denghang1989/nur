@@ -30,7 +30,7 @@ import szszhospital.cn.com.mobilenurse.remote.response.VitalSignsPath;
  * 2016/11/2 11
  */
 public interface Api {
-    String BASE_LOGIN_URL = "http://192.168.199.134/dthealth/";   //   http://10.0.0.5/dthealth/web/
+    String BASE_LOGIN_URL = " http://10.0.6.5/dthealth/";   //   http://10.0.0.5/dthealth/web/
 
     //3.账号密码登录
     @GET("web/Quality.Ajax.LoginAjax.cls")
@@ -50,7 +50,7 @@ public interface Api {
 
     //获取病人列表
     @GET("web/Quality.Ajax.PatientListAjax.cls")
-    Observable<Response<List<PatientInfo>>> getPatientListByLocId(@Query("UserId") String userId, @Query("LocID") String LocID);
+    Observable<Response<List<PatientInfo>>> getPatientListByLocId(@Query("UserId") String userId, @Query("LocID") String LocID, @Query("IsLoc") String isLoc);
 
     //获取医嘱信息
     @GET("web/Quality.Ajax.OrderAjax.cls")
@@ -118,5 +118,5 @@ public interface Api {
 
     //获取体温单图片列表
     @GET("web/Quality.Ajax.VitalSigns.cls")
-    Observable<Response<List<VitalSign>>> getEposideVitalSignsImage(@Query("EpisodeID") String  EposideId);
+    Observable<Response<List<VitalSign>>> getEposideVitalSignsImage(@Query("EpisodeID") String EposideId);
 }

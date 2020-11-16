@@ -1,6 +1,7 @@
 package szszhospital.cn.com.mobilenurse.viewholder;
 
 import android.content.Context;
+import android.widget.RadioGroup;
 
 import com.blankj.utilcode.util.StringUtils;
 
@@ -29,5 +30,15 @@ public class PatientViewHolder extends BaseViewHolder<PatientInfo> {
             setImageResource(R.id.icon, R.drawable.icon_woman);
         }
 
+        RadioGroup radioGroup = getView(R.id.radio);
+        if (mListener != null) {
+            radioGroup.setOnCheckedChangeListener(mListener);
+        }
+    }
+
+    private RadioGroup.OnCheckedChangeListener mListener;
+
+    public void setListener(RadioGroup.OnCheckedChangeListener listener) {
+        mListener = listener;
     }
 }

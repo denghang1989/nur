@@ -21,7 +21,7 @@ public interface PatientListContract {
     }
 
     interface Presenter extends BasePresenter<View> {
-        void getPatientList(String userId, String LocID);
+        void getPatientList(String userId, String LocID,String IsLoc);
     }
 
 }

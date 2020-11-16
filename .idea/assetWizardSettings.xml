@@ -11,29 +11,11 @@
                   <entry key="vectorAssetStep">
                     <value>
                       <PersistentState>
-                        <option name="children">
-                          <map>
-                            <entry key="clipartAsset">
-                              <value>
-                                <PersistentState>
-                                  <option name="values">
-                                    <map>
-                                      <entry key="url" value="jar:file:/D:/Program%20Files/Android/Android%20studio3.0/plugins/android/lib/android.jar!/images/material_design_icons/action/ic_perm_contact_calendar_black_24dp.xml" />
-                                    </map>
-                                  </option>
-                                </PersistentState>
-                              </value>
-                            </entry>
-                          </map>
-                        </option>
                         <option name="values">
                           <map>
                             <entry key="color" value="ffffff" />
-                            <entry key="height" value="32" />
                             <entry key="outputName" value="loc_32dp" />
-                            <entry key="overrideSize" value="true" />
                             <entry key="sourceFile" value="C:\Users\admin" />
-                            <entry key="width" value="32" />
                           </map>
                         </option>
                       </PersistentState>

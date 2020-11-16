@@ -15,4 +15,10 @@
     <color name="blue">#87CEFF</color>
     <color name="gray_50">@android:color/white</color>
     <color name="gray_300">@android:color/darker_gray</color>
+
+    <color name="color_bg_selected">#e0301e</color>
+    <color name="color_bg_normal">#e7e7e8</color>
+    <color name="color_text_selected">#ffffff</color>
+    <color name="color_text_normal">#000000</color>
+
 </resources>

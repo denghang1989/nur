@@ -2,15 +2,13 @@ package szszhospital.cn.com.mobilenurse.mvp.presenter;
 
 import java.util.List;
 
-import io.reactivex.Observer;
-import io.reactivex.disposables.Disposable;
 import szszhospital.cn.com.mobilenurse.base.RxPresenter;
 import szszhospital.cn.com.mobilenurse.mvp.contract.LocAccessContract;
 import szszhospital.cn.com.mobilenurse.remote.ApiService;
 import szszhospital.cn.com.mobilenurse.remote.RxUtil;
 import szszhospital.cn.com.mobilenurse.remote.response.LocAccess;
 
-public class LocAccessPresenter extends RxPresenter<LocAccessContract.View, LocAccessContract.Model,List<LocAccess>> implements LocAccessContract.Presenter {
+public class LocAccessPresenter extends RxPresenter<LocAccessContract.View, LocAccessContract.Model, List<LocAccess>> implements LocAccessContract.Presenter {
 
     @Override
     public void getLocAccess(String LocId) {

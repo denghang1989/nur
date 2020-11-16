@@ -7,10 +7,10 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
-import com.github.lzyzsd.jsbridge.BridgeHandler;
 import com.github.lzyzsd.jsbridge.BridgeWebView;
 import com.github.lzyzsd.jsbridge.BridgeWebViewClient;
 import com.github.lzyzsd.jsbridge.CallBackFunction;
+import com.github.lzyzsd.jsbridge.DefaultHandler;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
@@ -22,7 +22,7 @@ import szszhospital.cn.com.mobilenurse.databinding.ActivityWebBinding;
 /**
  * @author Administrator
  */
-public class BaseWebViewActivity extends BaseActivity<ActivityWebBinding> implements OnRefreshListener, BridgeHandler {
+public class BaseWebViewActivity extends BaseActivity<ActivityWebBinding> implements OnRefreshListener {
     protected BridgeWebView mWebView;
 
     @Override
@@ -93,7 +93,12 @@ public class BaseWebViewActivity extends BaseActivity<ActivityWebBinding> implem
 
     @Override
     protected void initEvent() {
-        mWebView.registerHandler("jsToJava", this);
+        mWebView.setDefaultHandler(new DefaultHandler() {
+            @Override
+            public void handler(String data, CallBackFunction function) {
+                DataFromJsHandler(data, function);
+            }
+        });
         mDataBinding.toolbar.setNavigationOnClickListener(v -> {
             backPressed();
         });
@@ -140,16 +145,6 @@ public class BaseWebViewActivity extends BaseActivity<ActivityWebBinding> implem
         }
     }
 
-    /**
-     * @param data     js
-     * @param function 回调接口
-     * @desc 返回数据到native层
-     */
-    @Override
-    public void handler(String data, CallBackFunction function) {
-
-    }
-
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && mWebView.canGoBack()) {
@@ -169,4 +164,15 @@ public class BaseWebViewActivity extends BaseActivity<ActivityWebBinding> implem
         }
     }
 
+    protected void DataFromJsHandler(String data, CallBackFunction function) {
+
+    }
+
+    public void sendDataToJs(String data, CallBackFunction function) {
+        if (function != null) {
+            mWebView.send(data, function);
+        } else {
+            mWebView.send(data);
+        }
+    }
 }

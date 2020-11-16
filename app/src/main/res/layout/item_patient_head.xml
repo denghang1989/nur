@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:app="http://schemas.android.com/apk/res-auto"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -19,19 +19,7 @@
             android:visibility="invisible"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/icon_woman"/>
-
-        <TextView
-            android:id="@+id/bed"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="32dp"
-            android:textColor="@color/white"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="14床"/>
+            app:srcCompat="@drawable/icon_woman" />
 
         <TextView
             android:id="@+id/name"
@@ -43,7 +31,7 @@
             android:textSize="16sp"
             app:layout_constraintStart_toEndOf="@+id/icon"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="姓名：呵呵"/>
+            tools:text="姓名：呵呵" />
 
         <TextView
             android:id="@+id/patientId"
@@ -55,7 +43,7 @@
             android:textSize="14sp"
             app:layout_constraintStart_toEndOf="@+id/icon"
             app:layout_constraintTop_toBottomOf="@+id/name"
-            tools:text="登记号：2920389"/>
+            tools:text="登记号：2920389" />
 
         <TextView
             android:id="@+id/dateTime"
@@ -68,7 +56,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/name"
             app:layout_constraintStart_toEndOf="@+id/name"
             app:layout_constraintTop_toTopOf="@+id/name"
-            tools:text="入院日期：2017-01-19 09:14"/>
+            tools:text="入院日期：2017-01-19 09:14" />
 
         <TextView
             android:id="@+id/diagnose"
@@ -82,7 +70,7 @@
             app:layout_constraintStart_toEndOf="@+id/icon"
             app:layout_constraintTop_toBottomOf="@+id/patientId"
             app:layout_constraintVertical_bias="0.136"
-            tools:text="诊断：2型糖尿病"/>
+            tools:text="诊断：2型糖尿病" />
 
         <TextView
             android:id="@+id/payType"
@@ -95,7 +83,62 @@
             app:layout_constraintBottom_toBottomOf="@+id/patientId"
             app:layout_constraintStart_toEndOf="@+id/patientId"
             app:layout_constraintTop_toTopOf="@+id/patientId"
-            tools:text="费用类型：医保"/>
+            tools:text="费用类型：医保" />
+
+        <TextView
+            android:id="@+id/bed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="14床" />
+
+
+        <RadioGroup
+            android:id="@+id/radio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <RadioButton
+                android:id="@+id/loc"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textColor="@color/color_radiobutton"
+                android:background="@drawable/radio_group_selector"
+                android:textSize="16sp"
+                android:button="@null"
+                android:checked="true"
+                android:paddingBottom="4dp"
+                android:paddingTop="4dp"
+                android:text="科室病人">
+
+            </RadioButton>
+
+            <RadioButton
+                android:id="@+id/person"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingBottom="4dp"
+                android:paddingTop="4dp"
+                android:textColor="@color/color_radiobutton"
+                android:background="@drawable/radio_group_selector"
+                android:textSize="16sp"
+                android:button="@null"
+                android:text="本人病人">
+
+            </RadioButton>
+        </RadioGroup>
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 </FrameLayout>

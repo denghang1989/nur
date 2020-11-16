@@ -1,6 +1,8 @@
 package szszhospital.cn.com.mobilenurse.fragemt;
 
 
+import android.widget.RadioGroup;
+
 import com.blankj.utilcode.util.StringUtils;
 
 import org.greenrobot.eventbus.EventBus;
@@ -25,12 +27,13 @@ import szszhospital.cn.com.mobilenurse.viewholder.PatientViewHolder;
 /**
  * 病人列表
  */
-public class PatientListFragment extends BasePresenterFragment<FragmentPatientListBinding, PatientListPresenter> implements PatientListContract.View {
+public class PatientListFragment extends BasePresenterFragment<FragmentPatientListBinding, PatientListPresenter> implements PatientListContract.View, RadioGroup.OnCheckedChangeListener {
 
-    private static final String TAG = "PatientListFragment";
-    private IPatientListAdapter mAdapter;
-    private PatientViewHolder   mPatientViewHolder;
-    private int mSelectPatient = -1;
+    private static final String              TAG            = "PatientListFragment";
+    private              IPatientListAdapter mAdapter;
+    private              PatientViewHolder   mPatientViewHolder;
+    private              int                 mSelectPatient = -1;
+    private              String              isLoc          = "1";
 
     public static PatientListFragment newInstance() {
         return new PatientListFragment();
@@ -52,6 +55,7 @@ public class PatientListFragment extends BasePresenterFragment<FragmentPatientLi
             EventBus.getDefault().post(new SelectPatientEvent(patientInfo));
         }
         mAdapter.setNewData(list);
+
     }
 
     @Override
@@ -64,6 +68,7 @@ public class PatientListFragment extends BasePresenterFragment<FragmentPatientLi
         super.init();
         mAdapter = new IPatientListAdapter(R.layout.item_patient_list);
         mPatientViewHolder = new PatientViewHolder(_mActivity, R.layout.item_patient_head);
+        mPatientViewHolder.setListener(this);
         EventBus.getDefault().register(this);
     }
 
@@ -90,7 +95,7 @@ public class PatientListFragment extends BasePresenterFragment<FragmentPatientLi
     @Override
     protected void initData() {
         super.initData();
-        mPresenter.getPatientList(App.loginUser.UserDR,App.loginUser.UserLoc);
+        mPresenter.getPatientList(App.loginUser.UserDR, App.loginUser.UserLoc, isLoc);
     }
 
     @Override
@@ -125,6 +130,19 @@ public class PatientListFragment extends BasePresenterFragment<FragmentPatientLi
 
     @Override
     public void hideProgress() {
+        mDataBinding.refreshLayout.finishRefresh();
+    }
 
+    @Override
+    public void onCheckedChanged(RadioGroup group, int checkedId) {
+        switch (checkedId) {
+            case R.id.loc:
+                isLoc = "1";
+                break;
+            case R.id.person:
+                isLoc = "0";
+                break;
+        }
+        initData();
     }
 }
