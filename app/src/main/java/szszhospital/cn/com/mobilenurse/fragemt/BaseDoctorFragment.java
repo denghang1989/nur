@@ -1,21 +1,22 @@
 package szszhospital.cn.com.mobilenurse.fragemt;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
-
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import androidx.databinding.ViewDataBinding;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import szszhospital.cn.com.mobilenurse.R;
 import szszhospital.cn.com.mobilenurse.base.BasePresenter;
 import szszhospital.cn.com.mobilenurse.base.BasePresenterFragment;
 import szszhospital.cn.com.mobilenurse.base.BaseView;
 import szszhospital.cn.com.mobilenurse.event.SelectPatientEvent;
 
 public abstract class BaseDoctorFragment<T extends ViewDataBinding, P extends BasePresenter> extends BasePresenterFragment<T, P> implements BaseView {
+
+    @Override
+    public int getLayoutId() {
+        return R.layout.fragment_order;
+    }
 
     @Override
     protected void init() {

@@ -7,8 +7,6 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import java.util.List;
 
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import szszhospital.cn.com.mobilenurse.App;
 import szszhospital.cn.com.mobilenurse.R;
 import szszhospital.cn.com.mobilenurse.activity.BrowsePacsImageActivity;
@@ -40,11 +38,6 @@ public class PathologyOrderFragment extends BaseDoctorFragment<FragmentOrderBind
     }
 
     @Override
-    public int getLayoutId() {
-        return R.layout.fragment_order;
-    }
-
-    @Override
     protected void initView() {
         super.initView();
         initRecyclerView(mDataBinding.orderList,mAdapter);
@@ -65,16 +58,6 @@ public class PathologyOrderFragment extends BaseDoctorFragment<FragmentOrderBind
         mDataBinding.top.setOnClickListener(v -> mDataBinding.orderList.scrollToPosition(0));
         mDataBinding.refreshLayout.setOnRefreshListener(refreshlayout -> initData());
         mAdapter.setOnItemChildClickListener(this);
-    }
-
-    @Override
-    public void showProgress() {
-        mDataBinding.progress.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void hideProgress() {
-        mDataBinding.progress.setVisibility(View.GONE);
     }
 
     @Override
@@ -127,6 +110,16 @@ public class PathologyOrderFragment extends BaseDoctorFragment<FragmentOrderBind
     @Override
     public void showEmptyData() {
         mDataBinding.showData.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void showProgress() {
+        mDataBinding.progress.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideProgress() {
+        mDataBinding.progress.setVisibility(View.GONE);
     }
 
 }

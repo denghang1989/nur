@@ -7,8 +7,6 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import java.util.List;
 
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import szszhospital.cn.com.mobilenurse.App;
 import szszhospital.cn.com.mobilenurse.R;
 import szszhospital.cn.com.mobilenurse.activity.BrowsePacsImageActivity;
@@ -34,11 +32,6 @@ public class PacsOrderItemFragment extends BaseDoctorFragment<FragmentOrderBindi
     protected void init() {
         super.init();
         mAdapter = new PacsOrderItemAdapter(R.layout.item_pacs_order_item);
-    }
-
-    @Override
-    public int getLayoutId() {
-        return R.layout.fragment_order;
     }
 
     @Override

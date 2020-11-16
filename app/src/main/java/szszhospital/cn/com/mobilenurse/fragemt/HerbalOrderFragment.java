@@ -4,8 +4,6 @@ import android.view.View;
 
 import java.util.List;
 
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import szszhospital.cn.com.mobilenurse.App;
 import szszhospital.cn.com.mobilenurse.R;
 import szszhospital.cn.com.mobilenurse.adapter.HerbalOrderAdapter;
@@ -21,11 +19,6 @@ import szszhospital.cn.com.mobilenurse.remote.response.Order;
 public class HerbalOrderFragment extends BaseDoctorFragment<FragmentOrderBinding, HerbalOrderPresenter> implements HerbalOrderContract.View {
 
     private HerbalOrderAdapter mAdapter;
-
-    @Override
-    public int getLayoutId() {
-        return R.layout.fragment_order;
-    }
 
     public static HerbalOrderFragment newInstance() {
         return new HerbalOrderFragment();

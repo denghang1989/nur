@@ -1,20 +1,15 @@
 package szszhospital.cn.com.mobilenurse.fragemt;
 
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.View;
 
 import com.blankj.utilcode.util.ConvertUtils;
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.github.florent37.viewanimator.ViewAnimator;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.recyclerview.widget.RecyclerView;
 import szszhospital.cn.com.mobilenurse.App;
-import szszhospital.cn.com.mobilenurse.R;
 import szszhospital.cn.com.mobilenurse.adapter.OrderListAdapter;
 import szszhospital.cn.com.mobilenurse.databinding.FragmentOrderBinding;
 import szszhospital.cn.com.mobilenurse.dialog.OrderExtDialogFragment;
@@ -31,11 +26,6 @@ public abstract class BaseOrdersFragment extends BaseDoctorFragment<FragmentOrde
     protected            OrderListAdapter       mAdapter;
     protected            OrderExtDialogFragment mDialogFragment;
     protected            List<Order>            mOrderList;
-
-    @Override
-    public int getLayoutId() {
-        return R.layout.fragment_order;
-    }
 
     @Override
     protected void init() {

@@ -1,12 +1,9 @@
 package szszhospital.cn.com.mobilenurse.fragemt;
 
-import android.os.Bundle;
 import android.view.View;
 
 import java.util.List;
 
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import szszhospital.cn.com.mobilenurse.App;
 import szszhospital.cn.com.mobilenurse.R;
 import szszhospital.cn.com.mobilenurse.adapter.EposideVitalSignsAdapter;

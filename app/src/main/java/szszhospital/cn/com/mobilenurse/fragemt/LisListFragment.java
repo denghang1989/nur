@@ -1,8 +1,5 @@
 package szszhospital.cn.com.mobilenurse.fragemt;
 
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
-
 import android.view.View;
 
 import com.blankj.utilcode.util.StringUtils;
@@ -30,11 +27,6 @@ public class LisListFragment extends BaseDoctorFragment<FragmentOrderBinding, Li
 
     public static LisListFragment newInstance() {
         return new LisListFragment();
-    }
-
-    @Override
-    public int getLayoutId() {
-        return R.layout.fragment_order;
     }
 
     @Override
